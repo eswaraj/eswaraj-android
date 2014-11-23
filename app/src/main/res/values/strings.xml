@@ -9,5 +9,6 @@
     <string name="loginButtonText">Login with Facebook</string>
     <string name="skipButtonText">Skip</string>
     <string name="quitButtonText">Quit</string>
+    <string name="getDataError">Network Error. Could not fetch data</string>
 
 </resources>
