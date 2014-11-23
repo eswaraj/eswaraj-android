@@ -11,8 +11,9 @@ import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.interfaces.DeviceRegisterInterface;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
+import com.eswaraj.app.eswaraj.interfaces.LoginSkipInterface;
 
-public class SplashActivity extends FragmentActivity implements FacebookLoginInterface, DeviceRegisterInterface{
+public class SplashActivity extends FragmentActivity implements FacebookLoginInterface, DeviceRegisterInterface, LoginSkipInterface{
 
     private SplashFragment splashFragment;
 
@@ -35,5 +36,10 @@ public class SplashActivity extends FragmentActivity implements FacebookLoginInt
     @Override
     public void onDeviceRegistered() {
         splashFragment.onDeviceRegistered();
+    }
+
+    @Override
+    public void onSkipDone() {
+        splashFragment.onSkipDone();
     }
 }

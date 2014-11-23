@@ -13,15 +13,21 @@ import android.widget.Button;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.handlers.LoginButtonClickHandler;
+import com.eswaraj.app.eswaraj.handlers.QuitButtonClickHandler;
+import com.eswaraj.app.eswaraj.handlers.SkipButtonClickHandler;
 import com.eswaraj.app.eswaraj.interfaces.DeviceRegisterInterface;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
+import com.eswaraj.app.eswaraj.interfaces.LoginSkipInterface;
+import com.eswaraj.app.eswaraj.location.LocationUtil;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
+import com.eswaraj.app.eswaraj.util.DeviceUtil;
+import com.eswaraj.app.eswaraj.util.ServerDataUtil;
 
 /**
  * Use the {@link SplashFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SplashFragment extends Fragment implements FacebookLoginInterface, DeviceRegisterInterface {
+public class SplashFragment extends Fragment implements FacebookLoginInterface, DeviceRegisterInterface, LoginSkipInterface {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -32,13 +38,25 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
     private String mParam2;
 
     //UI elements holders
-    Button buttonContinue;
+    Button buttonSkip;
     Button buttonLogin;
+    Button buttonQuit;
+
+    //Maintain async task return state
+    Boolean loginOrSkipDone;
+    Boolean serverDataDownloadDone;
+    Boolean redirectDone;
 
     //Login Utility
     FacebookLoginUtil facebookLoginUtil;
     //Device Register Utility
     DeviceUtil deviceUtil;
+    //Location Utility
+    LocationUtil locationUtil;
+    //ServerData Utility
+    ServerDataUtil serverDataUtil;
+    //Internet and Location service availability
+    Boolean hasNeededServices;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -64,26 +82,63 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //Login utility
+        //Utilities
         facebookLoginUtil = new FacebookLoginUtil(getActivity());
-        //Device register utility
         deviceUtil = new DeviceUtil(getActivity());
+        locationUtil = new LocationUtil(getActivity());
+        serverDataUtil = new ServerDataUtil(getActivity());
         //References to buttons
-        buttonContinue = (Button) getView().findViewById(R.id.buttonContinue);
+        buttonSkip = (Button) getView().findViewById(R.id.buttonSkip);
         buttonLogin = (Button) getView().findViewById(R.id.buttonLogin);
+        buttonQuit = (Button) getView().findViewById(R.id.buttonQuit);
+        //Set up initial state
+        loginOrSkipDone = false;
+        serverDataDownloadDone = false;
+        redirectDone = false;
 
-        //Don't display Continue button until login and data download is complete
-        buttonContinue.setVisibility(View.INVISIBLE);
-
-        //Don't display Login button if user is already logged in.
-        if(facebookLoginUtil.isUserLoggedIn()) {
+        buttonQuit.setVisibility(View.INVISIBLE);
+        //Check if Internet connection and Location services are present. If not, don't proceed.
+        hasNeededServices = checkLocationAndInternet();
+        if(!hasNeededServices) {
+            buttonQuit.setVisibility(View.VISIBLE);
             buttonLogin.setVisibility(View.INVISIBLE);
+            buttonSkip.setVisibility(View.INVISIBLE);
+        }
+        else {
+            //Don't display Login and Skip button if user is already logged in.
+            if (facebookLoginUtil.isUserLoggedIn()) {
+                buttonLogin.setVisibility(View.INVISIBLE);
+                buttonSkip.setVisibility(View.INVISIBLE);
+            }
+            //Start location service
+            locationUtil.startLocationService();
+
+            //Start data download from server, if needed
+            serverDataUtil.getDataIfNeeded();
         }
 
-        //User login. It will callback onLoginDone()
+        //Register callback handlers
         buttonLogin.setOnClickListener(new LoginButtonClickHandler(getActivity(), facebookLoginUtil));
-        //Register device if needed
-        //Prepare data. On completion, it will call appReadyForLaunch()
+        buttonQuit.setOnClickListener(new QuitButtonClickHandler(getActivity()));
+        buttonSkip.setOnClickListener(new SkipButtonClickHandler(getActivity()));
+
+    }
+
+    private Boolean checkLocationAndInternet() {
+        //Return true by default
+        //TODO: Implement the checks
+        return true;
+    }
+
+    private void takeUserToHomeScreen() {
+        synchronized(this) {
+            if (redirectDone) {
+                return;
+            } else {
+                redirectDone = true;
+                //TODO: Launch main activity from here
+            }
+        }
     }
 
     @Override
@@ -104,13 +159,31 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
 
     @Override
     public void onLoginDone() {
-        //Hide login button since login is done
+        //Hide login and skip button since login is done
         buttonLogin.setVisibility(View.INVISIBLE);
+        buttonSkip.setVisibility(View.INVISIBLE);
         //Register the device now
+        deviceUtil.startDeviceRegistration();
     }
 
     @Override
     public void onDeviceRegistered() {
-        //Start the download of data here
+        //Any registration dependent actions can be taken here
+        loginOrSkipDone = true;
+        if(serverDataDownloadDone) {
+            takeUserToHomeScreen();
+        }
+    }
+
+    @Override
+    public void onSkipDone() {
+        //TODO:Handle skip here
+        //Hide login and skip button since login is done
+        buttonLogin.setVisibility(View.INVISIBLE);
+        buttonSkip.setVisibility(View.INVISIBLE);
+        loginOrSkipDone = true;
+        if(serverDataDownloadDone) {
+            takeUserToHomeScreen();
+        }
     }
 }
