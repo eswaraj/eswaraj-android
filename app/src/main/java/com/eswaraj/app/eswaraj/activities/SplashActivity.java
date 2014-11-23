@@ -11,10 +11,11 @@ import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.interfaces.DeviceRegisterInterface;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
+import com.eswaraj.app.eswaraj.interfaces.LocationInterface;
 import com.eswaraj.app.eswaraj.interfaces.LoginSkipInterface;
 import com.eswaraj.app.eswaraj.interfaces.ServerDataInterface;
 
-public class SplashActivity extends FragmentActivity implements FacebookLoginInterface, DeviceRegisterInterface, LoginSkipInterface, ServerDataInterface{
+public class SplashActivity extends FragmentActivity implements FacebookLoginInterface, DeviceRegisterInterface, LoginSkipInterface, ServerDataInterface, LocationInterface{
 
     private SplashFragment splashFragment;
 
@@ -47,5 +48,10 @@ public class SplashActivity extends FragmentActivity implements FacebookLoginInt
     @Override
     public void onServerDataAvailable() {
         splashFragment.onServerDataAvailable();
+    }
+
+    @Override
+    public void onLocationChanged() {
+        splashFragment.onLocationChanged();
     }
 }

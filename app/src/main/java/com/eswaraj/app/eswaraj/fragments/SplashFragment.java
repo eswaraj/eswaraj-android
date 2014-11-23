@@ -19,6 +19,7 @@ import com.eswaraj.app.eswaraj.handlers.SkipButtonClickHandler;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.interfaces.DeviceRegisterInterface;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
+import com.eswaraj.app.eswaraj.interfaces.LocationInterface;
 import com.eswaraj.app.eswaraj.interfaces.LoginSkipInterface;
 import com.eswaraj.app.eswaraj.interfaces.ServerDataInterface;
 import com.eswaraj.app.eswaraj.location.LocationUtil;
@@ -31,7 +32,7 @@ import com.eswaraj.app.eswaraj.util.ServicesCheckUtil;
  * Use the {@link SplashFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SplashFragment extends Fragment implements FacebookLoginInterface, DeviceRegisterInterface, LoginSkipInterface, ServerDataInterface {
+public class SplashFragment extends Fragment implements FacebookLoginInterface, DeviceRegisterInterface, LoginSkipInterface, ServerDataInterface, LocationInterface {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -116,8 +117,6 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
                 buttonLogin.setVisibility(View.INVISIBLE);
                 buttonSkip.setVisibility(View.INVISIBLE);
             }
-            //Start location service
-            locationUtil.startLocationService();
 
             //Start data download from server, if needed
             serverDataUtil.getDataIfNeeded();
@@ -153,6 +152,21 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //Start location service
+        locationUtil.startLocationService();
+    }
+
+    @Override
+    public void onStop() {
+        //Stop location service
+        locationUtil.stopLocationService();
+        super.onStop();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -199,5 +213,10 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
         if(loginOrSkipDone) {
             takeUserToHomeScreen();
         }
+    }
+
+    @Override
+    public void onLocationChanged() {
+        //Nothing to do here since this fragment does not use location
     }
 }
