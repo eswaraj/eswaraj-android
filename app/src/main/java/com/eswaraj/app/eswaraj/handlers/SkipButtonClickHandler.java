@@ -22,12 +22,13 @@ public class SkipButtonClickHandler implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        try {
-            ((LoginSkipInterface) context).onSkipDone();
-        }
-        catch (ClassCastException e) {
-            Log.e("Interface not implemented", "The activity should implement LoginSkipInterface");
-            e.printStackTrace();
+        if (this.context != null) {
+            try {
+                ((LoginSkipInterface) context).onSkipDone();
+            } catch (ClassCastException e) {
+                Log.e("Interface not implemented", "The activity should implement LoginSkipInterface");
+                e.printStackTrace();
+            }
         }
     }
 }

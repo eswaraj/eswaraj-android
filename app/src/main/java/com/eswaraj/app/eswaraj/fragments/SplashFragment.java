@@ -18,6 +18,7 @@ import com.eswaraj.app.eswaraj.handlers.SkipButtonClickHandler;
 import com.eswaraj.app.eswaraj.interfaces.DeviceRegisterInterface;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
 import com.eswaraj.app.eswaraj.interfaces.LoginSkipInterface;
+import com.eswaraj.app.eswaraj.interfaces.ServerDataInterface;
 import com.eswaraj.app.eswaraj.location.LocationUtil;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.DeviceUtil;
@@ -27,7 +28,7 @@ import com.eswaraj.app.eswaraj.util.ServerDataUtil;
  * Use the {@link SplashFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SplashFragment extends Fragment implements FacebookLoginInterface, DeviceRegisterInterface, LoginSkipInterface {
+public class SplashFragment extends Fragment implements FacebookLoginInterface, DeviceRegisterInterface, LoginSkipInterface, ServerDataInterface {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -60,10 +61,6 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SplashFragment.
      */
     // TODO: Rename and change types and number of parameters
     public static SplashFragment newInstance(String param1, String param2) {
@@ -177,12 +174,22 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
 
     @Override
     public void onSkipDone() {
-        //TODO:Handle skip here
         //Hide login and skip button since login is done
         buttonLogin.setVisibility(View.INVISIBLE);
         buttonSkip.setVisibility(View.INVISIBLE);
         loginOrSkipDone = true;
         if(serverDataDownloadDone) {
+            takeUserToHomeScreen();
+        }
+    }
+
+    @Override
+    public void onServerDataAvailable() {
+        //Hide login and skip button since login is done
+        buttonLogin.setVisibility(View.INVISIBLE);
+        buttonSkip.setVisibility(View.INVISIBLE);
+        serverDataDownloadDone = true;
+        if(loginOrSkipDone) {
             takeUserToHomeScreen();
         }
     }
