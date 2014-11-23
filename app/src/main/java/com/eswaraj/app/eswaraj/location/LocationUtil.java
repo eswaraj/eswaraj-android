@@ -5,6 +5,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.eswaraj.app.eswaraj.interfaces.LocationInterface;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
@@ -58,7 +59,14 @@ public class LocationUtil implements GooglePlayServicesClient.ConnectionCallback
 
     @Override
     public void onLocationChanged(Location location) {
-
+        if (this.context != null) {
+            try {
+                ((LocationInterface) context).onLocationChanged();
+            } catch (ClassCastException e) {
+                Log.e("Interface not implemented", "The activity should implement LocationInterface");
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
