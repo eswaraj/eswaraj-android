@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.config.ServicesEnums;
 import com.eswaraj.app.eswaraj.handlers.LoginButtonClickHandler;
 import com.eswaraj.app.eswaraj.handlers.QuitButtonClickHandler;
 import com.eswaraj.app.eswaraj.handlers.SkipButtonClickHandler;
+import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.interfaces.DeviceRegisterInterface;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
 import com.eswaraj.app.eswaraj.interfaces.LoginSkipInterface;
@@ -23,6 +25,7 @@ import com.eswaraj.app.eswaraj.location.LocationUtil;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.DeviceUtil;
 import com.eswaraj.app.eswaraj.util.ServerDataUtil;
+import com.eswaraj.app.eswaraj.util.ServicesCheckUtil;
 
 /**
  * Use the {@link SplashFragment#newInstance} factory method to
@@ -56,6 +59,10 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
     LocationUtil locationUtil;
     //ServerData Utility
     ServerDataUtil serverDataUtil;
+    //SharedPreferences Helper
+    SharedPreferencesHelper sharedPreferencesHelper;
+    //ServicesCheck Utility
+    ServicesCheckUtil servicesCheckUtil;
     //Internet and Location service availability
     Boolean hasNeededServices;
     /**
@@ -83,7 +90,9 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
         facebookLoginUtil = new FacebookLoginUtil(getActivity());
         deviceUtil = new DeviceUtil(getActivity());
         locationUtil = new LocationUtil(getActivity());
-        serverDataUtil = new ServerDataUtil(getActivity());
+        sharedPreferencesHelper = new SharedPreferencesHelper(getActivity());
+        serverDataUtil = new ServerDataUtil(getActivity(), sharedPreferencesHelper);
+        servicesCheckUtil = new ServicesCheckUtil(getActivity());
         //References to buttons
         buttonSkip = (Button) getView().findViewById(R.id.buttonSkip);
         buttonLogin = (Button) getView().findViewById(R.id.buttonLogin);
@@ -122,9 +131,7 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
     }
 
     private Boolean checkLocationAndInternet() {
-        //Return true by default
-        //TODO: Implement the checks
-        return true;
+        return servicesCheckUtil.isServiceAvailable(ServicesEnums.INTERNET) && servicesCheckUtil.isServiceAvailable(ServicesEnums.LOCATION);
     }
 
     private void takeUserToHomeScreen() {
