@@ -1,11 +1,8 @@
 package com.eswaraj.app.eswaraj.fragments;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +13,12 @@ import com.eswaraj.app.eswaraj.config.ServicesEnums;
 import com.eswaraj.app.eswaraj.handlers.LoginButtonClickHandler;
 import com.eswaraj.app.eswaraj.handlers.QuitButtonClickHandler;
 import com.eswaraj.app.eswaraj.handlers.SkipButtonClickHandler;
-import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.interfaces.DeviceRegisterInterface;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
 import com.eswaraj.app.eswaraj.interfaces.LocationInterface;
 import com.eswaraj.app.eswaraj.interfaces.LoginSkipInterface;
 import com.eswaraj.app.eswaraj.interfaces.ServerDataInterface;
-import com.eswaraj.app.eswaraj.location.LocationUtil;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
-import com.eswaraj.app.eswaraj.util.DeviceUtil;
-import com.eswaraj.app.eswaraj.util.ServerDataUtil;
 import com.eswaraj.app.eswaraj.util.ServicesCheckUtil;
 
 /**
