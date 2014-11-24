@@ -1,14 +1,10 @@
 package com.eswaraj.app.eswaraj.helpers;
 
-import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
-import com.eswaraj.app.eswaraj.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -44,6 +40,7 @@ public class GoogleMapHelper {
         markerOptions = new MarkerOptions();
         markerOptions.position(new LatLng(0, 0));
         markerOptions.visible(false);
+        markerOptions.draggable(false);
         marker = googleMap.addMarker(markerOptions);
     }
 
@@ -59,5 +56,17 @@ public class GoogleMapHelper {
         this.marker.setPosition(location);
         this.googleMap.moveCamera(center);
         this.googleMap.animateCamera(zoom);
+    }
+
+    public void makeMarkerDraggable() {
+        this.marker.setDraggable(true);
+    }
+
+    public double getMarkerLatitude() {
+        return this.marker.getPosition().latitude;
+    }
+
+    public double getMarkerLongitude() {
+        return this.marker.getPosition().longitude;
     }
 }
