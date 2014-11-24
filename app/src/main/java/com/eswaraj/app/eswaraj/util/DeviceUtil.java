@@ -7,13 +7,13 @@ import com.eswaraj.app.eswaraj.interfaces.DeviceRegisterInterface;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
 
 public class DeviceUtil {
-    private Context context;
+    private DeviceRegisterInterface context;
 
     public DeviceUtil() {
         this.context = null;
     }
 
-    public DeviceUtil(Context context) {
+    public DeviceUtil(DeviceRegisterInterface context) {
         this.context = context;
     }
 
@@ -21,13 +21,7 @@ public class DeviceUtil {
         //Implement device registration logic here
         //Check SharedPreferences for externalId. If present, just call the callback function. Else start volley and call the function when volley finishes
         if(this.context != null) {
-            try {
-                ((DeviceRegisterInterface) context).onDeviceRegistered();
-            }
-            catch (ClassCastException e) {
-                Log.e("Interface not implemented", "The activity should implement DeviceRegisterInterface");
-                e.printStackTrace();
-            }
+                this.context.onDeviceRegistered();
         }
         return;
     }

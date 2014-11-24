@@ -19,7 +19,7 @@ import org.json.JSONArray;
 import java.util.Date;
 
 public class ServerDataUtil {
-    private Context context;
+    private ServerDataInterface context;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private NetworkAccessHelper networkAccessHelper;
 
@@ -27,10 +27,10 @@ public class ServerDataUtil {
         this.context = null;
     }
 
-    public ServerDataUtil(Context context, SharedPreferencesHelper sharedPreferencesHelper) {
+    public ServerDataUtil(ServerDataInterface context, SharedPreferencesHelper sharedPreferencesHelper) {
         this.context = context;
         this.sharedPreferencesHelper = sharedPreferencesHelper;
-        this.networkAccessHelper = NetworkAccessHelper.getInstance(this.context);
+        this.networkAccessHelper = NetworkAccessHelper.getInstance((Context)this.context);
     }
 
     public void getDataIfNeeded() {
@@ -41,13 +41,7 @@ public class ServerDataUtil {
             if((new Date().getTime() - sharedPreferencesHelper.getLong(PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.DATA_DOWNLOAD_TIME_IN_MS, 0L)) < Constants.SERVER_DATA_UPDATE_INTERVAL_IN_MS) {
                 //Data already present and not stale yet. Call the callback function and return
                 if(this.context != null) {
-                    try {
-                        ((ServerDataInterface) context).onServerDataAvailable();
-                    }
-                    catch (ClassCastException e) {
-                        Log.e("Interface not implemented", "The activity should implement ServerDataInterface");
-                        e.printStackTrace();
-                    }
+                    this.context.onServerDataAvailable();
                 }
                 return;
             }
@@ -62,7 +56,7 @@ public class ServerDataUtil {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, R.string.getDataError, Toast.LENGTH_LONG).show();
+                Toast.makeText((Context)context, R.string.getDataError, Toast.LENGTH_LONG).show();
                 Log.e("ServerDataUtil", "Unable to connect to service", error);
             }
         };

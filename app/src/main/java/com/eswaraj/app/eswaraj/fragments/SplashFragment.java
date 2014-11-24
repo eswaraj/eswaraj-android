@@ -54,14 +54,6 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
 
     //Login Utility
     FacebookLoginUtil facebookLoginUtil;
-    //Device Register Utility
-    DeviceUtil deviceUtil;
-    //Location Utility
-    LocationUtil locationUtil;
-    //ServerData Utility
-    ServerDataUtil serverDataUtil;
-    //SharedPreferences Helper
-    SharedPreferencesHelper sharedPreferencesHelper;
     //ServicesCheck Utility
     ServicesCheckUtil servicesCheckUtil;
     //Internet and Location service availability
@@ -88,11 +80,7 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //Utilities
-        facebookLoginUtil = new FacebookLoginUtil(getActivity());
-        deviceUtil = new DeviceUtil(getActivity());
-        locationUtil = new LocationUtil(getActivity());
-        sharedPreferencesHelper = new SharedPreferencesHelper(getActivity());
-        serverDataUtil = new ServerDataUtil(getActivity(), sharedPreferencesHelper);
+        facebookLoginUtil = new FacebookLoginUtil((FacebookLoginInterface)getActivity());
         servicesCheckUtil = new ServicesCheckUtil(getActivity());
         //References to buttons
         buttonSkip = (Button) getView().findViewById(R.id.buttonSkip);
@@ -117,15 +105,12 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
                 buttonLogin.setVisibility(View.INVISIBLE);
                 buttonSkip.setVisibility(View.INVISIBLE);
             }
-
-            //Start data download from server, if needed
-            serverDataUtil.getDataIfNeeded();
         }
 
         //Register callback handlers
         buttonLogin.setOnClickListener(new LoginButtonClickHandler(getActivity(), facebookLoginUtil));
         buttonQuit.setOnClickListener(new QuitButtonClickHandler(getActivity()));
-        buttonSkip.setOnClickListener(new SkipButtonClickHandler(getActivity()));
+        buttonSkip.setOnClickListener(new SkipButtonClickHandler((LoginSkipInterface)getActivity()));
 
     }
 
@@ -156,14 +141,10 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
     @Override
     public void onStart() {
         super.onStart();
-        //Start location service
-        locationUtil.startLocationService();
     }
 
     @Override
     public void onStop() {
-        //Stop location service
-        locationUtil.stopLocationService();
         super.onStop();
     }
 
@@ -180,8 +161,6 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
         //Hide login and skip button since login is done
         buttonLogin.setVisibility(View.INVISIBLE);
         buttonSkip.setVisibility(View.INVISIBLE);
-        //Register the device now
-        deviceUtil.startDeviceRegistration();
     }
 
     @Override

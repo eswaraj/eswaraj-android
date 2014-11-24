@@ -14,7 +14,7 @@ import com.google.android.gms.location.LocationRequest;
 
 public class LocationUtil implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
 
-    Context context;
+    LocationInterface context;
     LocationRequest locationRequest;
     LocationClient locationClient;
 
@@ -22,9 +22,9 @@ public class LocationUtil implements GooglePlayServicesClient.ConnectionCallback
         this.context = null;
     }
 
-    public LocationUtil(Context context) {
+    public LocationUtil(LocationInterface context) {
         this.context = context;
-        locationClient = new LocationClient(this.context, this, this);
+        locationClient = new LocationClient((Context)this.context, this, this);
         // Create the LocationRequest object
         locationRequest = LocationRequest.create();
         // Use high accuracy
@@ -60,12 +60,7 @@ public class LocationUtil implements GooglePlayServicesClient.ConnectionCallback
     @Override
     public void onLocationChanged(Location location) {
         if (this.context != null) {
-            try {
-                ((LocationInterface) context).onLocationChanged();
-            } catch (ClassCastException e) {
-                Log.e("Interface not implemented", "The activity should implement LocationInterface");
-                e.printStackTrace();
-            }
+                this.context.onLocationChanged();
         }
     }
 

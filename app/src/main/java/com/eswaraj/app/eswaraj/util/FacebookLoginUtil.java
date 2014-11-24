@@ -9,13 +9,13 @@ import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
 
 public class FacebookLoginUtil {
 
-    private Context context;
+    private FacebookLoginInterface context;
 
     public FacebookLoginUtil() {
         this.context = null;
     }
 
-    public FacebookLoginUtil(Context context) {
+    public FacebookLoginUtil(FacebookLoginInterface context) {
         this.context = context;
     }
 
@@ -23,13 +23,7 @@ public class FacebookLoginUtil {
         //This is not actual implementation hence calling the callback handler here.
         //This should be called when the login is complete
         if(this.context != null) {
-            try {
-                ((FacebookLoginInterface) context).onLoginDone();
-            }
-            catch (ClassCastException e) {
-                Log.e("Interface not implemented", "The activity should implement FacebookLoginInterface");
-                e.printStackTrace();
-            }
+                this.context.onLoginDone();
         }
         return;
     }

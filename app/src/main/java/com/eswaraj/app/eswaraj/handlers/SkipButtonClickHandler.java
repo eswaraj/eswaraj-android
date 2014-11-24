@@ -10,25 +10,20 @@ import com.eswaraj.app.eswaraj.interfaces.LoginSkipInterface;
 
 public class SkipButtonClickHandler implements View.OnClickListener{
 
-    private Context context;
+    private LoginSkipInterface context;
 
     public SkipButtonClickHandler() {
         this.context = null;
     }
 
-    public SkipButtonClickHandler(Context context) {
+    public SkipButtonClickHandler(LoginSkipInterface context) {
         this.context = context;
     }
 
     @Override
     public void onClick(View view) {
         if (this.context != null) {
-            try {
-                ((LoginSkipInterface) context).onSkipDone();
-            } catch (ClassCastException e) {
-                Log.e("Interface not implemented", "The activity should implement LoginSkipInterface");
-                e.printStackTrace();
-            }
+                this.context.onSkipDone();
         }
     }
 }
