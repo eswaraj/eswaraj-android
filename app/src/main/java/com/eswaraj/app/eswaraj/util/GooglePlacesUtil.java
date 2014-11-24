@@ -7,12 +7,9 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.eswaraj.app.eswaraj.R;
-import com.eswaraj.app.eswaraj.adapters.GooglePlaceAdapter;
 import com.eswaraj.app.eswaraj.config.Constants;
-import com.eswaraj.app.eswaraj.config.PreferenceConstants;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.interfaces.GooglePlacesInterface;
 import com.eswaraj.app.eswaraj.models.GooglePlace;
@@ -21,9 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class GooglePlacesUtil {
     private GooglePlacesInterface context;
