@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.config.ServerAccessEnums;
 import com.eswaraj.app.eswaraj.config.ServicesEnums;
 import com.eswaraj.app.eswaraj.handlers.LoginButtonClickHandler;
 import com.eswaraj.app.eswaraj.handlers.QuitButtonClickHandler;
 import com.eswaraj.app.eswaraj.handlers.SkipButtonClickHandler;
+import com.eswaraj.app.eswaraj.interfaces.DatastoreInterface;
 import com.eswaraj.app.eswaraj.interfaces.DeviceRegisterInterface;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
 import com.eswaraj.app.eswaraj.interfaces.LocationInterface;
@@ -25,7 +27,7 @@ import com.eswaraj.app.eswaraj.util.ServicesCheckUtil;
  * Use the {@link SplashFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SplashFragment extends Fragment implements FacebookLoginInterface, DeviceRegisterInterface, LoginSkipInterface, ServerDataInterface, LocationInterface {
+public class SplashFragment extends Fragment implements FacebookLoginInterface, DeviceRegisterInterface, LoginSkipInterface, DatastoreInterface, LocationInterface {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -177,10 +179,19 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
     }
 
     @Override
-    public void onServerDataAvailable() {
-        //Hide login and skip button since login is done
-        buttonLogin.setVisibility(View.INVISIBLE);
-        buttonSkip.setVisibility(View.INVISIBLE);
+    public void onDataAvailable(ServerAccessEnums resource, Bundle bundle) {
+        switch (resource) {
+            case GET_CATEGORIES:
+                onCategoriesDataAvailable();
+                break;
+            case GET_LOGGED_IN_USER_DTO:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void onCategoriesDataAvailable() {
         serverDataDownloadDone = true;
         if(loginOrSkipDone) {
             takeUserToHomeScreen();

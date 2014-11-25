@@ -8,8 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.config.ServerAccessEnums;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
+import com.eswaraj.app.eswaraj.interfaces.DatastoreInterface;
 import com.eswaraj.app.eswaraj.interfaces.DeviceRegisterInterface;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
 import com.eswaraj.app.eswaraj.interfaces.LocationInterface;
@@ -19,7 +21,7 @@ import com.eswaraj.app.eswaraj.location.LocationUtil;
 import com.eswaraj.app.eswaraj.util.DeviceUtil;
 import com.eswaraj.app.eswaraj.util.ServerDataUtil;
 
-public class SplashActivity extends FragmentActivity implements FacebookLoginInterface, DeviceRegisterInterface, LoginSkipInterface, ServerDataInterface, LocationInterface{
+public class SplashActivity extends FragmentActivity implements FacebookLoginInterface, DeviceRegisterInterface, LoginSkipInterface, DatastoreInterface, LocationInterface{
 
     private SplashFragment splashFragment;
     //Device Register Utility
@@ -37,7 +39,7 @@ public class SplashActivity extends FragmentActivity implements FacebookLoginInt
         //Start location service
         locationUtil.startLocationService();
         //Start data download from server, if needed
-        serverDataUtil.getDataIfNeeded();
+        serverDataUtil.getData(ServerAccessEnums.GET_CATEGORIES, false);
     }
 
     @Override
@@ -54,7 +56,7 @@ public class SplashActivity extends FragmentActivity implements FacebookLoginInt
         deviceUtil = new DeviceUtil(this);
         locationUtil = new LocationUtil(this);
         sharedPreferencesHelper = new SharedPreferencesHelper(this);
-        serverDataUtil = new ServerDataUtil(this, sharedPreferencesHelper);
+        serverDataUtil = new ServerDataUtil(this);
 
 
         splashFragment = SplashFragment.newInstance("", "");
@@ -81,8 +83,8 @@ public class SplashActivity extends FragmentActivity implements FacebookLoginInt
     }
 
     @Override
-    public void onServerDataAvailable() {
-        splashFragment.onServerDataAvailable();
+    public void onDataAvailable(ServerAccessEnums resource, Bundle bundle) {
+        splashFragment.onDataAvailable(resource, bundle);
     }
 
     @Override

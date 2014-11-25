@@ -15,6 +15,11 @@ public class NetworkAccessHelper {
         requestQueue = Volley.newRequestQueue(context.getApplicationContext());
     }
 
+    public static NetworkAccessHelper getInstance() {
+        networkAccessHelper.context = null;
+        return networkAccessHelper;
+    }
+
     public static NetworkAccessHelper getInstance(Context context) {
         networkAccessHelper.context = context;
         return networkAccessHelper;
