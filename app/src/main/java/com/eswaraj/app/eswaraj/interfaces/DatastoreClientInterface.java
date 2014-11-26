@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.eswaraj.app.eswaraj.config.ServerAccessEnums;
 
-public interface DatastoreInterface {
+public interface DatastoreClientInterface {
 
     public void onDataAvailable(ServerAccessEnums resource, Bundle bundle);
 }

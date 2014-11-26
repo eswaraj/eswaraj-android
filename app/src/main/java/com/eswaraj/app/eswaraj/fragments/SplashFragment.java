@@ -10,24 +10,24 @@ import android.widget.Button;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.config.ServerAccessEnums;
-import com.eswaraj.app.eswaraj.config.ServicesEnums;
 import com.eswaraj.app.eswaraj.handlers.LoginButtonClickHandler;
 import com.eswaraj.app.eswaraj.handlers.QuitButtonClickHandler;
 import com.eswaraj.app.eswaraj.handlers.SkipButtonClickHandler;
-import com.eswaraj.app.eswaraj.interfaces.DatastoreInterface;
-import com.eswaraj.app.eswaraj.interfaces.DeviceRegisterInterface;
+import com.eswaraj.app.eswaraj.interfaces.DatastoreClientInterface;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
 import com.eswaraj.app.eswaraj.interfaces.LocationInterface;
 import com.eswaraj.app.eswaraj.interfaces.LoginSkipInterface;
-import com.eswaraj.app.eswaraj.interfaces.ServerDataInterface;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
-import com.eswaraj.app.eswaraj.util.ServicesCheckUtil;
+import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
+import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
+
+import javax.inject.Inject;
 
 /**
  * Use the {@link SplashFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SplashFragment extends Fragment implements FacebookLoginInterface, DeviceRegisterInterface, LoginSkipInterface, DatastoreInterface, LocationInterface {
+public class SplashFragment extends Fragment implements FacebookLoginInterface, LoginSkipInterface, DatastoreClientInterface, LocationInterface {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -47,10 +47,13 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
     Boolean serverDataDownloadDone;
     Boolean redirectDone;
 
-    //Login Utility
+    @Inject
     FacebookLoginUtil facebookLoginUtil;
-    //ServicesCheck Utility
-    ServicesCheckUtil servicesCheckUtil;
+    @Inject
+    InternetServicesCheckUtil internetServicesCheckUtil;
+    @Inject
+    LocationServicesCheckUtil locationServicesCheckUtil;
+
     //Internet and Location service availability
     Boolean hasNeededServices;
     /**
@@ -74,9 +77,6 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //Utilities
-        facebookLoginUtil = new FacebookLoginUtil((FacebookLoginInterface)getActivity());
-        servicesCheckUtil = new ServicesCheckUtil(getActivity());
         //References to buttons
         buttonSkip = (Button) getView().findViewById(R.id.buttonSkip);
         buttonLogin = (Button) getView().findViewById(R.id.buttonLogin);
@@ -110,7 +110,7 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
     }
 
     private Boolean checkLocationAndInternet() {
-        return servicesCheckUtil.isServiceAvailable(ServicesEnums.INTERNET) && servicesCheckUtil.isServiceAvailable(ServicesEnums.LOCATION);
+        return internetServicesCheckUtil.isServiceAvailable(getActivity()) && locationServicesCheckUtil.isServiceAvailable(getActivity());
     }
 
     private void takeUserToHomeScreen() {
@@ -152,20 +152,16 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
 
 
     @Override
-    public void onLoginDone() {
+    public void onFacebookLoginDone() {
         //Hide login and skip button since login is done
         buttonLogin.setVisibility(View.INVISIBLE);
         buttonSkip.setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void onDeviceRegistered() {
-        //Any registration dependent actions can be taken here
         loginOrSkipDone = true;
         if(serverDataDownloadDone) {
             takeUserToHomeScreen();
         }
     }
+
 
     @Override
     public void onSkipDone() {

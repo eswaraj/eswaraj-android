@@ -1,37 +1,31 @@
 package com.eswaraj.app.eswaraj.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.config.ServerAccessEnums;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
-import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
-import com.eswaraj.app.eswaraj.interfaces.DatastoreInterface;
-import com.eswaraj.app.eswaraj.interfaces.DeviceRegisterInterface;
+import com.eswaraj.app.eswaraj.interfaces.DatastoreClientInterface;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
 import com.eswaraj.app.eswaraj.interfaces.LocationInterface;
 import com.eswaraj.app.eswaraj.interfaces.LoginSkipInterface;
-import com.eswaraj.app.eswaraj.interfaces.ServerDataInterface;
 import com.eswaraj.app.eswaraj.location.LocationUtil;
-import com.eswaraj.app.eswaraj.util.DeviceUtil;
-import com.eswaraj.app.eswaraj.util.ServerDataUtil;
+import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 
-public class SplashActivity extends FragmentActivity implements FacebookLoginInterface, DeviceRegisterInterface, LoginSkipInterface, DatastoreInterface, LocationInterface{
+import javax.inject.Inject;
+
+import de.greenrobot.event.EventBus;
+
+public class SplashActivity extends FragmentActivity implements FacebookLoginInterface, LoginSkipInterface, DatastoreClientInterface, LocationInterface{
 
     private SplashFragment splashFragment;
-    //Device Register Utility
-    DeviceUtil deviceUtil;
-    //Location Utility
+    @Inject
     LocationUtil locationUtil;
-    //ServerData Utility
-    ServerDataUtil serverDataUtil;
-    //SharedPreferences Helper
-    SharedPreferencesHelper sharedPreferencesHelper;
+    @Inject
+    MiddlewareServiceImpl middlewareService;
+    @Inject
+    private EventBus eventBus;
 
     @Override
     protected void onStart() {
@@ -39,7 +33,7 @@ public class SplashActivity extends FragmentActivity implements FacebookLoginInt
         //Start location service
         locationUtil.startLocationService();
         //Start data download from server, if needed
-        serverDataUtil.getData(ServerAccessEnums.GET_CATEGORIES, false);
+        middlewareService.loadCategoriesData(this);
     }
 
     @Override
@@ -53,11 +47,6 @@ public class SplashActivity extends FragmentActivity implements FacebookLoginInt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        deviceUtil = new DeviceUtil(this);
-        locationUtil = new LocationUtil(this);
-        sharedPreferencesHelper = new SharedPreferencesHelper(this);
-        serverDataUtil = new ServerDataUtil(this);
-
 
         splashFragment = SplashFragment.newInstance("", "");
         if (savedInstanceState == null) {
@@ -66,15 +55,10 @@ public class SplashActivity extends FragmentActivity implements FacebookLoginInt
     }
 
     @Override
-    public void onLoginDone() {
-        splashFragment.onLoginDone();
-        //Register the device now
-        deviceUtil.startDeviceRegistration();
-    }
-
-    @Override
-    public void onDeviceRegistered() {
-        splashFragment.onDeviceRegistered();
+    public void onFacebookLoginDone() {
+        splashFragment.onFacebookLoginDone();
+        //TODO: create object of type RegisterFacebookAccountRequest and pass it instead of null
+        middlewareService.registerFacebookUser(this, null);
     }
 
     @Override

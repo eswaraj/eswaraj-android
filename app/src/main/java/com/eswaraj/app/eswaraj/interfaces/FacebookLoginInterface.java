@@ -2,5 +2,5 @@ package com.eswaraj.app.eswaraj.interfaces;
 
 public interface FacebookLoginInterface {
 
-    public void onLoginDone();
+    public void onFacebookLoginDone();
 }

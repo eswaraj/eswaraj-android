@@ -5,26 +5,25 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.eswaraj.app.eswaraj.interfaces.LocationInterface;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 
+import javax.inject.Inject;
+
+import de.greenrobot.event.EventBus;
+
 public class LocationUtil implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
 
-    LocationInterface context;
     LocationRequest locationRequest;
     LocationClient locationClient;
+    @Inject
+    EventBus eventBus;
 
-    public LocationUtil() {
-        this.context = null;
-    }
-
-    public LocationUtil(LocationInterface context) {
-        this.context = context;
-        locationClient = new LocationClient((Context)this.context, this, this);
+    public LocationUtil(Context context) {
+        locationClient = new LocationClient(context, this, this);
         // Create the LocationRequest object
         locationRequest = LocationRequest.create();
         // Use high accuracy
@@ -59,9 +58,7 @@ public class LocationUtil implements GooglePlayServicesClient.ConnectionCallback
 
     @Override
     public void onLocationChanged(Location location) {
-        if (this.context != null) {
-                this.context.onLocationChanged();
-        }
+        this.eventBus.postSticky(location);
     }
 
     @Override
