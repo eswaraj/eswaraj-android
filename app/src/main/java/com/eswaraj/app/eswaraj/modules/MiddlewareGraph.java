@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.datastore.CacheInterface;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
@@ -20,7 +21,11 @@ import dagger.Module;
 import dagger.Provides;
 import de.greenrobot.event.EventBus;
 
-@Module
+@Module(
+        injects = {
+                SplashActivity.class
+        }
+)
 public class MiddlewareGraph {
     private Context applicationContext;
 
