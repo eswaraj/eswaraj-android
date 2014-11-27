@@ -4,11 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.eswaraj.app.eswaraj.R;
-import com.eswaraj.app.eswaraj.config.ServerAccessEnums;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
-import com.eswaraj.app.eswaraj.interfaces.DatastoreClientInterface;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
-import com.eswaraj.app.eswaraj.interfaces.LocationInterface;
 import com.eswaraj.app.eswaraj.interfaces.LoginSkipInterface;
 import com.eswaraj.app.eswaraj.location.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -17,7 +14,7 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class SplashActivity extends FragmentActivity implements FacebookLoginInterface, LoginSkipInterface, DatastoreClientInterface, LocationInterface{
+public class SplashActivity extends FragmentActivity implements FacebookLoginInterface, LoginSkipInterface{
 
     private SplashFragment splashFragment;
     @Inject
@@ -66,13 +63,4 @@ public class SplashActivity extends FragmentActivity implements FacebookLoginInt
         splashFragment.onSkipDone();
     }
 
-    @Override
-    public void onDataAvailable(ServerAccessEnums resource, Bundle bundle) {
-        splashFragment.onDataAvailable(resource, bundle);
-    }
-
-    @Override
-    public void onLocationChanged() {
-        splashFragment.onLocationChanged();
-    }
 }

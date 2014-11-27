@@ -1,12 +1,27 @@
 package com.eswaraj.app.eswaraj.datastore;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.config.PreferenceConstants;
+import com.eswaraj.app.eswaraj.events.GetCategoriesEvent;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 import javax.inject.Inject;
 
@@ -31,7 +46,21 @@ public class Cache implements CacheInterface {
 
 
     public void loadCategoriesData(Context context) {
-        //TODO: Create the CategoryDto by loading data from SharedPreferences and emitting a LoadCategoryEvent on eventBus
+        Gson gson = new Gson();
+        String json = sharedPreferencesHelper.getString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.SERVER_CATEGORY_DATA, null);
+        try {
+            List<CategoryWithChildCategoryDto> categoryDtoList;
+            GetCategoriesEvent getCategoriesEvent = new GetCategoriesEvent();
+            categoryDtoList = gson.fromJson(json, new TypeToken<ArrayList<CategoryWithChildCategoryDto>>(){}.getType());
+            getCategoriesEvent.setSuccess(true);
+            getCategoriesEvent.setCategoryList(categoryDtoList);
+            eventBus.postSticky(getCategoriesEvent);
+        } catch (JsonParseException e) {
+            //This should never happen since json would only be stored in server if de-serialization was successful in Server class
+            GetCategoriesEvent getCategoriesEvent = new GetCategoriesEvent();
+            getCategoriesEvent.setError("Invalid json");
+            eventBus.postSticky(getCategoriesEvent);
+        }
     }
 
 

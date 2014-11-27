@@ -7,15 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
-import com.eswaraj.app.eswaraj.config.ServerAccessEnums;
+import com.eswaraj.app.eswaraj.events.GetCategoriesEvent;
 import com.eswaraj.app.eswaraj.handlers.LoginButtonClickHandler;
 import com.eswaraj.app.eswaraj.handlers.QuitButtonClickHandler;
 import com.eswaraj.app.eswaraj.handlers.SkipButtonClickHandler;
-import com.eswaraj.app.eswaraj.interfaces.DatastoreClientInterface;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
-import com.eswaraj.app.eswaraj.interfaces.LocationInterface;
 import com.eswaraj.app.eswaraj.interfaces.LoginSkipInterface;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
@@ -23,19 +22,13 @@ import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
 
 import javax.inject.Inject;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Use the {@link SplashFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SplashFragment extends Fragment implements FacebookLoginInterface, LoginSkipInterface, DatastoreClientInterface, LocationInterface {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class SplashFragment extends Fragment implements FacebookLoginInterface, LoginSkipInterface {
 
     //UI elements holders
     Button buttonSkip;
@@ -53,6 +46,8 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
     InternetServicesCheckUtil internetServicesCheckUtil;
     @Inject
     LocationServicesCheckUtil locationServicesCheckUtil;
+    @Inject
+    EventBus eventBus;
 
     //Internet and Location service availability
     Boolean hasNeededServices;
@@ -60,12 +55,9 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      */
-    // TODO: Rename and change types and number of parameters
     public static SplashFragment newInstance(String param1, String param2) {
         SplashFragment fragment = new SplashFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -128,18 +120,19 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        eventBus.registerSticky(this);
+
     }
 
     @Override
     public void onStop() {
+        eventBus.unregister(this);
         super.onStop();
     }
 
@@ -174,28 +167,17 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface, 
         }
     }
 
-    @Override
-    public void onDataAvailable(ServerAccessEnums resource, Bundle bundle) {
-        switch (resource) {
-            case GET_CATEGORIES:
-                onCategoriesDataAvailable();
-                break;
-            case GET_LOGGED_IN_USER_DTO:
-                break;
-            default:
-                break;
+    public void onEventMainThread(GetCategoriesEvent event) {
+        if(event.getSuccess()) {
+            serverDataDownloadDone = true;
+            if (loginOrSkipDone) {
+                takeUserToHomeScreen();
+            }
+        }
+        else {
+            Toast.makeText(getActivity(), "Could not fetch categories from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            //Show retry button which will re-trigger the request.
         }
     }
 
-    public void onCategoriesDataAvailable() {
-        serverDataDownloadDone = true;
-        if(loginOrSkipDone) {
-            takeUserToHomeScreen();
-        }
-    }
-
-    @Override
-    public void onLocationChanged() {
-        //Nothing to do here since this fragment does not use location
-    }
 }
