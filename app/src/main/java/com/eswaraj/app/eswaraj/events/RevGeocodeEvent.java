@@ -11,4 +11,8 @@ public class RevGeocodeEvent extends BaseEvent {
     public String getRevGeocodedLocation() {
         return this.revGeocodedLocation;
     }
+
+    public void setRevGeocodedLocation(String revGeocodedLocation) {
+        this.revGeocodedLocation = revGeocodedLocation;
+    }
 }
