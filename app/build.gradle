@@ -28,6 +28,7 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.4.0'
     provided 'com.squareup.dagger:dagger-compiler:1.2.2'
     compile 'com.squareup.dagger:dagger:1.2.2'
+    compile 'com.facebook.android:facebook-android-sdk:3.20.0'
     compile files('libs/eswaraj-dto-1.0.0-SNAPSHOT.jar')
     compile files('libs/httpclientandroidlib-1.1.2.jar')
     compile files('libs/achartengine-1.1.0.jar')

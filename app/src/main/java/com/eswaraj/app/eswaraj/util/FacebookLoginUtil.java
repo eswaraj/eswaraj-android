@@ -1,18 +1,76 @@
 package com.eswaraj.app.eswaraj.util;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
+import com.facebook.widget.LoginButton;
+
+import java.util.Arrays;
 
 public class FacebookLoginUtil {
 
-    public void startFacebookLogin(FacebookLoginInterface context) {
-        //This is not actual implementation hence calling the callback handler here.
-        //This should be called when the login is complete
-        context.onFacebookLoginDone();
-        return;
+    private UiLifecycleHelper uiHelper;
+    private Session.StatusCallback callback;
+    private String TAG = "FacebookLoginUtil";
+
+    public void onCreate(final FacebookLoginInterface context, Bundle savedInstanceState) {
+        callback = new Session.StatusCallback() {
+            @Override
+            public void call(Session session, SessionState state, Exception exception) {
+                onSessionStateChange(context, session, state, exception);
+            }
+        };
+        uiHelper = new UiLifecycleHelper(((Fragment)context).getActivity(), callback);
+        uiHelper.onCreate(savedInstanceState);
+    }
+
+    public void onResume(FacebookLoginInterface context) {
+        Session session = Session.getActiveSession();
+        if (session != null &&
+                (session.isOpened() || session.isClosed()) ) {
+            onSessionStateChange(context, session, session.getState(), null);
+        }
+        uiHelper.onResume();
+    }
+
+    public void onPause() {
+        uiHelper.onPause();
+    }
+
+    public void onDestroy() {
+        uiHelper.onDestroy();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        uiHelper.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void onSaveInstanceState(Bundle outState) {
+        uiHelper.onSaveInstanceState(outState);
     }
 
     public Boolean isUserLoggedIn() {
-        //Return false by default
-        return false;
+        Session session = Session.getActiveSession();
+        return (session != null && session.isOpened());
+    }
+
+    public void setup(LoginButton loginButton) {
+        loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
+    }
+
+    public void onSessionStateChange(FacebookLoginInterface context, Session session, SessionState state, Exception exception) {
+        if (state.isOpened()) {
+            Log.d(TAG, "Logged in...");
+            context.onFacebookLoginDone();
+        } else if (state.isClosed()) {
+            Log.d(TAG, "Logged out...");
+        }
     }
 }

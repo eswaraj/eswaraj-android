@@ -22,7 +22,7 @@ public class LoginButtonClickHandler implements View.OnClickListener{
     }
     @Override
     public void onClick(View view) {
-        facebookLoginUtil.startFacebookLogin();
+        //facebookLoginUtil.startFacebookLogin();
     }
 
 }

@@ -9,4 +9,7 @@ public interface CacheInterface extends MiddlewareGetService {
     //Similar methods have to be defined for all methods in MiddlewareGetService interface
     public Boolean isCategoriesDataAvailable(Context context);
     public void updateCategoriesData(Context context, String json);
+
+    public Boolean isCategoriesImagesAvailable(Context context);
+    public void updateCategoriesImages(Context context);
 }

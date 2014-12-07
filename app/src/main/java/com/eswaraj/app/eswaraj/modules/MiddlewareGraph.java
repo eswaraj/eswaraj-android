@@ -7,6 +7,8 @@ import com.android.volley.toolbox.Volley;
 import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.datastore.CacheInterface;
+import com.eswaraj.app.eswaraj.datastore.Server;
+import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.location.LocationUtil;
@@ -23,8 +25,15 @@ import de.greenrobot.event.EventBus;
 
 @Module(
         injects = {
-                SplashActivity.class
-        }
+                SplashActivity.class,
+                SplashFragment.class,
+                Cache.class,
+                Server.class,
+                NetworkAccessHelper.class,
+                LocationUtil.class
+        },
+        complete = false,
+        library = true
 )
 public class MiddlewareGraph {
     private Context applicationContext;
@@ -39,7 +48,7 @@ public class MiddlewareGraph {
     }
 
 
-    @Provides
+    @Provides @Singleton
     FacebookLoginUtil provideFacebookLoginUtil() {
         return new FacebookLoginUtil();
     }
@@ -55,10 +64,10 @@ public class MiddlewareGraph {
     }
 
 
-    @Provides @Singleton
-    LocationUtil provideLocationUtil(Context context) {
-        return new LocationUtil(context);
-    }
+    //@Provides @Singleton
+    //LocationUtil provideLocationUtil(Context context) {
+        //return new LocationUtil(context);
+    //}
 
 
     @Provides @Singleton @Named("default")
@@ -67,9 +76,9 @@ public class MiddlewareGraph {
     }
 
     @Provides @Singleton
-    public RequestQueue provideRequestQueue(Context context) {
+    public RequestQueue provideRequestQueue() {
         /** Set up to use OkHttp */
-        return Volley.newRequestQueue(context);
+        return Volley.newRequestQueue(this.applicationContext);
     }
 
     @Provides

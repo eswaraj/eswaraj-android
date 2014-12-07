@@ -5,11 +5,12 @@
     android:orientation="vertical"
     tools:context="com.eswaraj.app.eswaraj.fragments.SplashFragment">
 
-    <Button
+    <com.facebook.widget.LoginButton
         android:id="@+id/buttonLogin"
-        android:text="@string/loginButtonText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp" />
 
     <Button
         android:id="@+id/buttonSkip"

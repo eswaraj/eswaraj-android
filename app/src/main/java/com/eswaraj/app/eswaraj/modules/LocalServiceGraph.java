@@ -12,7 +12,9 @@ import dagger.Provides;
 @Module(
         injects = {
                 SplashActivity.class
-        }
+        },
+        complete = false,
+        library = true
 )
 public class LocalServiceGraph {
 

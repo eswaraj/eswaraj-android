@@ -5,11 +5,11 @@ import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
 import java.util.List;
 
-public class GetCategoriesEvent extends BaseEvent {
+public class GetCategoriesDataEvent extends BaseEvent {
 
     private List<CategoryWithChildCategoryDto> categoryList;
 
-    public GetCategoriesEvent() {
+    public GetCategoriesDataEvent() {
         super();
         this.categoryList = null;
     }

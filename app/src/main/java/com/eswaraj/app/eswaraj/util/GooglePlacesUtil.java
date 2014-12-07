@@ -20,14 +20,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 public class GooglePlacesUtil {
     private GooglePlacesInterface context;
-    private NetworkAccessHelper networkAccessHelper;
+    @Inject
+    NetworkAccessHelper networkAccessHelper;
     private GooglePlace googlePlace;
 
     public GooglePlacesUtil(GooglePlacesInterface context) {
         this.context = context;
-        this.networkAccessHelper = NetworkAccessHelper.getInstance((Context)this.context);
     }
 
     public void getPlacesList(String input) {

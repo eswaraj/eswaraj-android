@@ -2,17 +2,22 @@ package com.eswaraj.app.eswaraj.middleware;
 
 import android.content.Context;
 
+import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.datastore.CacheInterface;
+import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.datastore.ServerInterface;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 public class MiddlewareServiceImpl implements MiddlewareService {
     @Inject
-    private CacheInterface cache;
+    CacheInterface cache;
     @Inject
-    private ServerInterface server;
+    ServerInterface server;
 
     @Override
     public void loadCategoriesData(Context context) {
@@ -37,6 +42,41 @@ public class MiddlewareServiceImpl implements MiddlewareService {
                 server.loadCategoriesData(context);
             }
         }
+    }
+
+    @Override
+    public Boolean isCategoriesDataAvailable(Context context) {
+        return cache.isCategoriesDataAvailable(context);
+    }
+
+    @Override
+    public void loadCategoriesImages(Context context, List<CategoryWithChildCategoryDto> categoriesList) {
+        if(cache.isCategoriesImagesAvailable(context)) {
+            cache.loadCategoriesImages(context, categoriesList);
+        }
+        else {
+            server.loadCategoriesImages(context, categoriesList);
+        }
+    }
+
+    @Override
+    public void loadCategoriesImages(Context context, List<CategoryWithChildCategoryDto> categoriesList, Boolean dontGetFromCache) {
+        if(dontGetFromCache) {
+            server.loadCategoriesImages(context, categoriesList);
+        }
+        else {
+            if (cache.isCategoriesImagesAvailable(context)) {
+                cache.loadCategoriesImages(context, categoriesList);
+            }
+            else {
+                server.loadCategoriesImages(context, categoriesList);
+            }
+        }
+    }
+
+    @Override
+    public Boolean isCategoriesImagesAvailable(Context context) {
+        return cache.isCategoriesImagesAvailable(context);
     }
 
     @Override

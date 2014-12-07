@@ -10,12 +10,9 @@ import javax.inject.Inject;
 
 public class NetworkAccessHelper {
     @Inject
-    private Context applicationContext;
-    private RequestQueue requestQueue;
-
-    public NetworkAccessHelper() {
-        requestQueue = Volley.newRequestQueue(this.applicationContext);
-    }
+    Context applicationContext;
+    @Inject
+    RequestQueue requestQueue;
 
     public void submitNetworkRequest(String requestTag, Request request) {
         requestQueue.cancelAll(requestTag);

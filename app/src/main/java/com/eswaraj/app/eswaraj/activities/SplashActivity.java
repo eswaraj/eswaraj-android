@@ -1,5 +1,6 @@
 package com.eswaraj.app.eswaraj.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -9,20 +10,21 @@ import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
 import com.eswaraj.app.eswaraj.interfaces.LoginSkipInterface;
 import com.eswaraj.app.eswaraj.location.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.facebook.AppEventsLogger;
 
 import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class SplashActivity extends FragmentActivity implements FacebookLoginInterface, LoginSkipInterface{
+public class SplashActivity extends FragmentActivity implements FacebookLoginInterface{
 
     private SplashFragment splashFragment;
-    @Inject
+    //@Inject
     LocationUtil locationUtil;
     @Inject
     MiddlewareServiceImpl middlewareService;
     @Inject
-    private EventBus eventBus;
+    EventBus eventBus;
 
     @Override
     protected void onStart() {
@@ -49,6 +51,8 @@ public class SplashActivity extends FragmentActivity implements FacebookLoginInt
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.SplashFragmentContainer, splashFragment).commit();
         }
+
+        locationUtil = new LocationUtil(this);
     }
 
     @Override
@@ -59,8 +63,22 @@ public class SplashActivity extends FragmentActivity implements FacebookLoginInt
     }
 
     @Override
-    public void onSkipDone() {
-        splashFragment.onSkipDone();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        splashFragment.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Logs 'app deactivate' App Event.
+        AppEventsLogger.deactivateApp(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Logs 'install' and 'app activate' App Events.
+        AppEventsLogger.activateApp(this);
+    }
 }

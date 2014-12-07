@@ -10,5 +10,6 @@
     <string name="skipButtonText">Skip</string>
     <string name="quitButtonText">Quit</string>
     <string name="getDataError">Network Error. Could not fetch data</string>
+    <string name="facebook_app_id">958809957480252</string>
 
 </resources>
