@@ -47,12 +47,12 @@ public class Cache implements CacheInterface {
             categoryDtoList = gson.fromJson(json, new TypeToken<ArrayList<CategoryWithChildCategoryDto>>(){}.getType());
             getCategoriesDataEvent.setSuccess(true);
             getCategoriesDataEvent.setCategoryList(categoryDtoList);
-            eventBus.postSticky(getCategoriesDataEvent);
+            eventBus.post(getCategoriesDataEvent);
         } catch (JsonParseException e) {
             //This should never happen since json would only be stored in server if de-serialization was successful in Server class
             GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
             getCategoriesDataEvent.setError("Invalid json");
-            eventBus.postSticky(getCategoriesDataEvent);
+            eventBus.post(getCategoriesDataEvent);
         }
     }
 
@@ -68,7 +68,7 @@ public class Cache implements CacheInterface {
         //No data needs to be put here. The image file names will be inferred from the categoryId. Just put success=True in event object
         GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
         getCategoriesImagesEvent.setSuccess(true);
-        eventBus.postSticky(getCategoriesImagesEvent);
+        eventBus.post(getCategoriesImagesEvent);
     }
 
     @Override

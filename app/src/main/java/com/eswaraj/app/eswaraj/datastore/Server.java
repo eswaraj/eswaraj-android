@@ -61,7 +61,7 @@ public class Server implements ServerInterface {
             public void onErrorResponse(VolleyError error) {
                 GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
                 getCategoriesDataEvent.setError(error.toString());
-                eventBus.postSticky(getCategoriesDataEvent);
+                eventBus.post(getCategoriesDataEvent);
             }
         };
     }
@@ -77,13 +77,13 @@ public class Server implements ServerInterface {
                     categoryDtoList = gson.fromJson(json, new TypeToken<ArrayList<CategoryWithChildCategoryDto>>(){}.getType());
                     getCategoriesDataEvent.setSuccess(true);
                     getCategoriesDataEvent.setCategoryList(categoryDtoList);
-                    eventBus.postSticky(getCategoriesDataEvent);
+                    eventBus.post(getCategoriesDataEvent);
                     //Update the cache
                     cache.updateCategoriesData(context, json);
                 } catch (JsonParseException e) {
                     GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
                     getCategoriesDataEvent.setError("Invalid json");
-                    eventBus.postSticky(getCategoriesDataEvent);
+                    eventBus.post(getCategoriesDataEvent);
                 }
             }
         };
@@ -114,7 +114,7 @@ public class Server implements ServerInterface {
                     GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
                     getCategoriesImagesEvent.setSuccess(successImages);
                     getCategoriesImagesEvent.setError(errorImages);
-                    eventBus.postSticky(getCategoriesImagesEvent);
+                    eventBus.post(getCategoriesImagesEvent);
                 }
             }
         };
@@ -132,7 +132,7 @@ public class Server implements ServerInterface {
                     //All image download requests completed. Publish an event now
                     GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
                     getCategoriesImagesEvent.setSuccess(successImages);
-                    eventBus.postSticky(getCategoriesImagesEvent);
+                    eventBus.post(getCategoriesImagesEvent);
                 }
             }
         };
