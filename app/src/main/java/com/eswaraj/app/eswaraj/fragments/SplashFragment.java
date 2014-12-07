@@ -213,8 +213,8 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface {
 
     public void onEventMainThread(GetCategoriesDataEvent event) {
         if(event.getSuccess()) {
-            //Launch image download now
-            middlewareService.loadCategoriesImages(getActivity(), event.getCategoryList());
+            //Launch image download now. Always launch with dontGetFromCache=true
+            middlewareService.loadCategoriesImages(getActivity(), event.getCategoryList(), true);
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch categories from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();

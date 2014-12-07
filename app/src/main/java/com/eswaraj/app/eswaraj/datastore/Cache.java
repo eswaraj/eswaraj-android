@@ -84,5 +84,6 @@ public class Cache implements CacheInterface {
     @Override
     public void updateCategoriesImages(Context context) {
         sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_IMAGES_AVAILABLE, true);
+        sharedPreferencesHelper.putLong(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_IMAGES_DOWNLOAD_TIME_IN_MS, new Date().getTime());
     }
 }
