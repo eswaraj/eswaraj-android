@@ -83,6 +83,16 @@ public class SelectAmenityActivity extends FragmentActivity {
             reverseGeocodingTask = new ReverseGeocodingTask(this, location);
             reverseGeocodingTask.execute();
         }
+        else {
+            lastLocation = location;
+            if(reverseGeocodingTask != null) {
+                if(reverseGeocodingTask.getStatus() != AsyncTask.Status.FINISHED) {
+                    reverseGeocodingTask.cancel(true);
+                }
+            }
+            reverseGeocodingTask = new ReverseGeocodingTask(this, location);
+            reverseGeocodingTask.execute();
+        }
     }
 
     public void onEventMainThread(RevGeocodeEvent event) {

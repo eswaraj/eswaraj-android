@@ -1,5 +1,6 @@
 package com.eswaraj.app.eswaraj.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,11 +11,14 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.activities.SplashActivity;
+import com.eswaraj.app.eswaraj.adapters.AmenityListAdapter;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -69,8 +73,11 @@ public class AmenitiesFragment extends Fragment {
         gvAmenityList = (GridView) rootView.findViewById(R.id.gvAmenityList);
         gvAmenityList.setOnItemClickListener(new GridView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Launch next activity here and pass the selected amenity data in Extras
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                //TODO: Fix the activity name below. It should be the SelectTemplateActivity.class
+                Intent i = new Intent(getActivity(), SplashActivity.class);
+                i.putExtra("AMENITY", (Serializable) gvAmenityList.getAdapter().getItem(pos));
+                startActivity(i);
             }
         });
         return rootView;
@@ -90,7 +97,9 @@ public class AmenitiesFragment extends Fragment {
 
     public void onEventMainThread(GetCategoriesImagesEvent event) {
         if(event.getSuccess()) {
-            //All needed data is available now. Set the adapter for gridview now using categoryList
+            //All needed data is available now. Set the adapter for gridview
+            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryList);
+            gvAmenityList.setAdapter(amenityListAdapter);
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch categories images from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
