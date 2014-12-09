@@ -7,6 +7,7 @@ public class Constants {
     //API keys
     public static final String GOOGLE_API_KEY = "";
     public static final String FACEBOOK_API_KEY = "";
+    public static final String YOUTUBE_API_KEY = "";
 
     //eSwaraj URLS
     public static final String BASE_URL = "http://dev.eswaraj.com/";

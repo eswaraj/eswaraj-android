@@ -35,7 +35,11 @@
         <activity
             android:name=".activities.SelectAmenityActivity"
             android:label="@string/title_activity_select_amenity"
-            android:theme="@android:style/Theme.Black.NoTitleBar">
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".activities.YoutubeActivity"
+            android:label="@string/title_activity_youtube" >
         </activity>
     </application>
 

@@ -12,5 +12,6 @@
     <string name="getDataError">Network Error. Could not fetch data</string>
     <string name="facebook_app_id">958809957480252</string>
     <string name="title_activity_select_amenity">SelectAmenityActivity</string>
+    <string name="title_activity_youtube">YoutubeActivity</string>
 
 </resources>
