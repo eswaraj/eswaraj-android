@@ -2,12 +2,13 @@ package com.eswaraj.app.eswaraj.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.base.BaseActivity;
+import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
-import com.eswaraj.app.eswaraj.interfaces.LoginSkipInterface;
 import com.eswaraj.app.eswaraj.location.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.facebook.AppEventsLogger;
@@ -16,7 +17,7 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class SplashActivity extends FragmentActivity implements FacebookLoginInterface{
+public class SplashActivity extends BaseActivity implements FacebookLoginInterface{
 
     private SplashFragment splashFragment;
     //@Inject
@@ -33,12 +34,14 @@ public class SplashActivity extends FragmentActivity implements FacebookLoginInt
         locationUtil.startLocationService();
         //Start data download from server, if needed
         middlewareService.loadCategoriesData(this);
+        eventBus.registerSticky(this);
     }
 
     @Override
     protected void onStop() {
         //Stop location service
         locationUtil.stopLocationService();
+        eventBus.unregister(this);
         super.onStop();
     }
 
@@ -57,7 +60,6 @@ public class SplashActivity extends FragmentActivity implements FacebookLoginInt
 
     @Override
     public void onFacebookLoginDone() {
-        splashFragment.onFacebookLoginDone();
         //TODO: create object of type RegisterFacebookAccountRequest and pass it instead of null
         middlewareService.registerFacebookUser(this, null);
     }
@@ -80,5 +82,9 @@ public class SplashActivity extends FragmentActivity implements FacebookLoginInt
         super.onResume();
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
+    }
+
+    public void onEvent(GetUserEvent event) {
+        Log.d("SplashActivity", "GetUserEvent");
     }
 }

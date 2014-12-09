@@ -1,9 +1,9 @@
 package com.eswaraj.app.eswaraj.activities;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.config.Constants;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 
-public class YoutubeActivity extends FragmentActivity implements YouTubePlayer.OnInitializedListener {
+public class YoutubeActivity extends BaseActivity implements YouTubePlayer.OnInitializedListener {
 
     private YouTubePlayerSupportFragment youTubePlayerSupportFragment;
     private String video;

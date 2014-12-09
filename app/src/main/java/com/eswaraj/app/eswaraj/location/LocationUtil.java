@@ -5,6 +5,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
@@ -15,14 +16,17 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class LocationUtil implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
+public class LocationUtil extends BaseClass implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
 
     LocationRequest locationRequest;
     LocationClient locationClient;
+    Context context;
     @Inject
     EventBus eventBus;
 
     public LocationUtil(Context context) {
+        this.context = context;
+
         locationClient = new LocationClient(context, this, this);
         // Create the LocationRequest object
         locationRequest = LocationRequest.create();

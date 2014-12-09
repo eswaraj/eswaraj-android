@@ -13,5 +13,6 @@
     <string name="facebook_app_id">958809957480252</string>
     <string name="title_activity_select_amenity">SelectAmenityActivity</string>
     <string name="title_activity_youtube">YoutubeActivity</string>
+    <string name="title_activity_base">BaseActivity</string>
 
 </resources>

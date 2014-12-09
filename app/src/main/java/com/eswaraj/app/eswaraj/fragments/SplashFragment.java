@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
+import com.eswaraj.app.eswaraj.activities.SplashActivity;
+import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
@@ -33,13 +35,13 @@ import de.greenrobot.event.EventBus;
  * Use the {@link SplashFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SplashFragment extends Fragment implements FacebookLoginInterface {
+public class SplashFragment extends BaseFragment implements FacebookLoginInterface {
 
     //Logged-in user
     UserDto userDto;
 
     //Next activity that will be launched
-    Activity nextActivity;
+    Class nextActivity;
 
     //UI elements holders
     Button buttonSkip;
@@ -95,6 +97,7 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface {
         redirectDone = false;
         hasNeededServices = false;
         buttonQuit.setVisibility(View.INVISIBLE);
+        buttonSkip.setVisibility(View.INVISIBLE);
 
         //Check if Internet connection and Location services are present. If not, don't proceed.
         hasNeededServices = checkLocationAndInternet();
@@ -134,7 +137,8 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface {
                 return;
             } else {
                 redirectDone = true;
-                //TODO: Launch main activity from here using this.nextActivity
+                Intent i = new Intent(getActivity(), this.nextActivity);
+                startActivity(i);
             }
         }
     }
@@ -194,9 +198,9 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface {
     public void onFacebookLoginDone() {
         //Hide login and skip button since login is done
         //LoginDone flag will not be updated here since that should happen only once userDto is available
-        buttonLogin.setVisibility(View.INVISIBLE);
+        //buttonLogin.setVisibility(View.INVISIBLE);
         buttonSkip.setVisibility(View.INVISIBLE);
-        Log.d("SplashFragment", "onFacebookLoginDone");
+        ((SplashActivity)getActivity()).onFacebookLoginDone();
     }
 
 
@@ -227,10 +231,11 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface {
             this.userDto = event.getUserDto();
             loginOrSkipDone = true;
             if(this.userDto.getPerson().getPersonAddress().getLongitude() != null) {
-                //this.nextActivity = HomeActivity.class;
+                this.nextActivity = SelectAmenityActivity.class;
             }
             else {
                 //this.nextActivity = MarkLocationActivity.class;
+                this.nextActivity = SelectAmenityActivity.class;
             }
             if(serverDataDownloadDone) {
                 takeUserToNextScreen();
@@ -250,8 +255,12 @@ public class SplashFragment extends Fragment implements FacebookLoginInterface {
             }
         }
         else {
-            Toast.makeText(getActivity(), "Could not fetch categories images from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Could not fetch all categories images from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
             //Show retry button which will re-trigger the request.
+            serverDataDownloadDone = true;
+            if (loginOrSkipDone) {
+                takeUserToNextScreen();
+            }
         }
     }
 

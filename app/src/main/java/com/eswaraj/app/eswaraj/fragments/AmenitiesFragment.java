@@ -2,7 +2,6 @@ package com.eswaraj.app.eswaraj.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.adapters.AmenityListAdapter;
+import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -26,7 +26,7 @@ import javax.inject.Inject;
 import de.greenrobot.event.EventBus;
 
 
-public class AmenitiesFragment extends Fragment {
+public class AmenitiesFragment extends BaseFragment {
 
     @Inject
     EventBus eventBus;

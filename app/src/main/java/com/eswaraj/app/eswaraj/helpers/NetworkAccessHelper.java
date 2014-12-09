@@ -5,10 +5,11 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.eswaraj.app.eswaraj.base.BaseClass;
 
 import javax.inject.Inject;
 
-public class NetworkAccessHelper {
+public class NetworkAccessHelper extends BaseClass {
     @Inject
     Context applicationContext;
     @Inject

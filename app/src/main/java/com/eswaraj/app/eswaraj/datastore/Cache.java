@@ -2,6 +2,8 @@ package com.eswaraj.app.eswaraj.datastore;
 
 import android.content.Context;
 
+import com.eswaraj.app.eswaraj.application.EswarajApplication;
+import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.config.PreferenceConstants;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
@@ -20,7 +22,7 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class Cache implements CacheInterface {
+public class Cache extends BaseClass implements CacheInterface {
 
     @Inject
     SharedPreferencesHelper sharedPreferencesHelper;

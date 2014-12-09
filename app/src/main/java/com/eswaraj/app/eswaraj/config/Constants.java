@@ -10,7 +10,7 @@ public class Constants {
     public static final String YOUTUBE_API_KEY = "";
 
     //eSwaraj URLS
-    public static final String BASE_URL = "http://dev.eswaraj.com/";
+    public static final String BASE_URL = "http://dev.eswaraj.com";
     public static final String GET_CATEGORIES_URL = BASE_URL + "/ajax/categories";
 
     //Google URLS

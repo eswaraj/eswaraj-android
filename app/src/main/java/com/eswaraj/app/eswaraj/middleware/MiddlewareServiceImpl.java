@@ -1,7 +1,11 @@
 package com.eswaraj.app.eswaraj.middleware;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.datastore.CacheInterface;
 import com.eswaraj.app.eswaraj.datastore.Server;
@@ -13,7 +17,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MiddlewareServiceImpl implements MiddlewareService {
+public class MiddlewareServiceImpl extends BaseClass implements MiddlewareService {
     @Inject
     CacheInterface cache;
     @Inject

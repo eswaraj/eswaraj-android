@@ -19,3 +19,6 @@
 -keepclassmembers class ** {
     public void onEvent*(**);
 }
+
+-keep class com.facebook.** { *; }
+-keepattributes Signature

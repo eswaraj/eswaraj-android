@@ -36,12 +36,26 @@ public class GoogleMapHelper {
     public void addMapAndMarker() {
         supportMapFragment = SupportMapFragment.newInstance();
         this.context.getSupportFragmentManager().beginTransaction().add(mapContainer, supportMapFragment).commit();
+        addMarker();
+    }
+
+    private void addMarker() {
         googleMap = supportMapFragment.getMap();
-        markerOptions = new MarkerOptions();
-        markerOptions.position(new LatLng(0, 0));
-        markerOptions.visible(false);
-        markerOptions.draggable(false);
-        marker = googleMap.addMarker(markerOptions);
+        if(googleMap != null) {
+            markerOptions = new MarkerOptions();
+            markerOptions.position(new LatLng(0, 0));
+            markerOptions.visible(false);
+            markerOptions.draggable(false);
+            marker = googleMap.addMarker(markerOptions);
+        }
+        else {
+            try {
+                Thread.sleep(500);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+            addMarker();
+        }
     }
 
     public void setZoomLevel(int zoomLevel) {

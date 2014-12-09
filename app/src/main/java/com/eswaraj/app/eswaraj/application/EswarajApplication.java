@@ -9,12 +9,14 @@ import java.util.Arrays;
 
 import dagger.ObjectGraph;
 
-public class EswarajApplication extends Application{
-    private ObjectGraph objectGraph;
+public class EswarajApplication extends Application {
+    private static ObjectGraph objectGraph;
+    private static EswarajApplication instance;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         objectGraph = ObjectGraph.create(getModules());
     }
 
@@ -25,4 +27,9 @@ public class EswarajApplication extends Application{
     public void inject(Object target) {
         objectGraph.inject(target);
     }
+
+    public static EswarajApplication getInstance() {
+        return instance;
+    }
+
 }

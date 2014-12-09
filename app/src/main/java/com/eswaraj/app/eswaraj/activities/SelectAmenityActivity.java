@@ -2,12 +2,12 @@ package com.eswaraj.app.eswaraj.activities;
 
 import android.location.Location;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.RevGeocodeEvent;
 import com.eswaraj.app.eswaraj.fragments.AmenitiesFragment;
 import com.eswaraj.app.eswaraj.fragments.BottomMenuBarFragment;
@@ -20,7 +20,7 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class SelectAmenityActivity extends FragmentActivity {
+public class SelectAmenityActivity extends BaseActivity {
 
     //@Inject
     LocationUtil locationUtil;
@@ -55,6 +55,7 @@ public class SelectAmenityActivity extends FragmentActivity {
 
     @Override
     protected void onStart() {
+        Log.e("SelectAmenityActivity", "Started");
         eventBus.registerSticky(this);
         super.onStart();
         locationUtil.startLocationService();
