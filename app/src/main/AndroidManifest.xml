@@ -49,6 +49,14 @@
             android:name="com.facebook.LoginActivity"
             android:label="FacebookLogin" >
         </activity>
+        <activity
+            android:name=".activities.SelectTemplateActivity"
+            android:label="@string/title_activity_select_template"
+            android:parentActivityName=".activities.SelectAmenityActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.eswaraj.app.eswaraj.activities.SelectAmenityActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -37,8 +37,10 @@ public class YoutubeActivity extends BaseActivity implements YouTubePlayer.OnIni
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
         if(!wasRestored) {
-            youTubePlayer.cueVideo(video);
-            youTubePlayer.play();
+            if(video != null) {
+                youTubePlayer.cueVideo(video);
+                youTubePlayer.play();
+            }
         }
     }
 

@@ -10,6 +10,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.activities.SelectTemplateActivity;
 import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.adapters.AmenityListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
@@ -74,8 +75,7 @@ public class AmenitiesFragment extends BaseFragment {
         gvAmenityList.setOnItemClickListener(new GridView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                //TODO: Fix the activity name below. It should be the SelectTemplateActivity.class
-                Intent i = new Intent(getActivity(), SplashActivity.class);
+                Intent i = new Intent(getActivity(), SelectTemplateActivity.class);
                 i.putExtra("AMENITY", (Serializable) gvAmenityList.getAdapter().getItem(pos));
                 startActivity(i);
             }
