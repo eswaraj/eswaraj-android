@@ -13,7 +13,7 @@ import com.eswaraj.app.eswaraj.fragments.AmenitiesFragment;
 import com.eswaraj.app.eswaraj.fragments.BottomMenuBarFragment;
 import com.eswaraj.app.eswaraj.helpers.GoogleMapHelper;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
-import com.eswaraj.app.eswaraj.location.LocationUtil;
+import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 
 import javax.inject.Inject;

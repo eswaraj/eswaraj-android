@@ -1,35 +1,21 @@
 package com.eswaraj.app.eswaraj.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
-import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
 import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
-import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
-import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
-import com.eswaraj.app.eswaraj.events.GetUserEvent;
-import com.eswaraj.app.eswaraj.handlers.QuitButtonClickHandler;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
-import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
-import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
-import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
-import com.eswaraj.web.dto.UserDto;
 import com.facebook.widget.LoginButton;
 
 import javax.inject.Inject;
-
-import de.greenrobot.event.EventBus;
 
 
 public class SplashFragment extends BaseFragment implements FacebookLoginInterface {
@@ -64,7 +50,12 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
         buttonQuit.setVisibility(View.INVISIBLE);
 
         //Register callback handlers
-        buttonQuit.setOnClickListener(new QuitButtonClickHandler(getActivity()));
+        buttonQuit.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
 
         //Any setup needed
         facebookLoginUtil.setup(buttonLogin);

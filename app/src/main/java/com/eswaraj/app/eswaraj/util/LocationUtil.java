@@ -1,4 +1,4 @@
-package com.eswaraj.app.eswaraj.location;
+package com.eswaraj.app.eswaraj.util;
 
 import android.content.Context;
 import android.location.Location;

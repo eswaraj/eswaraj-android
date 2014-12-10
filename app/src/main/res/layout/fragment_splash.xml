@@ -12,11 +12,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp" />
 
-    <Button
-        android:id="@+id/buttonSkip"
-        android:text="@string/skipButtonText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/buttonQuit"
