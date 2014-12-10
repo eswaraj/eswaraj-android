@@ -31,46 +31,16 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-/**
- * Use the {@link SplashFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class SplashFragment extends BaseFragment implements FacebookLoginInterface {
 
-    //Logged-in user
-    UserDto userDto;
-
-    //Next activity that will be launched
-    Class nextActivity;
-
     //UI elements holders
-    Button buttonSkip;
-    //Button buttonLogin;
     Button buttonQuit;
     LoginButton buttonLogin;
 
-    //Maintain async task return state
-    Boolean loginOrSkipDone;
-    Boolean serverDataDownloadDone;
-    Boolean redirectDone;
-
     @Inject
     FacebookLoginUtil facebookLoginUtil;
-    @Inject
-    InternetServicesCheckUtil internetServicesCheckUtil;
-    @Inject
-    LocationServicesCheckUtil locationServicesCheckUtil;
-    @Inject
-    EventBus eventBus;
-    @Inject
-    MiddlewareServiceImpl middlewareService;
 
-    //Internet and Location service availability
-    Boolean hasNeededServices;
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     */
     public static SplashFragment newInstance(String param1, String param2) {
         SplashFragment fragment = new SplashFragment();
         Bundle args = new Bundle();
@@ -87,58 +57,29 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
         super.onActivityCreated(savedInstanceState);
 
         //References to buttons
-        buttonSkip = (Button) getView().findViewById(R.id.buttonSkip);
         buttonLogin = (LoginButton) getView().findViewById(R.id.buttonLogin);
         buttonQuit = (Button) getView().findViewById(R.id.buttonQuit);
 
         //Set up initial state
-        loginOrSkipDone = false;
-        serverDataDownloadDone = false;
-        redirectDone = false;
-        hasNeededServices = false;
         buttonQuit.setVisibility(View.INVISIBLE);
-        buttonSkip.setVisibility(View.INVISIBLE);
-
-        //Check if Internet connection and Location services are present. If not, don't proceed.
-        hasNeededServices = checkLocationAndInternet();
-        if(!hasNeededServices) {
-            buttonQuit.setVisibility(View.VISIBLE);
-            buttonLogin.setVisibility(View.INVISIBLE);
-            buttonSkip.setVisibility(View.INVISIBLE);
-        }
-        else {
-            //Don't display Login and Skip button if user is already logged in.
-            if (facebookLoginUtil.isUserLoggedIn()) {
-                buttonLogin.setVisibility(View.INVISIBLE);
-                buttonSkip.setVisibility(View.INVISIBLE);
-            }
-        }
 
         //Register callback handlers
-        //buttonLogin.setOnClickListener(new LoginButtonClickHandler(getActivity(), facebookLoginUtil));
         buttonQuit.setOnClickListener(new QuitButtonClickHandler(getActivity()));
-        //buttonSkip.setOnClickListener(new SkipButtonClickHandler((LoginSkipInterface)getActivity()));
 
         //Any setup needed
         facebookLoginUtil.setup(buttonLogin);
 
     }
 
-    private Boolean checkLocationAndInternet() {
-        return internetServicesCheckUtil.isServiceAvailable(getActivity()) && locationServicesCheckUtil.isServiceAvailable(getActivity());
-    }
-
-    private void takeUserToNextScreen() {
+    public void notifyServiceAvailability(Boolean hasNeededServices) {
         if(!hasNeededServices) {
-            return;
+            buttonQuit.setVisibility(View.VISIBLE);
+            buttonLogin.setVisibility(View.INVISIBLE);
         }
-        synchronized(this) {
-            if (redirectDone) {
-                return;
-            } else {
-                redirectDone = true;
-                Intent i = new Intent(getActivity(), this.nextActivity);
-                startActivity(i);
+        else {
+            //Don't display Login and Skip button if user is already logged in.
+            if (facebookLoginUtil.isUserLoggedIn()) {
+                buttonLogin.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -147,19 +88,6 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         facebookLoginUtil.onCreate(this, savedInstanceState);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        eventBus.registerSticky(this);
-
-    }
-
-    @Override
-    public void onStop() {
-        eventBus.unregister(this);
-        super.onStop();
     }
 
     @Override
@@ -199,70 +127,9 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
         //Hide login and skip button since login is done
         //LoginDone flag will not be updated here since that should happen only once userDto is available
         //buttonLogin.setVisibility(View.INVISIBLE);
-        buttonSkip.setVisibility(View.INVISIBLE);
         ((SplashActivity)getActivity()).onFacebookLoginDone();
     }
 
-
-    //@Override
-    public void onSkipDone() {
-        //Hide login and skip button since login is done
-        buttonLogin.setVisibility(View.INVISIBLE);
-        buttonSkip.setVisibility(View.INVISIBLE);
-        loginOrSkipDone = true;
-        if(serverDataDownloadDone) {
-            takeUserToNextScreen();
-        }
-    }
-
-    public void onEventMainThread(GetCategoriesDataEvent event) {
-        if(event.getSuccess()) {
-            //Launch image download now. Always launch with dontGetFromCache=true
-            middlewareService.loadCategoriesImages(getActivity(), event.getCategoryList(), true);
-        }
-        else {
-            Toast.makeText(getActivity(), "Could not fetch categories from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-            //Show retry button which will re-trigger the request.
-        }
-    }
-
-    public void onEventMainThread(GetUserEvent event) {
-        if(event.getSuccess()) {
-            this.userDto = event.getUserDto();
-            loginOrSkipDone = true;
-            if(this.userDto.getPerson().getPersonAddress().getLongitude() != null) {
-                this.nextActivity = SelectAmenityActivity.class;
-            }
-            else {
-                //this.nextActivity = MarkLocationActivity.class;
-                this.nextActivity = SelectAmenityActivity.class;
-            }
-            if(serverDataDownloadDone) {
-                takeUserToNextScreen();
-            }
-        }
-        else {
-            Toast.makeText(getActivity(), "Could not fetch user details from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-            //Show retry button which will re-trigger the request.
-        }
-    }
-
-    public void onEventMainThread(GetCategoriesImagesEvent event) {
-        if(event.getSuccess()) {
-            serverDataDownloadDone = true;
-            if (loginOrSkipDone) {
-                takeUserToNextScreen();
-            }
-        }
-        else {
-            Toast.makeText(getActivity(), "Could not fetch all categories images from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-            //Show retry button which will re-trigger the request.
-            serverDataDownloadDone = true;
-            if (loginOrSkipDone) {
-                takeUserToNextScreen();
-            }
-        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

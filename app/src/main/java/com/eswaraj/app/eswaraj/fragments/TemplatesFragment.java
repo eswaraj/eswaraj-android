@@ -1,17 +1,21 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.activities.SelectTemplateActivity;
 import com.eswaraj.app.eswaraj.adapters.TemplateListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class TemplatesFragment extends BaseFragment {
@@ -35,6 +39,16 @@ public class TemplatesFragment extends BaseFragment {
 
         TemplateListAdapter templateListAdapter = new TemplateListAdapter(getActivity(), android.R.layout.simple_list_item_1, templates);
         listView.setAdapter(templateListAdapter);
+
+        listView.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                //TODO: Change activity to AddDetailsActivity
+                Intent i = new Intent(getActivity(), SelectTemplateActivity.class);
+                i.putExtra("TEMPLATE", (Serializable) listView.getAdapter().getItem(pos));
+                startActivity(i);
+            }
+        });
         return rootView;
     }
 

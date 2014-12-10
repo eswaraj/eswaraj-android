@@ -3,14 +3,20 @@ package com.eswaraj.app.eswaraj.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
+import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
+import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
 import com.eswaraj.app.eswaraj.location.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
+import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
+import com.eswaraj.web.dto.UserDto;
 import com.facebook.AppEventsLogger;
 
 import javax.inject.Inject;
@@ -23,9 +29,27 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     //@Inject
     LocationUtil locationUtil;
     @Inject
+    InternetServicesCheckUtil internetServicesCheckUtil;
+    @Inject
+    LocationServicesCheckUtil locationServicesCheckUtil;
+    @Inject
     MiddlewareServiceImpl middlewareService;
     @Inject
     EventBus eventBus;
+
+    //Logged-in user
+    UserDto userDto;
+
+    //Next activity that will be launched
+    Class nextActivity;
+
+    //Internet and Location service availability
+    Boolean hasNeededServices;
+
+    //Maintain async task return state
+    Boolean loginDone;
+    Boolean serverDataDownloadDone;
+    Boolean redirectDone;
 
     @Override
     protected void onStart() {
@@ -33,7 +57,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
         //Start location service
         locationUtil.startLocationService();
         //Start data download from server, if needed
-        middlewareService.loadCategoriesData(this);
+        middlewareService.loadCategoriesData(this, true);
         eventBus.registerSticky(this);
     }
 
@@ -56,6 +80,15 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
         }
 
         locationUtil = new LocationUtil(this);
+
+        //Set up initial state
+        loginDone = false;
+        serverDataDownloadDone = false;
+        redirectDone = false;
+
+        //Check if Internet connection and Location services are present. If not, don't proceed.
+        hasNeededServices = checkLocationAndInternet();
+        splashFragment.notifyServiceAvailability(hasNeededServices);
     }
 
     @Override
@@ -84,7 +117,73 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
         AppEventsLogger.activateApp(this);
     }
 
-    public void onEvent(GetUserEvent event) {
-        Log.d("SplashActivity", "GetUserEvent");
+
+    public void onEventMainThread(GetCategoriesDataEvent event) {
+        if(event.getSuccess()) {
+            //Launch image download now. Always launch with dontGetFromCache=true
+            middlewareService.loadCategoriesImages(this, event.getCategoryList(), true);
+        }
+        else {
+            Toast.makeText(this, "Could not fetch categories from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            //Show retry button which will re-trigger the request.
+        }
     }
+
+    public void onEventMainThread(GetUserEvent event) {
+        if(event.getSuccess()) {
+            this.userDto = event.getUserDto();
+            loginDone = true;
+            if(this.userDto.getPerson().getPersonAddress().getLongitude() != null) {
+                this.nextActivity = SelectAmenityActivity.class;
+            }
+            else {
+                //this.nextActivity = MarkLocationActivity.class;
+                this.nextActivity = SelectAmenityActivity.class;
+            }
+            if(serverDataDownloadDone) {
+                takeUserToNextScreen();
+            }
+        }
+        else {
+            Toast.makeText(this, "Could not fetch user details from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            //Show retry button which will re-trigger the request.
+        }
+    }
+
+    public void onEventMainThread(GetCategoriesImagesEvent event) {
+        if(event.getSuccess()) {
+            serverDataDownloadDone = true;
+            if (loginDone) {
+                takeUserToNextScreen();
+            }
+        }
+        else {
+            Toast.makeText(this, "Could not fetch all categories images from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            //Show retry button which will re-trigger the request.
+            serverDataDownloadDone = true;
+            if (loginDone) {
+                takeUserToNextScreen();
+            }
+        }
+    }
+
+    private void takeUserToNextScreen() {
+        if(!hasNeededServices) {
+            return;
+        }
+        synchronized(this) {
+            if (redirectDone) {
+                return;
+            } else {
+                redirectDone = true;
+                Intent i = new Intent(this, this.nextActivity);
+                startActivity(i);
+            }
+        }
+    }
+
+    private Boolean checkLocationAndInternet() {
+        return internetServicesCheckUtil.isServiceAvailable(this) && locationServicesCheckUtil.isServiceAvailable(this);
+    }
+
 }

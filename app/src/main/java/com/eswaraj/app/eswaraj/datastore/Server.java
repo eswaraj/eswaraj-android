@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -44,14 +45,14 @@ public class Server extends BaseClass implements ServerInterface {
     EventBus eventBus;
 
     private int imageReqCount;
-    private int imageResCount;
+    private AtomicInteger imageResCount;
     private Boolean successImages;
     private String errorImages;
 
     public Server() {
         super();
         imageReqCount = 0;
-        imageResCount = 0;
+        imageResCount = new AtomicInteger(0);
         successImages = true;
         errorImages = null;
     }
@@ -115,10 +116,8 @@ public class Server extends BaseClass implements ServerInterface {
             public void onErrorResponse(VolleyError error) {
                 successImages = false;
                 errorImages = error.toString();
-                synchronized (this) {
-                    imageResCount++;
-                }
-                if(imageResCount == imageReqCount) {
+                imageResCount.incrementAndGet();
+                if(imageResCount.get() == imageReqCount) {
                     //All image download requests completed. Publish an event now
                     GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
                     getCategoriesImagesEvent.setSuccess(successImages);
@@ -134,15 +133,13 @@ public class Server extends BaseClass implements ServerInterface {
             @Override
             public void onResponse(Bitmap bitmap) {
                 saveBitmapToFile(bitmap, id, context);
-                //TODO: Make imageResCount object of a class which is synchronised because right now success and error listeners are not synchronised
-                synchronized (this) {
-                    imageResCount++;
-                }
-                if(imageResCount == imageReqCount) {
+                imageResCount.incrementAndGet();
+                if(imageResCount.get() == imageReqCount) {
                     //All image download requests completed. Publish an event now
                     GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
                     getCategoriesImagesEvent.setSuccess(successImages);
                     eventBus.post(getCategoriesImagesEvent);
+                    cache.updateCategoriesImages(context);
                 }
             }
         };
