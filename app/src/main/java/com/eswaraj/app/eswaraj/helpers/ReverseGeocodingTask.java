@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.eswaraj.app.eswaraj.application.EswarajApplication;
 import com.eswaraj.app.eswaraj.events.RevGeocodeEvent;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class ReverseGeocodingTask extends AsyncTask<Void, Void, Void>{
     public ReverseGeocodingTask(Context context, Location location) {
         this.context = context;
         this.location = location;
+        EswarajApplication.getInstance().inject(this);
     }
 
     @Override
@@ -39,8 +41,8 @@ public class ReverseGeocodingTask extends AsyncTask<Void, Void, Void>{
         try {
         	matches = geoCoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
         	Address bestMatch = (matches.isEmpty() ? null : matches.get(0));
-        	String userLocationString = bestMatch.toString();
-        	Log.d("Address", userLocationString);
+        	String userLocationString = bestMatch.getAddressLine(1) + ", " + bestMatch.getAddressLine(2);
+        	//Log.d("Address", userLocationString);
             RevGeocodeEvent event = new RevGeocodeEvent();
             event.setRevGeocodedLocation(userLocationString);
             event.setSuccess(true);

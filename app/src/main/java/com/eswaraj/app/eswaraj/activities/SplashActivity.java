@@ -2,6 +2,7 @@ package com.eswaraj.app.eswaraj.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
@@ -39,9 +40,6 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     //Logged-in user
     UserDto userDto;
 
-    //Next activity that will be launched
-    Class nextActivity;
-
     //Internet and Location service availability
     Boolean hasNeededServices;
 
@@ -49,15 +47,20 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     Boolean loginDone;
     Boolean serverDataDownloadDone;
     Boolean redirectDone;
+    Boolean userLocationKnown;
 
     @Override
     protected void onStart() {
         super.onStart();
+        eventBus.registerSticky(this);
+
         //Start location service
         locationUtil.startLocationService();
         //Start data download from server, if needed
         middlewareService.loadCategoriesData(this, true);
-        eventBus.registerSticky(this);
+        //Check if Internet connection and Location services are present. If not, don't proceed.
+        hasNeededServices = checkLocationAndInternet();
+        splashFragment.notifyServiceAvailability(hasNeededServices);
     }
 
     @Override
@@ -84,10 +87,8 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
         loginDone = false;
         serverDataDownloadDone = false;
         redirectDone = false;
+        userLocationKnown = false;
 
-        //Check if Internet connection and Location services are present. If not, don't proceed.
-        hasNeededServices = checkLocationAndInternet();
-        splashFragment.notifyServiceAvailability(hasNeededServices);
     }
 
     @Override
@@ -120,7 +121,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     public void onEventMainThread(GetCategoriesDataEvent event) {
         if(event.getSuccess()) {
             //Launch image download now. Always launch with dontGetFromCache=true
-            middlewareService.loadCategoriesImages(this, event.getCategoryList(), true);
+            middlewareService.loadCategoriesImages(this, event.getCategoryList(), false);
         }
         else {
             Toast.makeText(this, "Could not fetch categories from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
@@ -130,14 +131,11 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
 
     public void onEventMainThread(GetUserEvent event) {
         if(event.getSuccess()) {
+            Log.d("SplashActivity", "GetUserEvent:Success");
             this.userDto = event.getUserDto();
             loginDone = true;
             if(this.userDto.getPerson().getPersonAddress().getLongitude() != null) {
-                this.nextActivity = SelectAmenityActivity.class;
-            }
-            else {
-                //this.nextActivity = MarkLocationActivity.class;
-                this.nextActivity = SelectAmenityActivity.class;
+                userLocationKnown = true;
             }
             if(serverDataDownloadDone) {
                 takeUserToNextScreen();
@@ -151,6 +149,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
 
     public void onEventMainThread(GetCategoriesImagesEvent event) {
         if(event.getSuccess()) {
+            Log.d("SplashActivity", "GetCategoriesImagesEvent:Success");
             serverDataDownloadDone = true;
             if (loginDone) {
                 takeUserToNextScreen();
@@ -167,6 +166,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     }
 
     private void takeUserToNextScreen() {
+        Log.d("SplashActivity", "takeUserToNextScreen");
         if(!hasNeededServices) {
             return;
         }
@@ -175,7 +175,10 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
                 return;
             } else {
                 redirectDone = true;
-                Intent i = new Intent(this, this.nextActivity);
+                Intent i = null;
+                if(userLocationKnown) {
+                    i = new Intent(this, SelectAmenityActivity.class);
+                }
                 startActivity(i);
             }
         }

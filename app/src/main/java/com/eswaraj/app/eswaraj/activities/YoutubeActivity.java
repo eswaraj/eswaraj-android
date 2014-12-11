@@ -27,7 +27,7 @@ public class YoutubeActivity extends BaseActivity implements YouTubePlayer.OnIni
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.youtube, youTubePlayerSupportFragment).commit();
         }
-        youTubePlayerSupportFragment.initialize(Constants.YOUTUBE_API_KEY, this);
+        youTubePlayerSupportFragment.initialize(Constants.GOOGLE_API_KEY, this);
 
         Intent i = getIntent();
         video = i.getStringExtra("VIDEO_ID");

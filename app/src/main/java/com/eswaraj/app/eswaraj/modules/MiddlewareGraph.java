@@ -5,13 +5,19 @@ import android.content.Context;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
+import com.eswaraj.app.eswaraj.activities.SelectTemplateActivity;
 import com.eswaraj.app.eswaraj.activities.SplashActivity;
+import com.eswaraj.app.eswaraj.activities.YoutubeActivity;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.datastore.CacheInterface;
 import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.fragments.AmenitiesFragment;
+import com.eswaraj.app.eswaraj.fragments.AmenityBannerFragment;
+import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
+import com.eswaraj.app.eswaraj.fragments.TemplatesFragment;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
+import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -35,7 +41,13 @@ import de.greenrobot.event.EventBus;
                 Server.class,
                 NetworkAccessHelper.class,
                 LocationUtil.class,
-                MiddlewareServiceImpl.class
+                MiddlewareServiceImpl.class,
+                ReverseGeocodingTask.class,
+                SelectTemplateActivity.class,
+                TemplatesFragment.class,
+                AmenityBannerFragment.class,
+                YoutubeActivity.class,
+                GoogleMapFragment.class
         },
         complete = false,
         library = true

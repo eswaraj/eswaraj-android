@@ -4,6 +4,7 @@ package com.eswaraj.app.eswaraj.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class AmenityBannerFragment extends BaseFragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_amenity_banner, container, false);
         banner = (ImageView) rootView.findViewById(R.id.abImage);
-        banner.setImageURI(Uri.parse(getActivity().getFilesDir() + "/eSwaraj_" + String.valueOf(amenity.getId()) + ".png"));
+        banner.setImageURI(Uri.parse(getActivity().getFilesDir() + "/eSwaraj_banner_" + String.valueOf(amenity.getId()) + ".png"));
         banner.setOnClickListener(this);
         return rootView;
     }
@@ -60,10 +61,11 @@ public class AmenityBannerFragment extends BaseFragment implements View.OnClickL
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(amenity.getVideoUrl());
         if (m.find( )) {
-            video = m.group(0);
+            video = m.group(1);
         }
         else {
             video = null;
         }
+        Log.d("Video", video);
     }
 }

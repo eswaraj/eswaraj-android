@@ -3,7 +3,6 @@ package com.eswaraj.app.eswaraj.activities;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
@@ -11,7 +10,7 @@ import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.RevGeocodeEvent;
 import com.eswaraj.app.eswaraj.fragments.AmenitiesFragment;
 import com.eswaraj.app.eswaraj.fragments.BottomMenuBarFragment;
-import com.eswaraj.app.eswaraj.helpers.GoogleMapHelper;
+import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -31,7 +30,7 @@ public class SelectAmenityActivity extends BaseActivity {
 
     private BottomMenuBarFragment bottomMenuBarFragment;
     private AmenitiesFragment amenitiesFragment;
-    private GoogleMapHelper googleMapHelper;
+    private GoogleMapFragment googleMapFragment;
     private Location lastLocation;
     private ReverseGeocodingTask reverseGeocodingTask;
 
@@ -41,21 +40,20 @@ public class SelectAmenityActivity extends BaseActivity {
         setContentView(R.layout.activity_select_amenity);
         lastLocation = null;
         locationUtil = new LocationUtil(this);
-        googleMapHelper = new GoogleMapHelper(this, R.id.asMapContainer);
         bottomMenuBarFragment = BottomMenuBarFragment.newInstance();
         amenitiesFragment = AmenitiesFragment.newInstance();
+        googleMapFragment = new GoogleMapFragment();
 
         //Add all fragments
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.asAmenities, amenitiesFragment).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.asMenubar, bottomMenuBarFragment).commit();
-            googleMapHelper.addMapAndMarker();
+            getSupportFragmentManager().beginTransaction().add(R.id.asMapContainer, googleMapFragment).commit();
         }
     }
 
     @Override
     protected void onStart() {
-        Log.e("SelectAmenityActivity", "Started");
         eventBus.registerSticky(this);
         super.onStart();
         locationUtil.startLocationService();
@@ -69,7 +67,7 @@ public class SelectAmenityActivity extends BaseActivity {
     }
 
     public void onEventMainThread(Location location) {
-        googleMapHelper.updateMarkerLocation(location.getLatitude(), location.getLongitude());
+        googleMapFragment.updateMarkerLocation(location.getLatitude(), location.getLongitude());
         if(lastLocation != null) {
             //If difference between location and lastLocation is greater than 100m then
             //TODO:Add condition

@@ -100,13 +100,32 @@ public class Server extends BaseClass implements ServerInterface {
 
     @Override
     public void loadCategoriesImages(Context context, List<CategoryWithChildCategoryDto> categoriesList) {
-        imageReqCount = categoriesList.size();
+        imageReqCount = categoriesList.size()*2;
+        Boolean icon = null;
         for(CategoryWithChildCategoryDto categoryDto : categoriesList) {
             String url = categoryDto.getImageUrl();
-            Log.d("LoadCategoriesImages", url);
-            Long id = categoryDto.getId();
-            ImageRequest request = new ImageRequest(url, createCategoriesImagesReqSuccessListener(context, id), 0, 0, null, createCategoriesImagesReqErrorListener(context));
-            this.networkAccessHelper.submitNetworkRequest("GetImage" + id, request);
+            icon = true;
+            if(url != "") {
+                Log.d("LoadCategoriesImages", url);
+                Long id = categoryDto.getId();
+                ImageRequest request = new ImageRequest(url, createCategoriesImagesReqSuccessListener(context, id, icon), 0, 0, null, createCategoriesImagesReqErrorListener(context));
+                this.networkAccessHelper.submitNetworkRequest("GetImage" + id, request);
+            }
+            else {
+                imageResCount.incrementAndGet();
+            }
+
+            url = categoryDto.getHeaderImageUrl();
+            icon = false;
+            if(url != "") {
+                Log.d("LoadCategoriesImages", url);
+                Long id = categoryDto.getId();
+                ImageRequest request = new ImageRequest(url, createCategoriesImagesReqSuccessListener(context, id, icon), 0, 0, null, createCategoriesImagesReqErrorListener(context));
+                this.networkAccessHelper.submitNetworkRequest("GetImage" + id, request);
+            }
+            else {
+                imageResCount.incrementAndGet();
+            }
         }
     }
 
@@ -128,11 +147,11 @@ public class Server extends BaseClass implements ServerInterface {
         };
     }
 
-    private Response.Listener<Bitmap> createCategoriesImagesReqSuccessListener(final Context context, final Long id) {
+    private Response.Listener<Bitmap> createCategoriesImagesReqSuccessListener(final Context context, final Long id, final Boolean icon) {
         return new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap bitmap) {
-                saveBitmapToFile(bitmap, id, context);
+                saveBitmapToFile(bitmap, id, context, icon);
                 imageResCount.incrementAndGet();
                 if(imageResCount.get() == imageReqCount) {
                     //All image download requests completed. Publish an event now
@@ -163,11 +182,16 @@ public class Server extends BaseClass implements ServerInterface {
     }
 
     //Utility functions
-    private void saveBitmapToFile(Bitmap bitmap, Long id, Context context) {
+    private void saveBitmapToFile(Bitmap bitmap, Long id, Context context, Boolean icon) {
         FileOutputStream fileOutput = null;
         try {
-            //out = new FileOutputStream("eSwaraj_" + id + ".png");
-            String filename = "eSwaraj_" + id + ".png";
+            String filename;
+            if(icon) {
+                filename = "eSwaraj_" + id + ".png";
+            }
+            else {
+                filename = "eSwaraj_banner_" + id + ".png";
+            }
             fileOutput = context.openFileOutput(filename, Context.MODE_PRIVATE);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutput);
             // PNG is a lossless format, the compression factor (100) is ignored

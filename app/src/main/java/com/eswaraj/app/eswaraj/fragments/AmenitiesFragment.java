@@ -2,6 +2,7 @@ package com.eswaraj.app.eswaraj.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +88,7 @@ public class AmenitiesFragment extends BaseFragment {
         if(event.getSuccess()) {
             //Launch image download now. Always launch with dontGetFromCache=true
             categoryList = event.getCategoryList();
-            middlewareService.loadCategoriesImages(getActivity(), event.getCategoryList(), true);
+            middlewareService.loadCategoriesImages(getActivity(), event.getCategoryList());
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch categories from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
@@ -98,6 +99,7 @@ public class AmenitiesFragment extends BaseFragment {
     public void onEventMainThread(GetCategoriesImagesEvent event) {
         if(event.getSuccess()) {
             //All needed data is available now. Set the adapter for gridview
+            Log.d("AmenitiesFragment", "GetCategoriesImagesEvent:Success");
             AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryList);
             gvAmenityList.setAdapter(amenityListAdapter);
         }
