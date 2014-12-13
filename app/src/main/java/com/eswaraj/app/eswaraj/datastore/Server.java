@@ -64,10 +64,11 @@ public class Server extends BaseClass implements ServerInterface {
 
     @Override
     public void loadUserData(Context context, Session session) {
+        /*
         registerFacebookUserRequest.processRequest(context, session);
         return;
+        */
         //TODO: Implement logic. This is for testing only
-        /*
         UserDto userDto = new UserDto();
         PersonDto personDto = new PersonDto();
         AddressDto addressDto = new AddressDto();
@@ -80,7 +81,6 @@ public class Server extends BaseClass implements ServerInterface {
         event.setSuccess(true);
         event.setUserDto(userDto);
         eventBus.postSticky(event);
-        */
     }
 
 }

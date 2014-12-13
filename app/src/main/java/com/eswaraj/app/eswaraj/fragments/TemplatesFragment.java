@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.activities.AddDetailsActivity;
 import com.eswaraj.app.eswaraj.activities.SelectTemplateActivity;
 import com.eswaraj.app.eswaraj.adapters.TemplateListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
@@ -43,8 +44,7 @@ public class TemplatesFragment extends BaseFragment {
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                //TODO: Change activity to AddDetailsActivity
-                Intent i = new Intent(getActivity(), SelectTemplateActivity.class);
+                Intent i = new Intent(getActivity(), AddDetailsActivity.class);
                 i.putExtra("TEMPLATE", (Serializable) listView.getAdapter().getItem(pos));
                 startActivity(i);
             }
