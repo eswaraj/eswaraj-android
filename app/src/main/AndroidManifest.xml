@@ -30,7 +30,8 @@
             android:name=".activities.SplashActivity"
             android:label="@string/title_activity_splash"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,11 +41,13 @@
         <activity
             android:name=".activities.SelectAmenityActivity"
             android:label="@string/title_activity_select_amenity"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activities.YoutubeActivity"
-            android:label="@string/title_activity_youtube" >
+            android:label="@string/title_activity_youtube"
+            android:theme="@android:style/Theme.Black.NoTitleBar">
         </activity>
         <activity
             android:name=".base.BaseActivity"
@@ -57,7 +60,8 @@
         <activity
             android:name=".activities.SelectTemplateActivity"
             android:label="@string/title_activity_select_template"
-            android:parentActivityName=".activities.SelectAmenityActivity" >
+            android:parentActivityName=".activities.SelectAmenityActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.SelectAmenityActivity" />

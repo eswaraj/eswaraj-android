@@ -15,11 +15,15 @@ import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
+import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
+import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
+import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
 import com.eswaraj.web.dto.AddressDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.PersonDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.UserDto;
+import com.facebook.Session;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
@@ -38,135 +42,32 @@ import de.greenrobot.event.EventBus;
 public class Server extends BaseClass implements ServerInterface {
 
     @Inject
-    NetworkAccessHelper networkAccessHelper;
-    @Inject
-    CacheInterface cache;
-    @Inject
     EventBus eventBus;
-
-    private int imageReqCount;
-    private AtomicInteger imageResCount;
-    private Boolean successImages;
-    private String errorImages;
-
-    public Server() {
-        super();
-        imageReqCount = 0;
-        imageResCount = new AtomicInteger(0);
-        successImages = true;
-        errorImages = null;
-    }
+    @Inject
+    LoadCategoriesDataRequest loadCategoriesDataRequest;
+    @Inject
+    LoadCategoriesImagesRequest loadCategoriesImagesRequest;
+    @Inject
+    RegisterFacebookUserRequest registerFacebookUserRequest;
 
 
     public void loadCategoriesData(Context context) {
-        StringRequest request = new StringRequest(Constants.GET_CATEGORIES_URL, createCategoriesDataReqSuccessListener(context), createCategoriesDataReqErrorListener(context));
-        this.networkAccessHelper.submitNetworkRequest("GetCategories", request);
+        loadCategoriesDataRequest.processRequest(context);
     }
 
-
-    private Response.ErrorListener createCategoriesDataReqErrorListener(final Context context) {
-        return new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
-                getCategoriesDataEvent.setError(error.toString());
-                eventBus.post(getCategoriesDataEvent);
-            }
-        };
-    }
-
-    private Response.Listener<String> createCategoriesDataReqSuccessListener(final Context context) {
-        return new Response.Listener<String>() {
-            @Override
-            public void onResponse(String json) {
-                Gson gson = new Gson();
-                try {
-                    List<CategoryWithChildCategoryDto> categoryDtoList;
-                    GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
-                    categoryDtoList = gson.fromJson(json, new TypeToken<ArrayList<CategoryWithChildCategoryDto>>(){}.getType());
-                    getCategoriesDataEvent.setSuccess(true);
-                    getCategoriesDataEvent.setCategoryList(categoryDtoList);
-                    eventBus.post(getCategoriesDataEvent);
-                    //Update the cache
-                    cache.updateCategoriesData(context, json);
-                } catch (JsonParseException e) {
-                    GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
-                    getCategoriesDataEvent.setError("Invalid json");
-                    eventBus.post(getCategoriesDataEvent);
-                }
-            }
-        };
-    }
 
     @Override
     public void loadCategoriesImages(Context context, List<CategoryWithChildCategoryDto> categoriesList) {
-        imageReqCount = categoriesList.size()*2;
-        Boolean icon = null;
-        for(CategoryWithChildCategoryDto categoryDto : categoriesList) {
-            String url = categoryDto.getImageUrl();
-            icon = true;
-            if(url != "") {
-                Log.d("LoadCategoriesImages", url);
-                Long id = categoryDto.getId();
-                ImageRequest request = new ImageRequest(url, createCategoriesImagesReqSuccessListener(context, id, icon), 0, 0, null, createCategoriesImagesReqErrorListener(context));
-                this.networkAccessHelper.submitNetworkRequest("GetImage" + id, request);
-            }
-            else {
-                imageResCount.incrementAndGet();
-            }
-
-            url = categoryDto.getHeaderImageUrl();
-            icon = false;
-            if(url != "") {
-                Log.d("LoadCategoriesImages", url);
-                Long id = categoryDto.getId();
-                ImageRequest request = new ImageRequest(url, createCategoriesImagesReqSuccessListener(context, id, icon), 0, 0, null, createCategoriesImagesReqErrorListener(context));
-                this.networkAccessHelper.submitNetworkRequest("GetImage" + id, request);
-            }
-            else {
-                imageResCount.incrementAndGet();
-            }
-        }
+        loadCategoriesImagesRequest.processRequest(context, categoriesList);
     }
 
-    private Response.ErrorListener createCategoriesImagesReqErrorListener(final Context context) {
-        return new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                successImages = false;
-                errorImages = error.toString();
-                imageResCount.incrementAndGet();
-                if(imageResCount.get() == imageReqCount) {
-                    //All image download requests completed. Publish an event now
-                    GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
-                    getCategoriesImagesEvent.setSuccess(successImages);
-                    getCategoriesImagesEvent.setError(errorImages);
-                    eventBus.post(getCategoriesImagesEvent);
-                }
-            }
-        };
-    }
-
-    private Response.Listener<Bitmap> createCategoriesImagesReqSuccessListener(final Context context, final Long id, final Boolean icon) {
-        return new Response.Listener<Bitmap>() {
-            @Override
-            public void onResponse(Bitmap bitmap) {
-                saveBitmapToFile(bitmap, id, context, icon);
-                imageResCount.incrementAndGet();
-                if(imageResCount.get() == imageReqCount) {
-                    //All image download requests completed. Publish an event now
-                    GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
-                    getCategoriesImagesEvent.setSuccess(successImages);
-                    eventBus.post(getCategoriesImagesEvent);
-                    cache.updateCategoriesImages(context);
-                }
-            }
-        };
-    }
 
     @Override
-    public void registerFacebookUser(Context context, RegisterFacebookAccountRequest request) {
+    public void loadUserData(Context context, Session session) {
+        registerFacebookUserRequest.processRequest(context, session);
+        return;
         //TODO: Implement logic. This is for testing only
+        /*
         UserDto userDto = new UserDto();
         PersonDto personDto = new PersonDto();
         AddressDto addressDto = new AddressDto();
@@ -179,32 +80,7 @@ public class Server extends BaseClass implements ServerInterface {
         event.setSuccess(true);
         event.setUserDto(userDto);
         eventBus.postSticky(event);
+        */
     }
 
-    //Utility functions
-    private void saveBitmapToFile(Bitmap bitmap, Long id, Context context, Boolean icon) {
-        FileOutputStream fileOutput = null;
-        try {
-            String filename;
-            if(icon) {
-                filename = "eSwaraj_" + id + ".png";
-            }
-            else {
-                filename = "eSwaraj_banner_" + id + ".png";
-            }
-            fileOutput = context.openFileOutput(filename, Context.MODE_PRIVATE);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutput);
-            // PNG is a lossless format, the compression factor (100) is ignored
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fileOutput != null) {
-                    fileOutput.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

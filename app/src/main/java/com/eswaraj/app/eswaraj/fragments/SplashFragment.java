@@ -13,6 +13,7 @@ import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
+import com.facebook.Session;
 import com.facebook.widget.LoginButton;
 
 import javax.inject.Inject;
@@ -114,11 +115,11 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
 
 
     @Override
-    public void onFacebookLoginDone() {
+    public void onFacebookLoginDone(Session session) {
         //Hide login and skip button since login is done
         //LoginDone flag will not be updated here since that should happen only once userDto is available
         //buttonLogin.setVisibility(View.INVISIBLE);
-        ((SplashActivity)getActivity()).onFacebookLoginDone();
+        ((SplashActivity)getActivity()).onFacebookLoginDone(session);
     }
 
 

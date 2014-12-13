@@ -3,8 +3,12 @@ package com.eswaraj.app.eswaraj.datastore;
 import android.content.Context;
 
 import com.eswaraj.app.eswaraj.middleware.MiddlewareGetService;
+import com.eswaraj.web.dto.UserDto;
 
 public interface CacheInterface extends MiddlewareGetService {
+
+    public Boolean isUserDataAvailable(Context context);
+    public void updateUserData(Context context, String json);
 
     //Similar methods have to be defined for all methods in MiddlewareGetService interface
     public Boolean isCategoriesDataAvailable(Context context);

@@ -12,6 +12,7 @@ import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.datastore.ServerInterface;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
+import com.facebook.Session;
 
 import java.util.List;
 
@@ -83,8 +84,24 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
         return cache.isCategoriesImagesAvailable(context);
     }
 
+
     @Override
-    public void registerFacebookUser(Context context, RegisterFacebookAccountRequest request) {
-        server.registerFacebookUser(context, request);
+    public void loadUserData(Context context, Session session) {
+        if(cache.isUserDataAvailable(context)) {
+            cache.loadUserData(context, session);
+        }
+        else {
+            server.loadUserData(context, session);
+        }
+    }
+
+    @Override
+    public void loadUserData(Context context, Session session, Boolean dontGetFromCache) {
+        server.loadUserData(context, session);
+    }
+
+    @Override
+    public Boolean isUserDataAvailable(Context context) {
+        return cache.isUserDataAvailable(context);
     }
 }

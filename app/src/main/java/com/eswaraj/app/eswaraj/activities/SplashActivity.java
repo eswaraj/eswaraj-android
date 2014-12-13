@@ -18,6 +18,7 @@ import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.AppEventsLogger;
+import com.facebook.Session;
 
 import javax.inject.Inject;
 
@@ -92,9 +93,8 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     }
 
     @Override
-    public void onFacebookLoginDone() {
-        //TODO: create object of type RegisterFacebookAccountRequest and pass it instead of null
-        middlewareService.registerFacebookUser(this, null);
+    public void onFacebookLoginDone(Session session) {
+        middlewareService.loadUserData(this, session);
     }
 
     @Override

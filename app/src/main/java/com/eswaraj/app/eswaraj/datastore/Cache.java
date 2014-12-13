@@ -9,8 +9,11 @@ import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.config.PreferenceConstants;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
+import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.eswaraj.web.dto.UserDto;
+import com.facebook.Session;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
@@ -30,6 +33,42 @@ public class Cache extends BaseClass implements CacheInterface {
     @Inject
     EventBus eventBus;
 
+    public void loadUserData(Context context, Session session) {
+        Gson gson = new Gson();
+        String json = sharedPreferencesHelper.getString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_DATA, null);
+        try {
+            UserDto userDto = new Gson().fromJson(json, UserDto.class);
+            GetUserEvent event = new GetUserEvent();
+            event.setSuccess(true);
+            event.setUserDto(userDto);
+            eventBus.postSticky(event);
+        } catch (JsonParseException e) {
+            //This should never happen since json would only be stored in server if de-serialization was successful in Server class
+            GetUserEvent event = new GetUserEvent();
+            event.setSuccess(false);
+            event.setError("Invalid json");
+            eventBus.postSticky(event);
+        }
+    }
+
+    @Override
+    public void updateUserData(Context context, String json) {
+        if(json != null) {
+            sharedPreferencesHelper.putString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_DATA, json);
+            sharedPreferencesHelper.putLong(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_DATA_DOWNLOAD_TIME_IN_MS, new Date().getTime());
+            sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_DATA_AVAILABLE, true);
+        }
+        else {
+            sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_DATA_AVAILABLE, false);
+        }
+    }
+
+    public Boolean isUserDataAvailable(Context context) {
+        if(sharedPreferencesHelper.getBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_DATA_AVAILABLE, false)) {
+            return true;
+        }
+        return false;
+    }
 
     public Boolean isCategoriesDataAvailable(Context context) {
         if(sharedPreferencesHelper.getBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_DATA_AVAILABLE, false)) {

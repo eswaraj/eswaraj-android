@@ -19,11 +19,15 @@ import com.eswaraj.app.eswaraj.fragments.TemplatesFragment;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
+import com.eswaraj.app.eswaraj.util.DeviceUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
+import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
+import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
+import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
 
 import javax.inject.Singleton;
 
@@ -41,13 +45,18 @@ import de.greenrobot.event.EventBus;
                 Server.class,
                 NetworkAccessHelper.class,
                 LocationUtil.class,
+                DeviceUtil.class,
+                FacebookLoginUtil.class,
                 MiddlewareServiceImpl.class,
                 ReverseGeocodingTask.class,
                 SelectTemplateActivity.class,
                 TemplatesFragment.class,
                 AmenityBannerFragment.class,
                 YoutubeActivity.class,
-                GoogleMapFragment.class
+                GoogleMapFragment.class,
+                LoadCategoriesDataRequest.class,
+                LoadCategoriesImagesRequest.class,
+                RegisterFacebookUserRequest.class
         },
         complete = false,
         library = true
@@ -116,5 +125,15 @@ public class MiddlewareGraph {
     @Provides @Singleton
     MiddlewareServiceImpl provideMiddlewareService() {
         return new MiddlewareServiceImpl();
+    }
+
+    @Provides @Singleton
+    LoadCategoriesDataRequest provideLoadCategoriesDataRequest() {
+        return new LoadCategoriesDataRequest();
+    }
+
+    @Provides
+    LoadCategoriesImagesRequest provideLoadCategoriesImagesRequest() {
+        return new LoadCategoriesImagesRequest();
     }
 }
