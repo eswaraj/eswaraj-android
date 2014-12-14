@@ -79,7 +79,7 @@ public class FacebookLoginUtil extends BaseClass {
         } else if (state.isClosed()) {
             Log.d(TAG, "Logged out...");
             //Update the cache with null to indicate that user has logged out and user object in cache is not valid anymore
-            cache.updateUserData((Context)context, null);
+            cache.updateUserData(((Fragment)context).getActivity(), null);
         }
     }
 }

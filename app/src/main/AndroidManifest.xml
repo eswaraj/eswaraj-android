@@ -29,7 +29,6 @@
         <activity
             android:name=".activities.SplashActivity"
             android:label="@string/title_activity_splash"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
             <intent-filter>
@@ -71,7 +70,8 @@
             android:name=".activities.AddDetailsActivity"
             android:label="@string/title_activity_add_details"
             android:parentActivityName=".activities.SelectTemplateActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar">
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:windowSoftInputMode="adjustPan|stateVisible">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.SelectTemplateActivity" />

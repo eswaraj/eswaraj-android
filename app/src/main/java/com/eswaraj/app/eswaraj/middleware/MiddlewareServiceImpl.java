@@ -86,22 +86,33 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
 
 
     @Override
-    public void loadUserData(Context context, Session session) {
+    public void loadUserData(Context context, Session session, String userExternalId) {
         if(cache.isUserDataAvailable(context)) {
-            cache.loadUserData(context, session);
+            cache.loadUserData(context, session, userExternalId);
         }
         else {
-            server.loadUserData(context, session);
+            server.loadUserData(context, session, userExternalId);
         }
     }
 
     @Override
-    public void loadUserData(Context context, Session session, Boolean dontGetFromCache) {
-        server.loadUserData(context, session);
+    public void loadUserData(Context context, Session session, String userExternalId, Boolean dontGetFromCache) {
+        server.loadUserData(context, session, userExternalId);
     }
 
     @Override
     public Boolean isUserDataAvailable(Context context) {
         return cache.isUserDataAvailable(context);
+    }
+
+    @Override
+    public void registerDevice(Context context) {
+        if(cache.isUserDataAvailable(context)) {
+            //If user is already logged in then bypass RegisterUserEvent and directly launch GetUserEvent
+            cache.loadUserData(context, null, null);
+        }
+        else {
+            server.registerDevice(context);
+        }
     }
 }

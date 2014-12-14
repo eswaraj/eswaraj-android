@@ -10,8 +10,10 @@ import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
+import com.eswaraj.app.eswaraj.events.RegisterDeviceEvent;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
+import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
@@ -37,6 +39,8 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     MiddlewareServiceImpl middlewareService;
     @Inject
     EventBus eventBus;
+    //@Inject
+    //FacebookLoginUtil facebookLoginUtil;
 
     //Logged-in user
     UserDto userDto;
@@ -49,6 +53,9 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     Boolean serverDataDownloadDone;
     Boolean redirectDone;
     Boolean userLocationKnown;
+
+    //Facebook Session
+    Session session;
 
     @Override
     protected void onStart() {
@@ -94,12 +101,15 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
 
     @Override
     public void onFacebookLoginDone(Session session) {
-        middlewareService.loadUserData(this, session);
+        this.session = session;
+        middlewareService.registerDevice(this);
+        //middlewareService.loadUserData(this, session);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //facebookLoginUtil.onActivityResult(requestCode, resultCode, data);
         splashFragment.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -143,6 +153,17 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
         }
         else {
             Toast.makeText(this, "Could not fetch user details from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            //Show retry button which will re-trigger the request.
+        }
+    }
+
+    public void onEventMainThread(RegisterDeviceEvent event) {
+        if(event.getSuccess()) {
+            Log.d("SplashActivity", "RegisterDeviceEvent:Success");
+            middlewareService.loadUserData(this, session, event.getUserDto().getExternalId());
+        }
+        else {
+            Toast.makeText(this, "Could not register device with server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
             //Show retry button which will re-trigger the request.
         }
     }

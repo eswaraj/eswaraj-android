@@ -30,6 +30,7 @@ import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
+import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
 
 import javax.inject.Singleton;
 
@@ -60,7 +61,8 @@ import de.greenrobot.event.EventBus;
                 LoadCategoriesImagesRequest.class,
                 RegisterFacebookUserRequest.class,
                 AddDetailsActivity.class,
-                AddDetailsFragment.class
+                AddDetailsFragment.class,
+                RegisterUserAndDeviceRequest.class
         },
         complete = false,
         library = true
@@ -139,5 +141,10 @@ public class MiddlewareGraph {
     @Provides
     LoadCategoriesImagesRequest provideLoadCategoriesImagesRequest() {
         return new LoadCategoriesImagesRequest();
+    }
+
+    @Provides @Singleton
+    RegisterUserAndDeviceRequest provideRegisterUserAndDeviceRequest() {
+        return new RegisterUserAndDeviceRequest();
     }
 }

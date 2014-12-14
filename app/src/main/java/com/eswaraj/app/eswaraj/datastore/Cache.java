@@ -33,7 +33,7 @@ public class Cache extends BaseClass implements CacheInterface {
     @Inject
     EventBus eventBus;
 
-    public void loadUserData(Context context, Session session) {
+    public void loadUserData(Context context, Session session, String userExternalId) {
         Gson gson = new Gson();
         String json = sharedPreferencesHelper.getString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_DATA, null);
         try {

@@ -18,6 +18,7 @@ import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
+import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
 import com.eswaraj.web.dto.AddressDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.PersonDto;
@@ -49,6 +50,8 @@ public class Server extends BaseClass implements ServerInterface {
     LoadCategoriesImagesRequest loadCategoriesImagesRequest;
     @Inject
     RegisterFacebookUserRequest registerFacebookUserRequest;
+    @Inject
+    RegisterUserAndDeviceRequest registerUserAndDeviceRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -63,12 +66,12 @@ public class Server extends BaseClass implements ServerInterface {
 
 
     @Override
-    public void loadUserData(Context context, Session session) {
-        /*
-        registerFacebookUserRequest.processRequest(context, session);
-        return;
-        */
+    public void loadUserData(Context context, Session session, String userExternalId) {
+
+        //registerFacebookUserRequest.processRequest(context, session, userExternalId);
+
         //TODO: Implement logic. This is for testing only
+
         UserDto userDto = new UserDto();
         PersonDto personDto = new PersonDto();
         AddressDto addressDto = new AddressDto();
@@ -81,6 +84,11 @@ public class Server extends BaseClass implements ServerInterface {
         event.setSuccess(true);
         event.setUserDto(userDto);
         eventBus.postSticky(event);
+
     }
 
+    @Override
+    public void registerDevice(Context context) {
+        registerUserAndDeviceRequest.processRequest(context);
+    }
 }

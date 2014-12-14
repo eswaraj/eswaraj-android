@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.Constants;
@@ -24,6 +25,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,19 +42,17 @@ public class RegisterFacebookUserRequest extends BaseClass {
     @Inject
     NetworkAccessHelper networkAccessHelper;
 
-    public void processRequest(Context context, Session session) {
+    public void processRequest(Context context, Session session, String userExternalId) {
         String androidId = DeviceUtil.getDeviceid((Activity)context);
         String deviceTypeRef = DeviceUtil.getDeviceTypeRef();
-        RegisterFacebookAccountRequest registerFacebookAccountRequest = new RegisterFacebookAccountRequest();
+        final RegisterFacebookAccountRequest registerFacebookAccountRequest = new RegisterFacebookAccountRequest();
 
         registerFacebookAccountRequest.setExpireTime(session.getExpirationDate());
         registerFacebookAccountRequest.setFacebookAppId(context.getString(R.string.facebook_app_id));
         registerFacebookAccountRequest.setToken(session.getAccessToken());
         registerFacebookAccountRequest.setDeviceId(androidId);
         registerFacebookAccountRequest.setDeviceTypeRef(deviceTypeRef);
-        registerFacebookAccountRequest.setUserExternalId(null);
-        //TODO: Discuss with Ravi and fix, if needed
-        //registerFacebookAccountRequest.setUserExternalId(MobileSessionHelper.getLoggedInUser(context).getExternalId());
+        registerFacebookAccountRequest.setUserExternalId(userExternalId);
 
         String json = new Gson().toJson(registerFacebookAccountRequest);
         JSONObject jsonObject = null;
@@ -62,6 +62,13 @@ public class RegisterFacebookUserRequest extends BaseClass {
             e.printStackTrace();
         }
 
+        RegisterFacebookUserVolleyRequest request = null;
+        try {
+            request = new RegisterFacebookUserVolleyRequest(createErrorListener(context), createSuccessListener(context), registerFacebookAccountRequest);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        /*
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, Constants.SAVE_FACEBOOK_USER_URL, jsonObject, createSuccessListener(context), createErrorListener(context)){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -71,10 +78,48 @@ public class RegisterFacebookUserRequest extends BaseClass {
                 return headers;
             }
         };
+
+        StringRequest request = new StringRequest(Request.Method.POST, Constants.SAVE_FACEBOOK_USER_URL, createSuccessListener(context), createErrorListener(context)){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                headers.put("User-agent", "My useragent");
+                return headers;
+            }
+
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("expireTime", registerFacebookAccountRequest.getExpireTime().toString());
+                params.put("facebookAppId", registerFacebookAccountRequest.getFacebookAppId());
+                params.put("token", registerFacebookAccountRequest.getToken());
+                params.put("deviceId", registerFacebookAccountRequest.getDeviceId());
+                params.put("deviceTypeRef", registerFacebookAccountRequest.getDeviceTypeRef());
+                params.put("userExternalId", registerFacebookAccountRequest.getUserExternalId());
+                return params;
+            }
+        };
+        */
         this.networkAccessHelper.submitNetworkRequest("RegisterUser", request);
 
     }
 
+    private Response.Listener<String> createSuccessListener(final Context context) {
+        return new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                UserDto userDto = new Gson().fromJson(response, UserDto.class);
+                GetUserEvent event = new GetUserEvent();
+                event.setSuccess(true);
+                event.setUserDto(userDto);
+                eventBus.postSticky(event);
+                cache.updateUserData(context, response);
+            }
+        };
+    }
+
+    /*
     private Response.Listener<JSONObject> createSuccessListener(final Context context) {
         return new Response.Listener<JSONObject>() {
             @Override
@@ -88,6 +133,7 @@ public class RegisterFacebookUserRequest extends BaseClass {
             }
         };
     }
+    */
 
     private Response.ErrorListener createErrorListener(final Context context) {
         return new Response.ErrorListener() {

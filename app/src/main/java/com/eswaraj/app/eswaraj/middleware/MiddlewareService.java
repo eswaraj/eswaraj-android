@@ -17,6 +17,6 @@ public interface MiddlewareService extends MiddlewareGetService, MiddlewarePostS
     public void loadCategoriesImages(Context context, List<CategoryWithChildCategoryDto> categoriesList, Boolean dontGetFromCache);
     public Boolean isCategoriesImagesAvailable(Context context);
 
-    public void loadUserData(Context context, Session session, Boolean dontGetFromCache);
+    public void loadUserData(Context context, Session session, String userExternalId, Boolean dontGetFromCache);
     public Boolean isUserDataAvailable(Context context);
 }

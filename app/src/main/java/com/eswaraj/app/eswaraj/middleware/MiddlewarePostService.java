@@ -8,4 +8,5 @@ import com.facebook.Session;
 
 public interface MiddlewarePostService {
 
+    public void registerDevice(Context context);
 }
