@@ -10,10 +10,8 @@ import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
-import com.eswaraj.app.eswaraj.events.RegisterDeviceEvent;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
-import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
@@ -39,8 +37,6 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     MiddlewareServiceImpl middlewareService;
     @Inject
     EventBus eventBus;
-    //@Inject
-    //FacebookLoginUtil facebookLoginUtil;
 
     //Logged-in user
     UserDto userDto;
@@ -102,14 +98,12 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     @Override
     public void onFacebookLoginDone(Session session) {
         this.session = session;
-        middlewareService.registerDevice(this);
-        //middlewareService.loadUserData(this, session);
+        middlewareService.loadUserData(this, session);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //facebookLoginUtil.onActivityResult(requestCode, resultCode, data);
         splashFragment.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -130,7 +124,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
 
     public void onEventMainThread(GetCategoriesDataEvent event) {
         if(event.getSuccess()) {
-            //Launch image download now. Always launch with dontGetFromCache=true
+            //Launch image download now.
             middlewareService.loadCategoriesImages(this, event.getCategoryList(), false);
         }
         else {
@@ -157,16 +151,6 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
         }
     }
 
-    public void onEventMainThread(RegisterDeviceEvent event) {
-        if(event.getSuccess()) {
-            Log.d("SplashActivity", "RegisterDeviceEvent:Success");
-            middlewareService.loadUserData(this, session, event.getUserDto().getExternalId());
-        }
-        else {
-            Toast.makeText(this, "Could not register device with server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-            //Show retry button which will re-trigger the request.
-        }
-    }
 
     public void onEventMainThread(GetCategoriesImagesEvent event) {
         if(event.getSuccess()) {
@@ -201,6 +185,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
                     i = new Intent(this, SelectAmenityActivity.class);
                 }
                 startActivity(i);
+                finish(); //User cant press back to return to this activity
             }
         }
     }

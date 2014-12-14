@@ -12,5 +12,5 @@ public interface MiddlewareGetService {
 
     public void loadCategoriesData(Context context);
     public void loadCategoriesImages(Context context, List<CategoryWithChildCategoryDto> categoriesList);
-    public void loadUserData(Context context, Session session, String userExternalId);
+    public void loadUserData(Context context, Session session);
 }

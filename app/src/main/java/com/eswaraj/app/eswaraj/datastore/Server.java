@@ -66,9 +66,9 @@ public class Server extends BaseClass implements ServerInterface {
 
 
     @Override
-    public void loadUserData(Context context, Session session, String userExternalId) {
+    public void loadUserData(Context context, Session session) {
 
-        //registerFacebookUserRequest.processRequest(context, session, userExternalId);
+        //registerFacebookUserRequest.processRequest(context, session);
 
         //TODO: Implement logic. This is for testing only
 

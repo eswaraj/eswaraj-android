@@ -55,6 +55,11 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
+    public void updateCategoriesData(Context context, String json) {
+        cache.updateCategoriesData(context, json);
+    }
+
+    @Override
     public void loadCategoriesImages(Context context, List<CategoryWithChildCategoryDto> categoriesList) {
         if(cache.isCategoriesImagesAvailable(context)) {
             cache.loadCategoriesImages(context, categoriesList);
@@ -84,20 +89,25 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
         return cache.isCategoriesImagesAvailable(context);
     }
 
+    @Override
+    public void updateCategoriesImages(Context context) {
+        cache.updateCategoriesImages(context);
+    }
+
 
     @Override
-    public void loadUserData(Context context, Session session, String userExternalId) {
+    public void loadUserData(Context context, Session session) {
         if(cache.isUserDataAvailable(context)) {
-            cache.loadUserData(context, session, userExternalId);
+            cache.loadUserData(context, session);
         }
         else {
-            server.loadUserData(context, session, userExternalId);
+            server.loadUserData(context, session);
         }
     }
 
     @Override
-    public void loadUserData(Context context, Session session, String userExternalId, Boolean dontGetFromCache) {
-        server.loadUserData(context, session, userExternalId);
+    public void loadUserData(Context context, Session session, Boolean dontGetFromCache) {
+        server.loadUserData(context, session);
     }
 
     @Override
@@ -106,10 +116,15 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
+    public void updateUserData(Context context, String json) {
+        cache.updateUserData(context, json);
+    }
+
+    @Override
     public void registerDevice(Context context) {
         if(cache.isUserDataAvailable(context)) {
             //If user is already logged in then bypass RegisterUserEvent and directly launch GetUserEvent
-            cache.loadUserData(context, null, null);
+            cache.loadUserData(context, null);
         }
         else {
             server.registerDevice(context);

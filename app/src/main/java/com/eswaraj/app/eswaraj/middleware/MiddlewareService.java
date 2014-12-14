@@ -3,20 +3,16 @@ package com.eswaraj.app.eswaraj.middleware;
 
 import android.content.Context;
 
+import com.eswaraj.app.eswaraj.datastore.CacheInterface;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.facebook.Session;
 
 import java.util.List;
 
-public interface MiddlewareService extends MiddlewareGetService, MiddlewarePostService{
+public interface MiddlewareService extends MiddlewareGetService, MiddlewarePostService, CacheInterface {
 
-    //Add these for each method in MiddlewareGetService
+    //Add these for each GET services
     public void loadCategoriesData(Context context, Boolean dontGetFromCache);
-    public Boolean isCategoriesDataAvailable(Context context);
-
     public void loadCategoriesImages(Context context, List<CategoryWithChildCategoryDto> categoriesList, Boolean dontGetFromCache);
-    public Boolean isCategoriesImagesAvailable(Context context);
-
-    public void loadUserData(Context context, Session session, String userExternalId, Boolean dontGetFromCache);
-    public Boolean isUserDataAvailable(Context context);
+    public void loadUserData(Context context, Session session, Boolean dontGetFromCache);
 }

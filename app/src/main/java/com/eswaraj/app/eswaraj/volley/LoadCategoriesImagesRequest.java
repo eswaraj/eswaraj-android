@@ -67,7 +67,7 @@ public class LoadCategoriesImagesRequest extends BaseClass {
                 Log.d("LoadCategoriesImages", url);
                 Long id = categoryDto.getId();
                 ImageRequest request = new ImageRequest(url, createSuccessListener(context, id, icon), 0, 0, null, createErrorListener(context));
-                this.networkAccessHelper.submitNetworkRequest("GetImage" + id, request);
+                this.networkAccessHelper.submitNetworkRequest("GetHeaderImage" + id, request);
             }
             else {
                 imageResCount.incrementAndGet();
@@ -84,6 +84,8 @@ public class LoadCategoriesImagesRequest extends BaseClass {
                 imageResCount.incrementAndGet();
                 if(imageResCount.get() == imageReqCount) {
                     //All image download requests completed. Publish an event now
+                    Log.d("ImageReqCountE", Integer.toString(imageReqCount));
+                    Log.d("ImageResCountE", Integer.toString(imageResCount.get()));
                     GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
                     getCategoriesImagesEvent.setSuccess(successImages);
                     getCategoriesImagesEvent.setError(errorImages);
@@ -101,6 +103,8 @@ public class LoadCategoriesImagesRequest extends BaseClass {
                 imageResCount.incrementAndGet();
                 if(imageResCount.get() == imageReqCount) {
                     //All image download requests completed. Publish an event now
+                    Log.d("ImageReqCountS", Integer.toString(imageReqCount));
+                    Log.d("ImageResCountS", Integer.toString(imageResCount.get()));
                     GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
                     getCategoriesImagesEvent.setSuccess(successImages);
                     eventBus.post(getCategoriesImagesEvent);
