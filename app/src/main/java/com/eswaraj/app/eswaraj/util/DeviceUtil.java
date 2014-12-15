@@ -9,8 +9,7 @@ import com.eswaraj.app.eswaraj.base.BaseClass;
 public class DeviceUtil extends BaseClass {
 
     public static String getDeviceid(Activity activity) {
-        String android_id = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
-        return android_id;
+        return Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
     public static String getDeviceTypeRef() {

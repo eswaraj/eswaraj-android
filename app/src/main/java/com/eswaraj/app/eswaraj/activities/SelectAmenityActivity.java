@@ -14,14 +14,16 @@ import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
 import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class SelectAmenityActivity extends BaseActivity {
+public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCallback {
 
-    //@Inject
+    @Inject
     LocationUtil locationUtil;
     @Inject
     MiddlewareServiceImpl middlewareService;
@@ -33,13 +35,15 @@ public class SelectAmenityActivity extends BaseActivity {
     private GoogleMapFragment googleMapFragment;
     private Location lastLocation;
     private ReverseGeocodingTask reverseGeocodingTask;
+    private Boolean mapReady;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_amenity);
         lastLocation = null;
-        locationUtil = new LocationUtil(this);
+        mapReady = false;
+        locationUtil.setup(this);
         bottomMenuBarFragment = BottomMenuBarFragment.newInstance();
         amenitiesFragment = AmenitiesFragment.newInstance();
         googleMapFragment = new GoogleMapFragment();
@@ -50,6 +54,9 @@ public class SelectAmenityActivity extends BaseActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.asMenubar, bottomMenuBarFragment).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.asMapContainer, googleMapFragment).commit();
         }
+
+        //Do setup
+        googleMapFragment.setContext(this);
     }
 
     @Override
@@ -67,7 +74,9 @@ public class SelectAmenityActivity extends BaseActivity {
     }
 
     public void onEventMainThread(Location location) {
-        googleMapFragment.updateMarkerLocation(location.getLatitude(), location.getLongitude());
+        if(mapReady) {
+            googleMapFragment.updateMarkerLocation(location.getLatitude(), location.getLongitude());
+        }
         if(lastLocation != null) {
             //If difference between location and lastLocation is greater than 100m then
             //TODO:Add condition
@@ -99,5 +108,11 @@ public class SelectAmenityActivity extends BaseActivity {
         if(event.getSuccess()) {
             asRevGeocode.setText(event.getRevGeocodedLocation());
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMapFragment.disableGestures();
+        mapReady = true;
     }
 }

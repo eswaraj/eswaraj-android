@@ -61,7 +61,7 @@
             android:label="@string/title_activity_select_template"
             android:parentActivityName=".activities.SelectAmenityActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar">
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.SelectAmenityActivity" />
@@ -71,10 +71,18 @@
             android:label="@string/title_activity_add_details"
             android:parentActivityName=".activities.SelectTemplateActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar"
-            android:windowSoftInputMode="adjustPan|stateVisible">
+            android:windowSoftInputMode="adjustPan|stateVisible" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.SelectTemplateActivity" />
+        </activity>
+        <activity
+            android:name=".activities.MarkLocationActivity"
+            android:label="@string/title_activity_mark_location"
+            android:parentActivityName=".activities.SplashActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.eswaraj.app.eswaraj.activities.SplashActivity" />
         </activity>
     </application>
 

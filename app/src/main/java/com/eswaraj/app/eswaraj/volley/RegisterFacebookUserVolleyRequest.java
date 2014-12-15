@@ -53,9 +53,9 @@ public class RegisterFacebookUserVolleyRequest extends Request<String> {
 
     private Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
 
-    public RegisterFacebookUserVolleyRequest(Response.ErrorListener errorListener, Response.Listener<String> listener, RegisterFacebookAccountRequest registerFacebookAccountRequest)
+    public RegisterFacebookUserVolleyRequest(Response.ErrorListener errorListener, Response.Listener<String> listener, RegisterFacebookAccountRequest registerFacebookAccountRequest, String url)
             throws UnsupportedEncodingException {
-        super(Method.POST, Constants.SAVE_FACEBOOK_USER_URL, errorListener);
+        super(Method.POST, url, errorListener);
         String json = gson.toJson(registerFacebookAccountRequest);
         entity = new StringEntity(json);
         Log.i("eswaraj", "json : " + json);

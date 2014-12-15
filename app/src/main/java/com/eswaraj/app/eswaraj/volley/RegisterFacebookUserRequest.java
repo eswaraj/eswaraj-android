@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseClass;
+import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
@@ -45,7 +46,7 @@ public class RegisterFacebookUserRequest extends BaseClass {
 
         RegisterFacebookUserVolleyRequest request = null;
         try {
-            request = new RegisterFacebookUserVolleyRequest(createErrorListener(context), createSuccessListener(context), registerFacebookAccountRequest);
+            request = new RegisterFacebookUserVolleyRequest(createErrorListener(context), createSuccessListener(context), registerFacebookAccountRequest, Constants.SAVE_FACEBOOK_USER_URL);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

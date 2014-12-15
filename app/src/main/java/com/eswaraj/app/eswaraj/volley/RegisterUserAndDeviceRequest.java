@@ -7,6 +7,7 @@ import android.content.Context;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.eswaraj.app.eswaraj.base.BaseClass;
+import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.events.RegisterDeviceEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
@@ -40,7 +41,7 @@ public class RegisterUserAndDeviceRequest extends BaseClass {
 
         RegisterUserAndDeviceVolleyRequest request = null;
         try {
-            request = new RegisterUserAndDeviceVolleyRequest(createErrorListener(context), createSuccessListener(context), registerDeviceRequest);
+            request = new RegisterUserAndDeviceVolleyRequest(createErrorListener(context), createSuccessListener(context), registerDeviceRequest, Constants.SAVE_DEVICE_ANONYMOUS_USER_URL);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

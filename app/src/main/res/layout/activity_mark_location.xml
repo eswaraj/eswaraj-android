@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.eswaraj.app.eswaraj.activities.MarkLocationActivity">
+
+    <TextView android:text="Mark your Home location on map. This helps us serve you better.\n Hold on the marker for 2 seconds and then drag."
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <FrameLayout
+        android:id="@+id/mlContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8">
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/mlSaveLocation"
+        android:text="Save Location"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

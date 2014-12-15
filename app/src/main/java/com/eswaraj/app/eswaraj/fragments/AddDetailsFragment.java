@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
@@ -47,6 +47,7 @@ public class AddDetailsFragment extends BaseFragment {
 
     private CategoryWithChildCategoryDto categoryWithChildCategoryDto;
     private UserDto userDto;
+    private Location location;
 
     private static final int SELECT_PHOTO = 1;
     private static final int TAKE_PHOTO = 2;
@@ -128,7 +129,7 @@ public class AddDetailsFragment extends BaseFragment {
         post.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Pick selectedFile, data from Description field and rest attributes from UserDto and post
+                //TODO: Pick selectedFile, location, data from Description field and rest attributes from UserDto and post
             }
         });
         return rootView;
@@ -185,5 +186,10 @@ public class AddDetailsFragment extends BaseFragment {
         else {
             //This will never happen because user cant reach this screen unless UserDto was received successfully on Splash Screen
         }
+    }
+
+
+    public void onEventMainThread(Location location) {
+        this.location = location;
     }
 }

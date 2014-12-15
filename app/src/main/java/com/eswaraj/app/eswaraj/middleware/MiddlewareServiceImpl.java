@@ -12,6 +12,7 @@ import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.datastore.ServerInterface;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
+import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
 
 import java.util.List;
@@ -129,5 +130,10 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
         else {
             server.registerDevice(context);
         }
+    }
+
+    @Override
+    public void saveUserLocation(Context context, UserDto userDto, double lat, double lng) {
+        server.saveUserLocation(context, userDto, lat, lng);
     }
 }

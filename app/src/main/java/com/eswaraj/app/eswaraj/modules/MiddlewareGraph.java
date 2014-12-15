@@ -5,6 +5,7 @@ import android.content.Context;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.eswaraj.app.eswaraj.activities.AddDetailsActivity;
+import com.eswaraj.app.eswaraj.activities.MarkLocationActivity;
 import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
 import com.eswaraj.app.eswaraj.activities.SelectTemplateActivity;
 import com.eswaraj.app.eswaraj.activities.SplashActivity;
@@ -62,7 +63,8 @@ import de.greenrobot.event.EventBus;
                 RegisterFacebookUserRequest.class,
                 AddDetailsActivity.class,
                 AddDetailsFragment.class,
-                RegisterUserAndDeviceRequest.class
+                RegisterUserAndDeviceRequest.class,
+                MarkLocationActivity.class
         },
         complete = false,
         library = true
@@ -96,10 +98,10 @@ public class MiddlewareGraph {
     }
 
 
-    //@Provides @Singleton
-    //LocationUtil provideLocationUtil(Context context) {
-        //return new LocationUtil(context);
-    //}
+    @Provides @Singleton
+    LocationUtil provideLocationUtil() {
+        return new LocationUtil();
+    }
 
 
     @Provides @Singleton

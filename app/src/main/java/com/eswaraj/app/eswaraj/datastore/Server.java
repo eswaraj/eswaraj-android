@@ -70,15 +70,16 @@ public class Server extends BaseClass implements ServerInterface {
 
         //registerFacebookUserRequest.processRequest(context, session);
 
-        //TODO: Implement logic. This is for testing only
+        //TODO: Uncomment above line and delete the mock code once the server side fixes are done
 
         UserDto userDto = new UserDto();
         PersonDto personDto = new PersonDto();
         AddressDto addressDto = new AddressDto();
-        addressDto.setLattitude(100.0);
-        addressDto.setLongitude(25.0);
+        //addressDto.setLattitude(100.0);
+        //addressDto.setLongitude(25.0);
         personDto.setPersonAddress(addressDto);
         userDto.setPerson(personDto);
+        userDto.setExternalId("fac31d43-d4d5-4906-8410-6c0648a1b0d9");
 
         GetUserEvent event = new GetUserEvent();
         event.setSuccess(true);
@@ -90,5 +91,10 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void registerDevice(Context context) {
         registerUserAndDeviceRequest.processRequest(context);
+    }
+
+    @Override
+    public void saveUserLocation(Context context, UserDto userDto, double lat, double lng) {
+        //TODO: Implement post request here
     }
 }

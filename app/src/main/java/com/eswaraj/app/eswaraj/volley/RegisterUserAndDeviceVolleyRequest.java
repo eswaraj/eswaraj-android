@@ -26,8 +26,8 @@ public class RegisterUserAndDeviceVolleyRequest extends Request<String> {
     private final Response.Listener<String> mListener;
     HttpEntity entity;
 
-    public RegisterUserAndDeviceVolleyRequest(Response.ErrorListener errorListener, Response.Listener<String> listener, RegisterDeviceRequest registerDeviceRequest) throws UnsupportedEncodingException {
-        super(Method.POST, Constants.SAVE_DEVICE_ANONYMOUS_USER_URL, errorListener);
+    public RegisterUserAndDeviceVolleyRequest(Response.ErrorListener errorListener, Response.Listener<String> listener, RegisterDeviceRequest registerDeviceRequest, String url) throws UnsupportedEncodingException {
+        super(Method.POST, url, errorListener);
 
         entity = new StringEntity(new Gson().toJson(registerDeviceRequest));
         mListener = listener;

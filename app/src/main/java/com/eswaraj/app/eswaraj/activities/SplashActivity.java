@@ -27,7 +27,7 @@ import de.greenrobot.event.EventBus;
 public class SplashActivity extends BaseActivity implements FacebookLoginInterface{
 
     private SplashFragment splashFragment;
-    //@Inject
+    @Inject
     LocationUtil locationUtil;
     @Inject
     InternetServicesCheckUtil internetServicesCheckUtil;
@@ -85,7 +85,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
             getSupportFragmentManager().beginTransaction().add(R.id.SplashFragmentContainer, splashFragment).commit();
         }
 
-        locationUtil = new LocationUtil(this);
+        locationUtil.setup(this);
 
         //Set up initial state
         loginDone = false;
@@ -183,6 +183,9 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
                 Intent i = null;
                 if(userLocationKnown) {
                     i = new Intent(this, SelectAmenityActivity.class);
+                }
+                else {
+                    i = new Intent(this, MarkLocationActivity.class);
                 }
                 startActivity(i);
                 finish(); //User cant press back to return to this activity
