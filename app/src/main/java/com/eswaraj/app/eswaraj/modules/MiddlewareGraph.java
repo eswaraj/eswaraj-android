@@ -29,6 +29,7 @@ import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
+import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
@@ -63,6 +64,7 @@ import de.greenrobot.event.EventBus;
                 LoadCategoriesDataRequest.class,
                 LoadCategoriesImagesRequest.class,
                 RegisterFacebookUserRequest.class,
+                ComplaintPostRequest.class,
                 AddDetailsActivity.class,
                 AddDetailsFragment.class,
                 RegisterUserAndDeviceRequest.class,
@@ -155,5 +157,10 @@ public class MiddlewareGraph {
     @Provides @Singleton
     RegisterUserAndDeviceRequest provideRegisterUserAndDeviceRequest() {
         return new RegisterUserAndDeviceRequest();
+    }
+
+    @Provides @Singleton
+    ComplaintPostRequest provideComplaintPostRequest() {
+        return new ComplaintPostRequest();
     }
 }

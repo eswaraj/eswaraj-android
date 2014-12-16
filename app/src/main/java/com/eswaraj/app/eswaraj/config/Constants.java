@@ -12,10 +12,11 @@ public class Constants {
     public static final String YOUTUBE_API_KEY = "";
 
     //eSwaraj URLS
-    public static final String BASE_URL = "http://dev.api.eswaraj.com/api/v0/";
-    public static final String GET_CATEGORIES_URL = BASE_URL + "categories";
-    public static final String SAVE_FACEBOOK_USER_URL = BASE_URL + "user/facebook";
+    public static final String BASE_URL = "http://dev.api.eswaraj.com/api/v0";
+    public static final String GET_CATEGORIES_URL = BASE_URL + "/categories";
+    public static final String SAVE_FACEBOOK_USER_URL = BASE_URL + "/user/facebook";
     public static final String SAVE_DEVICE_ANONYMOUS_USER_URL = BASE_URL + "/user/device";
+    public static final String POST_COMPLAINT_URL = BASE_URL + "/complaint";
 
     //Google URLS
     public static final String GOOGLE_PLACES_AUTOCOMPLETE_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?key=" + GOOGLE_API_BROWSER_KEY + "&components=country:in&input=";

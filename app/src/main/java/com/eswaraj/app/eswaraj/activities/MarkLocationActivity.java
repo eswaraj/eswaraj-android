@@ -144,6 +144,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     public void onEventMainThread(GooglePlaceDetailsEvent event) {
         if(event.getSuccess()) {
             GooglePlace googlePlace = event.getGooglePlace();
+            markerUpdatedOnce = true;
             googleMapFragment.updateMarkerLocation(googlePlace.getLatitude(), googlePlace.getLongitude());
         }
         else {

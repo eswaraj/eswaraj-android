@@ -2,6 +2,7 @@ package com.eswaraj.app.eswaraj.middleware;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.Location;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -135,5 +137,10 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     @Override
     public void saveUserLocation(Context context, UserDto userDto, double lat, double lng) {
         server.saveUserLocation(context, userDto, lat, lng);
+    }
+
+    @Override
+    public void postComplaint(UserDto userDto, CategoryWithChildCategoryDto categoryDto, Location location, String description, File image) {
+        server.postComplaint(userDto, categoryDto, location, description, image);
     }
 }

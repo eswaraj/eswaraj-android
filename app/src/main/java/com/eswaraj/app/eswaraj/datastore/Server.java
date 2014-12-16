@@ -2,6 +2,7 @@ package com.eswaraj.app.eswaraj.datastore;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
+import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
@@ -29,6 +31,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,6 +55,8 @@ public class Server extends BaseClass implements ServerInterface {
     RegisterFacebookUserRequest registerFacebookUserRequest;
     @Inject
     RegisterUserAndDeviceRequest registerUserAndDeviceRequest;
+    @Inject
+    ComplaintPostRequest complaintPostRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -75,8 +80,8 @@ public class Server extends BaseClass implements ServerInterface {
         UserDto userDto = new UserDto();
         PersonDto personDto = new PersonDto();
         AddressDto addressDto = new AddressDto();
-        //addressDto.setLattitude(100.0);
-        //addressDto.setLongitude(25.0);
+        addressDto.setLattitude(100.0);
+        addressDto.setLongitude(25.0);
         personDto.setPersonAddress(addressDto);
         userDto.setPerson(personDto);
         userDto.setExternalId("fac31d43-d4d5-4906-8410-6c0648a1b0d9");
@@ -96,5 +101,10 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void saveUserLocation(Context context, UserDto userDto, double lat, double lng) {
         //TODO: Implement post request here
+    }
+
+    @Override
+    public void postComplaint(UserDto userDto, CategoryWithChildCategoryDto categoryDto, Location location, String description, File image) {
+        complaintPostRequest.processRequest(userDto, categoryDto, location, description, image);
     }
 }

@@ -17,10 +17,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
+import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
+import com.eswaraj.app.eswaraj.middleware.MiddlewareService;
+import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.UserDto;
 
@@ -38,6 +42,8 @@ public class AddDetailsFragment extends BaseFragment {
 
     @Inject
     EventBus eventBus;
+    @Inject
+    MiddlewareServiceImpl middlewareService;
 
     private Button takePhoto;
     private Button attachPhoto;
@@ -129,7 +135,7 @@ public class AddDetailsFragment extends BaseFragment {
         post.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Pick selectedFile, location, data from Description field and rest attributes from UserDto and post
+                middlewareService.postComplaint(userDto, categoryWithChildCategoryDto, location, description.getText().toString(), selectedFile);
             }
         });
         return rootView;
@@ -191,5 +197,16 @@ public class AddDetailsFragment extends BaseFragment {
 
     public void onEventMainThread(Location location) {
         this.location = location;
+    }
+
+    public void onEventMainThread(SavedComplaintEvent event) {
+        if(event.getSuccess()) {
+            Log.d("AddDetailsFragment", "Saved complaint");
+            //TODO:Launch final screen from here
+        }
+        else {
+            //If the request fails dont go to next screen instead try again
+            Toast.makeText(getActivity(), "Complaint save failed. Try again. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
     }
 }
