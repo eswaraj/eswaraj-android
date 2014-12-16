@@ -23,6 +23,7 @@ import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.util.DeviceUtil;
+import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
@@ -50,6 +51,7 @@ import de.greenrobot.event.EventBus;
                 NetworkAccessHelper.class,
                 LocationUtil.class,
                 DeviceUtil.class,
+                GooglePlacesUtil.class,
                 FacebookLoginUtil.class,
                 MiddlewareServiceImpl.class,
                 ReverseGeocodingTask.class,
@@ -85,6 +87,11 @@ public class MiddlewareGraph {
     @Provides @Singleton
     FacebookLoginUtil provideFacebookLoginUtil() {
         return new FacebookLoginUtil();
+    }
+
+    @Provides @Singleton
+    GooglePlacesUtil provideGooglePlacesUtil() {
+        return new GooglePlacesUtil();
     }
 
     @Provides @Singleton
