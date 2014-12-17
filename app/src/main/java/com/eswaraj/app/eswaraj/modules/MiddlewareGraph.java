@@ -5,6 +5,7 @@ import android.content.Context;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.eswaraj.app.eswaraj.activities.AddDetailsActivity;
+import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
 import com.eswaraj.app.eswaraj.activities.MarkLocationActivity;
 import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
 import com.eswaraj.app.eswaraj.activities.SelectTemplateActivity;
@@ -16,6 +17,7 @@ import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.fragments.AddDetailsFragment;
 import com.eswaraj.app.eswaraj.fragments.AmenitiesFragment;
 import com.eswaraj.app.eswaraj.fragments.AmenityBannerFragment;
+import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryFragment;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.fragments.TemplatesFragment;
@@ -68,7 +70,9 @@ import de.greenrobot.event.EventBus;
                 AddDetailsActivity.class,
                 AddDetailsFragment.class,
                 RegisterUserAndDeviceRequest.class,
-                MarkLocationActivity.class
+                MarkLocationActivity.class,
+                ComplaintSummaryFragment.class,
+                ComplaintSummaryActivity.class
         },
         complete = false,
         library = true

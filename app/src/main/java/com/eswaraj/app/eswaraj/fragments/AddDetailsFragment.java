@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
@@ -202,7 +203,11 @@ public class AddDetailsFragment extends BaseFragment {
     public void onEventMainThread(SavedComplaintEvent event) {
         if(event.getSuccess()) {
             Log.d("AddDetailsFragment", "Saved complaint");
-            //TODO:Launch final screen from here
+            Intent i = new Intent(getActivity(), ComplaintSummaryActivity.class);
+            if(selectedFile != null) {
+                i.putExtra("IMAGE", selectedFile);
+            }
+            getActivity().startActivity(i);
         }
         else {
             //If the request fails dont go to next screen instead try again

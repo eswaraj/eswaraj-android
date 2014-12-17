@@ -17,5 +17,6 @@
     <string name="title_activity_select_template">SelectTemplateActivity</string>
     <string name="title_activity_add_details">AddDetailsActivity</string>
     <string name="title_activity_mark_location">MarkLocationActivity</string>
+    <string name="title_activity_complaint_summary">ComplaintSummaryActivity</string>
 
 </resources>
