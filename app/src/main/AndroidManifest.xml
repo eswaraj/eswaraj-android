@@ -92,6 +92,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.AddDetailsActivity" />
         </activity>
+        <activity
+            android:name=".activities.LaunchActivity"
+            android:label="@string/title_activity_launch" >
+        </activity>
+        <activity
+            android:name=".activities.MyComplaintsActivity"
+            android:label="@string/title_activity_my_complaints" >
+        </activity>
     </application>
 
 </manifest>

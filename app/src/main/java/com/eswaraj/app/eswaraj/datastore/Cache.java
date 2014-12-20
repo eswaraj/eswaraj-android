@@ -9,9 +9,11 @@ import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.config.PreferenceConstants;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
+import com.eswaraj.app.eswaraj.events.GetUserComplaintsEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
 import com.google.gson.Gson;
@@ -127,5 +129,40 @@ public class Cache extends BaseClass implements CacheInterface {
     public void updateCategoriesImages(Context context) {
         sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_IMAGES_AVAILABLE, true);
         sharedPreferencesHelper.putLong(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_IMAGES_DOWNLOAD_TIME_IN_MS, new Date().getTime());
+    }
+
+    @Override
+    public Boolean isUserComplaintsAvailable(Context context) {
+        if(sharedPreferencesHelper.getBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_COMPLAINTS_AVAILABLE, false)) {
+            if((new Date().getTime() - sharedPreferencesHelper.getLong(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_COMPLAINTS_DOWNLOAD_TIME_IN_MS, 0L)) < Constants.SERVER_DATA_UPDATE_INTERVAL_IN_MS) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void updateUserComplaints(Context context, String json) {
+        sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_COMPLAINTS_AVAILABLE, true);
+        sharedPreferencesHelper.putLong(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_COMPLAINTS_DOWNLOAD_TIME_IN_MS, new Date().getTime());
+    }
+
+    @Override
+    public void loadUserComplaints(Context context, UserDto userDto) {
+        Gson gson = new Gson();
+        String json = sharedPreferencesHelper.getString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_COMPLAINTS, null);
+        try {
+            List<ComplaintDto> complaintDtoList;
+            GetUserComplaintsEvent event = new GetUserComplaintsEvent();
+            complaintDtoList = gson.fromJson(json, new TypeToken<List<ComplaintDto>>(){}.getType());
+            event.setSuccess(true);
+            event.setComplaintDtoList(complaintDtoList);
+            eventBus.post(event);
+        } catch (JsonParseException e) {
+            //This should never happen since json would only be stored in server if de-serialization was successful in Server class
+            GetUserComplaintsEvent event = new GetUserComplaintsEvent();
+            event.setError("Invalid json");
+            eventBus.post(event);
+        }
     }
 }

@@ -53,6 +53,9 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     //Facebook Session
     Session session;
 
+    //TODO:Remove this after testing
+    Boolean debugMode = true;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -186,6 +189,9 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
                 }
                 else {
                     i = new Intent(this, MarkLocationActivity.class);
+                }
+                if(debugMode) {
+                    i = new Intent(this, LaunchActivity.class);
                 }
                 startActivity(i);
                 finish(); //User cant press back to return to this activity

@@ -124,6 +124,31 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
+    public void loadUserComplaints(Context context, UserDto userDto, Boolean dontGetFromCache) {
+        server.loadUserComplaints(context, userDto);
+    }
+
+    @Override
+    public Boolean isUserComplaintsAvailable(Context context) {
+        return cache.isUserComplaintsAvailable(context);
+    }
+
+    @Override
+    public void updateUserComplaints(Context context, String json) {
+        cache.updateUserComplaints(context, json);
+    }
+
+    @Override
+    public void loadUserComplaints(Context context, UserDto userDto) {
+        if(cache.isUserComplaintsAvailable(context)) {
+            cache.loadUserComplaints(context, userDto);
+        }
+        else {
+            server.loadUserComplaints(context, userDto);
+        }
+    }
+
+    @Override
     public void registerDevice(Context context) {
         if(cache.isUserDataAvailable(context)) {
             //If user is already logged in then bypass RegisterUserEvent and directly launch GetUserEvent

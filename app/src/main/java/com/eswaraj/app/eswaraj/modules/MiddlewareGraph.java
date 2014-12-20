@@ -7,6 +7,7 @@ import com.android.volley.toolbox.Volley;
 import com.eswaraj.app.eswaraj.activities.AddDetailsActivity;
 import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
 import com.eswaraj.app.eswaraj.activities.MarkLocationActivity;
+import com.eswaraj.app.eswaraj.activities.MyComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
 import com.eswaraj.app.eswaraj.activities.SelectTemplateActivity;
 import com.eswaraj.app.eswaraj.activities.SplashActivity;
@@ -19,6 +20,7 @@ import com.eswaraj.app.eswaraj.fragments.AmenitiesFragment;
 import com.eswaraj.app.eswaraj.fragments.AmenityBannerFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryFragment;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
+import com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.fragments.TemplatesFragment;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
@@ -36,6 +38,7 @@ import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
+import com.eswaraj.app.eswaraj.volley.UserComplaintsRequest;
 
 import javax.inject.Singleton;
 
@@ -72,7 +75,10 @@ import de.greenrobot.event.EventBus;
                 RegisterUserAndDeviceRequest.class,
                 MarkLocationActivity.class,
                 ComplaintSummaryFragment.class,
-                ComplaintSummaryActivity.class
+                ComplaintSummaryActivity.class,
+                MyComplaintsActivity.class,
+                MyComplaintsFragment.class,
+                UserComplaintsRequest.class
         },
         complete = false,
         library = true
@@ -166,5 +172,10 @@ public class MiddlewareGraph {
     @Provides @Singleton
     ComplaintPostRequest provideComplaintPostRequest() {
         return new ComplaintPostRequest();
+    }
+
+    @Provides @Singleton
+    UserComplaintsRequest provideUserComplaintsRequest() {
+        return new UserComplaintsRequest();
     }
 }

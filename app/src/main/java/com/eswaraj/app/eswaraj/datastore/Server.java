@@ -21,6 +21,7 @@ import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
+import com.eswaraj.app.eswaraj.volley.UserComplaintsRequest;
 import com.eswaraj.web.dto.AddressDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.PersonDto;
@@ -57,6 +58,8 @@ public class Server extends BaseClass implements ServerInterface {
     RegisterUserAndDeviceRequest registerUserAndDeviceRequest;
     @Inject
     ComplaintPostRequest complaintPostRequest;
+    @Inject
+    UserComplaintsRequest userComplaintsRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -84,6 +87,7 @@ public class Server extends BaseClass implements ServerInterface {
         addressDto.setLongitude(25.0);
         personDto.setPersonAddress(addressDto);
         userDto.setPerson(personDto);
+        userDto.setId((long) 84075);
         userDto.setExternalId("fac31d43-d4d5-4906-8410-6c0648a1b0d9");
 
         GetUserEvent event = new GetUserEvent();
@@ -91,6 +95,11 @@ public class Server extends BaseClass implements ServerInterface {
         event.setUserDto(userDto);
         eventBus.postSticky(event);
 
+    }
+
+    @Override
+    public void loadUserComplaints(Context context, UserDto userDto) {
+        userComplaintsRequest.processRequest(context, userDto);
     }
 
     @Override

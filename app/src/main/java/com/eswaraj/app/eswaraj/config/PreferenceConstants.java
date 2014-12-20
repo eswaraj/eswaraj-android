@@ -14,4 +14,8 @@ public class PreferenceConstants {
     public static final String USER_DATA_AVAILABLE = "UserDataAvailable";
     public static final String USER_DATA = "UserData";
     public static final String USER_DATA_DOWNLOAD_TIME_IN_MS = "UserDataDownloadTimeInMs";
+
+    public static final String USER_COMPLAINTS_AVAILABLE = "UserComplaintsAvailable";
+    public static final String USER_COMPLAINTS = "UserComplaints";
+    public static final String USER_COMPLAINTS_DOWNLOAD_TIME_IN_MS = "UserComplaintsDownloadTimeInMs";
 }
