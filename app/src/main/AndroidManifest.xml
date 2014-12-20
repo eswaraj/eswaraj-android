@@ -100,6 +100,10 @@
             android:name=".activities.MyComplaintsActivity"
             android:label="@string/title_activity_my_complaints" >
         </activity>
+        <activity
+            android:name=".activities.SingleComplaintActivity"
+            android:label="@string/title_activity_single_complaint" >
+        </activity>
     </application>
 
 </manifest>

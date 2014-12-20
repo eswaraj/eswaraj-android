@@ -10,6 +10,7 @@ import com.eswaraj.app.eswaraj.activities.MarkLocationActivity;
 import com.eswaraj.app.eswaraj.activities.MyComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
 import com.eswaraj.app.eswaraj.activities.SelectTemplateActivity;
+import com.eswaraj.app.eswaraj.activities.SingleComplaintActivity;
 import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.activities.YoutubeActivity;
 import com.eswaraj.app.eswaraj.datastore.Cache;
@@ -20,7 +21,9 @@ import com.eswaraj.app.eswaraj.fragments.AmenitiesFragment;
 import com.eswaraj.app.eswaraj.fragments.AmenityBannerFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryFragment;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
+import com.eswaraj.app.eswaraj.fragments.ImageFragment;
 import com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment;
+import com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.fragments.TemplatesFragment;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
@@ -33,6 +36,7 @@ import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
+import com.eswaraj.app.eswaraj.volley.ComplaintImageRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
@@ -78,7 +82,11 @@ import de.greenrobot.event.EventBus;
                 ComplaintSummaryActivity.class,
                 MyComplaintsActivity.class,
                 MyComplaintsFragment.class,
-                UserComplaintsRequest.class
+                UserComplaintsRequest.class,
+                SingleComplaintActivity.class,
+                SingleComplaintFragment.class,
+                ImageFragment.class,
+                ComplaintImageRequest.class
         },
         complete = false,
         library = true
@@ -177,5 +185,10 @@ public class MiddlewareGraph {
     @Provides @Singleton
     UserComplaintsRequest provideUserComplaintsRequest() {
         return new UserComplaintsRequest();
+    }
+
+    @Provides @Singleton
+    ComplaintImageRequest provideComplaintImageRequest() {
+        return new ComplaintImageRequest();
     }
 }

@@ -1,16 +1,19 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.activities.SingleComplaintActivity;
 import com.eswaraj.app.eswaraj.adapters.ComplaintListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
@@ -20,6 +23,7 @@ import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.UserDto;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -48,6 +52,15 @@ public class MyComplaintsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_my_complaints, container, false);
         mcList = (ListView) rootView.findViewById(R.id.mcList);
+
+        mcList.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getActivity(), SingleComplaintActivity.class);
+                i.putExtra("COMPLAINT", (Serializable) mcList.getAdapter().getItem(position));
+                startActivity(i);
+            }
+        });
         return rootView;
     }
 

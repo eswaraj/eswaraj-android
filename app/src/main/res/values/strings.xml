@@ -20,5 +20,6 @@
     <string name="title_activity_complaint_summary">ComplaintSummaryActivity</string>
     <string name="title_activity_launch">LaunchActivity</string>
     <string name="title_activity_my_complaints">MyComplaintsActivity</string>
+    <string name="title_activity_single_complaint">SingleComplaintActivity</string>
 
 </resources>
