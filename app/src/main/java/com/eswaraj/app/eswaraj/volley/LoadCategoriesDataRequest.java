@@ -11,6 +11,7 @@ import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
+import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -28,7 +29,7 @@ public class LoadCategoriesDataRequest extends BaseClass {
     @Inject
     EventBus eventBus;
     @Inject
-    Cache cache;
+    MiddlewareServiceImpl middlewareService;
     @Inject
     NetworkAccessHelper networkAccessHelper;
 
@@ -61,7 +62,7 @@ public class LoadCategoriesDataRequest extends BaseClass {
                     getCategoriesDataEvent.setCategoryList(categoryDtoList);
                     eventBus.post(getCategoriesDataEvent);
                     //Update the cache
-                    cache.updateCategoriesData(context, json);
+                    middlewareService.updateCategoriesData(context, json);
                 } catch (JsonParseException e) {
                     GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
                     getCategoriesDataEvent.setError("Invalid json");

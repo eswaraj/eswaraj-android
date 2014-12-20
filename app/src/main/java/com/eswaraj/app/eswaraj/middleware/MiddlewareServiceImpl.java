@@ -12,6 +12,7 @@ import com.eswaraj.app.eswaraj.datastore.CacheInterface;
 import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.datastore.ServerInterface;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
@@ -192,5 +193,30 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     @Override
     public void postComplaint(UserDto userDto, CategoryWithChildCategoryDto categoryDto, Location location, String description, File image) {
         server.postComplaint(userDto, categoryDto, location, description, image);
+    }
+
+    @Override
+    public void loadComments(Context context, ComplaintDto complaintDto, Boolean dontGetFromCache) {
+        server.loadComments(context, complaintDto);
+    }
+
+    @Override
+    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto) {
+        return cache.isCommentsAvailable(context, complaintDto);
+    }
+
+    @Override
+    public void updateComments(Context context, String json, ComplaintDto complaintDto) {
+        cache.updateComments(context, json, complaintDto);
+    }
+
+    @Override
+    public void loadComments(Context context, ComplaintDto complaintDto) {
+        if(cache.isCommentsAvailable(context, complaintDto)) {
+            cache.loadComments(context, complaintDto);
+        }
+        else {
+            server.loadComments(context, complaintDto);
+        }
     }
 }

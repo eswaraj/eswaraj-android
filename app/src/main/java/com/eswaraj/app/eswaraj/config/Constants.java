@@ -23,4 +23,7 @@ public class Constants {
     public static final String GOOGLE_PLACES_AUTOCOMPLETE_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?key=" + GOOGLE_API_BROWSER_KEY + "&components=country:in&input=";
     public static final String GOOGLE_PLACES_DETAILS_URL= "https://maps.googleapis.com/maps/api/place/details/json?key=" + GOOGLE_API_BROWSER_KEY + "&placeid=";
 
+    public static String getCommentsUrl(Long complaintId) {
+        return BASE_URL + "/complaint/" + complaintId + "/comments";
+    }
 }

@@ -4,6 +4,7 @@ package com.eswaraj.app.eswaraj.middleware;
 import android.content.Context;
 
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
 
@@ -16,4 +17,5 @@ public interface MiddlewareGetService {
     public void loadUserData(Context context, Session session);
     public void loadUserComplaints(Context context, UserDto userDto);
     public void loadComplaintImage(Context context, String url, Long id);
+    public void loadComments(Context context, ComplaintDto complaintDto);
 }

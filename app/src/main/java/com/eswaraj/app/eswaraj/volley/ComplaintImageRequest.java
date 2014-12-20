@@ -57,7 +57,7 @@ public class ComplaintImageRequest extends BaseClass {
                 GetComplaintImageEvent event = new GetComplaintImageEvent();
                 event.setSuccess(true);
                 eventBus.post(event);
-                middlewareService.updateCategoriesImages(context);
+                middlewareService.updateComplaintImage(context);
             }
         };
     }

@@ -9,6 +9,7 @@ import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.config.PreferenceConstants;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
+import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
 import com.eswaraj.app.eswaraj.events.GetUserComplaintsEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
@@ -20,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -164,5 +166,37 @@ public class Cache extends BaseClass implements CacheInterface {
             event.setError("Invalid json");
             eventBus.post(event);
         }
+    }
+
+    @Override
+    public Boolean isComplaintImageAvailable(Context context, String url, Long id) {
+        return new File(context.getFilesDir() + "/eSwaraj_complaint_" + id + ".png").exists();
+    }
+
+    @Override
+    public void updateComplaintImage(Context context) {
+        //Nothing to do here. Keeping the method for consistency
+    }
+
+    @Override
+    public void loadComplaintImage(Context context, String url, Long id) {
+        GetComplaintImageEvent event = new GetComplaintImageEvent();
+        event.setSuccess(true);
+        eventBus.post(event);
+    }
+
+    @Override
+    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto) {
+        return false;
+    }
+
+    @Override
+    public void updateComments(Context context, String json, ComplaintDto complaintDto) {
+        //Nothing to do here right now. Might update later
+    }
+
+    @Override
+    public void loadComments(Context context, ComplaintDto complaintDto) {
+        //Will not get called right now
     }
 }

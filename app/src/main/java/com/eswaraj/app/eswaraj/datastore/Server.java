@@ -16,6 +16,7 @@ import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
+import com.eswaraj.app.eswaraj.volley.CommentsRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintImageRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
@@ -25,6 +26,7 @@ import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
 import com.eswaraj.app.eswaraj.volley.UserComplaintsRequest;
 import com.eswaraj.web.dto.AddressDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.PersonDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.UserDto;
@@ -63,6 +65,8 @@ public class Server extends BaseClass implements ServerInterface {
     UserComplaintsRequest userComplaintsRequest;
     @Inject
     ComplaintImageRequest complaintImageRequest;
+    @Inject
+    CommentsRequest commentsRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -108,6 +112,11 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void loadComplaintImage(Context context, String url, Long id) {
         complaintImageRequest.processRequest(context, url, id);
+    }
+
+    @Override
+    public void loadComments(Context context, ComplaintDto complaintDto) {
+        commentsRequest.processRequest(context, complaintDto);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.eswaraj.app.eswaraj.datastore;
 import android.content.Context;
 
 import com.eswaraj.app.eswaraj.middleware.MiddlewareGetService;
+import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.UserDto;
 
 public interface CacheInterface extends MiddlewareGetService {
@@ -22,4 +23,7 @@ public interface CacheInterface extends MiddlewareGetService {
 
     public Boolean isComplaintImageAvailable(Context context, String url, Long id);
     public void updateComplaintImage(Context context);
+
+    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto);
+    public void updateComments(Context context, String json, ComplaintDto complaintDto);
 }
