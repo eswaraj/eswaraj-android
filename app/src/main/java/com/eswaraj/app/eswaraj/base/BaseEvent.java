@@ -1,4 +1,4 @@
-package com.eswaraj.app.eswaraj.events;
+package com.eswaraj.app.eswaraj.base;
 
 
 public class BaseEvent {
