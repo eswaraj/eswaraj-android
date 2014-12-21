@@ -54,7 +54,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     Session session;
 
     //TODO:Remove this after testing
-    Boolean debugMode = true;
+    Boolean debugMode = false;
 
     @Override
     protected void onStart() {

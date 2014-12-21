@@ -90,12 +90,12 @@ public class Server extends BaseClass implements ServerInterface {
         UserDto userDto = new UserDto();
         PersonDto personDto = new PersonDto();
         AddressDto addressDto = new AddressDto();
-        addressDto.setLattitude(100.0);
-        addressDto.setLongitude(25.0);
+        addressDto.setLattitude(28.64);
+        addressDto.setLongitude(77.22);
         personDto.setPersonAddress(addressDto);
         userDto.setPerson(personDto);
-        userDto.setId((long) 84075);
-        userDto.setExternalId("fac31d43-d4d5-4906-8410-6c0648a1b0d9");
+        userDto.setId((long) 84076);
+        userDto.setExternalId("47cf0992-42f4-49ec-9ae0-d12ee91d4bae");
 
         GetUserEvent event = new GetUserEvent();
         event.setSuccess(true);

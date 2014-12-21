@@ -18,13 +18,16 @@ import android.widget.Toast;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
+import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -39,6 +42,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     private GoogleMapFragment googleMapFragment;
     private File imageFile;
     private ComplaintDto complaintDto;
+    private List<CategoryWithChildCategoryDto> categoryList;
 
     private TextView mlaName;
     private ImageView mlaPhoto;
@@ -65,6 +69,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         googleMapFragment.setContext(this);
 
         imageFile = (File) getActivity().getIntent().getSerializableExtra("IMAGE");
+        complaintDto = (ComplaintDto) getActivity().getIntent().getSerializableExtra("COMPLAINT");
 
         if(imageFile != null) {
             Bitmap myBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
@@ -101,9 +106,20 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         googleMapFragment.updateMarkerLocation(complaintDto.getLattitude(), complaintDto.getLongitude());
     }
 
-    public void onEventMainThread(SavedComplaintEvent event) {
+
+    public void onEventMainThread(GetCategoriesDataEvent event) {
         if(event.getSuccess()) {
-            complaintDto = event.getComplaintDto();
+            categoryList = event.getCategoryList();
+            for(CategoryWithChildCategoryDto root : categoryList) {
+                if(root.getChildCategories() != null) {
+                    for (CategoryWithChildCategoryDto child : root.getChildCategories()) {
+                        if (child.getId() == complaintDto.getCategoryId()) {
+                            category.setText(child.getName());
+                            break;
+                        }
+                    }
+                }
+            }
         }
         else {
             //This will never happen

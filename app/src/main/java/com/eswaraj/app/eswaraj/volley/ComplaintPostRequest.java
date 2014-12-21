@@ -59,12 +59,11 @@ public class ComplaintPostRequest extends BaseClass {
         return new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("ComplaintPostRequest: Response = ", response);
                 ComplaintDto complaintDto = new Gson().fromJson(response, ComplaintDto.class);
                 SavedComplaintEvent event = new SavedComplaintEvent();
                 event.setSuccess(true);
                 event.setComplaintDto(complaintDto);
-                eventBus.postSticky(event);
+                eventBus.post(event);
             }
         };
     }
@@ -77,7 +76,7 @@ public class ComplaintPostRequest extends BaseClass {
                 SavedComplaintEvent event = new SavedComplaintEvent();
                 event.setSuccess(false);
                 event.setError(error.toString());
-                eventBus.postSticky(event);
+                eventBus.post(event);
             }
         };
     }

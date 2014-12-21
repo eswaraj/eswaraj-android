@@ -29,7 +29,7 @@ public class LoadCategoriesDataRequest extends BaseClass {
     @Inject
     EventBus eventBus;
     @Inject
-    MiddlewareServiceImpl middlewareService;
+    Cache cache;
     @Inject
     NetworkAccessHelper networkAccessHelper;
 
@@ -62,7 +62,7 @@ public class LoadCategoriesDataRequest extends BaseClass {
                     getCategoriesDataEvent.setCategoryList(categoryDtoList);
                     eventBus.post(getCategoriesDataEvent);
                     //Update the cache
-                    middlewareService.updateCategoriesData(context, json);
+                    cache.updateCategoriesData(context, json);
                 } catch (JsonParseException e) {
                     GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
                     getCategoriesDataEvent.setError("Invalid json");

@@ -7,6 +7,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.Constants;
+import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.events.GetCommentsEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -28,7 +29,7 @@ public class CommentsRequest extends BaseClass {
     @Inject
     EventBus eventBus;
     @Inject
-    MiddlewareServiceImpl middlewareService;
+    Cache cache;
     @Inject
     NetworkAccessHelper networkAccessHelper;
 
@@ -61,7 +62,7 @@ public class CommentsRequest extends BaseClass {
                     event.setCommentDtos(commentDtos);
                     eventBus.post(event);
                     //Update the cache
-                    middlewareService.updateComments(context, json, complaintDto);
+                    cache.updateComments(context, json, complaintDto);
                 } catch (JsonParseException e) {
                     GetCommentsEvent event = new GetCommentsEvent();
                     event.setError("Invalid json");

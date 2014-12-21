@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.eswaraj.app.eswaraj.base.BaseClass;
+import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
@@ -28,7 +29,7 @@ public class ComplaintImageRequest extends BaseClass {
     @Inject
     EventBus eventBus;
     @Inject
-    MiddlewareServiceImpl middlewareService;
+    Cache cache;
 
     public void processRequest(Context context, String url, Long id) {
         if(url != "") {
@@ -57,7 +58,7 @@ public class ComplaintImageRequest extends BaseClass {
                 GetComplaintImageEvent event = new GetComplaintImageEvent();
                 event.setSuccess(true);
                 eventBus.post(event);
-                middlewareService.updateComplaintImage(context);
+                cache.updateComplaintImage(context);
             }
         };
     }

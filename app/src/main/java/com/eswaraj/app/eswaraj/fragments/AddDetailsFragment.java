@@ -26,6 +26,7 @@ import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareService;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.UserDto;
 
@@ -45,6 +46,8 @@ public class AddDetailsFragment extends BaseFragment {
     EventBus eventBus;
     @Inject
     MiddlewareServiceImpl middlewareService;
+    @Inject
+    LocationUtil locationUtil;
 
     private Button takePhoto;
     private Button attachPhoto;
@@ -60,21 +63,22 @@ public class AddDetailsFragment extends BaseFragment {
     private static final int TAKE_PHOTO = 2;
 
     private File photoFile;
-    private File selectedFile;
+    private File selectedFile = null;
 
     public AddDetailsFragment() {
-        selectedFile = null;
     }
 
     @Override
     public void onStart() {
         super.onStart();
         eventBus.registerSticky(this);
+        locationUtil.startLocationService();
     }
 
     @Override
     public void onStop() {
         eventBus.unregister(this);
+        locationUtil.stopLocationService();
         super.onStop();
     }
 
@@ -88,6 +92,9 @@ public class AddDetailsFragment extends BaseFragment {
         post = (Button) rootView.findViewById(R.id.adPost);
         description = (EditText) rootView.findViewById(R.id.adDescription);
         selected = (TextView) rootView.findViewById(R.id.adSelected);
+
+        //Init
+        locationUtil.setup(getActivity());
 
         //Get the data from intent and display
         categoryWithChildCategoryDto = (CategoryWithChildCategoryDto) getActivity().getIntent().getSerializableExtra("TEMPLATE");
@@ -149,7 +156,8 @@ public class AddDetailsFragment extends BaseFragment {
             case SELECT_PHOTO:
                 if(resultCode == Activity.RESULT_OK) {
                     //Log.d("AttachPhoto", getPath(getActivity(), data.getData()));
-                    selectedFile = new File(data.getData().getPath());
+                    //selectedFile = new File(data.getData().getPath());
+                    selectedFile = new File(getPath(getActivity(), data.getData()));
                 }
                 break;
             case TAKE_PHOTO:
@@ -204,7 +212,9 @@ public class AddDetailsFragment extends BaseFragment {
         if(event.getSuccess()) {
             Log.d("AddDetailsFragment", "Saved complaint");
             Intent i = new Intent(getActivity(), ComplaintSummaryActivity.class);
+            i.putExtra("COMPLAINT", event.getComplaintDto());
             if(selectedFile != null) {
+                Log.d("IMAGE", "Putting file: " + selectedFile.getAbsolutePath());
                 i.putExtra("IMAGE", selectedFile);
             }
             getActivity().startActivity(i);
