@@ -24,6 +24,7 @@
 
         <Button
             android:id="@+id/mlSearchButton"
+            android:text="Search"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"/>

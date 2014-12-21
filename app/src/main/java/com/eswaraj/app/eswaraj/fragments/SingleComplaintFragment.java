@@ -65,25 +65,26 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         //Get data from intent
         complaintDto = (ComplaintDto) getActivity().getIntent().getSerializableExtra("COMPLAINT");
 
-        //Update text
-        for(CategoryWithChildCategoryDto root : categoryList) {
-            for(CategoryWithChildCategoryDto child : root.getChildCategories()) {
-                if(child.getId() == complaintDto.getCategoryId()) {
-                    scCategory.setText(child.getName());
-                    break;
-                }
-            }
-        }
+
         scDescription.setText(complaintDto.getDescription());
 
         //Set up fragments
         commentsFragment.setComplaintDto(complaintDto);
-        imageFragment.setImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
+        if(complaintDto.getImages() != null) {
+            imageFragment.setImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
+        }
         googleMapFragment.setContext(this);
 
         //Add fragments
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.scCommentContainer, commentsFragment).commit();
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.scDisplayContainer, imageFragment).commit();
+        if(complaintDto.getImages() != null) {
+            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.scDisplayContainer, imageFragment).commit();
+        }
+        else {
+            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.scDisplayContainer, googleMapFragment).commit();
+            scPhoto.setVisibility(View.INVISIBLE);
+            scMap.setVisibility(View.INVISIBLE);
+        }
 
         //Register listeners
         scPhoto.setOnClickListener(new Button.OnClickListener() {
@@ -122,6 +123,17 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     public void onEventMainThread(GetCategoriesDataEvent event) {
         if(event.getSuccess()) {
             categoryList = event.getCategoryList();
+            //Update text
+            for(CategoryWithChildCategoryDto root : categoryList) {
+                if(root.getChildCategories() != null) {
+                    for (CategoryWithChildCategoryDto child : root.getChildCategories()) {
+                        if (child.getId() == complaintDto.getCategoryId()) {
+                            scCategory.setText(child.getName());
+                            break;
+                        }
+                    }
+                }
+            }
         }
         else {
             //This will never happen

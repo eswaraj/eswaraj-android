@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.activities.MyComplaintsActivity;
 import com.eswaraj.app.eswaraj.adapters.BottomMenuBarAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.models.BottomMenuBarItem;
@@ -68,7 +69,7 @@ public class BottomMenuBarFragment extends Fragment {
         //Add all navigation items here
         //-1 means that icon is not present
         //null means that no target activity needs to be launched
-        arrayList.add(new BottomMenuBarItem(-1, "My Complaints", null));
+        arrayList.add(new BottomMenuBarItem(-1, "My Complaints", MyComplaintsActivity.class));
         arrayList.add(new BottomMenuBarItem(-1, "My Constituencies", null));
         arrayList.add(new BottomMenuBarItem(-1, "My Leaders", null));
         arrayList.add(new BottomMenuBarItem(-1, "My Profile", null));

@@ -139,10 +139,12 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     public void onEventMainThread(GetUserEvent event) {
         if(event.getSuccess()) {
             Log.d("SplashActivity", "GetUserEvent:Success");
-            this.userDto = event.getUserDto();
+            userDto = event.getUserDto();
             loginDone = true;
-            if(this.userDto.getPerson().getPersonAddress().getLongitude() != null) {
-                userLocationKnown = true;
+            if(userDto.getPerson().getPersonAddress() != null) {
+                if(userDto.getPerson().getPersonAddress().getLongitude() != null) {
+                    userLocationKnown = true;
+                }
             }
             if(serverDataDownloadDone) {
                 takeUserToNextScreen();

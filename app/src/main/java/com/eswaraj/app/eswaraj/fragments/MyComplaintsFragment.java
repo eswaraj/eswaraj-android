@@ -42,6 +42,8 @@ public class MyComplaintsFragment extends BaseFragment {
 
     private List<CategoryWithChildCategoryDto> categoryDtoList;
     private UserDto userDto;
+    private Boolean categoriesDataReady = false;
+    private Boolean userDataReady = false;
 
     public MyComplaintsFragment() {
         // Required empty public constructor
@@ -79,6 +81,10 @@ public class MyComplaintsFragment extends BaseFragment {
     public void onEventMainThread(GetCategoriesDataEvent event) {
         if(event.getSuccess()) {
             categoryDtoList = event.getCategoryList();
+            categoriesDataReady = true;
+            if(userDataReady) {
+                middlewareService.loadUserComplaints(getActivity(), userDto, true);
+            }
         }
         else {
             //This will never happen
@@ -88,8 +94,10 @@ public class MyComplaintsFragment extends BaseFragment {
     public void onEventMainThread(GetUserEvent event) {
         if(event.getSuccess()) {
             userDto = event.getUserDto();
-            //Not getting data from cache. Since this call will take time to publish an event, categoryListDto would already be available
-            middlewareService.loadUserComplaints(getActivity(), userDto, true);
+            userDataReady = true;
+            if(categoriesDataReady) {
+                middlewareService.loadUserComplaints(getActivity(), userDto, true);
+            }
         }
         else {
            //This will never happen

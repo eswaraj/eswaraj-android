@@ -57,10 +57,12 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         ComplaintDto complaintDto = complaintDtoList.get(position);
 
         for(CategoryWithChildCategoryDto root : categoryDtoList) {
-            for(CategoryWithChildCategoryDto child : root.getChildCategories()) {
-                if(child.getId() == complaintDto.getCategoryId()) {
-                    holder.mcCategory.setText(child.getName());
-                    break;
+            if(root.getChildCategories() != null) {
+                for (CategoryWithChildCategoryDto child : root.getChildCategories()) {
+                    if (child.getId() == complaintDto.getCategoryId()) {
+                        holder.mcCategory.setText(child.getName());
+                        break;
+                    }
                 }
             }
         }

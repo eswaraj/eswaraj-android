@@ -83,10 +83,11 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void loadUserData(Context context, Session session) {
 
-        //registerFacebookUserRequest.processRequest(context, session);
+        registerFacebookUserRequest.processRequest(context, session);
 
         //TODO: Uncomment above line and delete the mock code once the server side fixes are done
 
+        /*
         UserDto userDto = new UserDto();
         PersonDto personDto = new PersonDto();
         AddressDto addressDto = new AddressDto();
@@ -101,6 +102,7 @@ public class Server extends BaseClass implements ServerInterface {
         event.setSuccess(true);
         event.setUserDto(userDto);
         eventBus.postSticky(event);
+        */
 
     }
 

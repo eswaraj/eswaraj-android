@@ -5,7 +5,9 @@ package com.eswaraj.app.eswaraj.volley;
 import android.location.Location;
 import android.util.Log;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.Constants;
@@ -47,6 +49,7 @@ public class ComplaintPostRequest extends BaseClass {
         ComplaintPostVolleyRequest request = null;
         try {
             request = new ComplaintPostVolleyRequest(createErrorListener(), createSuccessListener(), saveComplaintRequestDto, image, Constants.POST_COMPLAINT_URL);
+            request.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 3));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

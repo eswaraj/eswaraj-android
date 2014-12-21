@@ -85,6 +85,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
                 middlewareService.saveUserLocation(view.getContext(), userDto, lat, lng);
                 Intent i = new Intent(view.getContext(), SelectAmenityActivity.class);
                 view.getContext().startActivity(i);
+                finish();
             }
         });
 

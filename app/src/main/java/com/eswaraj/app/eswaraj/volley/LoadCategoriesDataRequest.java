@@ -44,7 +44,7 @@ public class LoadCategoriesDataRequest extends BaseClass {
             public void onErrorResponse(VolleyError error) {
                 GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
                 getCategoriesDataEvent.setError(error.toString());
-                eventBus.post(getCategoriesDataEvent);
+                eventBus.postSticky(getCategoriesDataEvent);
             }
         };
     }
@@ -60,13 +60,13 @@ public class LoadCategoriesDataRequest extends BaseClass {
                     categoryDtoList = gson.fromJson(json, new TypeToken<ArrayList<CategoryWithChildCategoryDto>>(){}.getType());
                     getCategoriesDataEvent.setSuccess(true);
                     getCategoriesDataEvent.setCategoryList(categoryDtoList);
-                    eventBus.post(getCategoriesDataEvent);
+                    eventBus.postSticky(getCategoriesDataEvent);
                     //Update the cache
                     cache.updateCategoriesData(context, json);
                 } catch (JsonParseException e) {
                     GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
                     getCategoriesDataEvent.setError("Invalid json");
-                    eventBus.post(getCategoriesDataEvent);
+                    eventBus.postSticky(getCategoriesDataEvent);
                 }
             }
         };

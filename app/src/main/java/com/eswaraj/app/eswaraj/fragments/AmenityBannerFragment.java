@@ -66,6 +66,5 @@ public class AmenityBannerFragment extends BaseFragment implements View.OnClickL
         else {
             video = null;
         }
-        Log.d("Video", video);
     }
 }

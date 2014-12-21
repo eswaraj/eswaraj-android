@@ -65,6 +65,8 @@ public class AddDetailsFragment extends BaseFragment {
     private File photoFile;
     private File selectedFile = null;
 
+    private Boolean posted = false;
+
     public AddDetailsFragment() {
     }
 
@@ -143,7 +145,10 @@ public class AddDetailsFragment extends BaseFragment {
         post.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                middlewareService.postComplaint(userDto, categoryWithChildCategoryDto, location, description.getText().toString(), selectedFile);
+                if(!posted) {
+                    posted = true;
+                    middlewareService.postComplaint(userDto, categoryWithChildCategoryDto, location, description.getText().toString(), selectedFile);
+                }
             }
         });
         return rootView;

@@ -83,9 +83,6 @@ public class LoadCategoriesImagesRequest extends BaseClass {
                 errorImages = error.toString();
                 imageResCount.incrementAndGet();
                 if(imageResCount.get() == imageReqCount) {
-                    //All image download requests completed. Publish an event now
-                    Log.d("ImageReqCountE", Integer.toString(imageReqCount));
-                    Log.d("ImageResCountE", Integer.toString(imageResCount.get()));
                     GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
                     getCategoriesImagesEvent.setSuccess(successImages);
                     getCategoriesImagesEvent.setError(errorImages);
@@ -102,9 +99,6 @@ public class LoadCategoriesImagesRequest extends BaseClass {
                 saveBitmapToFile(bitmap, id, context, icon);
                 imageResCount.incrementAndGet();
                 if(imageResCount.get() == imageReqCount) {
-                    //All image download requests completed. Publish an event now
-                    Log.d("ImageReqCountS", Integer.toString(imageReqCount));
-                    Log.d("ImageResCountS", Integer.toString(imageResCount.get()));
                     GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
                     getCategoriesImagesEvent.setSuccess(successImages);
                     eventBus.post(getCategoriesImagesEvent);
