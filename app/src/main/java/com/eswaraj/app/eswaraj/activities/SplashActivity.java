@@ -1,5 +1,6 @@
 package com.eswaraj.app.eswaraj.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,8 +54,8 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     //Facebook Session
     Session session;
 
-    //TODO:Remove this after testing
-    Boolean debugMode = false;
+    private ProgressDialog pDialog;
+
 
     @Override
     protected void onStart() {
@@ -102,6 +103,11 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     public void onFacebookLoginDone(Session session) {
         this.session = session;
         middlewareService.loadUserData(this, session);
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Setting things up ...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
     }
 
     @Override
@@ -177,6 +183,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
 
     private void takeUserToNextScreen() {
         Log.d("SplashActivity", "takeUserToNextScreen");
+        pDialog.dismiss();
         if(!hasNeededServices) {
             return;
         }
@@ -191,9 +198,6 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
                 }
                 else {
                     i = new Intent(this, MarkLocationActivity.class);
-                }
-                if(debugMode) {
-                    i = new Intent(this, LaunchActivity.class);
                 }
                 startActivity(i);
                 finish(); //User cant press back to return to this activity

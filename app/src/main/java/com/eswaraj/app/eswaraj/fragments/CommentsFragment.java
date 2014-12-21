@@ -132,6 +132,7 @@ public class CommentsFragment extends BaseFragment {
                     commentListAdapter.notifyDataSetChanged();
                 }
             });
+            Toast.makeText(getActivity(), "Comment Posted", Toast.LENGTH_LONG).show();
         }
         else {
             Toast.makeText(getActivity(), "Failed to save comment. Error = " + event.getError(), Toast.LENGTH_LONG).show();

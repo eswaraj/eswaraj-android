@@ -2,6 +2,7 @@ package com.eswaraj.app.eswaraj.fragments;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -66,6 +67,7 @@ public class AddDetailsFragment extends BaseFragment {
     private File selectedFile = null;
 
     private Boolean posted = false;
+    private ProgressDialog pDialog;
 
     public AddDetailsFragment() {
     }
@@ -148,6 +150,11 @@ public class AddDetailsFragment extends BaseFragment {
                 if(!posted) {
                     posted = true;
                     middlewareService.postComplaint(userDto, categoryWithChildCategoryDto, location, description.getText().toString(), selectedFile);
+                    pDialog = new ProgressDialog(getActivity());
+                    pDialog.setMessage("Posting your complaint ...");
+                    pDialog.setIndeterminate(false);
+                    pDialog.setCancelable(false);
+                    pDialog.show();
                 }
             }
         });
@@ -214,6 +221,7 @@ public class AddDetailsFragment extends BaseFragment {
     }
 
     public void onEventMainThread(SavedComplaintEvent event) {
+        pDialog.dismiss();
         if(event.getSuccess()) {
             Log.d("AddDetailsFragment", "Saved complaint");
             Intent i = new Intent(getActivity(), ComplaintSummaryActivity.class);

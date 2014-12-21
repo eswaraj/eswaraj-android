@@ -1,5 +1,6 @@
 package com.eswaraj.app.eswaraj.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.Location;
 import android.support.v7.app.ActionBarActivity;
@@ -53,6 +54,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     private EditText mlSearchText;
     private Button mlSearchButton;
     private ListView mlSearchResults;
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +118,12 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         super.onStart();
         eventBus.registerSticky(this);
         locationUtil.startLocationService();
+
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Getting your location ...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
     }
 
     @Override
@@ -127,6 +135,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
 
     public void onEventMainThread(Location location) {
         if(mapReady && !markerUpdatedOnce) {
+            pDialog.dismiss();
             googleMapFragment.updateMarkerLocation(location.getLatitude(), location.getLongitude());
             markerUpdatedOnce = true;
         }
