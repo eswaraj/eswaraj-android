@@ -59,6 +59,14 @@ public class CommentListAdapter extends ArrayAdapter<CommentDto> {
         return row;
     }
 
+    public void addComment(CommentDto newCommentDto) {
+        commentDtoList.add(0, newCommentDto);
+    }
+
+    public void updateList(List<CommentDto> commentDtoList) {
+        this.commentDtoList = commentDtoList;
+    }
+
     static class CommentDtoHolder
     {
         TextView cName;

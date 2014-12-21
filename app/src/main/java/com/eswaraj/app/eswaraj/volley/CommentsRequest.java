@@ -33,8 +33,8 @@ public class CommentsRequest extends BaseClass {
     @Inject
     NetworkAccessHelper networkAccessHelper;
 
-    public void processRequest(Context context, ComplaintDto complaintDto) {
-        StringRequest request = new StringRequest(Constants.getCommentsUrl(complaintDto.getId()), createSuccessListener(context, complaintDto), createErrorListener(context));
+    public void processRequest(Context context, ComplaintDto complaintDto, int count) {
+        StringRequest request = new StringRequest(Constants.getCommentsUrl(complaintDto.getId(), count), createSuccessListener(context, complaintDto, count), createErrorListener(context));
         this.networkAccessHelper.submitNetworkRequest("GetComments" + complaintDto.getId(), request);
     }
 
@@ -49,7 +49,7 @@ public class CommentsRequest extends BaseClass {
         };
     }
 
-    private Response.Listener<String> createSuccessListener(final Context context, final ComplaintDto complaintDto) {
+    private Response.Listener<String> createSuccessListener(final Context context, final ComplaintDto complaintDto, final int count) {
         return new Response.Listener<String>() {
             @Override
             public void onResponse(String json) {
@@ -62,7 +62,7 @@ public class CommentsRequest extends BaseClass {
                     event.setCommentDtos(commentDtos);
                     eventBus.post(event);
                     //Update the cache
-                    cache.updateComments(context, json, complaintDto);
+                    cache.updateComments(context, json, complaintDto, count);
                 } catch (JsonParseException e) {
                     GetCommentsEvent event = new GetCommentsEvent();
                     event.setError("Invalid json");

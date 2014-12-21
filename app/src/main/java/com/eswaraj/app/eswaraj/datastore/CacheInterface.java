@@ -24,6 +24,6 @@ public interface CacheInterface extends MiddlewareGetService {
     public Boolean isComplaintImageAvailable(Context context, String url, Long id);
     public void updateComplaintImage(Context context);
 
-    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto);
-    public void updateComments(Context context, String json, ComplaintDto complaintDto);
+    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto, int count);
+    public void updateComments(Context context, String json, ComplaintDto complaintDto, int count);
 }

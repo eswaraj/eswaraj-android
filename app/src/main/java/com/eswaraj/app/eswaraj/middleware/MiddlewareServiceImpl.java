@@ -196,27 +196,32 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void loadComments(Context context, ComplaintDto complaintDto, Boolean dontGetFromCache) {
-        server.loadComments(context, complaintDto);
+    public void loadComments(Context context, ComplaintDto complaintDto, int count, Boolean dontGetFromCache) {
+        server.loadComments(context, complaintDto, count);
     }
 
     @Override
-    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto) {
-        return cache.isCommentsAvailable(context, complaintDto);
+    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto, int count) {
+        return cache.isCommentsAvailable(context, complaintDto, count);
     }
 
     @Override
-    public void updateComments(Context context, String json, ComplaintDto complaintDto) {
-        cache.updateComments(context, json, complaintDto);
+    public void updateComments(Context context, String json, ComplaintDto complaintDto, int count) {
+        cache.updateComments(context, json, complaintDto, count);
     }
 
     @Override
-    public void loadComments(Context context, ComplaintDto complaintDto) {
-        if(cache.isCommentsAvailable(context, complaintDto)) {
-            cache.loadComments(context, complaintDto);
+    public void loadComments(Context context, ComplaintDto complaintDto, int count) {
+        if(cache.isCommentsAvailable(context, complaintDto, count)) {
+            cache.loadComments(context, complaintDto, count);
         }
         else {
-            server.loadComments(context, complaintDto);
+            server.loadComments(context, complaintDto, count);
         }
+    }
+
+    @Override
+    public void postComment(UserDto userDto, ComplaintDto complaintDto, String comment) {
+        server.postComment(userDto, complaintDto, comment);
     }
 }

@@ -8,6 +8,16 @@ public class CommentDto {
     private Long id;
     private Boolean adminComment;
     private Commenter postedBy;
+    private Long commentedById;
+
+
+    public Long getCommentedById() {
+        return commentedById;
+    }
+
+    public void setCommentedById(Long commentedById) {
+        this.commentedById = commentedById;
+    }
 
     public String getText() {
         return text;
@@ -47,6 +57,10 @@ public class CommentDto {
 
     public void setPostedBy(Commenter postedBy) {
         this.postedBy = postedBy;
+    }
+
+    public void createNewCommenter() {
+        postedBy = new Commenter();
     }
 
 

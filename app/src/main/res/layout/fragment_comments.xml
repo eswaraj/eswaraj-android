@@ -40,4 +40,10 @@
         android:layout_weight="6">
     </ListView>
 
+    <Button
+        android:id="@+id/cShowMore"
+        android:text="Show More"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

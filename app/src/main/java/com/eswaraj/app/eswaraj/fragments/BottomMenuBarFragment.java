@@ -1,6 +1,7 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -57,6 +58,7 @@ public class BottomMenuBarFragment extends Fragment {
                 Class targetActivity = item.getTargetActivity();
                 if(targetActivity != null) {
                     Intent i = new Intent(getActivity(), targetActivity);
+                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(i);
                 }
             }

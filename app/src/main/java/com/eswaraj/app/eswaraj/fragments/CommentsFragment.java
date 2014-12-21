@@ -15,9 +15,12 @@ import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.adapters.CommentListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.GetCommentsEvent;
+import com.eswaraj.app.eswaraj.events.GetUserEvent;
+import com.eswaraj.app.eswaraj.events.SavedCommentEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.CommentDto;
 import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.web.dto.UserDto;
 
 import java.util.List;
 
@@ -33,6 +36,7 @@ public class CommentsFragment extends BaseFragment {
     @Inject
     MiddlewareServiceImpl middlewareService;
 
+    private UserDto userDto;
     private ComplaintDto complaintDto;
     private List<CommentDto> commentDtoList;
     private CommentListAdapter commentListAdapter;
@@ -40,6 +44,7 @@ public class CommentsFragment extends BaseFragment {
     private Button cSend;
     private EditText cComment;
     private ListView cOldComments;
+    private Button cShowMore;
 
     public CommentsFragment() {
         // Required empty public constructor
@@ -55,12 +60,20 @@ public class CommentsFragment extends BaseFragment {
         cSend = (Button) rootView.findViewById(R.id.cSend);
         cComment = (EditText) rootView.findViewById(R.id.cComment);
         cOldComments = (ListView) rootView.findViewById(R.id.cOldComments);
+        cShowMore = (Button) rootView.findViewById(R.id.cShowMore);
+
 
         cSend.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Post comment request launch here
-                //On completion update the adapter to add the new comment
+                middlewareService.postComment(userDto, complaintDto, cComment.getText().toString());
+            }
+        });
+
+        cShowMore.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                middlewareService.loadComments(getActivity(), complaintDto, commentDtoList.size() + 50);
             }
         });
         return rootView;
@@ -69,8 +82,8 @@ public class CommentsFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        eventBus.register(this);
-        middlewareService.loadComments(getActivity(), complaintDto);
+        eventBus.registerSticky(this);
+        middlewareService.loadComments(getActivity(), complaintDto, 50);
     }
 
     @Override
@@ -79,14 +92,49 @@ public class CommentsFragment extends BaseFragment {
         super.onStop();
     }
 
-    public void onEventMainThread(GetCommentsEvent event) {
+    public void onEventMainThread(final GetCommentsEvent event) {
         if(event.getSuccess()) {
-            commentDtoList = event.getCommentDtos();
-            commentListAdapter = new CommentListAdapter(getActivity(), R.layout.item_comment_list, commentDtoList);
-            cOldComments.setAdapter(commentListAdapter);
+            if(commentListAdapter == null) {
+                commentDtoList = event.getCommentDtos();
+                commentListAdapter = new CommentListAdapter(getActivity(), R.layout.item_comment_list, commentDtoList);
+                cOldComments.setAdapter(commentListAdapter);
+            }
+            else {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        commentDtoList = event.getCommentDtos();
+                        commentListAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
         }
         else {
             Toast.makeText(getActivity(), "Failed to fetch comments. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onEventMainThread(GetUserEvent event) {
+        if(event.getSuccess()) {
+            userDto = event.getUserDto();
+        }
+        else {
+            //This will never happen
+        }
+    }
+
+    public void onEventMainThread(final SavedCommentEvent event) {
+        if(event.getSuccess()) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    commentListAdapter.addComment(event.getCommentDto());
+                    commentListAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+        else {
+            Toast.makeText(getActivity(), "Failed to save comment. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -16,6 +16,7 @@ import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
+import com.eswaraj.app.eswaraj.volley.CommentPostRequest;
 import com.eswaraj.app.eswaraj.volley.CommentsRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintImageRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
@@ -67,6 +68,8 @@ public class Server extends BaseClass implements ServerInterface {
     ComplaintImageRequest complaintImageRequest;
     @Inject
     CommentsRequest commentsRequest;
+    @Inject
+    CommentPostRequest commentPostRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -117,8 +120,8 @@ public class Server extends BaseClass implements ServerInterface {
     }
 
     @Override
-    public void loadComments(Context context, ComplaintDto complaintDto) {
-        commentsRequest.processRequest(context, complaintDto);
+    public void loadComments(Context context, ComplaintDto complaintDto, int count) {
+        commentsRequest.processRequest(context, complaintDto, count);
     }
 
     @Override
@@ -134,5 +137,10 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void postComplaint(UserDto userDto, CategoryWithChildCategoryDto categoryDto, Location location, String description, File image) {
         complaintPostRequest.processRequest(userDto, categoryDto, location, description, image);
+    }
+
+    @Override
+    public void postComment(UserDto userDto, ComplaintDto complaintDto, String comment) {
+        commentPostRequest.processRequest(userDto, complaintDto, comment);
     }
 }

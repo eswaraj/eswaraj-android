@@ -37,6 +37,7 @@ import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
+import com.eswaraj.app.eswaraj.volley.CommentPostRequest;
 import com.eswaraj.app.eswaraj.volley.CommentsRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintImageRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
@@ -90,7 +91,8 @@ import de.greenrobot.event.EventBus;
                 ImageFragment.class,
                 ComplaintImageRequest.class,
                 CommentsFragment.class,
-                CommentsRequest.class
+                CommentsRequest.class,
+                CommentPostRequest.class
         },
         complete = false,
         library = true
@@ -199,5 +201,10 @@ public class MiddlewareGraph {
     @Provides @Singleton
     CommentsRequest provideCommentsRequest() {
         return new CommentsRequest();
+    }
+
+    @Provides @Singleton
+    CommentPostRequest provideCommentPostRequest() {
+        return new CommentPostRequest();
     }
 }

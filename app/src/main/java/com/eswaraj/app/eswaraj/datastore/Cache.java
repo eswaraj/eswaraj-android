@@ -186,17 +186,17 @@ public class Cache extends BaseClass implements CacheInterface {
     }
 
     @Override
-    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto) {
+    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto, int count) {
         return false;
     }
 
     @Override
-    public void updateComments(Context context, String json, ComplaintDto complaintDto) {
+    public void updateComments(Context context, String json, ComplaintDto complaintDto, int count) {
         //Nothing to do here right now. Might update later
     }
 
     @Override
-    public void loadComments(Context context, ComplaintDto complaintDto) {
+    public void loadComments(Context context, ComplaintDto complaintDto, int count) {
         //Will not get called right now
     }
 }
