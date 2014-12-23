@@ -200,6 +200,8 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
                     i = new Intent(this, MarkLocationActivity.class);
                 }
                 startActivity(i);
+                locationUtil.stopLocationService();
+                eventBus.unregister(this);
                 finish(); //User cant press back to return to this activity
             }
         }

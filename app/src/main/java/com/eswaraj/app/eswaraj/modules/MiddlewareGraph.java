@@ -22,6 +22,7 @@ import com.eswaraj.app.eswaraj.fragments.AmenityBannerFragment;
 import com.eswaraj.app.eswaraj.fragments.CommentsFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryFragment;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
+import com.eswaraj.app.eswaraj.fragments.GooglePlacesListFragment;
 import com.eswaraj.app.eswaraj.fragments.ImageFragment;
 import com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment;
 import com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment;
@@ -92,7 +93,8 @@ import de.greenrobot.event.EventBus;
                 ComplaintImageRequest.class,
                 CommentsFragment.class,
                 CommentsRequest.class,
-                CommentPostRequest.class
+                CommentPostRequest.class,
+                GooglePlacesListFragment.class
         },
         complete = false,
         library = true
@@ -131,7 +133,7 @@ public class MiddlewareGraph {
     }
 
 
-    @Provides @Singleton
+    @Provides
     LocationUtil provideLocationUtil() {
         return new LocationUtil();
     }

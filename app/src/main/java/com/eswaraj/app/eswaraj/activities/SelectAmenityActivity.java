@@ -3,6 +3,7 @@ package com.eswaraj.app.eswaraj.activities;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
@@ -36,6 +37,7 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
     private Location lastLocation;
     private ReverseGeocodingTask reverseGeocodingTask;
     private Boolean mapReady;
+    TextView asRevGeocode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,8 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
             getSupportFragmentManager().beginTransaction().add(R.id.asMenubar, bottomMenuBarFragment).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.asMapContainer, googleMapFragment).commit();
         }
+
+        asRevGeocode = (TextView) findViewById(R.id.asRevGeocode);
 
         //Do setup
         googleMapFragment.setContext(this);
@@ -84,27 +88,32 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
             lastLocation = location;
             //2. Start rev geocoding task
             if(reverseGeocodingTask != null) {
-                if(reverseGeocodingTask.getStatus() != AsyncTask.Status.FINISHED) {
-                    reverseGeocodingTask.cancel(true);
+                if(reverseGeocodingTask.getStatus() == AsyncTask.Status.FINISHED) {
+                    reverseGeocodingTask = new ReverseGeocodingTask(this, location);
+                    reverseGeocodingTask.execute();
                 }
             }
-            reverseGeocodingTask = new ReverseGeocodingTask(this, location);
-            reverseGeocodingTask.execute();
+            else {
+                reverseGeocodingTask = new ReverseGeocodingTask(this, location);
+                reverseGeocodingTask.execute();
+            }
         }
         else {
             lastLocation = location;
             if(reverseGeocodingTask != null) {
-                if(reverseGeocodingTask.getStatus() != AsyncTask.Status.FINISHED) {
-                    reverseGeocodingTask.cancel(true);
+                if(reverseGeocodingTask.getStatus() == AsyncTask.Status.FINISHED) {
+                    reverseGeocodingTask = new ReverseGeocodingTask(this, location);
+                    reverseGeocodingTask.execute();
                 }
             }
-            reverseGeocodingTask = new ReverseGeocodingTask(this, location);
-            reverseGeocodingTask.execute();
+            else {
+                reverseGeocodingTask = new ReverseGeocodingTask(this, location);
+                reverseGeocodingTask.execute();
+            }
         }
     }
 
     public void onEventMainThread(RevGeocodeEvent event) {
-        TextView asRevGeocode = (TextView) findViewById(R.id.asRevGeocode);
         if(event.getSuccess()) {
             asRevGeocode.setText(event.getRevGeocodedLocation());
         }

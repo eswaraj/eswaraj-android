@@ -38,10 +38,10 @@ public class LocationUtil extends BaseClass implements GoogleApiClient.Connectio
         locationRequest = LocationRequest.create();
         // Use high accuracy
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        // Set the update interval to 30 seconds
-        locationRequest.setInterval(30000);
-        // Set the fastest update interval to 10 second
-        locationRequest.setFastestInterval(10000);
+        // Set the update interval to 3 seconds
+        locationRequest.setInterval(3000);
+        // Set the fastest update interval to 1 second
+        locationRequest.setFastestInterval(1000);
     }
 
     public void startLocationService() {

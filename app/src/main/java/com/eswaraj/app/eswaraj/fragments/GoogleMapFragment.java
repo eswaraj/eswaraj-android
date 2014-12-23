@@ -1,56 +1,43 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.eswaraj.app.eswaraj.R;
-import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallback {
+public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyCallback {
 
-    private OnMapReadyCallback context;
-    private SupportMapFragment supportMapFragment;
+    private OnMapReadyCallback callback;
     private GoogleMap googleMap;
     private Marker marker;
+    private int zoomLevel;
     private MarkerOptions markerOptions;
-    private int zoomLevel = 14;
-    private Boolean draggable = false;
+    private Boolean draggable;
 
     public GoogleMapFragment() {
-
+        zoomLevel = 14;
+        draggable = false;
     }
 
     public void setContext(OnMapReadyCallback context) {
-        this.context = context;
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_google_map, container, false);
-        supportMapFragment = SupportMapFragment.newInstance();
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.map, supportMapFragment).commit();
-        supportMapFragment.getMapAsync(this);
-        return rootView;
+        this.callback = context;
+        super.getMapAsync(this);
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+        if(callback != null) {
+            callback.onMapReady(googleMap);
+        }
     }
-
 
     public void setZoomLevel(int zoomLevel) {
         this.zoomLevel = zoomLevel;
@@ -61,22 +48,24 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
     }
 
     public void updateMarkerLocation(double lat, double lng) {
-        if(googleMap == null) {
-            return;
-        }
+        LatLng location = new LatLng(lat, lng);
+
         if(marker == null) {
-            markerOptions.position(new LatLng(lat, lng));
+            markerOptions = new MarkerOptions();
+            markerOptions.visible(true);
+            markerOptions.position(location);
+            markerOptions.draggable(draggable);
             marker = googleMap.addMarker(markerOptions);
-            marker.setDraggable(draggable);
         }
 
-        LatLng location = new LatLng(lat, lng);
-        CameraUpdate zoom = CameraUpdateFactory.zoomTo(this.zoomLevel);
-        CameraUpdate center = CameraUpdateFactory.newLatLng(location);
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(location)
+                .zoom(zoomLevel)
+                .bearing(0)
+                .tilt(45)
+                .build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         marker.setPosition(location);
-        googleMap.moveCamera(center);
-        googleMap.animateCamera(zoom);
-        marker.setVisible(true);
     }
 
     public void makeMarkerDraggable() {
@@ -87,11 +76,11 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
     }
 
     public double getMarkerLatitude() {
-        return this.marker.getPosition().latitude;
+        return marker.getPosition().latitude;
     }
 
     public double getMarkerLongitude() {
-        return this.marker.getPosition().longitude;
+        return marker.getPosition().longitude;
     }
 
     public void disableGestures() {
@@ -104,23 +93,5 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
         uiSettings.setMyLocationButtonEnabled(false);
         uiSettings.setScrollGesturesEnabled(false);
         uiSettings.setCompassEnabled(false);
-    }
-
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        this.googleMap = googleMap;
-
-        //Add marker to map
-        markerOptions = new MarkerOptions();
-        markerOptions.position(new LatLng(0, 0));
-        markerOptions.visible(false);
-        markerOptions.draggable(false);
-
-
-        //Call callback for parent activity
-        if(context != null) {
-            context.onMapReady(googleMap);
-        }
     }
 }
