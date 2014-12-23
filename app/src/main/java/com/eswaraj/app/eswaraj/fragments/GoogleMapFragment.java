@@ -1,6 +1,8 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
+import android.util.Log;
+
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,11 +34,26 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
         this.googleMap = googleMap;
         if(callback != null) {
             callback.onMapReady(googleMap);
         }
+        googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker arg0) {
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public void onMarkerDragEnd(Marker arg0) {
+                googleMap.animateCamera(CameraUpdateFactory.newLatLng(arg0.getPosition()));
+            }
+
+            @Override
+            public void onMarkerDrag(Marker arg0) {
+            }
+        });
     }
 
     public void setZoomLevel(int zoomLevel) {

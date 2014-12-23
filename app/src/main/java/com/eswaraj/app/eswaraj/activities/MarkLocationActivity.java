@@ -21,6 +21,7 @@ import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.GooglePlace;
 import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
+import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.web.dto.UserDto;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -48,7 +49,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     private Button mlSaveLocation;
     private EditText mlSearchText;
     private Button mlSearchButton;
-    private ProgressDialog pDialog;
+    private CustomProgressDialog pDialog;
     private Boolean mapDisplayed;
     private GooglePlace googlePlace;
 
@@ -122,10 +123,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         eventBus.registerSticky(this);
         locationUtil.startLocationService();
 
-        pDialog = new ProgressDialog(this);
-        pDialog.setMessage("Getting your location ...");
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(false);
+        pDialog = new CustomProgressDialog(this, false, true, "Getting your locating...");
         pDialog.show();
     }
 

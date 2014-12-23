@@ -17,6 +17,7 @@ import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
+import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.AppEventsLogger;
 import com.facebook.Session;
@@ -54,7 +55,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     //Facebook Session
     Session session;
 
-    private ProgressDialog pDialog;
+    private CustomProgressDialog pDialog;
 
 
     @Override
@@ -103,10 +104,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     public void onFacebookLoginDone(Session session) {
         this.session = session;
         middlewareService.loadUserData(this, session);
-        pDialog = new ProgressDialog(this);
-        pDialog.setMessage("Setting things up ...");
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(false);
+        pDialog = new CustomProgressDialog(this, false, true, "Setting things up");
         pDialog.show();
     }
 

@@ -28,6 +28,7 @@ import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareService;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
+import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.UserDto;
 
@@ -67,7 +68,7 @@ public class AddDetailsFragment extends BaseFragment {
     private File selectedFile = null;
 
     private Boolean posted = false;
-    private ProgressDialog pDialog;
+    private CustomProgressDialog pDialog;
 
     public AddDetailsFragment() {
     }
@@ -150,10 +151,7 @@ public class AddDetailsFragment extends BaseFragment {
                 if(!posted) {
                     posted = true;
                     middlewareService.postComplaint(userDto, categoryWithChildCategoryDto, location, description.getText().toString(), selectedFile);
-                    pDialog = new ProgressDialog(getActivity());
-                    pDialog.setMessage("Posting your complaint ...");
-                    pDialog.setIndeterminate(false);
-                    pDialog.setCancelable(false);
+                    pDialog = new CustomProgressDialog(getActivity(), false, true, "Posting your complaint ...");
                     pDialog.show();
                 }
             }
@@ -167,8 +165,6 @@ public class AddDetailsFragment extends BaseFragment {
         switch (requestCode) {
             case SELECT_PHOTO:
                 if(resultCode == Activity.RESULT_OK) {
-                    //Log.d("AttachPhoto", getPath(getActivity(), data.getData()));
-                    //selectedFile = new File(data.getData().getPath());
                     selectedFile = new File(getPath(getActivity(), data.getData()));
                 }
                 break;
