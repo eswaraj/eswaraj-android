@@ -91,6 +91,13 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         mlSearchButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(mapDisplayed) {
+                    mapDisplayed = false;
+                    mapReady = false;
+
+                    getSupportFragmentManager().beginTransaction().remove(googleMapFragment).commit();
+                    getSupportFragmentManager().beginTransaction().add(R.id.mlContainer, googlePlacesListFragment).commit();
+                }
                 googlePlacesUtil.getPlacesList(mlSearchText.getText().toString());
                 hideKeyboard();
             }

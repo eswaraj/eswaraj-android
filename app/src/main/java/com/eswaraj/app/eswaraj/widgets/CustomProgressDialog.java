@@ -2,39 +2,31 @@ package com.eswaraj.app.eswaraj.widgets;
 
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 
-public class CustomProgressDialog extends ProgressDialog {
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
+public class CustomProgressDialog extends SweetAlertDialog {
 
     private Context context;
     private Boolean onBackButtonExitActivity;
 
     public CustomProgressDialog(Context context) {
-        super(context);
-        this.context = context;
-    }
-
-    public CustomProgressDialog(Context context, int theme) {
-        super(context, theme);
+        super(context, SweetAlertDialog.PROGRESS_TYPE);
+        getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         this.context = context;
     }
 
     public CustomProgressDialog(Context context, Boolean cancelable, Boolean onBackButtonExitActivity, String message) {
-        super(context);
+        super(context, SweetAlertDialog.PROGRESS_TYPE);
         this.onBackButtonExitActivity = onBackButtonExitActivity;
+        getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         this.context = context;
         setCancelable(cancelable);
-        setMessage(message);
+        setTitleText(message);
     }
 
-    public CustomProgressDialog(Context context, int theme, Boolean cancelable, Boolean onBackButtonExitActivity, String message) {
-        super(context, theme);
-        this.onBackButtonExitActivity = onBackButtonExitActivity;
-        this.context = context;
-        setCancelable(cancelable);
-        setMessage(message);
-    }
 
     @Override
     public void onBackPressed() {

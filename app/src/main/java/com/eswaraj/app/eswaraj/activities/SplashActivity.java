@@ -1,6 +1,5 @@
 package com.eswaraj.app.eswaraj.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,11 +12,11 @@ import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
+import com.eswaraj.app.eswaraj.interfaces.LaunchNextActivityInterface;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
-import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.AppEventsLogger;
 import com.facebook.Session;
@@ -26,7 +25,7 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class SplashActivity extends BaseActivity implements FacebookLoginInterface{
+public class SplashActivity extends BaseActivity implements FacebookLoginInterface, LaunchNextActivityInterface {
 
     private SplashFragment splashFragment;
     @Inject
@@ -54,8 +53,6 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
 
     //Facebook Session
     Session session;
-
-    private CustomProgressDialog pDialog;
 
 
     @Override
@@ -104,8 +101,6 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     public void onFacebookLoginDone(Session session) {
         this.session = session;
         middlewareService.loadUserData(this, session);
-        pDialog = new CustomProgressDialog(this, false, true, "Setting things up");
-        pDialog.show();
     }
 
     @Override
@@ -151,7 +146,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
                 }
             }
             if(serverDataDownloadDone) {
-                takeUserToNextScreen();
+                appReady();
             }
         }
         else {
@@ -166,7 +161,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
             Log.d("SplashActivity", "GetCategoriesImagesEvent:Success");
             serverDataDownloadDone = true;
             if (loginDone) {
-                takeUserToNextScreen();
+                appReady();
             }
         }
         else {
@@ -174,14 +169,18 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
             //Show retry button which will re-trigger the request.
             serverDataDownloadDone = true;
             if (loginDone) {
-                takeUserToNextScreen();
+                appReady();
             }
         }
     }
 
-    private void takeUserToNextScreen() {
+    private void appReady() {
+        splashFragment.setShowInstruction(!userLocationKnown);
+        splashFragment.notifyAppReady();
+    }
+
+    public void takeUserToNextScreen() {
         Log.d("SplashActivity", "takeUserToNextScreen");
-        pDialog.dismiss();
         if(!hasNeededServices) {
             return;
         }

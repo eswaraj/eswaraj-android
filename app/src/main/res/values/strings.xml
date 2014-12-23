@@ -9,6 +9,7 @@
     <string name="loginButtonText">Login with Facebook</string>
     <string name="skipButtonText">Skip</string>
     <string name="quitButtonText">Quit</string>
+    <string name="gotItButtonText">Got It!</string>
     <string name="getDataError">Network Error. Could not fetch data</string>
     <string name="facebook_app_id">958809957480252</string>
     <string name="facebook_app_id_old">306847796169444</string>
