@@ -1,5 +1,6 @@
 package com.eswaraj.app.eswaraj.activities;
 
+import android.content.Context;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
     MiddlewareServiceImpl middlewareService;
     @Inject
     EventBus eventBus;
+    @Inject
+    Context applicationContext;
 
     private BottomMenuBarFragment bottomMenuBarFragment;
     private AmenitiesFragment amenitiesFragment;
@@ -45,7 +48,6 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
         setContentView(R.layout.activity_select_amenity);
         lastLocation = null;
         mapReady = false;
-        locationUtil.setup(this);
         bottomMenuBarFragment = BottomMenuBarFragment.newInstance();
         amenitiesFragment = AmenitiesFragment.newInstance();
         googleMapFragment = new GoogleMapFragment();
@@ -65,14 +67,14 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
 
     @Override
     protected void onStart() {
-        eventBus.registerSticky(this);
         super.onStart();
-        locationUtil.startLocationService();
+        eventBus.registerSticky(this);
+        locationUtil.subscribe(applicationContext, false);
     }
 
     @Override
     protected void onStop() {
-        locationUtil.stopLocationService();
+        locationUtil.unsubscribe();
         eventBus.unregister(this);
         super.onStop();
     }

@@ -1,5 +1,6 @@
 package com.eswaraj.app.eswaraj.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,22 +11,20 @@ import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
+import com.eswaraj.app.eswaraj.events.UserButtonClickEvent;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
-import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
-import com.eswaraj.app.eswaraj.interfaces.LaunchNextActivityInterface;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
-import com.eswaraj.web.dto.UserDto;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.facebook.AppEventsLogger;
-import com.facebook.Session;
 
 import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class SplashActivity extends BaseActivity implements FacebookLoginInterface, LaunchNextActivityInterface {
+public class SplashActivity extends BaseActivity {
 
     private SplashFragment splashFragment;
     @Inject
@@ -38,9 +37,10 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     MiddlewareServiceImpl middlewareService;
     @Inject
     EventBus eventBus;
-
-    //Logged-in user
-    UserDto userDto;
+    @Inject
+    UserSessionUtil userSession;
+    @Inject
+    Context applicationContext;
 
     //Internet and Location service availability
     Boolean hasNeededServices;
@@ -49,31 +49,22 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     Boolean loginDone;
     Boolean serverDataDownloadDone;
     Boolean redirectDone;
-    Boolean userLocationKnown;
 
-    //Facebook Session
-    Session session;
 
 
     @Override
     protected void onStart() {
         super.onStart();
-        eventBus.registerSticky(this);
 
-        //Start location service
-        locationUtil.startLocationService();
-        //Start data download from server, if needed
+        locationUtil.subscribe(applicationContext, false);
         middlewareService.loadCategoriesData(this, true);
-        //Check if Internet connection and Location services are present. If not, don't proceed.
         hasNeededServices = checkLocationAndInternet();
         splashFragment.notifyServiceAvailability(hasNeededServices);
     }
 
     @Override
     protected void onStop() {
-        //Stop location service
-        locationUtil.stopLocationService();
-        eventBus.unregister(this);
+        locationUtil.unsubscribe();
         super.onStop();
     }
 
@@ -82,25 +73,15 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        splashFragment = SplashFragment.newInstance("", "");
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.SplashFragmentContainer, splashFragment).commit();
-        }
+        splashFragment = (SplashFragment) getSupportFragmentManager().findFragmentById(R.id.splashFragment);
 
-        locationUtil.setup(this);
+        eventBus.registerSticky(this);
 
         //Set up initial state
         loginDone = false;
         serverDataDownloadDone = false;
         redirectDone = false;
-        userLocationKnown = false;
 
-    }
-
-    @Override
-    public void onFacebookLoginDone(Session session) {
-        this.session = session;
-        middlewareService.loadUserData(this, session);
     }
 
     @Override
@@ -123,6 +104,11 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
         AppEventsLogger.activateApp(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        eventBus.unregister(this);
+        super.onDestroy();
+    }
 
     public void onEventMainThread(GetCategoriesDataEvent event) {
         if(event.getSuccess()) {
@@ -138,20 +124,10 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     public void onEventMainThread(GetUserEvent event) {
         if(event.getSuccess()) {
             Log.d("SplashActivity", "GetUserEvent:Success");
-            userDto = event.getUserDto();
             loginDone = true;
-            if(userDto.getPerson().getPersonAddress() != null) {
-                if(userDto.getPerson().getPersonAddress().getLongitude() != null) {
-                    userLocationKnown = true;
-                }
-            }
             if(serverDataDownloadDone) {
                 appReady();
             }
-        }
-        else {
-            Toast.makeText(this, "Could not fetch user details from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-            //Show retry button which will re-trigger the request.
         }
     }
 
@@ -174,9 +150,16 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
         }
     }
 
+    public void onEventMainThread(UserButtonClickEvent event) {
+        takeUserToNextScreen();
+    }
+
     private void appReady() {
-        splashFragment.setShowInstruction(!userLocationKnown);
+        splashFragment.setShowInstruction(!userSession.isUserLocationKnown());
         splashFragment.notifyAppReady();
+        if(userSession.isUserLocationKnown()) {
+            takeUserToNextScreen();
+        }
     }
 
     public void takeUserToNextScreen() {
@@ -190,7 +173,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
             } else {
                 redirectDone = true;
                 Intent i = null;
-                if(userLocationKnown) {
+                if(userSession.isUserLocationKnown()) {
                     i = new Intent(this, SelectAmenityActivity.class);
                 }
                 else {

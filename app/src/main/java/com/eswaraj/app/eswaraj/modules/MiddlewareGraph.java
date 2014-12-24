@@ -38,6 +38,7 @@ import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.volley.CommentPostRequest;
 import com.eswaraj.app.eswaraj.volley.CommentsRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintImageRequest;
@@ -123,6 +124,11 @@ public class MiddlewareGraph {
     }
 
     @Provides @Singleton
+    UserSessionUtil provideUserSessionUtil() {
+        return new UserSessionUtil();
+    }
+
+    @Provides @Singleton
     SharedPreferencesHelper provideSharedPreferencesHelper() {
         return new SharedPreferencesHelper();
     }
@@ -133,7 +139,7 @@ public class MiddlewareGraph {
     }
 
 
-    @Provides
+    @Provides @Singleton
     LocationUtil provideLocationUtil() {
         return new LocationUtil();
     }

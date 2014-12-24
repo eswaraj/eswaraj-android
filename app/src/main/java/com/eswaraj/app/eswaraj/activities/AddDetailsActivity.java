@@ -1,5 +1,6 @@
 package com.eswaraj.app.eswaraj.activities;
 
+import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -15,6 +16,8 @@ public class AddDetailsActivity extends BaseActivity {
 
     @Inject
     LocationUtil locationUtil;
+    @Inject
+    Context applicationContext;
 
     private AddDetailsFragment addDetailsFragment;
     private BottomMenuBarFragment bottomMenuBarFragment;
@@ -31,19 +34,17 @@ public class AddDetailsActivity extends BaseActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.adContainer, addDetailsFragment).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.adMenuBar, bottomMenuBarFragment).commit();
         }
-
-        locationUtil.setup(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        locationUtil.startLocationService();
+        locationUtil.subscribe(applicationContext, false);
     }
 
     @Override
     protected void onStop() {
-        locationUtil.stopLocationService();
+        locationUtil.unsubscribe();
         super.onStop();
     }
 

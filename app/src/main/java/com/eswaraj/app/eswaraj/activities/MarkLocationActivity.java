@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -40,6 +41,8 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     LocationUtil locationUtil;
     @Inject
     GooglePlacesUtil googlePlacesUtil;
+    @Inject
+    Context applicationContext;
 
     private GoogleMapFragment googleMapFragment;
     private GooglePlacesListFragment googlePlacesListFragment;
@@ -67,7 +70,6 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         }
 
         //Initialization
-        locationUtil.setup(this);
         googleMapFragment.setContext(this);
         mlSaveLocation = (Button) findViewById(R.id.mlSaveLocation);
         mlSearchText = (EditText) findViewById(R.id.mlSearchText);
@@ -119,8 +121,8 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
 
     @Override
     protected void onStop() {
-        locationUtil.stopLocationService();
         eventBus.unregister(this);
+        locationUtil.unsubscribe();
         super.onStop();
     }
 
@@ -128,7 +130,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     protected void onStart() {
         super.onStart();
         eventBus.registerSticky(this);
-        locationUtil.startLocationService();
+        locationUtil.subscribe(applicationContext, true);
 
         pDialog = new CustomProgressDialog(this, false, true, "Getting your locating...");
         pDialog.show();

@@ -3,25 +3,31 @@ package com.eswaraj.app.eswaraj.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
-import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
-import com.eswaraj.app.eswaraj.interfaces.LaunchNextActivityInterface;
+import com.eswaraj.app.eswaraj.events.FacebookSessionEvent;
+import com.eswaraj.app.eswaraj.events.GetUserEvent;
+import com.eswaraj.app.eswaraj.events.UserButtonClickEvent;
+import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
-import com.facebook.Session;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.facebook.widget.LoginButton;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import javax.inject.Inject;
 
+import de.greenrobot.event.EventBus;
 
-public class SplashFragment extends BaseFragment implements FacebookLoginInterface {
+
+public class SplashFragment extends BaseFragment {
 
     //UI elements holders
     Button buttonQuit;
@@ -32,10 +38,16 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
 
     @Inject
     FacebookLoginUtil facebookLoginUtil;
+    @Inject
+    EventBus eventBus;
+    @Inject
+    MiddlewareServiceImpl middlewareService;
+    @Inject
+    UserSessionUtil userSession;
 
     private Boolean showInstruction;
 
-    public static SplashFragment newInstance(String param1, String param2) {
+    public static SplashFragment newInstance() {
         SplashFragment fragment = new SplashFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -73,7 +85,7 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
         buttonGotIt.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((LaunchNextActivityInterface) v.getContext()).takeUserToNextScreen();
+                eventBus.post(new UserButtonClickEvent());
             }
         });
 
@@ -107,20 +119,19 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
             welcomeText.setText("The app is setup.\n\nOn the next screen you will be asked to mark your home location on a map.\n\nThis is a one-time activity and will help us serve you data about your constituency.");
             buttonGotIt.setVisibility(View.VISIBLE);
         }
-        else {
-            ((LaunchNextActivityInterface) getActivity()).takeUserToNextScreen();
-        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        facebookLoginUtil.onCreate(this, savedInstanceState);
+        eventBus.registerSticky(this);
+        facebookLoginUtil.onCreate(getActivity(), savedInstanceState);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        eventBus.unregister(this);
         facebookLoginUtil.onDestroy();
     }
 
@@ -133,7 +144,7 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
     @Override
     public void onResume() {
         super.onResume();
-        facebookLoginUtil.onResume(this);
+        facebookLoginUtil.onResume();
     }
 
     @Override
@@ -148,20 +159,34 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
         return view;
     }
 
-
-    @Override
-    public void onFacebookLoginDone(Session session) {
-        //LoginDone flag will not be updated here since that should happen only once userDto is available
-        buttonLogin.setVisibility(View.INVISIBLE);
-        progressWheel.setVisibility(View.VISIBLE);
-        progressWheel.spin();
-        ((FacebookLoginInterface)getActivity()).onFacebookLoginDone(session);
-    }
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         facebookLoginUtil.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void onEventMainThread(FacebookSessionEvent event) {
+        if(event.getLogin()) {
+            //LoginDone flag will not be updated here since that should happen only once userDto is available
+            buttonLogin.setVisibility(View.INVISIBLE);
+            progressWheel.setVisibility(View.VISIBLE);
+            progressWheel.spin();
+            middlewareService.loadUserData(getActivity(), event.getSession());
+        }
+        else {
+            //Update the cache with null to indicate that user has logged out and user object in cache is not valid anymore
+            middlewareService.updateUserData(getActivity(), null);
+        }
+    }
+
+    public void onEventMainThread(GetUserEvent event) {
+        if(event.getSuccess()) {
+            Log.d("SplashFragment", "GetUserEvent:Success");
+            userSession.setUser(event.getUserDto());
+        }
+        else {
+            Toast.makeText(getActivity(), "Could not fetch user details from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            //Show retry button which will re-trigger the request.
+        }
     }
 }

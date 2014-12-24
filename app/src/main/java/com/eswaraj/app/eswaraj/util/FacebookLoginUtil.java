@@ -1,15 +1,12 @@
 package com.eswaraj.app.eswaraj.util;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.eswaraj.app.eswaraj.base.BaseClass;
-import com.eswaraj.app.eswaraj.datastore.Cache;
-import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
-import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.events.FacebookSessionEvent;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
@@ -19,31 +16,33 @@ import java.util.Arrays;
 
 import javax.inject.Inject;
 
+import de.greenrobot.event.EventBus;
+
 public class FacebookLoginUtil extends BaseClass {
 
     @Inject
-    MiddlewareServiceImpl middlewareService;
+    EventBus eventBus;
 
     private UiLifecycleHelper uiHelper;
     private Session.StatusCallback callback;
     private String TAG = "FacebookLoginUtil";
 
-    public void onCreate(final FacebookLoginInterface context, Bundle savedInstanceState) {
+    public void onCreate(Activity context, Bundle savedInstanceState) {
         callback = new Session.StatusCallback() {
             @Override
             public void call(Session session, SessionState state, Exception exception) {
-                onSessionStateChange(context, session, state, exception);
+                onSessionStateChange(session, state, exception);
             }
         };
-        uiHelper = new UiLifecycleHelper(((Fragment)context).getActivity(), callback);
+        uiHelper = new UiLifecycleHelper(context, callback);
         uiHelper.onCreate(savedInstanceState);
     }
 
-    public void onResume(FacebookLoginInterface context) {
+    public void onResume() {
         Session session = Session.getActiveSession();
         if (session != null &&
                 (session.isOpened() || session.isClosed()) ) {
-            onSessionStateChange(context, session, session.getState(), null);
+            onSessionStateChange(session, session.getState(), null);
         }
         uiHelper.onResume();
     }
@@ -73,14 +72,17 @@ public class FacebookLoginUtil extends BaseClass {
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
     }
 
-    public void onSessionStateChange(FacebookLoginInterface context, Session session, SessionState state, Exception exception) {
+    public void onSessionStateChange(Session session, SessionState state, Exception exception) {
+        FacebookSessionEvent event = new FacebookSessionEvent();
+        event.setSuccess(true);
+        event.setSession(session);
         if (state.isOpened()) {
             Log.d(TAG, "Logged in...");
-            context.onFacebookLoginDone(session);
+            event.setLogin(true);
         } else if (state.isClosed()) {
             Log.d(TAG, "Logged out...");
-            //Update the cache with null to indicate that user has logged out and user object in cache is not valid anymore
-            middlewareService.updateUserData(((Fragment)context).getActivity(), null);
+            event.setLogin(false);
         }
+        eventBus.post(event);
     }
 }

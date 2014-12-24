@@ -21,6 +21,14 @@ public class LocationUtil extends BaseClass implements GoogleApiClient.Connectio
     private LocationRequest locationRequest;
     private GoogleApiClient googleApiClient;
 
+    private Location lastKnownLocation;
+    private Long lastLocationServiceStartTime = 0L;
+    private Long lastLocationServiceStopTime = 0L;
+
+    private Boolean setupDone = false;
+    private Boolean getContinuousUpdates = false;
+    private Boolean nextActivityNeedsUpdates = true;
+
     @Inject
     EventBus eventBus;
 
@@ -29,30 +37,35 @@ public class LocationUtil extends BaseClass implements GoogleApiClient.Connectio
     }
 
     public void setup(Context context) {
-        googleApiClient = new GoogleApiClient.Builder(context)
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-        // Create the LocationRequest object
-        locationRequest = LocationRequest.create();
-        // Use high accuracy
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        // Set the update interval to 3 seconds
-        locationRequest.setInterval(3000);
-        // Set the fastest update interval to 1 second
-        locationRequest.setFastestInterval(1000);
+        if(!setupDone) {
+            googleApiClient = new GoogleApiClient.Builder(context)
+                    .addApi(LocationServices.API)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .build();
+            locationRequest = LocationRequest.create();
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            locationRequest.setInterval(3000);
+            locationRequest.setFastestInterval(1000);
+            setupDone = true;
+        }
     }
 
     public void startLocationService() {
-        googleApiClient.connect();
+        Log.d("LocationUtil", "Start called");
+        lastLocationServiceStartTime = System.currentTimeMillis();
+        if(!googleApiClient.isConnected()) {
+            googleApiClient.connect();
+        }
     }
 
     public void stopLocationService() {
+        Log.d("LocationUtil", "Stop called");
+        lastLocationServiceStopTime = System.currentTimeMillis();
         if (googleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+            googleApiClient.disconnect();
         }
-        googleApiClient.disconnect();
     }
 
     @Override
@@ -68,11 +81,52 @@ public class LocationUtil extends BaseClass implements GoogleApiClient.Connectio
 
     @Override
     public void onLocationChanged(Location location) {
-        this.eventBus.postSticky(location);
+        stopLocationListenerIfNeeded();
+        setLastKnownLocation(location);
+        eventBus.post(location);
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.d("LocationService", "Connection Failed");
+    }
+
+    //This is the user entry point to receive location updates
+    public void subscribe(Context context, Boolean getContinuousUpdates) {
+        Log.d("LocationUtil", "Sub called");
+        this.getContinuousUpdates = getContinuousUpdates;
+        setup(context);
+        startLocationListenerIfNeeded();
+        if(lastKnownLocation != null) {
+            eventBus.post(lastKnownLocation);
+        }
+        nextActivityNeedsUpdates = !nextActivityNeedsUpdates;
+    }
+
+    public void unsubscribe() {
+        Log.d("LocationUtil", "Unsub called");
+        if(!nextActivityNeedsUpdates) {
+            stopLocationService();
+            nextActivityNeedsUpdates = true;
+        }
+        else {
+            nextActivityNeedsUpdates = false;
+        }
+    }
+
+    public void setLastKnownLocation(Location lastKnownLocation) {
+        this.lastKnownLocation = lastKnownLocation;
+    }
+
+    private void startLocationListenerIfNeeded() {
+        if((lastKnownLocation == null && !googleApiClient.isConnected()) || getContinuousUpdates || (System.currentTimeMillis() - lastLocationServiceStopTime > 60000)) {
+            startLocationService();
+        }
+    }
+
+    private void stopLocationListenerIfNeeded() {
+        if(lastKnownLocation != null && googleApiClient.isConnected() && !getContinuousUpdates && (System.currentTimeMillis() - lastLocationServiceStartTime) > 60000) {
+            stopLocationService();
+        }
     }
 }

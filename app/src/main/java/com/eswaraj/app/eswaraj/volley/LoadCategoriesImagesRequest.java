@@ -47,31 +47,21 @@ public class LoadCategoriesImagesRequest extends BaseClass {
 
     public void processRequest(Context context, List<CategoryWithChildCategoryDto> categoriesList) {
         imageReqCount = categoriesList.size()*2;
-        Boolean icon = null;
         for(CategoryWithChildCategoryDto categoryDto : categoriesList) {
-            String url = categoryDto.getImageUrl();
-            icon = true;
-            if(url != "") {
-                Log.d("LoadCategoriesImages", url);
-                Long id = categoryDto.getId();
-                ImageRequest request = new ImageRequest(url, createSuccessListener(context, id, icon), 0, 0, null, createErrorListener(context));
-                this.networkAccessHelper.submitNetworkRequest("GetImage" + id, request);
-            }
-            else {
-                imageResCount.incrementAndGet();
-            }
+            launchRequest(context, categoryDto.getImageUrl(), true, categoryDto.getId());
+            launchRequest(context, categoryDto.getHeaderImageUrl(), false, categoryDto.getId());
+        }
+    }
 
-            url = categoryDto.getHeaderImageUrl();
-            icon = false;
-            if(url != "") {
-                Log.d("LoadCategoriesImages", url);
-                Long id = categoryDto.getId();
-                ImageRequest request = new ImageRequest(url, createSuccessListener(context, id, icon), 0, 0, null, createErrorListener(context));
-                this.networkAccessHelper.submitNetworkRequest("GetHeaderImage" + id, request);
-            }
-            else {
-                imageResCount.incrementAndGet();
-            }
+    private void launchRequest(Context context, String url, Boolean icon, Long id) {
+        if(!url.equals("")) {
+            Log.d("LoadCategoriesImages", url);
+            String tag = icon ? "GetImage" + id : "GetHeaderImage" + id;
+            ImageRequest request = new ImageRequest(url, createSuccessListener(context, id, icon), 0, 0, null, createErrorListener(context));
+            this.networkAccessHelper.submitNetworkRequest(tag, request);
+        }
+        else {
+            imageResCount.incrementAndGet();
         }
     }
 
