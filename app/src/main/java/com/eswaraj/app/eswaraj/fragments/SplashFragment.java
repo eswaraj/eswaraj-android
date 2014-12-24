@@ -3,22 +3,31 @@ package com.eswaraj.app.eswaraj.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
+import com.eswaraj.app.eswaraj.events.GetUserEvent;
+import com.eswaraj.app.eswaraj.events.LoginResultEvent;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
 import com.eswaraj.app.eswaraj.interfaces.LaunchNextActivityInterface;
+import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.models.UserSession;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
+import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
 import com.facebook.widget.LoginButton;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import javax.inject.Inject;
+
+import de.greenrobot.event.EventBus;
 
 
 public class SplashFragment extends BaseFragment implements FacebookLoginInterface {
@@ -30,17 +39,24 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
     TextView welcomeText;
     ProgressWheel progressWheel;
 
+    boolean loginDone = false;
+
+    //Facebook Session
+    Session session;
+
+    @Inject
+    UserSession userSession;
+
+    @Inject
+    EventBus eventBus;
+
+    @Inject
+    MiddlewareServiceImpl middlewareService;
+
     @Inject
     FacebookLoginUtil facebookLoginUtil;
 
-    private Boolean showInstruction;
-
-    public static SplashFragment newInstance(String param1, String param2) {
-        SplashFragment fragment = new SplashFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private boolean showInstruction = false;
 
     public SplashFragment() {
         // Required empty public constructor
@@ -49,6 +65,7 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
 
         //References to UI elements
         buttonLogin = (LoginButton) getView().findViewById(R.id.buttonLogin);
@@ -94,7 +111,7 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
         }
     }
 
-    public void setShowInstruction(Boolean show) {
+    public void setShowInstruction(boolean show) {
         showInstruction = show;
     }
 
@@ -107,21 +124,20 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
             welcomeText.setText("The app is setup.\n\nOn the next screen you will be asked to mark your home location on a map.\n\nThis is a one-time activity and will help us serve you data about your constituency.");
             buttonGotIt.setVisibility(View.VISIBLE);
         }
-        else {
-            ((LaunchNextActivityInterface) getActivity()).takeUserToNextScreen();
-        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         facebookLoginUtil.onCreate(this, savedInstanceState);
+        eventBus.register(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         facebookLoginUtil.onDestroy();
+        eventBus.unregister(this);
     }
 
     @Override
@@ -155,7 +171,8 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
         buttonLogin.setVisibility(View.INVISIBLE);
         progressWheel.setVisibility(View.VISIBLE);
         progressWheel.spin();
-        ((FacebookLoginInterface)getActivity()).onFacebookLoginDone(session);
+        this.session = session;
+        middlewareService.loadUserData(this.getActivity(), session);
     }
 
 
@@ -164,4 +181,29 @@ public class SplashFragment extends BaseFragment implements FacebookLoginInterfa
         super.onActivityResult(requestCode, resultCode, data);
         facebookLoginUtil.onActivityResult(requestCode, resultCode, data);
     }
+
+    public boolean getLoginDone() {
+        return loginDone;
+    }
+
+    public void setLoginDone(boolean loginDone) {
+        this.loginDone = loginDone;
+    }
+
+    public void onEventMainThread(GetUserEvent event) {
+        if(event.getSuccess()) {
+            Log.d("SplashActivity", "GetUserEvent:Success");
+            UserDto userDto = event.getUserDto();
+            userSession.setUser(userDto);
+            notifyAppReady();
+        }
+        else {
+            Toast.makeText(this.getActivity(), "Could not fetch user details from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            //Show retry button which will re-trigger the request.
+        }
+        LoginResultEvent loginResultEvent = new LoginResultEvent();
+        eventBus.post(loginResultEvent);
+    }
+
+
 }

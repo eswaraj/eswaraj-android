@@ -46,32 +46,21 @@ public class LoadCategoriesImagesRequest extends BaseClass {
     }
 
     public void processRequest(Context context, List<CategoryWithChildCategoryDto> categoriesList) {
-        imageReqCount = categoriesList.size()*2;
+        imageReqCount = categoriesList.size() * 2;//Double as each Category have one icon image and one header image
         Boolean icon = null;
         for(CategoryWithChildCategoryDto categoryDto : categoriesList) {
-            String url = categoryDto.getImageUrl();
-            icon = true;
-            if(url != "") {
-                Log.d("LoadCategoriesImages", url);
-                Long id = categoryDto.getId();
-                ImageRequest request = new ImageRequest(url, createSuccessListener(context, id, icon), 0, 0, null, createErrorListener(context));
-                this.networkAccessHelper.submitNetworkRequest("GetImage" + id, request);
-            }
-            else {
-                imageResCount.incrementAndGet();
-            }
-
-            url = categoryDto.getHeaderImageUrl();
-            icon = false;
-            if(url != "") {
-                Log.d("LoadCategoriesImages", url);
-                Long id = categoryDto.getId();
-                ImageRequest request = new ImageRequest(url, createSuccessListener(context, id, icon), 0, 0, null, createErrorListener(context));
-                this.networkAccessHelper.submitNetworkRequest("GetHeaderImage" + id, request);
-            }
-            else {
-                imageResCount.incrementAndGet();
-            }
+            downloadImage(context, categoryDto.getId(),categoryDto.getImageUrl(), true);
+            downloadImage(context, categoryDto.getId(),categoryDto.getHeaderImageUrl(), false);
+        }
+    }
+    private void downloadImage(Context context,Long id, String url, boolean icon){
+        if(url != null && !"".equals(url.trim())) {
+            Log.d("LoadCategoriesImages", url);
+            ImageRequest request = new ImageRequest(url, createSuccessListener(context, id, icon), 0, 0, null, createErrorListener(context));
+            this.networkAccessHelper.submitNetworkRequest("GetHeaderImage" + id, request);
+        }
+        else {
+            imageResCount.incrementAndGet();
         }
     }
 

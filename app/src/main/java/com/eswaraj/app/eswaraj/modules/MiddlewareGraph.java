@@ -31,6 +31,7 @@ import com.eswaraj.app.eswaraj.fragments.TemplatesFragment;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
+import com.eswaraj.app.eswaraj.models.UserSession;
 import com.eswaraj.app.eswaraj.util.DeviceUtil;
 import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
@@ -209,4 +210,10 @@ public class MiddlewareGraph {
     CommentPostRequest provideCommentPostRequest() {
         return new CommentPostRequest();
     }
+
+    @Provides @Singleton
+    UserSession userSession() {
+        return new UserSession();
+    }
+
 }
