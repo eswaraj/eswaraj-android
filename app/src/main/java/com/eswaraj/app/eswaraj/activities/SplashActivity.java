@@ -10,9 +10,11 @@ import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
+import com.eswaraj.app.eswaraj.events.LoginResultEvent;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.interfaces.FacebookLoginInterface;
 import com.eswaraj.app.eswaraj.interfaces.LaunchNextActivityInterface;
+import com.eswaraj.app.eswaraj.models.UserSession;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
@@ -25,7 +27,7 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class SplashActivity extends BaseActivity implements FacebookLoginInterface, LaunchNextActivityInterface {
+public class SplashActivity extends BaseActivity implements LaunchNextActivityInterface {
 
     private SplashFragment splashFragment;
     @Inject
@@ -40,33 +42,21 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     EventBus eventBus;
 
     //Logged-in user
-    UserDto userDto;
+    @Inject
+    UserSession userSession;
 
     //Internet and Location service availability
     Boolean hasNeededServices;
 
     //Maintain async task return state
-    Boolean loginDone;
     Boolean serverDataDownloadDone;
     Boolean redirectDone;
-    Boolean userLocationKnown;
-
-    //Facebook Session
-    Session session;
 
 
     @Override
     protected void onStart() {
         super.onStart();
-        eventBus.registerSticky(this);
 
-        //Start location service
-        locationUtil.startLocationService();
-        //Start data download from server, if needed
-        middlewareService.loadCategoriesData(this, true);
-        //Check if Internet connection and Location services are present. If not, don't proceed.
-        hasNeededServices = checkLocationAndInternet();
-        splashFragment.notifyServiceAvailability(hasNeededServices);
     }
 
     @Override
@@ -81,26 +71,24 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        eventBus.register(this);
 
-        splashFragment = SplashFragment.newInstance("", "");
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.SplashFragmentContainer, splashFragment).commit();
-        }
+        splashFragment = (SplashFragment)getSupportFragmentManager().findFragmentById(R.id.splash_fragment);
 
         locationUtil.setup(this);
 
         //Set up initial state
-        loginDone = false;
         serverDataDownloadDone = false;
         redirectDone = false;
-        userLocationKnown = false;
 
-    }
+        //Start location service
+        locationUtil.startLocationService();
+        //Start data download from server, if needed
+        middlewareService.loadCategoriesData(this, true);
+        //Check if Internet connection and Location services are present. If not, don't proceed.
+        hasNeededServices = checkLocationAndInternet();
+        splashFragment.notifyServiceAvailability(hasNeededServices);
 
-    @Override
-    public void onFacebookLoginDone(Session session) {
-        this.session = session;
-        middlewareService.loadUserData(this, session);
     }
 
     @Override
@@ -135,32 +123,18 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
         }
     }
 
-    public void onEventMainThread(GetUserEvent event) {
-        if(event.getSuccess()) {
-            Log.d("SplashActivity", "GetUserEvent:Success");
-            userDto = event.getUserDto();
-            loginDone = true;
-            if(userDto.getPerson().getPersonAddress() != null) {
-                if(userDto.getPerson().getPersonAddress().getLongitude() != null) {
-                    userLocationKnown = true;
-                }
-            }
-            if(serverDataDownloadDone) {
-                appReady();
-            }
-        }
-        else {
-            Toast.makeText(this, "Could not fetch user details from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-            //Show retry button which will re-trigger the request.
-        }
+
+
+
+    //Event When Login is Completed either fail or Success
+    public void onEventMainThread(LoginResultEvent event) {
+        takeUserToNextScreen();
     }
-
-
     public void onEventMainThread(GetCategoriesImagesEvent event) {
         if(event.getSuccess()) {
             Log.d("SplashActivity", "GetCategoriesImagesEvent:Success");
             serverDataDownloadDone = true;
-            if (loginDone) {
+            if (splashFragment.getLoginDone()) {
                 appReady();
             }
         }
@@ -168,14 +142,14 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
             Toast.makeText(this, "Could not fetch all categories images from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
             //Show retry button which will re-trigger the request.
             serverDataDownloadDone = true;
-            if (loginDone) {
+            if (splashFragment.getLoginDone()) {
                 appReady();
             }
         }
     }
 
     private void appReady() {
-        splashFragment.setShowInstruction(!userLocationKnown);
+        splashFragment.setShowInstruction(!userSession.isUserLocationKnown());
         splashFragment.notifyAppReady();
     }
 
@@ -190,7 +164,7 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
             } else {
                 redirectDone = true;
                 Intent i = null;
-                if(userLocationKnown) {
+                if(userSession.isUserLocationKnown()) {
                     i = new Intent(this, SelectAmenityActivity.class);
                 }
                 else {
@@ -198,7 +172,6 @@ public class SplashActivity extends BaseActivity implements FacebookLoginInterfa
                 }
                 startActivity(i);
                 locationUtil.stopLocationService();
-                eventBus.unregister(this);
                 finish(); //User cant press back to return to this activity
             }
         }
