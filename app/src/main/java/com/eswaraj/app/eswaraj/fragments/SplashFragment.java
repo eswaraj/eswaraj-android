@@ -1,6 +1,7 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -148,6 +149,7 @@ public class SplashFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_splash, container, false);
+        Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/HandmadeTypewriter.ttf");
 
         //References to UI elements
         buttonLogin = (LoginButton) view.findViewById(R.id.buttonLogin);
@@ -165,6 +167,7 @@ public class SplashFragment extends BaseFragment {
         buttonGotIt.setVisibility(View.INVISIBLE);
         progressWheel.setVisibility(View.INVISIBLE);
         welcomeText.setText("Lets be the change we want to see in the world.\nLets play our part in betterment of nation through click of a button.\n Lets live the dream of Swaraj");
+        welcomeText.setTypeface(custom_font);
 
         //Register callback handlers
         buttonQuit.setOnClickListener(new Button.OnClickListener() {

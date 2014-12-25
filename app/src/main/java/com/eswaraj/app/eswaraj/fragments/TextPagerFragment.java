@@ -1,5 +1,6 @@
 package com.eswaraj.app.eswaraj.fragments;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -32,7 +33,9 @@ public class TextPagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.splash_pager_text, container, false);
+        Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/HandmadeTypewriter.ttf");
         mTextView = (TextView) v.findViewById(R.id.splash_text);
+        mTextView.setTypeface(custom_font);
         return v;
     }
 

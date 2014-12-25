@@ -5,4 +5,5 @@
     android:gravity="center"
     android:textStyle="bold"
     android:id="@+id/splash_text"
+    android:textColor="#ffffff"
 />

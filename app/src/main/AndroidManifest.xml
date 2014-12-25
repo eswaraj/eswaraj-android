@@ -86,6 +86,7 @@
             android:label="@string/title_activity_mark_location"
             android:parentActivityName=".activities.SplashActivity"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

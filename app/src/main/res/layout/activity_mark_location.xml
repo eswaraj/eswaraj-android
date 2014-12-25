@@ -3,46 +3,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:weightSum="1"
     tools:context="com.eswaraj.app.eswaraj.activities.MarkLocationActivity">
 
-    <TextView android:text="Mark your Home location on map. This helps us serve you better.\n Hold on the marker for 2 seconds and then drag."
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-    <LinearLayout
-        android:orientation="horizontal"
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="40dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/navbar_logo"
+        android:layout_weight="0.3"
+        android:background="#fff1bd48"
+        android:paddingTop="5dp" />
+
+    <!--TextView android:text="Home location"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffff8833"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="@color/material_blue_grey_80"
+        android:textSize="20dp"
+        android:layout_weight="0.3"
+        /-->
+
+<RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout01"
+    android:layout_width="wrap_content"
+    android:layout_height="367dp"
+    android:weightSum="1"
+    android:layout_gravity="bottom|center"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:gravity="center_vertical|center_horizontal"
+    android:layout_weight="0.6">
+    >
+
+    <FrameLayout
+        android:id="@+id/mlContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="9"
+        android:layout_alignParentBottom="true">
+    </FrameLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:paddingTop="50dp">
 
         <EditText
             android:id="@+id/mlSearchText"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="7"/>
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_weight="0.8" />
 
         <Button
             android:id="@+id/mlSearchButton"
             android:text="Search"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"/>
-
+            android:gravity="center"
+            android:background="@drawable/nice_button"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:shadowRadius="1"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_weight="0.2"
+            android:layout_below="@+id/mlContainer"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/mlContainer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8">
-    </FrameLayout>
+</RelativeLayout>
 
     <Button
         android:id="@+id/mlSaveLocation"
         android:text="Save Location"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_margin="0dp"
+        android:layout_weight="0.1"
+        android:gravity="center_vertical|center_horizontal"
+        android:background="@drawable/nice_button"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        android:shadowRadius="1"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowColor="@android:color/black"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
 
 </LinearLayout>

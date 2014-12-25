@@ -3,6 +3,7 @@ package com.eswaraj.app.eswaraj.activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,9 @@ import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.web.dto.UserDto;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
+import com.github.amlcurran.showcaseview.targets.PointTarget;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
@@ -55,6 +59,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     private CustomProgressDialog pDialog;
     private Boolean mapDisplayed;
     private GooglePlace googlePlace;
+    private ShowcaseView showcaseView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +122,15 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
             }
         });
 
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+
+        new ShowcaseView.Builder(this)
+                .setTarget(new PointTarget(size.x/2, size.y/2))
+                .setContentTitle("Mark your home")
+                .setContentText("Touch and hold the marker for a second and then drag to mark your home on the map")
+                .hideOnTouchOutside()
+                .build();
     }
 
     @Override
