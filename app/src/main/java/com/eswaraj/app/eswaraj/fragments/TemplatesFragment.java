@@ -38,8 +38,9 @@ public class TemplatesFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_templates, container, false);
         listView = (ListView) rootView.findViewById(R.id.tList);
 
-        TemplateListAdapter templateListAdapter = new TemplateListAdapter(getActivity(), android.R.layout.simple_list_item_1, templates);
+        TemplateListAdapter templateListAdapter = new TemplateListAdapter(getActivity(), R.layout.item_subcategory_list, templates);
         listView.setAdapter(templateListAdapter);
+        listView.setDividerHeight(0);
 
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override

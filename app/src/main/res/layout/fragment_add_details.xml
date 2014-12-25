@@ -3,72 +3,147 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#ffe9e7ee"
     tools:context="com.eswaraj.app.eswaraj.fragments.AddDetailsFragment">
 
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="eSwaraj" />
+        android:layout_height="40dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/navbar_logo"
+        android:paddingTop="5dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="Citizen Service" />
+        android:text="Citizen Service"
+        android:padding="15dp"
+        android:textColor="#ffca3b36"
+        android:textStyle="bold"
+        android:shadowColor="#fff1974a"
+        android:textSize="20dp"
+        android:id="@+id/cs" />
 
     <TextView
         android:id="@+id/adSelected"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="" />
+        android:text=""
+        android:padding="15dp"
+        android:textColor="#ff3a4359"
+        android:shadowColor="#ff865429"
+        android:textSize="16dp"
+        android:gravity="top|fill_vertical"
+        android:layout_marginTop="-20dp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Please enter a brief description of the issue" />
+        android:text="Description"
+        android:padding="15dp"
+        android:textColor="#ffca3b36"
+        android:textStyle="bold"
+        android:shadowColor="#fff1974a"
+        android:textSize="20dp"
+        />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.8"
+        android:text="(Please enter a brief description of the issue)"
+        android:padding="15dp"
+        android:textColor="#ff798db9"
+        android:shadowColor="#fff1974a"
+        android:textSize="12dp"
+        android:gravity="center_vertical|fill_vertical"
+        android:layout_marginLeft="-30dp" />
+    </LinearLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="Description" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp" >
 
-    <EditText
-        android:id="@+id/adDescription"
+
+        <EditText
+            android:id="@+id/adDescription"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#fff1f1eb"
+            android:height="64dp"
+            android:layout_margin="15dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+
+        <Button
+            android:id="@+id/issue_detail_descption_edit_btn"
+            android:layout_width="20dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="#ffedf1ed"
+            android:drawableLeft="@drawable/ic_edit"
+            android:drawablePadding="0dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:text=""
+            android:textColor="#ff870013"
+            android:textSize="14sp"
+            android:paddingLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp" >
 
+        <include
+            android:id="@+id/take_photo_container_ref"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/take_photo_container" />
 
-    <Button
-        android:id="@+id/adTakePhoto"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="Take Photo"/>
+        <include
+            android:id="@+id/photo_taken_container_ref"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            layout="@layout/photo_taken_container"
+            android:visibility="invisible"
+            />
 
-    <Button
-        android:id="@+id/adAttachPhoto"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="Attach Photo"/>
-
+    </RelativeLayout>
     <Button
         android:id="@+id/adPost"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="Post"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/post_button"
+        android:onClick="onPostClick"
+        android:text="Post"
+        android:textColor="@android:color/white" />
 
     <FrameLayout
         android:id="@+id/adMenuBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:textColor="#ff870013"
+        android:textSize="14sp">
     </FrameLayout>
 
 </LinearLayout>

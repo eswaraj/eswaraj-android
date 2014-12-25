@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class TemplateListAdapter extends ArrayAdapter<CategoryWithChildCategoryD
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new CategoryDtoHolder();
-            holder.stTitle = (TextView)row.findViewById(android.R.id.text1);
+            holder.stTitle = (TextView)row.findViewById(R.id.subcatitem);
 
             row.setTag(holder);
         }

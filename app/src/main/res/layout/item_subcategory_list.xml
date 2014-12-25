@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="0dp">
+
+    <TextView android:id="@+id/subcatitem"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:textColor="#929292"
+        android:maxLines="1"
+        android:background="@drawable/issue_detail_button"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        />
+
+</LinearLayout>
