@@ -1,6 +1,7 @@
 package com.eswaraj.app.eswaraj.activities;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -118,6 +119,8 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
     public void onEventMainThread(RevGeocodeEvent event) {
         if(event.getSuccess()) {
             asRevGeocode.setText(event.getRevGeocodedLocation());
+            asRevGeocode.setTextColor(Color.parseColor("#929292"));
+
         }
     }
 
