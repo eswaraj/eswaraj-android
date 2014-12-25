@@ -4,16 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context="com.eswaraj.app.eswaraj.activities.MarkLocationActivity">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/imageView"
-        android:src="@drawable/navbar_logo"
-        android:layout_weight="0.3"
-        android:background="#fff1bd48"
-        android:paddingTop="5dp" />
+    tools:context="com.eswaraj.app.eswaraj.activities.MarkLocationActivity"
+    android:background="#ffffffff">
 
     <!--TextView android:text="Home location"
         android:layout_width="fill_parent"
@@ -25,6 +17,12 @@
         android:layout_weight="0.3"
         /-->
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/navbar_logo" />
+
 <RelativeLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/RelativeLayout01"
@@ -35,29 +33,22 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:gravity="center_vertical|center_horizontal"
-    android:layout_weight="0.6">
+    android:layout_weight="0.9">
     >
 
-    <FrameLayout
-        android:id="@+id/mlContainer"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="9"
-        android:layout_alignParentBottom="true">
-    </FrameLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="1"
-        android:paddingTop="50dp">
+        android:id="@+id/linearLayout">
 
         <EditText
             android:id="@+id/mlSearchText"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_weight="0.8" />
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.3" />
 
         <Button
             android:id="@+id/mlSearchButton"
@@ -70,13 +61,23 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowColor="@android:color/black"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="45dp"
-            android:layout_weight="0.2"
+            android:layout_weight="0.7"
             android:layout_below="@+id/mlContainer"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/mlContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="9"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/linearLayout"
+        android:background="#ffeee7eb">
+    </FrameLayout>
 
 </RelativeLayout>
 
