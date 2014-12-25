@@ -27,27 +27,6 @@ public class CustomViewPager extends ViewPager {
 
     public CustomViewPager(Context context) {
         super(context);
-        super.setOnPageChangeListener(onPageChangeListener);
-        postInitViewPager();
-    }
-
-    public CustomViewPager(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        super.setOnPageChangeListener(onPageChangeListener);
-        postInitViewPager();
-    }
-
-    public void setRadioGroup(RadioGroup radioGroup) {
-        this.radioGroup = radioGroup;
-    }
-
-    private CustomScroller mScroller = null;
-
-    /**
-     * Override the Scroller instance with our own class so we can change the
-     * duration
-     */
-    private void postInitViewPager() {
         onPageChangeListener = new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -64,6 +43,44 @@ public class CustomViewPager extends ViewPager {
 
             }
         };
+        super.setOnPageChangeListener(onPageChangeListener);
+        postInitViewPager();
+    }
+
+    public CustomViewPager(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        onPageChangeListener = new OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                radioGroup.check(RADIO_BUTTON_STARTING_ID + position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        };
+        super.setOnPageChangeListener(onPageChangeListener);
+        postInitViewPager();
+    }
+
+    public void setRadioGroup(RadioGroup radioGroup) {
+        this.radioGroup = radioGroup;
+    }
+
+    private CustomScroller mScroller = null;
+
+    /**
+     * Override the Scroller instance with our own class so we can change the
+     * duration
+     */
+    private void postInitViewPager() {
+
         try {
             Field scroller = ViewPager.class.getDeclaredField("mScroller");
             scroller.setAccessible(true);
@@ -124,8 +141,6 @@ public class CustomViewPager extends ViewPager {
 
 
     private void setUpRadioGroup() {
-        LayoutInflater inflater = ((Activity)getContext()).getLayoutInflater();
-
         for (int i = 0; i < getAdapter().getCount(); i++) {
             RadioButton radio = new RadioButton(getContext());
             radio.setId(RADIO_BUTTON_STARTING_ID + i);
@@ -133,6 +148,6 @@ public class CustomViewPager extends ViewPager {
             radioGroup.addView(radio);
         }
         radioGroup.check(RADIO_BUTTON_STARTING_ID + 0);
-        radioGroup.setEnabled(false);
+        radioGroup.setEnabled(true);
     }
 }
