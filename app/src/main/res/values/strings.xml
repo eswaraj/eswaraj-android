@@ -24,4 +24,10 @@
     <string name="title_activity_my_complaints">MyComplaintsActivity</string>
     <string name="title_activity_single_complaint">SingleComplaintActivity</string>
 
+    <string-array name="splash_text">
+        <item>Select an issue in your locality that\'s bugging you for a while</item>
+        <item>Post picture and submit your issue to know about your location MLA</item>
+        <item>View overall and constituency level analytics on the existing civic amenity issues </item>
+    </string-array>
+
 </resources>

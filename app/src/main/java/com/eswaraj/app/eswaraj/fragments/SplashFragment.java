@@ -8,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.adapters.TextPagerAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.FacebookSessionEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
@@ -19,6 +21,7 @@ import com.eswaraj.app.eswaraj.events.UserButtonClickEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
+import com.eswaraj.app.eswaraj.widgets.CustomViewPager;
 import com.facebook.widget.LoginButton;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
@@ -35,6 +38,8 @@ public class SplashFragment extends BaseFragment {
     LoginButton buttonLogin;
     TextView welcomeText;
     ProgressWheel progressWheel;
+    CustomViewPager pager;
+    private RadioGroup radioGroup;
 
     @Inject
     FacebookLoginUtil facebookLoginUtil;
@@ -62,32 +67,7 @@ public class SplashFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //References to UI elements
-        buttonLogin = (LoginButton) getView().findViewById(R.id.buttonLogin);
-        buttonQuit = (Button) getView().findViewById(R.id.buttonQuit);
-        buttonGotIt = (Button) getView().findViewById(R.id.buttonGotIt);
-        welcomeText = (TextView) getView().findViewById(R.id.welcomeText);
-        progressWheel = (ProgressWheel) getView().findViewById(R.id.splashProgressWheel);
 
-        //Set up initial state
-        buttonQuit.setVisibility(View.INVISIBLE);
-        buttonGotIt.setVisibility(View.INVISIBLE);
-        progressWheel.setVisibility(View.INVISIBLE);
-        welcomeText.setText("Lets be the change we want to see in the world.\nLets play our part in betterment of nation through click of a button.\n Lets live the dream of Swaraj");
-
-        //Register callback handlers
-        buttonQuit.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().finish();
-            }
-        });
-        buttonGotIt.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eventBus.post(new UserButtonClickEvent());
-            }
-        });
 
         //Any setup needed
         facebookLoginUtil.setup(buttonLogin);
@@ -148,6 +128,18 @@ public class SplashFragment extends BaseFragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        pager.start();
+    }
+
+    @Override
+    public void onStop() {
+        pager.cancel();
+        super.onStop();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         facebookLoginUtil.onSaveInstanceState(outState);
@@ -156,7 +148,49 @@ public class SplashFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_splash, container, false);
+
+        //References to UI elements
+        buttonLogin = (LoginButton) view.findViewById(R.id.buttonLogin);
+        buttonQuit = (Button) view.findViewById(R.id.buttonQuit);
+        buttonGotIt = (Button) view.findViewById(R.id.buttonGotIt);
+        welcomeText = (TextView) view.findViewById(R.id.welcomeText);
+        progressWheel = (ProgressWheel) view.findViewById(R.id.splashProgressWheel);
+        pager = (CustomViewPager) view.findViewById(R.id.viewPager);
+        radioGroup = (RadioGroup) view.findViewById(R.id.radiogroup);
+
+        pager.setRadioGroup(radioGroup);
+
+        //Set up initial state
+        buttonQuit.setVisibility(View.INVISIBLE);
+        buttonGotIt.setVisibility(View.INVISIBLE);
+        progressWheel.setVisibility(View.INVISIBLE);
+        welcomeText.setText("Lets be the change we want to see in the world.\nLets play our part in betterment of nation through click of a button.\n Lets live the dream of Swaraj");
+
+        //Register callback handlers
+        buttonQuit.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
+        buttonGotIt.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eventBus.post(new UserButtonClickEvent());
+            }
+        });
+
+        setUpPager();
         return view;
+    }
+    private void setUpPager() {
+        TextPagerAdapter adapter;
+        pager.setScrollDurationFactor(10);
+        adapter = new TextPagerAdapter(getActivity().getSupportFragmentManager(), getActivity(), R.array.splash_text);
+        pager.setAdapter(adapter);
+        pager.setOffscreenPageLimit(2);
+        //pager.setOnPageChangeListener(onPageChangeListener);
+        pager.setCurrentItem(0);
     }
 
     @Override
