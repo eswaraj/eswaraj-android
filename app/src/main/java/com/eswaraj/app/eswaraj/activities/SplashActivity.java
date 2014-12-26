@@ -174,7 +174,7 @@ public class SplashActivity extends BaseActivity {
                 redirectDone = true;
                 Intent i = null;
                 if(userSession.isUserLocationKnown()) {
-                    i = new Intent(this, SelectAmenityActivity.class);
+                    i = new Intent(this, HomeActivity.class);
                 }
                 else {
                     i = new Intent(this, MarkLocationActivity.class);

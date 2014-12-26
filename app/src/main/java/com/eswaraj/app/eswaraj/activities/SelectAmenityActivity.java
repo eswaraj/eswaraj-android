@@ -1,6 +1,7 @@
 package com.eswaraj.app.eswaraj.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
+import com.eswaraj.app.eswaraj.events.AmenitySelectEvent;
 import com.eswaraj.app.eswaraj.events.RevGeocodeEvent;
 import com.eswaraj.app.eswaraj.fragments.AmenitiesFragment;
 import com.eswaraj.app.eswaraj.fragments.BottomMenuBarFragment;
@@ -19,6 +21,8 @@ import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+
+import java.io.Serializable;
 
 import javax.inject.Inject;
 
@@ -35,7 +39,6 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
     @Inject
     Context applicationContext;
 
-    private BottomMenuBarFragment bottomMenuBarFragment;
     private AmenitiesFragment amenitiesFragment;
     private GoogleMapFragment googleMapFragment;
     private Location lastLocation;
@@ -49,14 +52,12 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
         setContentView(R.layout.activity_select_amenity);
         lastLocation = null;
         mapReady = false;
-        bottomMenuBarFragment = BottomMenuBarFragment.newInstance();
         amenitiesFragment = AmenitiesFragment.newInstance();
         googleMapFragment = new GoogleMapFragment();
 
         //Add all fragments
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.asAmenities, amenitiesFragment).commit();
-            getSupportFragmentManager().beginTransaction().add(R.id.asMenubar, bottomMenuBarFragment).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.asMapContainer, googleMapFragment).commit();
         }
 
@@ -70,7 +71,7 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
     protected void onStart() {
         super.onStart();
         eventBus.registerSticky(this);
-        locationUtil.subscribe(applicationContext, false);
+        locationUtil.subscribe(applicationContext, true);
     }
 
     @Override
@@ -121,6 +122,17 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
             asRevGeocode.setText(event.getRevGeocodedLocation());
             asRevGeocode.setTextColor(Color.parseColor("#929292"));
 
+        }
+    }
+
+    public void onEventMainThread(AmenitySelectEvent event) {
+        if(event.getSuccess()) {
+            Intent i = new Intent(this, SelectTemplateActivity.class);
+            i.putExtra("AMENITY", (Serializable) event.getAmenity());
+            startActivity(i);
+        }
+        else {
+            //This will never happen
         }
     }
 

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.activities.YoutubeActivity;
@@ -23,6 +24,9 @@ public class AmenityBannerFragment extends BaseFragment implements View.OnClickL
 
     private CategoryWithChildCategoryDto amenity;
     private ImageView banner;
+    private ImageView videoLink;
+    private TextView amenityName;
+    private TextView issueCount;
     private String video;
     private String pattern = ".*v=(.*)";
 
@@ -44,8 +48,14 @@ public class AmenityBannerFragment extends BaseFragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_amenity_banner, container, false);
         banner = (ImageView) rootView.findViewById(R.id.abImage);
+        videoLink = (ImageView) rootView.findViewById(R.id.video_click_link);
+        amenityName = (TextView) rootView.findViewById(R.id.issue_name);
+        issueCount = (TextView) rootView.findViewById(R.id.issue_issues);
+
         banner.setImageURI(Uri.parse(getActivity().getFilesDir() + "/eSwaraj_banner_" + String.valueOf(amenity.getId()) + ".png"));
-        banner.setOnClickListener(this);
+        videoLink.setOnClickListener(this);
+        amenityName.setText(amenity.getName());
+        issueCount.setText(Integer.toString(amenity.getChildCategories().size()) + "issues");
         return rootView;
     }
 

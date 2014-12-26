@@ -5,18 +5,12 @@
     android:orientation="vertical"
     tools:context="com.eswaraj.app.eswaraj.activities.SingleComplaintActivity">
 
-    <FrameLayout
-        android:id="@+id/scContainer"
+    <fragment
+        class="com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment"
+        android:id="@+id/scFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9">
-    </FrameLayout>
+        android:layout_weight="9"/>
 
-    <FrameLayout
-        android:id="@+id/scMenuBar"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-    </FrameLayout>
 
 </LinearLayout>

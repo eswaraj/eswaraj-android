@@ -6,6 +6,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.eswaraj.app.eswaraj.activities.AddDetailsActivity;
 import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
+import com.eswaraj.app.eswaraj.activities.HomeActivity;
 import com.eswaraj.app.eswaraj.activities.MarkLocationActivity;
 import com.eswaraj.app.eswaraj.activities.MyComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
@@ -95,7 +96,8 @@ import de.greenrobot.event.EventBus;
                 CommentsFragment.class,
                 CommentsRequest.class,
                 CommentPostRequest.class,
-                GooglePlacesListFragment.class
+                GooglePlacesListFragment.class,
+                HomeActivity.class
         },
         complete = false,
         library = true

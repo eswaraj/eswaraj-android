@@ -15,7 +15,6 @@ import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
 public class SelectTemplateActivity extends BaseActivity {
 
-    private BottomMenuBarFragment bottomMenuBarFragment;
     private AmenityBannerFragment amenityBannerFragment;
     private TemplatesFragment templatesFragment;
     private CategoryWithChildCategoryDto amenity;
@@ -30,7 +29,6 @@ public class SelectTemplateActivity extends BaseActivity {
         amenity = (CategoryWithChildCategoryDto) i.getSerializableExtra("AMENITY");
 
         //Create fragments
-        bottomMenuBarFragment = new BottomMenuBarFragment();
         amenityBannerFragment = new AmenityBannerFragment();
         templatesFragment = new TemplatesFragment();
 
@@ -41,7 +39,6 @@ public class SelectTemplateActivity extends BaseActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.stBanner, amenityBannerFragment).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.stList, templatesFragment).commit();
-            getSupportFragmentManager().beginTransaction().add(R.id.stMenuBar, bottomMenuBarFragment).commit();
         }
     }
 

@@ -14,20 +14,13 @@ import com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment;
 public class SingleComplaintActivity extends BaseActivity {
 
     private SingleComplaintFragment singleComplaintFragment;
-    private BottomMenuBarFragment bottomMenuBarFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_complaint);
 
-        singleComplaintFragment = new SingleComplaintFragment();
-        bottomMenuBarFragment = new BottomMenuBarFragment();
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.scContainer, singleComplaintFragment).commit();
-            getSupportFragmentManager().beginTransaction().add(R.id.scMenuBar, bottomMenuBarFragment).commit();
-        }
+        singleComplaintFragment = (SingleComplaintFragment) getSupportFragmentManager().findFragmentById(R.id.scFragment);
     }
 
 }

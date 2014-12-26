@@ -30,4 +30,6 @@
         <item>View overall and constituency level analytics on the existing civic amenity issues </item>
     </string-array>
 
+    <string name="title_activity_home">HomeActivity</string>
+
 </resources>

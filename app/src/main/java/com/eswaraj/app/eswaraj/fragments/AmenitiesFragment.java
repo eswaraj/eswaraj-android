@@ -15,6 +15,7 @@ import com.eswaraj.app.eswaraj.activities.SelectTemplateActivity;
 import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.adapters.AmenityListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
+import com.eswaraj.app.eswaraj.events.AmenitySelectEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -76,9 +77,10 @@ public class AmenitiesFragment extends BaseFragment {
         gvAmenityList.setOnItemClickListener(new GridView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                Intent i = new Intent(getActivity(), SelectTemplateActivity.class);
-                i.putExtra("AMENITY", (Serializable) gvAmenityList.getAdapter().getItem(pos));
-                startActivity(i);
+                AmenitySelectEvent event = new AmenitySelectEvent();
+                event.setSuccess(true);
+                event.setAmenity((CategoryWithChildCategoryDto) gvAmenityList.getAdapter().getItem(pos));
+                eventBus.post(event);
             }
         });
         return rootView;

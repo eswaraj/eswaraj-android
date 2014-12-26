@@ -30,8 +30,8 @@
             android:name=".activities.SplashActivity"
             android:label="@string/title_activity_splash"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,14 +42,14 @@
             android:name=".activities.SelectAmenityActivity"
             android:label="@string/title_activity_select_amenity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.YoutubeActivity"
             android:label="@string/title_activity_youtube"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".base.BaseActivity"
@@ -64,8 +64,8 @@
             android:label="@string/title_activity_select_template"
             android:parentActivityName=".activities.SelectAmenityActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.SelectAmenityActivity" />
@@ -74,8 +74,8 @@
             android:name=".activities.AddDetailsActivity"
             android:label="@string/title_activity_add_details"
             android:parentActivityName=".activities.SelectTemplateActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="adjustPan|stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -87,7 +87,7 @@
             android:parentActivityName=".activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.SplashActivity" />
@@ -97,7 +97,7 @@
             android:label="@string/title_activity_complaint_summary"
             android:parentActivityName=".activities.AddDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.AddDetailsActivity" />
@@ -106,13 +106,17 @@
             android:name=".activities.MyComplaintsActivity"
             android:label="@string/title_activity_my_complaints"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.SingleComplaintActivity"
             android:label="@string/title_activity_single_complaint"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".activities.HomeActivity"
+            android:label="@string/title_activity_home" >
         </activity>
     </application>
 

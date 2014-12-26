@@ -12,7 +12,6 @@ import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryFragment;
 
 public class ComplaintSummaryActivity extends BaseActivity {
 
-    private BottomMenuBarFragment bottomMenuBarFragment;
     private ComplaintSummaryFragment complaintSummaryFragment;
 
     @Override
@@ -20,13 +19,7 @@ public class ComplaintSummaryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complaint_summary);
 
-        bottomMenuBarFragment = new BottomMenuBarFragment();
-        complaintSummaryFragment = new ComplaintSummaryFragment();
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.csContainer, complaintSummaryFragment).commit();
-            getSupportFragmentManager().beginTransaction().add(R.id.csMenuBar, bottomMenuBarFragment).commit();
-        }
+        complaintSummaryFragment = (ComplaintSummaryFragment) getSupportFragmentManager().findFragmentById(R.id.csFragment);
     }
 
 }

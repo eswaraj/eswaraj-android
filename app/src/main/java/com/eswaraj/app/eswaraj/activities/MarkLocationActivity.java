@@ -1,12 +1,10 @@
 package com.eswaraj.app.eswaraj.activities;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -26,7 +24,6 @@ import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.web.dto.UserDto;
 import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
 import com.github.amlcurran.showcaseview.targets.PointTarget;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -89,7 +86,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
                 double lat = googleMapFragment.getMarkerLatitude();
                 double lng = googleMapFragment.getMarkerLongitude();
                 middlewareService.saveUserLocation(view.getContext(), userDto, lat, lng);
-                Intent i = new Intent(view.getContext(), SelectAmenityActivity.class);
+                Intent i = new Intent(view.getContext(), HomeActivity.class);
                 view.getContext().startActivity(i);
                 finish();
             }
