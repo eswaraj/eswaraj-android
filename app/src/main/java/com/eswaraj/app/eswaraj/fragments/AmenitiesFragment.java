@@ -1,6 +1,5 @@
 package com.eswaraj.app.eswaraj.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,8 +10,6 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
-import com.eswaraj.app.eswaraj.activities.SelectTemplateActivity;
-import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.adapters.AmenityListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.AmenitySelectEvent;
@@ -21,7 +18,6 @@ import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;

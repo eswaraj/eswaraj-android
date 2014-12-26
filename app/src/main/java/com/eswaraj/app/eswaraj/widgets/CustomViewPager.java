@@ -10,23 +10,14 @@ import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.animation.Interpolator;
-
-import com.eswaraj.app.eswaraj.interfaces.OnSwipeOutListenerInterface;
 
 
 public class CustomViewPager extends ViewPager {
 
     private Timer timer;
     private CustomScroller mScroller = null;
-    float mStartDragX;
-    OnSwipeOutListenerInterface mListener;
 
-
-    public void setOnSwipeOutListener(OnSwipeOutListenerInterface listener) {
-        mListener = listener;
-    }
 
     public CustomViewPager(Context context) {
         super(context);
@@ -36,27 +27,6 @@ public class CustomViewPager extends ViewPager {
     public CustomViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
         postInitViewPager();
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.d("splash", "1");
-        float x = ev.getX();
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mStartDragX = x;
-                Log.d("splash", "2");
-                break;
-            case MotionEvent.ACTION_MOVE:
-                Log.d("splash", "3");
-                if (mStartDragX < x && getCurrentItem() == 0) {
-                    mListener.onSwipeOutAtStart();
-                } else if (mStartDragX > x && getCurrentItem() == getAdapter().getCount() - 1) {
-                    mListener.onSwipeOutAtEnd();
-                }
-                break;
-        }
-        return super.onInterceptTouchEvent(ev);
     }
     
     /**

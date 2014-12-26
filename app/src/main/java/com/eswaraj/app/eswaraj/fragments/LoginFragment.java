@@ -72,11 +72,13 @@ public class LoginFragment extends BaseFragment {
             buttonQuit.setVisibility(View.VISIBLE);
             buttonLogin.setVisibility(View.INVISIBLE);
         }
+        /*
         else {
             if (facebookLoginUtil.isUserLoggedIn()) {
                 buttonLogin.setVisibility(View.INVISIBLE);
             }
         }
+        */
     }
 
     public void setShowInstruction(Boolean show) {
@@ -97,7 +99,7 @@ public class LoginFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        eventBus.registerSticky(this);
+        eventBus.register(this);
         facebookLoginUtil.onCreate(getActivity(), savedInstanceState);
     }
 
@@ -153,6 +155,9 @@ public class LoginFragment extends BaseFragment {
         buttonQuit.setVisibility(View.INVISIBLE);
         buttonGotIt.setVisibility(View.INVISIBLE);
         progressWheel.setVisibility(View.INVISIBLE);
+        if (facebookLoginUtil.isUserLoggedIn()) {
+            buttonLogin.setVisibility(View.INVISIBLE);
+        }
         welcomeText.setText("Lets be the change we want to see in the world.\nLets play our part in betterment of nation through click of a button.\n Lets live the dream of Swaraj");
         welcomeText.setTypeface(custom_font);
 

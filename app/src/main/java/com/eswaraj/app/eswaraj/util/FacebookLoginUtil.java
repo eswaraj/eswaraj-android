@@ -79,10 +79,11 @@ public class FacebookLoginUtil extends BaseClass {
         if (state.isOpened()) {
             Log.d(TAG, "Logged in...");
             event.setLogin(true);
+            eventBus.post(event);
         } else if (state.isClosed()) {
             Log.d(TAG, "Logged out...");
             event.setLogin(false);
+            eventBus.post(event);
         }
-        eventBus.post(event);
     }
 }

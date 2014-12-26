@@ -7,6 +7,7 @@ import com.android.volley.toolbox.Volley;
 import com.eswaraj.app.eswaraj.activities.AddDetailsActivity;
 import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
 import com.eswaraj.app.eswaraj.activities.HomeActivity;
+import com.eswaraj.app.eswaraj.activities.LoginActivity;
 import com.eswaraj.app.eswaraj.activities.MarkLocationActivity;
 import com.eswaraj.app.eswaraj.activities.MyComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
@@ -59,7 +60,7 @@ import de.greenrobot.event.EventBus;
 
 @Module(
         injects = {
-                SplashActivity.class,
+                LoginActivity.class,
                 LoginFragment.class,
                 SelectAmenityActivity.class,
                 AmenitiesFragment.class,
@@ -100,7 +101,8 @@ import de.greenrobot.event.EventBus;
                 GooglePlacesListFragment.class,
                 HomeActivity.class,
                 UserSessionUtil.class,
-                SplashFragment.class
+                SplashFragment.class,
+                SplashActivity.class
         },
         complete = false,
         library = true

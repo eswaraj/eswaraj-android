@@ -2,8 +2,6 @@ package com.eswaraj.app.eswaraj.fragments;
 
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,21 +9,25 @@ import android.view.ViewGroup;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.adapters.TextPagerAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
-import com.eswaraj.app.eswaraj.interfaces.OnSwipeOutListenerInterface;
+import com.eswaraj.app.eswaraj.events.UserReadyEvent;
 import com.eswaraj.app.eswaraj.models.SplashScreenItem;
 import com.eswaraj.app.eswaraj.widgets.CustomViewPager;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
+import de.greenrobot.event.EventBus;
+
 
 public class SplashFragment extends BaseFragment {
 
+    @Inject
+    EventBus eventBus;
+
     private CustomViewPager pager;
     private ArrayList<SplashScreenItem> splashScreenItems;
-    private ViewPager.OnPageChangeListener onPageChangeListener;
-    private OnSwipeOutListenerInterface onSwipeOutListenerInterface;
     private View.OnClickListener onClickListener;
-    private int selectedPage;
 
     public SplashFragment() {
         // Required empty public constructor
@@ -59,8 +61,6 @@ public class SplashFragment extends BaseFragment {
         adapter.setOnClickListener(onClickListener);
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(2);
-        pager.setOnPageChangeListener(onPageChangeListener);
-        pager.setOnSwipeOutListener(onSwipeOutListenerInterface);
         pager.setCurrentItem(0);
     }
 
@@ -71,42 +71,14 @@ public class SplashFragment extends BaseFragment {
     }
 
     private void setUpListener() {
-        onPageChangeListener = new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                selectedPage = position;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        };
-
-        onSwipeOutListenerInterface = new OnSwipeOutListenerInterface() {
-            @Override
-            public void onSwipeOutAtStart() {
-
-            }
-
-            @Override
-            public void onSwipeOutAtEnd() {
-                Log.d("SplashFragment", "Trying to go out of bound");
-            }
-        };
-
         onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Splash", "Ready");
+                UserReadyEvent event = new UserReadyEvent();
+                event.setSuccess(true);
+                eventBus.post(event);
             }
         };
     }
-
     
 }
