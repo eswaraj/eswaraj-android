@@ -54,6 +54,7 @@ public class AddDetailsFragment extends BaseFragment {
     private Button takePhoto;
     private Button attachPhoto;
     private Button post;
+    private Button DescriptionBtn;
     private EditText description;
     private TextView selected;
 
@@ -95,6 +96,7 @@ public class AddDetailsFragment extends BaseFragment {
         takePhoto = (Button) rootView.findViewById(R.id.adTakePhoto);
         attachPhoto = (Button) rootView.findViewById(R.id.adAttachPhoto);
         post = (Button) rootView.findViewById(R.id.adPost);
+        DescriptionBtn = (Button) rootView.findViewById(R.id.adDescriptionbtn);
         description = (EditText) rootView.findViewById(R.id.adDescription);
         selected = (TextView) rootView.findViewById(R.id.adSelected);
 
@@ -156,7 +158,25 @@ public class AddDetailsFragment extends BaseFragment {
                 }
             }
         });
+        setDescriptionText();
+        setonLoadDescriptionBtn();
         return rootView;
+    }
+
+    public void setDescriptionText() {
+        DescriptionBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                DescriptionBtn.setVisibility(View.INVISIBLE);
+                description.requestFocus();
+                description.setVisibility(View.VISIBLE);            }
+        });
+    }
+
+    public void setonLoadDescriptionBtn() {
+        DescriptionBtn.setVisibility(View.VISIBLE);
+        description.setVisibility(View.INVISIBLE);
     }
 
     @Override

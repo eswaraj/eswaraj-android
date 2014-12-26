@@ -6,37 +6,40 @@
     android:background="#ffe9e7ee"
     tools:context="com.eswaraj.app.eswaraj.fragments.AddDetailsFragment">
 
-    <ImageView
+    <include
+        android:id="@+id/logo_header"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/imageView"
-        android:src="@drawable/navbar_logo"
-        android:paddingTop="5dp" />
+        android:layout_height="wrap_content"
+        layout="@layout/screen_header" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:text="Citizen Service"
-        android:padding="15dp"
         android:textColor="#ffca3b36"
         android:textStyle="bold"
         android:shadowColor="#fff1974a"
         android:textSize="20dp"
-        android:id="@+id/cs" />
+        android:id="@+id/cs"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp" />
 
     <TextView
         android:id="@+id/adSelected"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text=""
-        android:padding="15dp"
+        android:layout_weight="0.5"
+        android:text="water"
         android:textColor="#ff3a4359"
         android:shadowColor="#ff865429"
         android:textSize="16dp"
-        android:gravity="top|fill_vertical"
-        android:layout_marginTop="-20dp" />
+        android:gravity="fill_vertical"
+        android:layout_marginTop="-20dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -80,29 +83,51 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#fff1f1eb"
+            android:background="#ffffff"
             android:height="64dp"
-            android:layout_margin="15dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="0dp" />
 
         <Button
             android:id="@+id/issue_detail_descption_edit_btn"
-            android:layout_width="20dp"
-            android:layout_height="32dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="#ffedf1ed"
+            android:background="#ffffff"
             android:drawableLeft="@drawable/ic_edit"
             android:drawablePadding="0dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:gravity="center"
+            android:gravity="top|right"
             android:text=""
             android:textColor="#ff870013"
             android:textSize="14sp"
             android:paddingLeft="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="15dp"
+            android:paddingTop="5dp" />
+
+        <Button
+            android:id="@+id/adDescriptionbtn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_centerHorizontal="true"
+            android:background="#ffffffff"
+            android:drawableRight="@drawable/ic_plus"
+            android:gravity="center"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="Add Description"
+            android:textColor="#929292"
+            android:textSize="17sp"
+            android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp" />
 
     </RelativeLayout>
