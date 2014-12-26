@@ -56,7 +56,7 @@ public class SplashFragment extends BaseFragment {
 
     private void setUpPager() {
         TextPagerAdapter adapter;
-        pager.setScrollDurationFactor(10);
+        pager.setScrollDurationFactor(2);
         adapter = new TextPagerAdapter(getActivity().getSupportFragmentManager(), splashScreenItems);
         adapter.setOnClickListener(onClickListener);
         pager.setAdapter(adapter);
@@ -66,8 +66,8 @@ public class SplashFragment extends BaseFragment {
 
     private void setUpPagerData() {
         splashScreenItems = new ArrayList<SplashScreenItem>();
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.constituency), "Some dummy text1"));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.leader), "Some dummy text2"));
+        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.constituency),"Some heading1", "Some dummy text1"));
+        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.leader), "Some heading2", "Some dummy text2"));
     }
 
     private void setUpListener() {

@@ -15,6 +15,7 @@ import com.eswaraj.app.eswaraj.models.SplashScreenItem;
 
 public class TextPagerFragment extends Fragment {
     private TextView mText;
+    private TextView mHeading;
     private ImageView mImage;
     private Button mButton;
 
@@ -51,6 +52,7 @@ public class TextPagerFragment extends Fragment {
         Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/HandmadeTypewriter.ttf");
         mText = (TextView) rootView.findViewById(R.id.splash_pager_text);
         mImage = (ImageView) rootView.findViewById(R.id.splash_pager_image);
+        mHeading = (TextView) rootView.findViewById(R.id.splash_pager_heading);
         mButton = (Button) rootView.findViewById(R.id.splash_pager_button);
         mText.setTypeface(custom_font);
         mButton.setOnClickListener(onClickListener);
@@ -61,6 +63,7 @@ public class TextPagerFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mText.setText(splashScreenItem.getText());
+        mHeading.setText(splashScreenItem.getHeading());
         mImage.setImageDrawable(splashScreenItem.getImage());
         if(showButton) {
             mButton.setVisibility(View.VISIBLE);

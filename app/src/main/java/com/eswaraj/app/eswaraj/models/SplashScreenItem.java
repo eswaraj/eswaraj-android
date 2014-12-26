@@ -7,10 +7,22 @@ public class SplashScreenItem {
 
     private Drawable image;
     private String text;
+    private String heading;
 
-    public SplashScreenItem(Drawable image, String text) {
+
+    public SplashScreenItem(Drawable image, String heading, String text) {
         this.image = image;
+        this.heading = heading;
+
         this.text = text;
+    }
+
+    public String getHeading() {
+        return heading;
+    }
+
+    public void setHeading(String heading) {
+        this.heading = heading;
     }
 
     public Drawable getImage() {
