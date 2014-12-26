@@ -37,7 +37,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     Context applicationContext;
 
     private GoogleMapFragment googleMapFragment;
-    private Boolean mapReady;
+    private Boolean mapReady = false;
     private Location lastLocation;
     private ReverseGeocodingTask reverseGeocodingTask;
     

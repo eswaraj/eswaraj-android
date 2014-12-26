@@ -5,4 +5,6 @@
     <color name="NiceButtonDisabledStartColor">#565051</color>
     <color name="NiceButtonDisabledEndColor">#736F6E</color>
     <color name="NiceButtonBorderColor">#254117</color>
+    <color name="GooglePlacesListBGColor">#FFFFFF</color>
+    <color name="GooglePlacesListTextColor">#000000</color>
 </resources>

@@ -77,7 +77,7 @@
         android:layout_weight="9"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/linearLayout"
-        android:background="#ff37aed7">
+        android:background="#ffffff">
     </FrameLayout>
 
 </RelativeLayout>

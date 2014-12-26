@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.models.GooglePlace;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class GooglePlacesListAdapter extends ArrayAdapter<GooglePlace> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new GooglePlaceHolder();
-            holder.stTitle = (TextView)row.findViewById(android.R.id.text1);
+            holder.stTitle = (TextView)row.findViewById(R.id.text1);
 
             row.setTag(holder);
         }
