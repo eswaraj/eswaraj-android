@@ -27,6 +27,7 @@ import com.eswaraj.app.eswaraj.fragments.GooglePlacesListFragment;
 import com.eswaraj.app.eswaraj.fragments.ImageFragment;
 import com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment;
 import com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment;
+import com.eswaraj.app.eswaraj.fragments.LoginFragment;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.fragments.TemplatesFragment;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
@@ -59,7 +60,7 @@ import de.greenrobot.event.EventBus;
 @Module(
         injects = {
                 SplashActivity.class,
-                SplashFragment.class,
+                LoginFragment.class,
                 SelectAmenityActivity.class,
                 AmenitiesFragment.class,
                 Cache.class,
@@ -97,7 +98,9 @@ import de.greenrobot.event.EventBus;
                 CommentsRequest.class,
                 CommentPostRequest.class,
                 GooglePlacesListFragment.class,
-                HomeActivity.class
+                HomeActivity.class,
+                UserSessionUtil.class,
+                SplashFragment.class
         },
         complete = false,
         library = true

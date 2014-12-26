@@ -10,71 +10,55 @@ import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.animation.Interpolator;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
-import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.interfaces.OnSwipeOutListenerInterface;
 
 
 public class CustomViewPager extends ViewPager {
 
     private Timer timer;
-    private RadioGroup radioGroup;
-    private OnPageChangeListener onPageChangeListener;
-    private static final int RADIO_BUTTON_STARTING_ID = 0x100;
+    private CustomScroller mScroller = null;
+    float mStartDragX;
+    OnSwipeOutListenerInterface mListener;
+
+
+    public void setOnSwipeOutListener(OnSwipeOutListenerInterface listener) {
+        mListener = listener;
+    }
 
     public CustomViewPager(Context context) {
         super(context);
-        onPageChangeListener = new OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                radioGroup.check(RADIO_BUTTON_STARTING_ID + position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        };
-        super.setOnPageChangeListener(onPageChangeListener);
         postInitViewPager();
     }
 
     public CustomViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        onPageChangeListener = new OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                radioGroup.check(RADIO_BUTTON_STARTING_ID + position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        };
-        super.setOnPageChangeListener(onPageChangeListener);
         postInitViewPager();
     }
 
-    public void setRadioGroup(RadioGroup radioGroup) {
-        this.radioGroup = radioGroup;
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        Log.d("splash", "1");
+        float x = ev.getX();
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mStartDragX = x;
+                Log.d("splash", "2");
+                break;
+            case MotionEvent.ACTION_MOVE:
+                Log.d("splash", "3");
+                if (mStartDragX < x && getCurrentItem() == 0) {
+                    mListener.onSwipeOutAtStart();
+                } else if (mStartDragX > x && getCurrentItem() == getAdapter().getCount() - 1) {
+                    mListener.onSwipeOutAtEnd();
+                }
+                break;
+        }
+        return super.onInterceptTouchEvent(ev);
     }
-
-    private CustomScroller mScroller = null;
-
+    
     /**
      * Override the Scroller instance with our own class so we can change the
      * duration
@@ -101,7 +85,6 @@ public class CustomViewPager extends ViewPager {
     }
 
     public void start() {
-        setUpRadioGroup();
         if (null != timer) {
             timer.cancel();
         }
@@ -139,15 +122,4 @@ public class CustomViewPager extends ViewPager {
         }, 4000, 4000);
     }
 
-
-    private void setUpRadioGroup() {
-        for (int i = 0; i < getAdapter().getCount(); i++) {
-            RadioButton radio = new RadioButton(getContext());
-            radio.setId(RADIO_BUTTON_STARTING_ID + i);
-            radio.setEnabled(false);
-            radioGroup.addView(radio);
-        }
-        radioGroup.check(RADIO_BUTTON_STARTING_ID + 0);
-        radioGroup.setEnabled(true);
-    }
 }

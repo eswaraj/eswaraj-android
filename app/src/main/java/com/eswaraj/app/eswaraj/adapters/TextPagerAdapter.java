@@ -1,35 +1,43 @@
 package com.eswaraj.app.eswaraj.adapters;
 
-import android.content.Context;
-import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 
 import com.eswaraj.app.eswaraj.fragments.TextPagerFragment;
+import com.eswaraj.app.eswaraj.models.SplashScreenItem;
+
+import java.util.ArrayList;
 
 public class TextPagerAdapter extends FragmentPagerAdapter {
 
-    LayoutInflater inflater;
-    View view;
-    String[] splashText;
+    private ArrayList<SplashScreenItem> splashScreenItems;
+    private Button.OnClickListener onClickListener;
 
-
-    public TextPagerAdapter(FragmentManager fragmentManager, Context context, int resourceId) {
+    public TextPagerAdapter(FragmentManager fragmentManager, ArrayList<SplashScreenItem> splashScreenItems) {
         super(fragmentManager);
-        splashText = context.getResources().getStringArray(resourceId);
+        this.splashScreenItems = splashScreenItems;
+    }
 
+    public void setOnClickListener(Button.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
     @Override
     public int getCount() {
-        return splashText.length;
+        return splashScreenItems.size();
     }
 
     @Override
     public Fragment getItem(int position) {
-        return TextPagerFragment.newInstance(splashText[position]);
+        TextPagerFragment fragment = new TextPagerFragment();
+        fragment.setSplashScreenItem(splashScreenItems.get(position));
+        if(position == splashScreenItems.size() - 1) {
+            fragment.setShowButton(true);
+            fragment.setOnClickListener(onClickListener);
+        }
+        return fragment;
     }
 }

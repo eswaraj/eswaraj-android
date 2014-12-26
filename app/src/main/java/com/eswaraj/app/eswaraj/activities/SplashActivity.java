@@ -12,6 +12,7 @@ import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.events.UserButtonClickEvent;
+import com.eswaraj.app.eswaraj.fragments.LoginFragment;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -26,7 +27,9 @@ import de.greenrobot.event.EventBus;
 
 public class SplashActivity extends BaseActivity {
 
+    private LoginFragment loginFragment;
     private SplashFragment splashFragment;
+
     @Inject
     LocationUtil locationUtil;
     @Inject
@@ -49,6 +52,7 @@ public class SplashActivity extends BaseActivity {
     Boolean loginDone;
     Boolean serverDataDownloadDone;
     Boolean redirectDone;
+    Boolean loginFragmentActive;
 
 
 
@@ -57,9 +61,10 @@ public class SplashActivity extends BaseActivity {
         super.onStart();
 
         locationUtil.subscribe(applicationContext, false);
-        middlewareService.loadCategoriesData(this, true);
         hasNeededServices = checkLocationAndInternet();
-        splashFragment.notifyServiceAvailability(hasNeededServices);
+        if(loginFragmentActive) {
+            loginFragment.notifyServiceAvailability(hasNeededServices);
+        }
     }
 
     @Override
@@ -73,7 +78,18 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        splashFragment = (SplashFragment) getSupportFragmentManager().findFragmentById(R.id.splashFragment);
+        loginFragment = LoginFragment.newInstance();
+        splashFragment = new SplashFragment();
+
+        if(savedInstanceState == null) {
+            if (userSession.isUserLoggedIn(this)) {
+                getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, loginFragment).commit();
+                loginFragmentActive = true;
+            } else {
+                getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, splashFragment).commit();
+                loginFragmentActive = false;
+            }
+        }
 
         eventBus.registerSticky(this);
 
@@ -82,12 +98,14 @@ public class SplashActivity extends BaseActivity {
         serverDataDownloadDone = false;
         redirectDone = false;
 
+        middlewareService.loadCategoriesData(this, true);
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        splashFragment.onActivityResult(requestCode, resultCode, data);
+        loginFragment.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -155,8 +173,8 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void appReady() {
-        splashFragment.setShowInstruction(!userSession.isUserLocationKnown());
-        splashFragment.notifyAppReady();
+        loginFragment.setShowInstruction(!userSession.isUserLocationKnown());
+        loginFragment.notifyAppReady();
         if(userSession.isUserLocationKnown()) {
             takeUserToNextScreen();
         }

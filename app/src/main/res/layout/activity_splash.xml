@@ -9,15 +9,17 @@
     tools:context="com.eswaraj.app.eswaraj.activities.SplashActivity">
 
     <FrameLayout
-        android:id="@+id/SplashFragmentContainer"
+        android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--
         <fragment
-            class="com.eswaraj.app.eswaraj.fragments.SplashFragment"
+            class="com.eswaraj.app.eswaraj.fragments.LoginFragment"
             android:id="@+id/splashFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+        -->
 
     </FrameLayout>
 

@@ -1,9 +1,18 @@
 package com.eswaraj.app.eswaraj.util;
 
 
+import android.content.Context;
+
+import com.eswaraj.app.eswaraj.base.BaseClass;
+import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.web.dto.UserDto;
 
-public class UserSessionUtil {
+import javax.inject.Inject;
+
+public class UserSessionUtil extends BaseClass {
+
+    @Inject
+    MiddlewareServiceImpl middlewareService;
 
     private UserDto user;
 
@@ -22,5 +31,14 @@ public class UserSessionUtil {
             }
         }
         return false;
+    }
+
+    public Boolean isUserLoggedIn(Context context) {
+        return middlewareService.isUserDataAvailable(context);
+    }
+
+    public void logoutUser(Context context) {
+        //Update the cache with null to indicate that user has logged out and user object in cache is not valid anymore
+        middlewareService.updateUserData(context, null);
     }
 }
