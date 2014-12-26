@@ -17,12 +17,11 @@
         android:layout_weight="0.3"
         /-->
 
-    <ImageView
+    <include
+        android:id="@+id/logo_header"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/imageView"
-        android:src="@drawable/navbar_logo"
-        android:paddingTop="5dp" />
+        android:layout_height="wrap_content"
+        layout="@layout/screen_header" />
 
 <RelativeLayout
     xmlns:tools="http://schemas.android.com/tools"

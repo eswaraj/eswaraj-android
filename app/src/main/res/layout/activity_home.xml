@@ -2,12 +2,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.eswaraj.app.eswaraj.activities.HomeActivity">
+    android:weightSum="10"
+    android:padding="0dp"
+    tools:context="com.eswaraj.app.eswaraj.activities.HomeActivity"
+    android:background="#F2F2F2">
+
+    <include
+        android:id="@+id/logo_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/screen_header" />
 
     <fragment
         class="com.eswaraj.app.eswaraj.fragments.GoogleMapFragment"
@@ -21,45 +26,159 @@
         android:id="@+id/hRevGeocode"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="0.5"
+        android:layout_marginTop="-15dp"
+        android:textColor="#929292"
+        android:gravity="center_vertical|center_horizontal" />
 
     <Button
         android:id="@+id/hCreate"
-        android:text="Create Complaint"
-        android:layout_width="match_parent"
+        android:text="Raise Complaint"
+        android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="2.25"
+        android:drawableTop="@drawable/raise_hand"
+        android:layout_gravity="bottom|center_horizontal"
+        android:textColor="#929292"
+        android:textStyle="bold"
+        android:textSize="14dp"
+        android:background="#f2f2f2"
+        android:paddingBottom="4dp"
+        android:gravity="bottom|center_horizontal" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6"
-        android:orientation="vertical">
+        android:layout_weight="2"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
 
-        <ImageView
-            android:id="@+id/hComplaints"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.5">
+            <ImageView
+                android:id="@+id/hComplaints"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/complaint"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="0.7"
+                android:paddingBottom="10dp" />
 
-        <ImageView
-            android:id="@+id/hConstituency"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            <TextView android:id="@+id/my_complaints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#929292"
+                android:maxLines="1"
+                android:text="My Complaints"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.3"
+                android:layout_marginTop="-15dp" />
+        </LinearLayout>
 
-        <ImageView
-            android:id="@+id/hLeaders"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+        <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+            android:layout_weight="0.5">
+            <ImageView
+                android:id="@+id/hConstituency"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/constituency"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_weight="0.7"
+                android:paddingBottom="10dp" />
 
-        <ImageView
-            android:id="@+id/hProfile"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            <TextView android:id="@+id/my_constituency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#929292"
+                android:maxLines="1"
+                android:layout_gravity="center_horizontal"
+                android:text="My Constituency"
+                android:layout_weight="0.3"
+                android:layout_marginTop="-15dp" />
+        </LinearLayout>
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.5">
+            <ImageView
+                android:id="@+id/hLeaders"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/leader"
+                android:layout_weight="0.7"
+                android:paddingBottom="10dp" />
+
+            <TextView android:id="@+id/my_leader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#929292"
+                android:maxLines="1"
+                android:layout_gravity="center_horizontal"
+                android:text="My Leader"
+                android:layout_weight="0.3"
+                android:layout_marginTop="-15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.5">
+                <ImageView
+                    android:id="@+id/hProfile"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:src="@drawable/profile"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_weight="0.7"
+                    android:paddingBottom="10dp" />
+
+                <TextView android:id="@+id/my_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:textColor="#929292"
+                    android:maxLines="1"
+                    android:layout_gravity="center_horizontal"
+                    android:text="My Profile"
+                    android:layout_weight="0.3"
+                    android:layout_marginTop="-15dp" />
+            </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
