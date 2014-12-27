@@ -8,6 +8,7 @@ import com.eswaraj.app.eswaraj.activities.AddDetailsActivity;
 import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
 import com.eswaraj.app.eswaraj.activities.HomeActivity;
 import com.eswaraj.app.eswaraj.activities.LoginActivity;
+import com.eswaraj.app.eswaraj.activities.LoginDialogActivity;
 import com.eswaraj.app.eswaraj.activities.MarkLocationActivity;
 import com.eswaraj.app.eswaraj.activities.MyComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
@@ -102,7 +103,8 @@ import de.greenrobot.event.EventBus;
                 HomeActivity.class,
                 UserSessionUtil.class,
                 SplashFragment.class,
-                SplashActivity.class
+                SplashActivity.class,
+                LoginDialogActivity.class
         },
         complete = false,
         library = true
@@ -120,7 +122,7 @@ public class MiddlewareGraph {
     }
 
 
-    @Provides @Singleton
+    @Provides
     FacebookLoginUtil provideFacebookLoginUtil() {
         return new FacebookLoginUtil();
     }

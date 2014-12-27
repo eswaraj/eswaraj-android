@@ -11,7 +11,7 @@ import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
-import com.eswaraj.app.eswaraj.events.UserButtonClickEvent;
+import com.eswaraj.app.eswaraj.events.UserContinueEvent;
 import com.eswaraj.app.eswaraj.fragments.LoginFragment;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -56,7 +56,7 @@ public class LoginActivity extends BaseActivity {
         super.onStart();
 
         locationUtil.subscribe(applicationContext, false);
-        loginFragment.notifyServiceAvailability(checkLocationAndInternet());
+        loginFragment.notifyServiceAvailability(checkLocationAndInternet() || (middlewareService.isCategoriesDataAvailable(this) && middlewareService.isCategoriesImagesAvailable(this)));
     }
 
     @Override
@@ -149,13 +149,13 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    public void onEventMainThread(UserButtonClickEvent event) {
+    public void onEventMainThread(UserContinueEvent event) {
         takeUserToNextScreen();
     }
 
 
     private void appReady() {
-        loginFragment.setShowInstruction(!userSession.isUserLocationKnown());
+        loginFragment.setShowInstruction(!userSession.isUserLocationKnown() && userSession.isUserLoggedIn(this));
         loginFragment.notifyAppReady();
         if(userSession.isUserLocationKnown()) {
             takeUserToNextScreen();
@@ -173,7 +173,7 @@ public class LoginActivity extends BaseActivity {
             } else {
                 redirectDone = true;
                 Intent i = null;
-                if(userSession.isUserLocationKnown()) {
+                if(userSession.isUserLocationKnown() || !userSession.isUserLoggedIn(this)) {
                     i = new Intent(this, HomeActivity.class);
                 }
                 else {

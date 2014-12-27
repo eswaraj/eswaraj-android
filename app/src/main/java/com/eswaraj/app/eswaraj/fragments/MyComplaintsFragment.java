@@ -20,6 +20,7 @@ import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetUserComplaintsEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.UserDto;
 
@@ -37,13 +38,12 @@ public class MyComplaintsFragment extends BaseFragment {
     EventBus eventBus;
     @Inject
     MiddlewareServiceImpl middlewareService;
+    @Inject
+    UserSessionUtil userSession;
 
     private ListView mcList;
 
     private List<CategoryWithChildCategoryDto> categoryDtoList;
-    private UserDto userDto;
-    private Boolean categoriesDataReady = false;
-    private Boolean userDataReady = false;
 
     public MyComplaintsFragment() {
         // Required empty public constructor
@@ -81,28 +81,13 @@ public class MyComplaintsFragment extends BaseFragment {
     public void onEventMainThread(GetCategoriesDataEvent event) {
         if(event.getSuccess()) {
             categoryDtoList = event.getCategoryList();
-            categoriesDataReady = true;
-            if(userDataReady) {
-                middlewareService.loadUserComplaints(getActivity(), userDto, true);
-            }
+            middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), true);
         }
         else {
             //This will never happen
         }
     }
 
-    public void onEventMainThread(GetUserEvent event) {
-        if(event.getSuccess()) {
-            userDto = event.getUserDto();
-            userDataReady = true;
-            if(categoriesDataReady) {
-                middlewareService.loadUserComplaints(getActivity(), userDto, true);
-            }
-        }
-        else {
-           //This will never happen
-        }
-    }
 
     public void onEventMainThread(GetUserComplaintsEvent event) {
         if(event.getSuccess()) {

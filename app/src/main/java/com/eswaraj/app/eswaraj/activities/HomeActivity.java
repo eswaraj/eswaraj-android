@@ -19,7 +19,9 @@ import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.RevGeocodeEvent;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
+import com.eswaraj.app.eswaraj.util.GenericUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
@@ -35,6 +37,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     LocationUtil locationUtil;
     @Inject
     Context applicationContext;
+    @Inject
+    UserSessionUtil userSession;
 
     private GoogleMapFragment googleMapFragment;
     private Boolean mapReady = false;
@@ -47,6 +51,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     private ImageView profile;
     private TextView hRevGeocode;
     private Button hCreate;
+
+    private Boolean retryRevGeocoding = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,30 +85,54 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         complaints.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
-                startActivity(i);
+                if(userSession.isUserLoggedIn(v.getContext())) {
+                    Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
+                    startActivity(i);
+                }
+                else {
+                    Intent i = new Intent(v.getContext(), LoginDialogActivity.class);
+                    startActivity(i);
+                }
             }
         });
         //TODO:Fix the activity targets
         leaders.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
-                startActivity(i);
+                if(userSession.isUserLoggedIn(v.getContext())) {
+                    Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
+                    startActivity(i);
+                }
+                else {
+                    Intent i = new Intent(v.getContext(), LoginDialogActivity.class);
+                    startActivity(i);
+                }
             }
         });
         constituency.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
-                startActivity(i);
+                if(userSession.isUserLoggedIn(v.getContext())) {
+                    Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
+                    startActivity(i);
+                }
+                else {
+                    Intent i = new Intent(v.getContext(), LoginDialogActivity.class);
+                    startActivity(i);
+                }
             }
         });
         profile.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
-                startActivity(i);
+                if(userSession.isUserLoggedIn(v.getContext())) {
+                    Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
+                    startActivity(i);
+                }
+                else {
+                    Intent i = new Intent(v.getContext(), LoginDialogActivity.class);
+                    startActivity(i);
+                }
             }
         });
     }
@@ -128,27 +158,27 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     }
 
     public void onEventMainThread(Location location) {
+        Double distance;
+        Boolean doRevGeoCoding;
+
         if (mapReady) {
             googleMapFragment.updateMarkerLocation(location.getLatitude(), location.getLongitude());
         }
+
         if(lastLocation != null) {
-            //If difference between location and lastLocation is greater than 100m then
-            //TODO:Add condition
-            //1. Update lastLocation
-            lastLocation = location;
-            //2. Start rev geocoding task
-            if(reverseGeocodingTask != null) {
-                if(reverseGeocodingTask.getStatus() == AsyncTask.Status.FINISHED) {
-                    reverseGeocodingTask = new ReverseGeocodingTask(this, location);
-                    reverseGeocodingTask.execute();
-                }
+            distance = GenericUtil.calculateDistance(location.getLatitude(), location.getLongitude(), lastLocation.getLatitude(), lastLocation.getLongitude());
+            if (distance > 100) {
+                doRevGeoCoding = true;
             }
             else {
-                reverseGeocodingTask = new ReverseGeocodingTask(this, location);
-                reverseGeocodingTask.execute();
+                doRevGeoCoding = false;
             }
         }
         else {
+            doRevGeoCoding = true;
+        }
+
+        if(doRevGeoCoding || retryRevGeocoding) {
             lastLocation = location;
             if(reverseGeocodingTask != null) {
                 if(reverseGeocodingTask.getStatus() == AsyncTask.Status.FINISHED) {
@@ -167,6 +197,10 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         if(event.getSuccess()) {
             hRevGeocode.setText(event.getRevGeocodedLocation());
             hRevGeocode.setTextColor(Color.parseColor("#929292"));
+            retryRevGeocoding = false;
+        }
+        else {
+            retryRevGeocoding = true;
         }
     }
 }

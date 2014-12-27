@@ -15,8 +15,9 @@ import android.widget.Toast;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.FacebookSessionEvent;
+import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
-import com.eswaraj.app.eswaraj.events.UserButtonClickEvent;
+import com.eswaraj.app.eswaraj.events.UserContinueEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
@@ -33,6 +34,7 @@ public class LoginFragment extends BaseFragment {
     //UI elements holders
     Button buttonQuit;
     Button buttonGotIt;
+    TextView buttonSkip;
     LoginButton buttonLogin;
     TextView welcomeText;
     ProgressWheel progressWheel;
@@ -88,11 +90,16 @@ public class LoginFragment extends BaseFragment {
     public void notifyAppReady() {
         buttonLogin.setVisibility(View.INVISIBLE);
         buttonQuit.setVisibility(View.INVISIBLE);
-        buttonGotIt.setVisibility(View.VISIBLE);
-        progressWheel.setVisibility(View.INVISIBLE);
+        buttonSkip.setVisibility(View.INVISIBLE);
         if(showInstruction) {
             welcomeText.setText("The app is setup.\n\nOn the next screen you will be asked to mark your home location on a map.\n\nThis is a one-time activity and will help us serve you data about your constituency.");
+            progressWheel.setVisibility(View.INVISIBLE);
             buttonGotIt.setVisibility(View.VISIBLE);
+        }
+        else {
+            UserContinueEvent event = new UserContinueEvent();
+            event.setLoggedIn(true);
+            eventBus.post(event);
         }
     }
 
@@ -147,8 +154,9 @@ public class LoginFragment extends BaseFragment {
         buttonLogin = (LoginButton) view.findViewById(R.id.buttonLogin);
         buttonQuit = (Button) view.findViewById(R.id.buttonQuit);
         buttonGotIt = (Button) view.findViewById(R.id.buttonGotIt);
+        buttonSkip = (TextView) view.findViewById(R.id.buttonSkip);
         welcomeText = (TextView) view.findViewById(R.id.welcomeText);
-        progressWheel = (ProgressWheel) view.findViewById(R.id.splashProgressWheel);
+        progressWheel = (ProgressWheel) view.findViewById(R.id.loginProgressWheel);
 
 
         //Set up initial state
@@ -171,7 +179,23 @@ public class LoginFragment extends BaseFragment {
         buttonGotIt.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eventBus.post(new UserButtonClickEvent());
+                UserContinueEvent event = new UserContinueEvent();
+                event.setLoggedIn(true);
+                eventBus.post(event);
+            }
+        });
+        buttonSkip.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //UserContinueEvent event = new UserContinueEvent();
+                //event.setLoggedIn(false);
+                buttonLogin.setVisibility(View.INVISIBLE);
+                buttonSkip.setVisibility(View.INVISIBLE);
+                progressWheel.setVisibility(View.VISIBLE);
+                progressWheel.spin();
+                GetUserEvent event = new GetUserEvent();
+                event.setSuccess(true);
+                eventBus.post(event);
             }
         });
 
@@ -189,6 +213,7 @@ public class LoginFragment extends BaseFragment {
         if(event.getLogin()) {
             //LoginDone flag will not be updated here since that should happen only once userDto is available
             buttonLogin.setVisibility(View.INVISIBLE);
+            buttonSkip.setVisibility(View.INVISIBLE);
             progressWheel.setVisibility(View.VISIBLE);
             progressWheel.spin();
             middlewareService.loadUserData(getActivity(), event.getSession());

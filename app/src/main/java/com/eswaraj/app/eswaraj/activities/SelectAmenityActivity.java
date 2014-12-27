@@ -17,6 +17,7 @@ import com.eswaraj.app.eswaraj.fragments.AmenitiesFragment;
 import com.eswaraj.app.eswaraj.fragments.BottomMenuBarFragment;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
+import com.eswaraj.app.eswaraj.util.GenericUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,8 +34,6 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
     @Inject
     LocationUtil locationUtil;
     @Inject
-    MiddlewareServiceImpl middlewareService;
-    @Inject
     EventBus eventBus;
     @Inject
     Context applicationContext;
@@ -44,6 +43,7 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
     private Location lastLocation;
     private ReverseGeocodingTask reverseGeocodingTask;
     private Boolean mapReady;
+    private Boolean retryRevGeocoding = false;
     TextView asRevGeocode;
 
     @Override
@@ -82,27 +82,27 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
     }
 
     public void onEventMainThread(Location location) {
+        Double distance;
+        Boolean doRevGeoCoding;
+
         if(mapReady) {
             googleMapFragment.updateMarkerLocation(location.getLatitude(), location.getLongitude());
         }
+
         if(lastLocation != null) {
-            //If difference between location and lastLocation is greater than 100m then
-            //TODO:Add condition
-            //1. Update lastLocation
-            lastLocation = location;
-            //2. Start rev geocoding task
-            if(reverseGeocodingTask != null) {
-                if(reverseGeocodingTask.getStatus() == AsyncTask.Status.FINISHED) {
-                    reverseGeocodingTask = new ReverseGeocodingTask(this, location);
-                    reverseGeocodingTask.execute();
-                }
+            distance = GenericUtil.calculateDistance(location.getLatitude(), location.getLongitude(), lastLocation.getLatitude(), lastLocation.getLongitude());
+            if (distance > 100) {
+                doRevGeoCoding = true;
             }
             else {
-                reverseGeocodingTask = new ReverseGeocodingTask(this, location);
-                reverseGeocodingTask.execute();
+                doRevGeoCoding = false;
             }
         }
         else {
+            doRevGeoCoding = true;
+        }
+
+        if(doRevGeoCoding || retryRevGeocoding) {
             lastLocation = location;
             if(reverseGeocodingTask != null) {
                 if(reverseGeocodingTask.getStatus() == AsyncTask.Status.FINISHED) {
@@ -121,7 +121,10 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
         if(event.getSuccess()) {
             asRevGeocode.setText(event.getRevGeocodedLocation());
             asRevGeocode.setTextColor(Color.parseColor("#929292"));
-
+            retryRevGeocoding = false;
+        }
+        else {
+            retryRevGeocoding = true;
         }
     }
 

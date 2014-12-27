@@ -32,7 +32,6 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden" >
-
         </activity>
         <activity
             android:name=".activities.SelectAmenityActivity"
@@ -92,8 +91,8 @@
             android:name=".activities.ComplaintSummaryActivity"
             android:label="@string/title_activity_complaint_summary"
             android:parentActivityName=".activities.AddDetailsActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -102,34 +101,39 @@
         <activity
             android:name=".activities.MyComplaintsActivity"
             android:label="@string/title_activity_my_complaints"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.SingleComplaintActivity"
             android:label="@string/title_activity_single_complaint"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".activities.SplashActivity"
             android:label="@string/title_activity_splash"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"
-            >
+            android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.LoginDialogActivity"
+            android:label="Log In to Continue"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Light.Dialog">
         </activity>
     </application>
 

@@ -40,8 +40,7 @@ public class FacebookLoginUtil extends BaseClass {
 
     public void onResume() {
         Session session = Session.getActiveSession();
-        if (session != null &&
-                (session.isOpened() || session.isClosed()) ) {
+        if (session != null &&  (session.isOpened() || session.isClosed()) ) {
             onSessionStateChange(session, session.getState(), null);
         }
         uiHelper.onResume();

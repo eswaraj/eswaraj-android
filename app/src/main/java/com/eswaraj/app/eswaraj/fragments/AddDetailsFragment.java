@@ -22,12 +22,14 @@ import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
+import com.eswaraj.app.eswaraj.activities.LoginDialogActivity;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareService;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.UserDto;
@@ -50,6 +52,8 @@ public class AddDetailsFragment extends BaseFragment {
     MiddlewareServiceImpl middlewareService;
     @Inject
     LocationUtil locationUtil;
+    @Inject
+    UserSessionUtil userSession;
 
     private Button takePhoto;
     private Button attachPhoto;
@@ -59,7 +63,6 @@ public class AddDetailsFragment extends BaseFragment {
     private TextView selected;
 
     private CategoryWithChildCategoryDto categoryWithChildCategoryDto;
-    private UserDto userDto;
     private Location location;
 
     private static final int SELECT_PHOTO = 1;
@@ -150,11 +153,17 @@ public class AddDetailsFragment extends BaseFragment {
         post.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!posted) {
-                    posted = true;
-                    middlewareService.postComplaint(userDto, categoryWithChildCategoryDto, location, description.getText().toString(), selectedFile);
-                    pDialog = new CustomProgressDialog(getActivity(), false, true, "Posting your complaint ...");
-                    pDialog.show();
+                if(userSession.isUserLoggedIn(getActivity())) {
+                    if (!posted) {
+                        posted = true;
+                        middlewareService.postComplaint(userSession.getUser(), categoryWithChildCategoryDto, location, description.getText().toString(), selectedFile);
+                        pDialog = new CustomProgressDialog(getActivity(), false, true, "Posting your complaint ...");
+                        pDialog.show();
+                    }
+                }
+                else {
+                    Intent i = new Intent(getActivity(), LoginDialogActivity.class);
+                    startActivity(i);
                 }
             }
         });
@@ -220,17 +229,6 @@ public class AddDetailsFragment extends BaseFragment {
 
         return null;
     }
-
-    public void onEventMainThread(GetUserEvent event) {
-        if(event.getSuccess()) {
-            Log.d("AddDetailsFragment", "Got UserDto");
-            userDto = event.getUserDto();
-        }
-        else {
-            //This will never happen because user cant reach this screen unless UserDto was received successfully on Splash Screen
-        }
-    }
-
 
     public void onEventMainThread(Location location) {
         this.location = location;
