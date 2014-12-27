@@ -9,6 +9,7 @@ import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.fragments.BottomMenuBarFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryFragment;
+import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
 
 public class ComplaintSummaryActivity extends BaseActivity {
 
@@ -21,5 +22,4 @@ public class ComplaintSummaryActivity extends BaseActivity {
 
         complaintSummaryFragment = (ComplaintSummaryFragment) getSupportFragmentManager().findFragmentById(R.id.csFragment);
     }
-
 }
