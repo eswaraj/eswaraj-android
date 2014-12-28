@@ -5,6 +5,21 @@
     android:orientation="vertical"
     tools:context="com.eswaraj.app.eswaraj.activities.MyComplaintsActivity">
 
+    <Button
+        android:id="@+id/mcShowList"
+        android:text="List"
+        android:layout_weight="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/mcShowMap"
+        android:text="Map"
+        android:layout_weight="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--
     <fragment
         class="com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment"
         android:id="@+id/mcFragment"
@@ -12,5 +27,12 @@
         android:layout_height="0dp"
         android:layout_weight="9"
         tools:layout="@layout/fragment_my_complaints" />
+    -->
+
+    <FrameLayout
+        android:id="@+id/mcContainer"
+        android:layout_weight="9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

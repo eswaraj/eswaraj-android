@@ -104,7 +104,8 @@ import de.greenrobot.event.EventBus;
                 UserSessionUtil.class,
                 SplashFragment.class,
                 SplashActivity.class,
-                LoginDialogActivity.class
+                LoginDialogActivity.class,
+                GoogleMapFragment.class
         },
         complete = false,
         library = true

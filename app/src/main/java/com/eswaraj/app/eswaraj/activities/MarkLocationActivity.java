@@ -57,7 +57,6 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     private CustomProgressDialog pDialog;
     private Boolean mapDisplayed;
     private GooglePlace googlePlace;
-    private ShowcaseView showcaseView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

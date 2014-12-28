@@ -6,7 +6,6 @@ import android.os.Bundle;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.fragments.AddDetailsFragment;
-import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 
 import javax.inject.Inject;

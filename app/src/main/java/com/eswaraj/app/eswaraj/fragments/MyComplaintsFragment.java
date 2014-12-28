@@ -16,12 +16,14 @@ import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.activities.SingleComplaintActivity;
 import com.eswaraj.app.eswaraj.adapters.ComplaintListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
+import com.eswaraj.app.eswaraj.events.ComplaintSelectedEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetUserComplaintsEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.UserDto;
 
 import java.io.Serializable;
@@ -36,10 +38,6 @@ public class MyComplaintsFragment extends BaseFragment {
 
     @Inject
     EventBus eventBus;
-    @Inject
-    MiddlewareServiceImpl middlewareService;
-    @Inject
-    UserSessionUtil userSession;
 
     private ListView mcList;
 
@@ -58,9 +56,9 @@ public class MyComplaintsFragment extends BaseFragment {
         mcList.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getActivity(), SingleComplaintActivity.class);
-                i.putExtra("COMPLAINT", (Serializable) mcList.getAdapter().getItem(position));
-                startActivity(i);
+                ComplaintSelectedEvent event = new ComplaintSelectedEvent();
+                event.setComplaintDto((ComplaintDto) mcList.getAdapter().getItem(position));
+                eventBus.post(event);
             }
         });
         return rootView;
@@ -81,20 +79,14 @@ public class MyComplaintsFragment extends BaseFragment {
     public void onEventMainThread(GetCategoriesDataEvent event) {
         if(event.getSuccess()) {
             categoryDtoList = event.getCategoryList();
-            middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), true);
         }
         else {
             //This will never happen
         }
     }
 
-
-    public void onEventMainThread(GetUserComplaintsEvent event) {
-        if(event.getSuccess()) {
-            mcList.setAdapter(new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, event.getComplaintDtoList(), categoryDtoList));
-        }
-        else {
-            Toast.makeText(getActivity(), "Could not fetch user complaints. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-        }
+    public void setComplaintData(List<ComplaintDto> complaintDtoList) {
+        mcList.setAdapter(new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, complaintDtoList, categoryDtoList));
     }
+
 }
