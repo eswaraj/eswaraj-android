@@ -1,5 +1,6 @@
 package com.eswaraj.app.eswaraj.volley;
 
+
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -9,7 +10,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.eswaraj.web.dto.comment.CommentSaveRequestDto;
 import com.google.gson.Gson;
 
 import org.apache.http.HttpEntity;
@@ -19,15 +19,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-public class CommentPostVolleyRequest extends Request<String> {
+public class GenericPostVolleyRequest<T> extends Request<String> {
 
     private final Response.Listener<String> mListener;
     HttpEntity entity;
 
-    public CommentPostVolleyRequest(String url, Response.ErrorListener errorListener, Response.Listener<String> listener, CommentSaveRequestDto commentSaveRequestDto) {
+    public GenericPostVolleyRequest(String url, Response.ErrorListener errorListener, Response.Listener<String> listener, T requestDto) {
         super(Request.Method.POST, url, errorListener);
         try {
-            entity = new StringEntity(new Gson().toJson(commentSaveRequestDto));
+            entity = new StringEntity(new Gson().toJson(requestDto));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -71,3 +71,4 @@ public class CommentPostVolleyRequest extends Request<String> {
         }
     }
 }
+

@@ -18,6 +18,7 @@ import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.volley.CommentPostRequest;
 import com.eswaraj.app.eswaraj.volley.CommentsRequest;
+import com.eswaraj.app.eswaraj.volley.ComplaintCloseRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintImageRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
@@ -70,6 +71,8 @@ public class Server extends BaseClass implements ServerInterface {
     CommentsRequest commentsRequest;
     @Inject
     CommentPostRequest commentPostRequest;
+    @Inject
+    ComplaintCloseRequest complaintCloseRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -142,5 +145,10 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void postComment(UserDto userDto, ComplaintDto complaintDto, String comment) {
         commentPostRequest.processRequest(userDto, complaintDto, comment);
+    }
+
+    @Override
+    public void closeComplaint(ComplaintDto complaintDto) {
+        complaintCloseRequest.processRequest(complaintDto);
     }
 }

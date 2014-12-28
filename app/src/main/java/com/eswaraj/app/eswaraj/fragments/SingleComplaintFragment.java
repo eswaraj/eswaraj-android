@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
+import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.google.android.gms.maps.GoogleMap;
@@ -29,6 +31,10 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
 
     @Inject
     EventBus eventBus;
+    @Inject
+    UserSessionUtil userSession;
+    @Inject
+    MiddlewareServiceImpl middlewareService;
 
     private CommentsFragment commentsFragment;
     private ImageFragment imageFragment;
@@ -39,6 +45,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
 
     private Button scPhoto;
     private Button scMap;
+    private Button scClose;
     private TextView scCategory;
     private TextView scDescription;
 
@@ -54,6 +61,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         //Get handles
         scPhoto = (Button) rootView.findViewById(R.id.scPhoto);
         scMap = (Button) rootView.findViewById(R.id.scMap);
+        scClose = (Button) rootView.findViewById(R.id.scClose);
         scCategory = (TextView) rootView.findViewById(R.id.scCategory);
         scDescription = (TextView) rootView.findViewById(R.id.scDescription);
 
@@ -67,6 +75,9 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
 
 
         scDescription.setText(complaintDto.getDescription());
+        if(userSession.getUser().getPerson().getId() != complaintDto.getPersonId()) {
+            scClose.setVisibility(View.INVISIBLE);
+        }
 
         //Set up fragments
         commentsFragment.setComplaintDto(complaintDto);
@@ -103,6 +114,12 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
                     imageSelected = false;
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.scDisplayContainer, googleMapFragment).commit();
                 }
+            }
+        });
+        scClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                middlewareService.closeComplaint(complaintDto);
             }
         });
         return rootView;

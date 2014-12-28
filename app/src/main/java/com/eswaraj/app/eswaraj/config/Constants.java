@@ -19,6 +19,7 @@ public class Constants {
     public static final String POST_COMPLAINT_URL = BASE_URL + "/complaint";
     public static final String USER_COMPLAINTS_URL = BASE_URL + "/user/complaints";
     public static final String COMMENT_POST_URL = BASE_URL + "/complaint/user/comment";
+    public static final String COMPLAINT_CLOSE_URL = BASE_URL + "/complaint/user/status";
 
     //Google URLS
     public static final String GOOGLE_PLACES_AUTOCOMPLETE_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?key=" + GOOGLE_API_BROWSER_KEY + "&components=country:in&input=";

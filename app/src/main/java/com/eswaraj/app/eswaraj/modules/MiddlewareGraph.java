@@ -45,6 +45,7 @@ import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.volley.CommentPostRequest;
 import com.eswaraj.app.eswaraj.volley.CommentsRequest;
+import com.eswaraj.app.eswaraj.volley.ComplaintCloseRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintImageRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
@@ -105,7 +106,8 @@ import de.greenrobot.event.EventBus;
                 SplashFragment.class,
                 SplashActivity.class,
                 LoginDialogActivity.class,
-                GoogleMapFragment.class
+                GoogleMapFragment.class,
+                ComplaintCloseRequest.class
         },
         complete = false,
         library = true
@@ -224,5 +226,10 @@ public class MiddlewareGraph {
     @Provides @Singleton
     CommentPostRequest provideCommentPostRequest() {
         return new CommentPostRequest();
+    }
+
+    @Provides @Singleton
+    ComplaintCloseRequest provideComplaintCloseRequest() {
+        return new ComplaintCloseRequest();
     }
 }

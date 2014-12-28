@@ -18,4 +18,5 @@ public interface MiddlewarePostService {
     public void saveUserLocation(Context context, UserDto userDto, double lat, double lng);
     public void postComplaint(UserDto userDto, CategoryWithChildCategoryDto categoryDto, Location location, String description, File image);
     public void postComment(UserDto userDto, ComplaintDto complaintDto, String comment);
+    public void closeComplaint(ComplaintDto complaintDto);
 }

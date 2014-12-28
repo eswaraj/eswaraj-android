@@ -1,13 +1,11 @@
 package com.eswaraj.app.eswaraj.volley;
 
-import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.events.SavedCommentEvent;
-import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.models.CommentDto;
 import com.eswaraj.web.dto.ComplaintDto;
@@ -35,7 +33,7 @@ public class CommentPostRequest extends BaseClass {
         commentSaveRequestDto.setPersonId(userDto.getPerson().getId());
         commentSaveRequestDto.setPoliticalAdminId(null);
 
-        CommentPostVolleyRequest request = new CommentPostVolleyRequest(Constants.COMMENT_POST_URL, createErrorListener(), createSuccessListener(userDto), commentSaveRequestDto);
+        GenericPostVolleyRequest request = new GenericPostVolleyRequest(Constants.COMMENT_POST_URL, createErrorListener(), createSuccessListener(userDto), commentSaveRequestDto);
         networkAccessHelper.submitNetworkRequest("PostComment", request);
     }
 

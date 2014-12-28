@@ -224,4 +224,9 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     public void postComment(UserDto userDto, ComplaintDto complaintDto, String comment) {
         server.postComment(userDto, complaintDto, comment);
     }
+
+    @Override
+    public void closeComplaint(ComplaintDto complaintDto) {
+        server.closeComplaint(complaintDto);
+    }
 }

@@ -67,6 +67,7 @@ public class CommentsFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 middlewareService.postComment(userDto, complaintDto, cComment.getText().toString());
+                cComment.setText("");
             }
         });
 

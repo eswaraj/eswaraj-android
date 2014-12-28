@@ -27,8 +27,6 @@ public class RegisterUserAndDeviceRequest extends BaseClass {
     @Inject
     EventBus eventBus;
     @Inject
-    Cache cache;
-    @Inject
     NetworkAccessHelper networkAccessHelper;
 
     public void processRequest(Context context) {
@@ -39,13 +37,7 @@ public class RegisterUserAndDeviceRequest extends BaseClass {
         registerDeviceRequest.setDeviceId(androidId);
         registerDeviceRequest.setDeviceTypeRef(deviceTypeRef);
 
-        RegisterUserAndDeviceVolleyRequest request = null;
-        try {
-            request = new RegisterUserAndDeviceVolleyRequest(createErrorListener(context), createSuccessListener(context), registerDeviceRequest, Constants.SAVE_DEVICE_ANONYMOUS_USER_URL);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
+        GenericPostVolleyRequest request = new GenericPostVolleyRequest(Constants.SAVE_DEVICE_ANONYMOUS_USER_URL, createErrorListener(context), createSuccessListener(context), registerDeviceRequest);
         this.networkAccessHelper.submitNetworkRequest("RegisterDevice", request);
 
     }
