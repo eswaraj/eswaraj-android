@@ -14,7 +14,6 @@
         android:background="@null"
         android:drawableBottom="@drawable/issue_details_take"
         android:drawablePadding="8dp"
-        android:onClick="takePhoto"
         android:text="Take Photo"
         android:textColor="#ff1c33b0"
         android:textSize="17sp" />
@@ -33,7 +32,6 @@
         android:background="@null"
         android:drawableBottom="@drawable/issue_details_attach"
         android:drawablePadding="8dp"
-        android:onClick="choosePhoto"
         android:text="Attach Photo"
         android:textColor="#ff1c33b0"
         android:textSize="17sp" />

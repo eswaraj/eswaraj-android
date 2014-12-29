@@ -3,16 +3,21 @@ package com.eswaraj.app.eswaraj.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
+import com.eswaraj.app.eswaraj.events.CacheClearedEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
+import com.eswaraj.app.eswaraj.events.UserDataAvailableEvent;
 import com.eswaraj.app.eswaraj.fragments.LoginFragment;
+import com.eswaraj.app.eswaraj.helpers.StorageCacheClearingTask;
 import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -36,8 +41,6 @@ public class LoginActivity extends BaseActivity {
     @Inject
     LocationServicesCheckUtil locationServicesCheckUtil;
     @Inject
-    MiddlewareServiceImpl middlewareService;
-    @Inject
     EventBus eventBus;
     @Inject
     UserSessionUtil userSession;
@@ -46,9 +49,8 @@ public class LoginActivity extends BaseActivity {
 
 
     //Maintain async task return state
-    Boolean loginDone;
-    Boolean serverDataDownloadDone;
     Boolean redirectDone;
+    Boolean dialogMode;
 
 
 
@@ -57,7 +59,9 @@ public class LoginActivity extends BaseActivity {
         super.onStart();
 
         locationUtil.subscribe(applicationContext, false);
-        loginFragment.notifyServiceAvailability(checkLocationAndInternet() || (middlewareService.isCategoriesDataAvailable(this) && middlewareService.isCategoriesImagesAvailable(this)));
+        if(!dialogMode) {
+            loginFragment.notifyServiceAvailability(checkLocationAndInternet());
+        }
     }
 
     @Override
@@ -69,19 +73,30 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        dialogMode = getIntent().getBooleanExtra("MODE", false);
 
-        loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.loginFragment);
+        if(dialogMode) {
+            setContentView(R.layout.activity_login);
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+            int screenWidth = (int) (metrics.widthPixels);
+            int screenHeight = (int) (metrics.heightPixels * 0.50);
+            getWindow().setLayout(screenWidth, screenHeight);
 
-        eventBus.registerSticky(this);
+        }
+        else {
+            setTheme(android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+            setContentView(R.layout.activity_login);
+        }
+
+        //loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.loginFragment);
+        loginFragment = new LoginFragment();
+        loginFragment.setMode(dialogMode);
+        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, loginFragment).commit();
+
+        eventBus.register(this);
 
         //Set up initial state
-        loginDone = false;
-        serverDataDownloadDone = false;
         redirectDone = false;
-
-        middlewareService.loadCategoriesData(this, true);
-
     }
 
     @Override
@@ -110,45 +125,14 @@ public class LoginActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    public void onEventMainThread(GetCategoriesDataEvent event) {
+
+    public void onEventMainThread(UserDataAvailableEvent event) {
         if(event.getSuccess()) {
-            //Launch image download now.
-            middlewareService.loadCategoriesImages(this, event.getCategoryList(), false);
-        }
-        else {
-            Toast.makeText(this, "Could not fetch categories from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-            //Show retry button which will re-trigger the request.
+            Log.d("LoginActivity", "UserDataAvailable:Success");
+            appReady();
         }
     }
 
-    public void onEventMainThread(GetUserEvent event) {
-        if(event.getSuccess()) {
-            Log.d("LoginActivity", "GetUserEvent:Success");
-            loginDone = true;
-            if(serverDataDownloadDone) {
-                appReady();
-            }
-        }
-    }
-
-
-    public void onEventMainThread(GetCategoriesImagesEvent event) {
-        if(event.getSuccess()) {
-            Log.d("LoginActivity", "GetCategoriesImagesEvent:Success");
-            serverDataDownloadDone = true;
-            if (loginDone) {
-                appReady();
-            }
-        }
-        else {
-            Toast.makeText(this, "Could not fetch all categories images from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-            //Show retry button which will re-trigger the request.
-            serverDataDownloadDone = true;
-            if (loginDone) {
-                appReady();
-            }
-        }
-    }
 
     public void onEventMainThread(UserContinueEvent event) {
         takeUserToNextScreen();
@@ -156,10 +140,15 @@ public class LoginActivity extends BaseActivity {
 
 
     private void appReady() {
-        loginFragment.setShowInstruction(!userSession.isUserLocationKnown() && userSession.isUserLoggedIn(this));
-        loginFragment.notifyAppReady();
-        if(userSession.isUserLocationKnown()) {
-            takeUserToNextScreen();
+        if(dialogMode) {
+            finish();
+        }
+        else {
+            loginFragment.setShowInstruction(!userSession.isUserLocationKnown() && userSession.isUserLoggedIn(this));
+            loginFragment.notifyAppReady();
+            if (userSession.isUserLocationKnown()) {
+                takeUserToNextScreen();
+            }
         }
     }
 

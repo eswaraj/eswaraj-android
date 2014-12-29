@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
+import com.eswaraj.app.eswaraj.config.ImageType;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
@@ -82,7 +83,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         //Set up fragments
         commentsFragment.setComplaintDto(complaintDto);
         if(complaintDto.getImages() != null) {
-            imageFragment.setImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
+            imageFragment.setImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId(), ImageType.COMPLAINT);
         }
         googleMapFragment.setContext(this);
 

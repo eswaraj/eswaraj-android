@@ -68,8 +68,7 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         }
 
         holder.mcId.setText(complaintDto.getId().toString());
-        //TODO: Get new jar which has this field and then uncomment this line
-        //holder.mcDate.setText(new Date(complaintDto.getComplaintTime()).toString());
+        holder.mcDate.setText(new Date(complaintDto.getComplaintTime()).toString());
         return row;
     }
 

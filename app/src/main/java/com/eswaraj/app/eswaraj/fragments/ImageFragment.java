@@ -14,7 +14,10 @@ import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
+import com.eswaraj.app.eswaraj.config.ImageType;
+import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
+import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 
 import java.io.File;
@@ -30,6 +33,8 @@ public class ImageFragment extends BaseFragment {
     EventBus eventBus;
     @Inject
     MiddlewareServiceImpl middlewareService;
+    @Inject
+    StorageCache storageCache;
 
     private ImageView iImage;
     private String path;
@@ -59,24 +64,32 @@ public class ImageFragment extends BaseFragment {
         super.onStop();
     }
 
-    public void setImage(String path, Long id) {
+    public void setImage(String path, Long id, ImageType type) {
         this.path = path;
         this.id = id;
-        if(path != null) {
+        if(type == ImageType.COMPLAINT) {
             middlewareService.loadComplaintImage(getActivity(), path, id);
+        }
+        else if(type == ImageType.PROFILE) {
+
         }
     }
 
     public void onEventMainThread(GetComplaintImageEvent event) {
         if(event.getSuccess()) {
-            File f = new File(getActivity().getFilesDir() + "/eSwaraj_complaint_" + id + ".png");
-            if(f.exists()) {
-                Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
-                iImage.setImageBitmap(bitmap);
-            }
+            iImage.setImageBitmap(storageCache.getBitmap(id, getActivity(), ImageType.COMPLAINT));
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch complaint image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onEventMainThread(GetProfileImageEvent event) {
+        if(event.getSuccess()) {
+            iImage.setImageBitmap(storageCache.getBitmap(id, getActivity(), ImageType.PROFILE));
+        }
+        else {
+            Toast.makeText(getActivity(), "Could not fetch profile image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
     }
 }

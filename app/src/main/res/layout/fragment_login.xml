@@ -53,6 +53,7 @@
                 android:layout_width="100dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="55dp"
+                android:gravity="center"
                 android:layout_below="@+id/buttonLogin"
                 android:layout_centerInParent="true" />
 

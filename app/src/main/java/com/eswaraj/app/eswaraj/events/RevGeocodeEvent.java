@@ -4,6 +4,15 @@ import com.eswaraj.app.eswaraj.base.BaseEvent;
 
 public class RevGeocodeEvent extends BaseEvent {
     private String revGeocodedLocation;
+    private String revGeocodedFullData;
+
+    public String getRevGeocodedFullData() {
+        return revGeocodedFullData;
+    }
+
+    public void setRevGeocodedFullData(String revGeocodedFullData) {
+        this.revGeocodedFullData = revGeocodedFullData;
+    }
 
     public RevGeocodeEvent() {
         super();

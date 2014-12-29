@@ -13,11 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--
         <fragment
             class="com.eswaraj.app.eswaraj.fragments.LoginFragment"
             android:id="@+id/loginFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+            -->
 
     </FrameLayout>
 

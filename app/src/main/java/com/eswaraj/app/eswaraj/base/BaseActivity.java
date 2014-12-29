@@ -9,6 +9,8 @@ import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
 
 public class BaseActivity extends FragmentActivity {
 
+    protected Boolean dontUseAnimation = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,16 +21,28 @@ public class BaseActivity extends FragmentActivity {
     @Override
     public void finish() {
         super.finish();
-        WindowAnimationHelper.finish(this);
+        if(!dontUseAnimation) {
+            WindowAnimationHelper.finish(this);
+        }
     }
 
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
-        WindowAnimationHelper.startActivityForResultWithSlideFromRight(this, intent, requestCode);
+        if(dontUseAnimation) {
+            super.startActivityForResult(intent, requestCode);
+        }
+        else {
+            WindowAnimationHelper.startActivityForResultWithSlideFromRight(this, intent, requestCode);
+        }
     }
 
     @Override
     public void startActivity(Intent intent) {
-        WindowAnimationHelper.startActivityWithSlideFromRight(this, intent);
+        if(dontUseAnimation) {
+            super.startActivity(intent);
+        }
+        else {
+            WindowAnimationHelper.startActivityWithSlideFromRight(this, intent);
+        }
     }
 }

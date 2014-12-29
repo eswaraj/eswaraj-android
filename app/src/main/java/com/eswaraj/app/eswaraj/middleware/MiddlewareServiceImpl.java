@@ -191,8 +191,8 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void postComplaint(UserDto userDto, CategoryWithChildCategoryDto categoryDto, Location location, String description, File image) {
-        server.postComplaint(userDto, categoryDto, location, description, image);
+    public void postComplaint(UserDto userDto, CategoryWithChildCategoryDto categoryDto, Location location, String description, File image, Boolean anonymous, String userGoogleLocation) {
+        server.postComplaint(userDto, categoryDto, location, description, image, anonymous, userGoogleLocation);
     }
 
     @Override
@@ -228,5 +228,30 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     @Override
     public void closeComplaint(ComplaintDto complaintDto) {
         server.closeComplaint(complaintDto);
+    }
+
+    @Override
+    public void loadProfileImage(Context context, String url, Long id, Boolean dontGetFromCache) {
+        server.loadProfileImage(context, url, id);
+    }
+
+    @Override
+    public Boolean isProfileImageAvailable(Context context, String url, Long id) {
+        return cache.isProfileImageAvailable(context, url, id);
+    }
+
+    @Override
+    public void updateProfileImage(Context context) {
+        cache.updateProfileImage(context);
+    }
+
+    @Override
+    public void loadProfileImage(Context context, String url, Long id) {
+        if(cache.isProfileImageAvailable(context, url, id)) {
+            cache.loadProfileImage(context, url, id);
+        }
+        else {
+            server.loadProfileImage(context, url, id);
+        }
     }
 }

@@ -16,23 +16,29 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true" >
 
+        <ImageView
+            android:id="@+id/adPhotoDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"/>
+
     </FrameLayout>
 
     <Button
-        android:id="@+id/remove_pic"
+        android:id="@+id/adDeletePhoto"
         android:layout_width="144dp"
         android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:background="@drawable/issue_detail_button"
         android:drawableLeft="@drawable/ic_delete"
         android:drawablePadding="8dp"
-        android:onClick="removePhoto"
         android:text="Remove Photo"
         android:textColor="#ff1c33b0"
         android:textSize="14sp" />
 
     <Button
-        android:id="@+id/retake_photo"
+        android:id="@+id/adRetakePhoto"
         android:layout_width="144dp"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
@@ -40,7 +46,6 @@
         android:background="@drawable/issue_detail_button"
         android:drawableLeft="@drawable/ic_retake"
         android:drawablePadding="8dp"
-        android:onClick="retakePhoto"
         android:text="Retake Photo"
         android:textColor="#ff1c33b0"
         android:textSize="14sp" />

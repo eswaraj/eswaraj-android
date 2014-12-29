@@ -28,9 +28,9 @@
 
         <activity
             android:name=".activities.LoginActivity"
-            android:label="@string/title_activity_splash"
+            android:label="Login to Continue"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:theme="@android:style/Theme.Holo.Light.Dialog"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
@@ -52,7 +52,7 @@
         </activity>
         <activity
             android:name="com.facebook.LoginActivity"
-            android:label="FacebookLogin" >
+            android:label="Login to Continue" >
         </activity>
         <activity
             android:name=".activities.SelectTemplateActivity"

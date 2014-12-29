@@ -8,6 +8,7 @@ import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.events.ComplaintClosedEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.web.dto.ComplaintStatusChangeByPersonRequestDto;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
 
 import javax.inject.Inject;
@@ -23,13 +24,12 @@ public class ComplaintCloseRequest extends BaseClass {
 
     public void processRequest(ComplaintDto complaintDto)
     {
-        //TODO: Fix the Dto here. It should be ChangeByPerson
-        ComplaintStatusChangeByPoliticalAdminRequestDto complaintStatusChangeByPoliticalAdminRequestDto = new ComplaintStatusChangeByPoliticalAdminRequestDto();
-        complaintStatusChangeByPoliticalAdminRequestDto.setComplaintId(complaintDto.getId());
-        complaintStatusChangeByPoliticalAdminRequestDto.setPersonId(complaintDto.getPersonId());
-        complaintStatusChangeByPoliticalAdminRequestDto.setStatus("Closed");
+        ComplaintStatusChangeByPersonRequestDto complaintStatusChangeByPersonRequestDto = new ComplaintStatusChangeByPersonRequestDto();
+        complaintStatusChangeByPersonRequestDto.setComplaintId(complaintDto.getId());
+        complaintStatusChangeByPersonRequestDto.setPersonId(complaintDto.getPersonId());
+        complaintStatusChangeByPersonRequestDto.setStatus("Closed");
 
-        GenericPostVolleyRequest request = new GenericPostVolleyRequest(Constants.COMPLAINT_CLOSE_URL, createErrorListener(), createSuccessListener(), complaintStatusChangeByPoliticalAdminRequestDto);
+        GenericPostVolleyRequest request = new GenericPostVolleyRequest(Constants.COMPLAINT_CLOSE_URL, createErrorListener(), createSuccessListener(), complaintStatusChangeByPersonRequestDto);
         networkAccessHelper.submitNetworkRequest("CloseComplaint", request);
     }
 

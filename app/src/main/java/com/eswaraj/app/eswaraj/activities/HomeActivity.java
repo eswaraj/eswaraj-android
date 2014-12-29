@@ -91,7 +91,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                     startActivity(i);
                 }
                 else {
-                    Intent i = new Intent(v.getContext(), LoginDialogActivity.class);
+                    Intent i = new Intent(v.getContext(), LoginActivity.class);
+                    i.putExtra("MODE", true);
                     startActivity(i);
                 }
             }
@@ -105,7 +106,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                     startActivity(i);
                 }
                 else {
-                    Intent i = new Intent(v.getContext(), LoginDialogActivity.class);
+                    Intent i = new Intent(v.getContext(), LoginActivity.class);
+                    i.putExtra("MODE", true);
                     startActivity(i);
                 }
             }
@@ -118,7 +120,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                     startActivity(i);
                 }
                 else {
-                    Intent i = new Intent(v.getContext(), LoginDialogActivity.class);
+                    Intent i = new Intent(v.getContext(), LoginActivity.class);
+                    i.putExtra("MODE", true);
                     startActivity(i);
                 }
             }
@@ -131,7 +134,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                     startActivity(i);
                 }
                 else {
-                    Intent i = new Intent(v.getContext(), LoginDialogActivity.class);
+                    Intent i = new Intent(v.getContext(), LoginActivity.class);
+                    i.putExtra("MODE", true);
                     startActivity(i);
                 }
             }
@@ -198,6 +202,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         if(event.getSuccess()) {
             hRevGeocode.setText(event.getRevGeocodedLocation());
             hRevGeocode.setTextColor(Color.parseColor("#929292"));
+            userSession.setUserRevGeocodedLocation(event.getRevGeocodedFullData());
             retryRevGeocoding = false;
         }
         else {

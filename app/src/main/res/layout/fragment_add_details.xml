@@ -20,7 +20,7 @@
         android:textColor="#ffca3b36"
         android:textStyle="bold"
         android:shadowColor="#fff1974a"
-        android:textSize="20dp"
+        android:textSize="19dp"
         android:id="@+id/cs"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
@@ -47,29 +47,31 @@
         android:orientation="horizontal"
         >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Description"
-        android:padding="15dp"
-        android:textColor="#ffca3b36"
-        android:textStyle="bold"
-        android:shadowColor="#fff1974a"
-        android:textSize="20dp"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Description"
+            android:padding="15dp"
+            android:textColor="#ffca3b36"
+            android:textStyle="bold"
+            android:shadowColor="#fff1974a"
+            android:textSize="19dp"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.8"
-        android:text="(Please enter a brief description of the issue)"
-        android:padding="15dp"
-        android:textColor="#ff798db9"
-        android:shadowColor="#fff1974a"
-        android:textSize="12dp"
-        android:gravity="center_vertical|fill_vertical"
-        android:layout_marginLeft="-30dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:text="(Please enter a brief description of the issue)"
+            android:padding="15dp"
+            android:textColor="#ff798db9"
+            android:shadowColor="#fff1974a"
+            android:textSize="11dp"
+            android:gravity="center_vertical|fill_vertical"
+            android:layout_marginLeft="-30dp" />
     </LinearLayout>
 
     <RelativeLayout
@@ -132,6 +134,26 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/adAnonCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Post Anonymously"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -158,7 +180,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/post_button"
-        android:onClick="onPostClick"
         android:text="Post"
         android:textColor="@android:color/white" />
 

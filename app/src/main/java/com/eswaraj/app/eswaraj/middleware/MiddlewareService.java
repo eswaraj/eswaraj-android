@@ -19,5 +19,6 @@ public interface MiddlewareService extends MiddlewareGetService, MiddlewarePostS
     public void loadUserData(Context context, Session session, Boolean dontGetFromCache);
     public void loadUserComplaints(Context context, UserDto userDto, Boolean dontGetFromCache);
     public void loadComplaintImage(Context context, String url, Long id, Boolean dontGetFromCache);
+    public void loadProfileImage(Context context, String url, Long id, Boolean dontGetFromCache);
     public void loadComments(Context context, ComplaintDto complaintDto, int count, Boolean dontGetFromCache);
 }

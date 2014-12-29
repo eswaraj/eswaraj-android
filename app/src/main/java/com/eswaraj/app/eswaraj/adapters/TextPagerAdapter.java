@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.widget.Button;
 
+import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.fragments.TextPagerFragment;
 import com.eswaraj.app.eswaraj.models.SplashScreenItem;
 
@@ -14,6 +15,8 @@ public class TextPagerAdapter extends FragmentPagerAdapter {
 
     private ArrayList<SplashScreenItem> splashScreenItems;
     private Button.OnClickListener onClickListener;
+    private TextPagerFragment lastFragment;
+    private Boolean showButton = false;
 
     public TextPagerAdapter(FragmentManager fragmentManager, ArrayList<SplashScreenItem> splashScreenItems) {
         super(fragmentManager);
@@ -34,9 +37,22 @@ public class TextPagerAdapter extends FragmentPagerAdapter {
         TextPagerFragment fragment = new TextPagerFragment();
         fragment.setSplashScreenItem(splashScreenItems.get(position));
         if(position == splashScreenItems.size() - 1) {
-            fragment.setShowButton(true);
+            lastFragment = fragment;
+            lastFragment.showSpinner();
+            if(showButton) {
+                lastFragment.showContinueButton();
+            }
             fragment.setOnClickListener(onClickListener);
         }
         return fragment;
+    }
+
+    public void showProceedButton() {
+        if(lastFragment != null) {
+            lastFragment.showContinueButton();
+        }
+        else {
+            showButton = true;
+        }
     }
 }

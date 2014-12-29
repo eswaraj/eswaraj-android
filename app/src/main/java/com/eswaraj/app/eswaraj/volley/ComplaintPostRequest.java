@@ -36,8 +36,8 @@ public class ComplaintPostRequest extends BaseClass {
     @Inject
     NetworkAccessHelper networkAccessHelper;
 
-    public void processRequest(UserDto userDto, CategoryWithChildCategoryDto categoryDto, Location location, String description, File image) {
-
+    public void processRequest(UserDto userDto, CategoryWithChildCategoryDto categoryDto, Location location, String description, File image, Boolean anonymous, String userGoogleLocation) {
+        Log.e("processrequest: ", userDto.toString());
         SaveComplaintRequestDto saveComplaintRequestDto = new SaveComplaintRequestDto();
         saveComplaintRequestDto.setUserExternalid(userDto.getExternalId());
         saveComplaintRequestDto.setCategoryId(categoryDto.getId());
@@ -45,6 +45,8 @@ public class ComplaintPostRequest extends BaseClass {
         saveComplaintRequestDto.setTitle(description);
         saveComplaintRequestDto.setLattitude(location.getLatitude());
         saveComplaintRequestDto.setLongitude(location.getLongitude());
+        saveComplaintRequestDto.setAnonymous(anonymous);
+        saveComplaintRequestDto.setGoogleLocationJson(userGoogleLocation);
 
         ComplaintPostVolleyRequest request = null;
         try {

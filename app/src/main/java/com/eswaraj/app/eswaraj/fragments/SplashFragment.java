@@ -26,6 +26,7 @@ public class SplashFragment extends BaseFragment {
     EventBus eventBus;
 
     private CustomViewPager pager;
+    private TextPagerAdapter adapter;
     private ArrayList<SplashScreenItem> splashScreenItems;
     private View.OnClickListener onClickListener;
 
@@ -55,7 +56,6 @@ public class SplashFragment extends BaseFragment {
     }
 
     private void setUpPager() {
-        TextPagerAdapter adapter;
         pager.setScrollDurationFactor(2);
         adapter = new TextPagerAdapter(getActivity().getSupportFragmentManager(), splashScreenItems);
         adapter.setOnClickListener(onClickListener);
@@ -66,8 +66,13 @@ public class SplashFragment extends BaseFragment {
 
     private void setUpPagerData() {
         splashScreenItems = new ArrayList<SplashScreenItem>();
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.constituency),"Some heading1", "Some dummy text1"));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.leader), "Some heading2", "Some dummy text2"));
+        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswarajlogo),"Welcome to eSwaraj", "A Mobile & Web Platform for better Governance"));
+        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswarajposter),"About eSwaraj","eSwaraj is for everyone. It enables citizens to report issues in their neighbourhood and provides trends and statistics to the government to govern better."));
+        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.mobile),"Why eSwaraj ?","Let's try to understand the need for eSwaraj."));
+        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj01),"Signing the constitution", "We came together and signed a contract named Constitution which paved the way for founding of this great nation. A contract that promised that our lives would be much better by being part of this nation. A contract that promised that together we can be much more than we are as individuals."));
+        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj02), "Administrative Structure", "A system of administration was laid out to achieve the promises in the Constitution. Considering everyone's similar basic needs, India was divided in multiple parts, each with same administrative and political structure."));
+        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj03), "The need for social audit", "But then, Even the greatest plans fall short if ground-level feedback is not taken from end beneficiaries. eSwaraj aims to remove the disconnect between ground level realities and top level perception and bring transparency in quality of service delivery and governance."));
+        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj04), "Analytics and More", "Visual analytics offering deeper insights to improve governance Per constituency/colony based map view to locate problems"));
     }
 
     private void setUpListener() {
@@ -79,6 +84,10 @@ public class SplashFragment extends BaseFragment {
                 eventBus.post(event);
             }
         };
+    }
+
+    public void readyToProceed() {
+        adapter.showProceedButton();
     }
     
 }

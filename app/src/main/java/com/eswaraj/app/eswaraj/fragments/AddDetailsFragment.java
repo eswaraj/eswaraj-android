@@ -1,50 +1,43 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
-import com.eswaraj.app.eswaraj.activities.LoginDialogActivity;
-import com.eswaraj.app.eswaraj.base.BaseFragment;
-import com.eswaraj.app.eswaraj.events.GetUserEvent;
+import com.eswaraj.app.eswaraj.activities.LoginActivity;
+import com.eswaraj.app.eswaraj.events.ComplaintPostedEvent;
 import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
-import com.eswaraj.app.eswaraj.middleware.MiddlewareService;
+import com.eswaraj.app.eswaraj.helpers.BitmapWorkerTask;
+import com.eswaraj.app.eswaraj.helpers.CameraHelper;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.web.dto.UserDto;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
 
-public class AddDetailsFragment extends BaseFragment {
+public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
 
     @Inject
     EventBus eventBus;
@@ -54,13 +47,21 @@ public class AddDetailsFragment extends BaseFragment {
     LocationUtil locationUtil;
     @Inject
     UserSessionUtil userSession;
+    @Inject
+    CameraHelper cameraHelper;
 
     private Button takePhoto;
     private Button attachPhoto;
+    private Button deletePhoto;
+    private Button retakePhoto;
     private Button post;
-    private Button DescriptionBtn;
+    private Button descriptionBtn;
     private EditText description;
     private TextView selected;
+    private ImageView photoDisplay;
+    private CheckBox anonCheckbox;
+    private ViewGroup takePhotoContainer;
+    private ViewGroup photoTakenContainer;
 
     private CategoryWithChildCategoryDto categoryWithChildCategoryDto;
     private Location location;
@@ -75,6 +76,12 @@ public class AddDetailsFragment extends BaseFragment {
     private CustomProgressDialog pDialog;
 
     public AddDetailsFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        cameraHelper.setFragment(this);
     }
 
     @Override
@@ -98,10 +105,16 @@ public class AddDetailsFragment extends BaseFragment {
         //Get handles
         takePhoto = (Button) rootView.findViewById(R.id.adTakePhoto);
         attachPhoto = (Button) rootView.findViewById(R.id.adAttachPhoto);
+        deletePhoto = (Button) rootView.findViewById(R.id.adDeletePhoto);
+        retakePhoto = (Button) rootView.findViewById(R.id.adRetakePhoto);
         post = (Button) rootView.findViewById(R.id.adPost);
-        DescriptionBtn = (Button) rootView.findViewById(R.id.adDescriptionbtn);
+        descriptionBtn = (Button) rootView.findViewById(R.id.adDescriptionbtn);
         description = (EditText) rootView.findViewById(R.id.adDescription);
         selected = (TextView) rootView.findViewById(R.id.adSelected);
+        photoDisplay = (ImageView) rootView.findViewById(R.id.adPhotoDisplay);
+        anonCheckbox = (CheckBox) rootView.findViewById(R.id.adAnonCheckbox);
+        takePhotoContainer = (ViewGroup) rootView.findViewById(R.id.take_photo_container_ref);
+        photoTakenContainer = (ViewGroup) rootView.findViewById(R.id.photo_taken_container_ref);
 
         //Init
         locationUtil.setup(getActivity());
@@ -110,43 +123,37 @@ public class AddDetailsFragment extends BaseFragment {
         categoryWithChildCategoryDto = (CategoryWithChildCategoryDto) getActivity().getIntent().getSerializableExtra("TEMPLATE");
         selected.setText(categoryWithChildCategoryDto.getName());
 
+        //Initial state
+        descriptionBtn.setVisibility(View.VISIBLE);
+        description.setVisibility(View.INVISIBLE);
+
         //Register on-click listeners
         takePhoto.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                // Ensure that there's a camera activity to handle the intent
-                if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-                    // Create the File where the photo should go
-                    photoFile = null;
-                    try {
-                        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                        String imageFileName = "eSwaraj_" + timeStamp + "_";
-                        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-                        photoFile = File.createTempFile(
-                                imageFileName,  /* prefix */
-                                ".jpg",         /* suffix */
-                                storageDir      /* directory */
-                        );
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    // Continue only if the File was successfully created
-                    if (photoFile != null) {
-                        Log.d("TakePhoto", photoFile.getAbsolutePath());
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-                        startActivityForResult(takePictureIntent, TAKE_PHOTO);
-                    }
-                }
+                cameraHelper.openOnlyCameraIntent();
             }
         });
 
         attachPhoto.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+                cameraHelper.openOnlyGalleryIntent();
+            }
+        });
+
+        deletePhoto.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cameraHelper.setImageName(null);
+                resetIssueImageView();
+            }
+        });
+
+        retakePhoto.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cameraHelper.openImageIntent();
             }
         });
 
@@ -155,79 +162,66 @@ public class AddDetailsFragment extends BaseFragment {
             public void onClick(View view) {
                 if(userSession.isUserLoggedIn(getActivity())) {
                     if (!posted) {
-                        posted = true;
-                        middlewareService.postComplaint(userSession.getUser(), categoryWithChildCategoryDto, location, description.getText().toString(), selectedFile);
+                        middlewareService.postComplaint(userSession.getUser(), categoryWithChildCategoryDto, location, description.getText().toString(), cameraHelper.getImageFile(), anonCheckbox.isChecked(), userSession.getUserRevGeocodedLocation());
                         pDialog = new CustomProgressDialog(getActivity(), false, true, "Posting your complaint ...");
                         pDialog.show();
                     }
                 }
                 else {
-                    Intent i = new Intent(getActivity(), LoginDialogActivity.class);
+                    Intent i = new Intent(getActivity(), LoginActivity.class);
                     startActivity(i);
                 }
             }
         });
-        setDescriptionText();
-        setonLoadDescriptionBtn();
-        return rootView;
-    }
 
-    public void setDescriptionText() {
-        DescriptionBtn.setOnClickListener(new View.OnClickListener() {
+        descriptionBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                DescriptionBtn.setVisibility(View.INVISIBLE);
+                descriptionBtn.setVisibility(View.INVISIBLE);
                 description.requestFocus();
-                description.setVisibility(View.VISIBLE);            }
+                description.setVisibility(View.VISIBLE);
+            }
         });
+
+        return rootView;
     }
 
-    public void setonLoadDescriptionBtn() {
-        DescriptionBtn.setVisibility(View.VISIBLE);
-        description.setVisibility(View.INVISIBLE);
+    private void resetIssueImageView() {
+        if(TextUtils.isEmpty(cameraHelper.getImageName())) {
+            Log.e("AddDetails", "resetIssueImageView1");
+            takePhotoContainer.setVisibility(View.VISIBLE);
+            photoTakenContainer.setVisibility(View.GONE);
+        } else {
+            Log.e("AddDetails", "resetIssueImageView2");
+            takePhotoContainer.setVisibility(View.GONE);
+            photoTakenContainer.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void displayImageIfAvailable() {
+        resetIssueImageView();
+        if(!TextUtils.isEmpty(cameraHelper.getImageName())) {
+            new BitmapWorkerTask(photoDisplay, 200).execute(cameraHelper.getImageName());
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        cameraHelper.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        cameraHelper.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case SELECT_PHOTO:
-                if(resultCode == Activity.RESULT_OK) {
-                    selectedFile = new File(getPath(getActivity(), data.getData()));
-                }
-                break;
-            case TAKE_PHOTO:
-                if(resultCode == Activity.RESULT_OK) {
-                    selectedFile = photoFile;
-                }
-                else {
-                    photoFile.delete();
-                }
-                break;
-        }
-    }
-
-    public static String getPath(Context context, Uri uri) {
-        if ("content".equalsIgnoreCase(uri.getScheme())) {
-            String[] projection = { "_data" };
-            Cursor cursor = null;
-
-            try {
-                cursor = context.getContentResolver().query(uri, projection, null, null, null);
-                int column_index = cursor.getColumnIndexOrThrow("_data");
-                if (cursor.moveToFirst()) {
-                    return cursor.getString(column_index);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-
-        return null;
+        cameraHelper.onActivityResult(requestCode, resultCode, data);
     }
 
     public void onEventMainThread(Location location) {
@@ -237,18 +231,26 @@ public class AddDetailsFragment extends BaseFragment {
     public void onEventMainThread(SavedComplaintEvent event) {
         pDialog.dismiss();
         if(event.getSuccess()) {
-            Log.d("AddDetailsFragment", "Saved complaint");
-            Intent i = new Intent(getActivity(), ComplaintSummaryActivity.class);
-            i.putExtra("COMPLAINT", event.getComplaintDto());
-            if(selectedFile != null) {
-                Log.d("IMAGE", "Putting file: " + selectedFile.getAbsolutePath());
-                i.putExtra("IMAGE", selectedFile);
-            }
-            getActivity().startActivity(i);
+            ComplaintPostedEvent complaintPostedEvent = new ComplaintPostedEvent();
+            complaintPostedEvent.setSuccess(true);
+            complaintPostedEvent.setComplaintDto(event.getComplaintDto());
+            complaintPostedEvent.setImageFile(cameraHelper.getImageFile());
+            eventBus.post(complaintPostedEvent);
+            posted = true;
         }
         else {
             //If the request fails dont go to next screen instead try again
             Toast.makeText(getActivity(), "Complaint save failed. Try again. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onCameraPicTaken() {
+        displayImageIfAvailable();
+    }
+
+    @Override
+    public void onGalleryPicChosen() {
+        displayImageIfAvailable();
     }
 }

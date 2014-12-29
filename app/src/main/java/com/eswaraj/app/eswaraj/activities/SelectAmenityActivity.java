@@ -21,6 +21,7 @@ import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
 import com.eswaraj.app.eswaraj.util.GenericUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
@@ -38,6 +39,8 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
     EventBus eventBus;
     @Inject
     Context applicationContext;
+    @Inject
+    UserSessionUtil userSession;
 
     private AmenitiesFragment amenitiesFragment;
     private GoogleMapFragment googleMapFragment;
@@ -122,6 +125,7 @@ public class SelectAmenityActivity extends BaseActivity implements OnMapReadyCal
         if(event.getSuccess()) {
             asRevGeocode.setText(event.getRevGeocodedLocation());
             asRevGeocode.setTextColor(Color.parseColor("#929292"));
+            userSession.setUserRevGeocodedLocation(event.getRevGeocodedFullData());
             retryRevGeocoding = false;
         }
         else {

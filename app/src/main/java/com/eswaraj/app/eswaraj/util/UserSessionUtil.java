@@ -15,6 +15,15 @@ public class UserSessionUtil extends BaseClass {
     MiddlewareServiceImpl middlewareService;
 
     private UserDto user;
+    private String userRevGeocodedLocation;
+
+    public String getUserRevGeocodedLocation() {
+        return userRevGeocodedLocation;
+    }
+
+    public void setUserRevGeocodedLocation(String userRevGeocodedLocation) {
+        this.userRevGeocodedLocation = userRevGeocodedLocation;
+    }
 
     public UserDto getUser() {
         return user;
@@ -36,7 +45,8 @@ public class UserSessionUtil extends BaseClass {
     }
 
     public Boolean isUserLoggedIn(Context context) {
-        return middlewareService.isUserDataAvailable(context);
+        return (user != null);
+        //return middlewareService.isUserDataAvailable(context);
     }
 
     public void logoutUser(Context context) {

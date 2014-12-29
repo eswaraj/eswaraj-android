@@ -10,6 +10,7 @@ import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.events.RegisterDeviceEvent;
+import com.eswaraj.app.eswaraj.helpers.CameraHelper;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.util.DeviceUtil;
 import com.eswaraj.web.dto.RegisterDeviceRequest;
@@ -28,6 +29,8 @@ public class RegisterUserAndDeviceRequest extends BaseClass {
     EventBus eventBus;
     @Inject
     NetworkAccessHelper networkAccessHelper;
+    @Inject
+    Cache cache;
 
     public void processRequest(Context context) {
         String androidId = DeviceUtil.getDeviceid((Activity) context);
@@ -51,6 +54,7 @@ public class RegisterUserAndDeviceRequest extends BaseClass {
                 event.setSuccess(true);
                 event.setUserDto(userDto);
                 eventBus.postSticky(event);
+                cache.updateUserData(context, response);
             }
         };
     }

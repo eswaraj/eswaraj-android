@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.eswaraj.app.eswaraj.application.EswarajApplication;
 import com.eswaraj.app.eswaraj.events.RevGeocodeEvent;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.List;
@@ -46,6 +47,7 @@ public class ReverseGeocodingTask extends AsyncTask<Void, Void, Void>{
         	//Log.e("Address", userLocationString);
             RevGeocodeEvent event = new RevGeocodeEvent();
             event.setRevGeocodedLocation(userLocationString);
+            event.setRevGeocodedFullData(new Gson().toJson(bestMatch));
             event.setSuccess(true);
             eventBus.post(event);
         } catch (IOException e) {

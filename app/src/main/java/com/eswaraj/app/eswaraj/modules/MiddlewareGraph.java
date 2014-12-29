@@ -19,6 +19,7 @@ import com.eswaraj.app.eswaraj.activities.YoutubeActivity;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.datastore.CacheInterface;
 import com.eswaraj.app.eswaraj.datastore.Server;
+import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.fragments.AddDetailsFragment;
 import com.eswaraj.app.eswaraj.fragments.AmenitiesFragment;
 import com.eswaraj.app.eswaraj.fragments.AmenityBannerFragment;
@@ -32,9 +33,11 @@ import com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment;
 import com.eswaraj.app.eswaraj.fragments.LoginFragment;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.fragments.TemplatesFragment;
+import com.eswaraj.app.eswaraj.helpers.CameraHelper;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
+import com.eswaraj.app.eswaraj.helpers.StorageCacheClearingTask;
 import com.eswaraj.app.eswaraj.util.DeviceUtil;
 import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
@@ -46,7 +49,7 @@ import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.volley.CommentPostRequest;
 import com.eswaraj.app.eswaraj.volley.CommentsRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintCloseRequest;
-import com.eswaraj.app.eswaraj.volley.ComplaintImageRequest;
+import com.eswaraj.app.eswaraj.volley.LoadImageRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
@@ -96,7 +99,7 @@ import de.greenrobot.event.EventBus;
                 SingleComplaintActivity.class,
                 SingleComplaintFragment.class,
                 ImageFragment.class,
-                ComplaintImageRequest.class,
+                LoadImageRequest.class,
                 CommentsFragment.class,
                 CommentsRequest.class,
                 CommentPostRequest.class,
@@ -107,7 +110,8 @@ import de.greenrobot.event.EventBus;
                 SplashActivity.class,
                 LoginDialogActivity.class,
                 GoogleMapFragment.class,
-                ComplaintCloseRequest.class
+                ComplaintCloseRequest.class,
+                StorageCacheClearingTask.class
         },
         complete = false,
         library = true
@@ -214,8 +218,8 @@ public class MiddlewareGraph {
     }
 
     @Provides @Singleton
-    ComplaintImageRequest provideComplaintImageRequest() {
-        return new ComplaintImageRequest();
+    LoadImageRequest provideComplaintImageRequest() {
+        return new LoadImageRequest();
     }
 
     @Provides @Singleton
@@ -231,5 +235,15 @@ public class MiddlewareGraph {
     @Provides @Singleton
     ComplaintCloseRequest provideComplaintCloseRequest() {
         return new ComplaintCloseRequest();
+    }
+
+    @Provides @Singleton
+    StorageCache provideStorageCache() {
+        return new StorageCache();
+    }
+
+    @Provides
+    CameraHelper provideCameraHelper() {
+        return new CameraHelper();
     }
 }

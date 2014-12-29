@@ -170,7 +170,7 @@ public class Cache extends BaseClass implements CacheInterface {
 
     @Override
     public Boolean isComplaintImageAvailable(Context context, String url, Long id) {
-        return new File(context.getFilesDir() + "/eSwaraj_complaint_" + id + ".png").exists();
+        return false;
     }
 
     @Override
@@ -180,9 +180,7 @@ public class Cache extends BaseClass implements CacheInterface {
 
     @Override
     public void loadComplaintImage(Context context, String url, Long id) {
-        GetComplaintImageEvent event = new GetComplaintImageEvent();
-        event.setSuccess(true);
-        eventBus.post(event);
+        //Will never get called
     }
 
     @Override
@@ -198,5 +196,20 @@ public class Cache extends BaseClass implements CacheInterface {
     @Override
     public void loadComments(Context context, ComplaintDto complaintDto, int count) {
         //Will not get called right now
+    }
+
+    @Override
+    public Boolean isProfileImageAvailable(Context context, String url, Long id) {
+        return false;
+    }
+
+    @Override
+    public void updateProfileImage(Context context) {
+        //Nothing to do here
+    }
+
+    @Override
+    public void loadProfileImage(Context context, String url, Long id) {
+        //Will never get called
     }
 }

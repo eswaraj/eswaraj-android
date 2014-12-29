@@ -17,5 +17,6 @@ public interface MiddlewareGetService {
     public void loadUserData(Context context, Session session);
     public void loadUserComplaints(Context context, UserDto userDto);
     public void loadComplaintImage(Context context, String url, Long id);
+    public void loadProfileImage(Context context, String url, Long id);
     public void loadComments(Context context, ComplaintDto complaintDto, int count);
 }

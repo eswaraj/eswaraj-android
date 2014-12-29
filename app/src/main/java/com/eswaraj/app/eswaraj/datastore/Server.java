@@ -1,48 +1,27 @@
 package com.eswaraj.app.eswaraj.datastore;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.location.Location;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.eswaraj.app.eswaraj.base.BaseClass;
-import com.eswaraj.app.eswaraj.config.Constants;
-import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
-import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
-import com.eswaraj.app.eswaraj.events.GetUserEvent;
-import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
+import com.eswaraj.app.eswaraj.config.ImageType;
 import com.eswaraj.app.eswaraj.volley.CommentPostRequest;
 import com.eswaraj.app.eswaraj.volley.CommentsRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintCloseRequest;
-import com.eswaraj.app.eswaraj.volley.ComplaintImageRequest;
+import com.eswaraj.app.eswaraj.volley.LoadImageRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
 import com.eswaraj.app.eswaraj.volley.UserComplaintsRequest;
-import com.eswaraj.web.dto.AddressDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.ComplaintDto;
-import com.eswaraj.web.dto.PersonDto;
-import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
-import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -66,7 +45,7 @@ public class Server extends BaseClass implements ServerInterface {
     @Inject
     UserComplaintsRequest userComplaintsRequest;
     @Inject
-    ComplaintImageRequest complaintImageRequest;
+    LoadImageRequest loadImageRequest;
     @Inject
     CommentsRequest commentsRequest;
     @Inject
@@ -119,7 +98,7 @@ public class Server extends BaseClass implements ServerInterface {
 
     @Override
     public void loadComplaintImage(Context context, String url, Long id) {
-        complaintImageRequest.processRequest(context, url, id);
+        loadImageRequest.processRequest(context, url, id, ImageType.COMPLAINT);
     }
 
     @Override
@@ -138,8 +117,8 @@ public class Server extends BaseClass implements ServerInterface {
     }
 
     @Override
-    public void postComplaint(UserDto userDto, CategoryWithChildCategoryDto categoryDto, Location location, String description, File image) {
-        complaintPostRequest.processRequest(userDto, categoryDto, location, description, image);
+    public void postComplaint(UserDto userDto, CategoryWithChildCategoryDto categoryDto, Location location, String description, File image, Boolean anonymous, String userGoogleLocation) {
+        complaintPostRequest.processRequest(userDto, categoryDto, location, description, image, anonymous, userGoogleLocation);
     }
 
     @Override
@@ -150,5 +129,10 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void closeComplaint(ComplaintDto complaintDto) {
         complaintCloseRequest.processRequest(complaintDto);
+    }
+
+    @Override
+    public void loadProfileImage(Context context, String url, Long id) {
+        loadImageRequest.processRequest(context, url, id, ImageType.PROFILE);
     }
 }

@@ -18,6 +18,7 @@ import com.eswaraj.app.eswaraj.events.FacebookSessionEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
+import com.eswaraj.app.eswaraj.events.UserDataAvailableEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
@@ -49,6 +50,7 @@ public class LoginFragment extends BaseFragment {
     UserSessionUtil userSession;
 
     private Boolean showInstruction;
+    private Boolean dialogMode;
 
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
@@ -147,57 +149,68 @@ public class LoginFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        View view;
+        if(dialogMode) {
+            view = inflater.inflate(R.layout.fragment_login_dialog, container, false);
+        }
+        else {
+            view = inflater.inflate(R.layout.fragment_login, container, false);
+        }
         Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/HandmadeTypewriter.ttf");
 
-        //References to UI elements
-        buttonLogin = (LoginButton) view.findViewById(R.id.buttonLogin);
-        buttonQuit = (Button) view.findViewById(R.id.buttonQuit);
-        buttonGotIt = (Button) view.findViewById(R.id.buttonGotIt);
-        buttonSkip = (TextView) view.findViewById(R.id.buttonSkip);
-        welcomeText = (TextView) view.findViewById(R.id.welcomeText);
-        progressWheel = (ProgressWheel) view.findViewById(R.id.loginProgressWheel);
+        if(!dialogMode) {
+            //References to UI elements
+            buttonLogin = (LoginButton) view.findViewById(R.id.buttonLogin);
+            buttonQuit = (Button) view.findViewById(R.id.buttonQuit);
+            buttonGotIt = (Button) view.findViewById(R.id.buttonGotIt);
+            buttonSkip = (TextView) view.findViewById(R.id.buttonSkip);
+            welcomeText = (TextView) view.findViewById(R.id.welcomeText);
+            progressWheel = (ProgressWheel) view.findViewById(R.id.loginProgressWheel);
 
 
-        //Set up initial state
-        buttonQuit.setVisibility(View.INVISIBLE);
-        buttonGotIt.setVisibility(View.INVISIBLE);
-        progressWheel.setVisibility(View.INVISIBLE);
-        if (facebookLoginUtil.isUserLoggedIn()) {
-            buttonLogin.setVisibility(View.INVISIBLE);
-        }
-        welcomeText.setText("Lets be the change we want to see in the world.\nLets play our part in betterment of nation through click of a button.\n Lets live the dream of Swaraj");
-        welcomeText.setTypeface(custom_font);
-
-        //Register callback handlers
-        buttonQuit.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().finish();
-            }
-        });
-        buttonGotIt.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserContinueEvent event = new UserContinueEvent();
-                event.setLoggedIn(true);
-                eventBus.post(event);
-            }
-        });
-        buttonSkip.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //UserContinueEvent event = new UserContinueEvent();
-                //event.setLoggedIn(false);
+            //Set up initial state
+            buttonQuit.setVisibility(View.INVISIBLE);
+            buttonGotIt.setVisibility(View.INVISIBLE);
+            progressWheel.setVisibility(View.INVISIBLE);
+            if (facebookLoginUtil.isUserLoggedIn()) {
                 buttonLogin.setVisibility(View.INVISIBLE);
-                buttonSkip.setVisibility(View.INVISIBLE);
-                progressWheel.setVisibility(View.VISIBLE);
-                progressWheel.spin();
-                GetUserEvent event = new GetUserEvent();
-                event.setSuccess(true);
-                eventBus.post(event);
             }
-        });
+            welcomeText.setText("Lets be the change we want to see in the world.\nLets play our part in betterment of nation through click of a button.\n Lets live the dream of Swaraj");
+            welcomeText.setTypeface(custom_font);
+
+            //Register callback handlers
+            buttonQuit.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().finish();
+                }
+            });
+            buttonGotIt.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UserContinueEvent event = new UserContinueEvent();
+                    event.setLoggedIn(true);
+                    eventBus.post(event);
+                }
+            });
+            buttonSkip.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    buttonLogin.setVisibility(View.INVISIBLE);
+                    buttonSkip.setVisibility(View.INVISIBLE);
+                    progressWheel.setVisibility(View.VISIBLE);
+                    progressWheel.spin();
+                    GetUserEvent event = new GetUserEvent();
+                    event.setSuccess(true);
+                    eventBus.post(event);
+                }
+            });
+        }
+        else {
+            buttonLogin = (LoginButton) view.findViewById(R.id.buttonLogin);
+            progressWheel = (ProgressWheel) view.findViewById(R.id.loginProgressWheel);
+            progressWheel.setVisibility(View.INVISIBLE);
+        }
 
         return view;
     }
@@ -211,9 +224,10 @@ public class LoginFragment extends BaseFragment {
 
     public void onEventMainThread(FacebookSessionEvent event) {
         if(event.getLogin()) {
-            //LoginDone flag will not be updated here since that should happen only once userDto is available
+            if(!dialogMode) {
+                buttonSkip.setVisibility(View.INVISIBLE);
+            }
             buttonLogin.setVisibility(View.INVISIBLE);
-            buttonSkip.setVisibility(View.INVISIBLE);
             progressWheel.setVisibility(View.VISIBLE);
             progressWheel.spin();
             middlewareService.loadUserData(getActivity(), event.getSession());
@@ -227,10 +241,17 @@ public class LoginFragment extends BaseFragment {
         if(event.getSuccess()) {
             Log.d("LoginFragment", "GetUserEvent:Success");
             userSession.setUser(event.getUserDto());
+            UserDataAvailableEvent userDataAvailableEvent = new UserDataAvailableEvent();
+            userDataAvailableEvent.setSuccess(true);
+            eventBus.post(userDataAvailableEvent);
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch user details from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
             //Show retry button which will re-trigger the request.
         }
+    }
+
+    public void setMode(Boolean mode) {
+        dialogMode = mode;
     }
 }
