@@ -1,12 +1,37 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.eswaraj.app.eswaraj.fragments.TemplatesFragment">
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="#ffffffff"
+    android:padding="0dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/navbar_logo"
+        android:paddingTop="5dp" />
+
+    <FrameLayout
+        android:id="@+id/stBanner"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+    </FrameLayout>
+
 
     <ListView
-        android:id="@+id/tList"
+        android:id="@+id/stList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:layout_marginTop="-12.5dp">
+    </ListView>
 
-</FrameLayout>
+
+</LinearLayout>

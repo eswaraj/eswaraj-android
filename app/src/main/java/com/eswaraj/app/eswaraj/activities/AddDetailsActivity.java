@@ -19,10 +19,6 @@ import de.greenrobot.event.EventBus;
 public class AddDetailsActivity extends BaseActivity {
 
     @Inject
-    LocationUtil locationUtil;
-    @Inject
-    Context applicationContext;
-    @Inject
     EventBus eventBus;
 
     private AddDetailsFragment addDetailsFragment;
@@ -39,12 +35,10 @@ public class AddDetailsActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         eventBus.register(this);
-        locationUtil.subscribe(applicationContext, false);
     }
 
     @Override
     protected void onStop() {
-        locationUtil.unsubscribe();
         eventBus.unregister(this);
         super.onStop();
     }

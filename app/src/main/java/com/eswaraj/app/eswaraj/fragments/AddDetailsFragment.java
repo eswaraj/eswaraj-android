@@ -1,6 +1,7 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -39,6 +40,8 @@ import de.greenrobot.event.EventBus;
 
 public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
 
+    @Inject
+    Context applicationContext;
     @Inject
     EventBus eventBus;
     @Inject
@@ -88,13 +91,13 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
     public void onStart() {
         super.onStart();
         eventBus.registerSticky(this);
-        locationUtil.startLocationService();
+        locationUtil.subscribe(applicationContext, false);
     }
 
     @Override
     public void onStop() {
         eventBus.unregister(this);
-        locationUtil.stopLocationService();
+        locationUtil.unsubscribe();
         super.onStop();
     }
 

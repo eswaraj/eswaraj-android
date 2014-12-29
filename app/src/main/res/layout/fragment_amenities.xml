@@ -1,15 +1,43 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.eswaraj.app.eswaraj.fragments.AmenitiesFragment"
-    android:background="#ffffffff">
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:background="#ffffffff"
+    android:padding="0dp">
+
+    <include
+        android:id="@+id/logo_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/screen_header" />
+
+    <FrameLayout
+        android:id="@+id/asMapContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/asRevGeocode"
+        android:layout_width="fill_parent"
+        android:layout_height="5dp"
+        android:layout_weight="0.5"
+        android:background="#ffffffff"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#929292" />
 
     <GridView
         android:id="@+id/gvAmenityList"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
         android:layout_width="match_parent"
         android:numColumns="3">
     </GridView>
 
-</FrameLayout>
+</LinearLayout>

@@ -14,13 +14,21 @@ import android.widget.TextView;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.activities.YoutubeActivity;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
+import com.eswaraj.app.eswaraj.events.BannerClickEvent;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
+
+import de.greenrobot.event.EventBus;
+
 
 public class AmenityBannerFragment extends BaseFragment implements View.OnClickListener {
+
+    @Inject
+    EventBus eventBus;
 
     private CategoryWithChildCategoryDto amenity;
     private ImageView banner;
@@ -62,9 +70,10 @@ public class AmenityBannerFragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        Intent i = new Intent(getActivity(), YoutubeActivity.class);
-        i.putExtra("VIDEO_ID", video);
-        startActivity(i);
+        BannerClickEvent event = new BannerClickEvent();
+        event.setSuccess(true);
+        event.setVideo(video);
+        eventBus.post(event);
     }
 
     private void extractVideoId() {

@@ -21,7 +21,7 @@ import com.eswaraj.app.eswaraj.datastore.CacheInterface;
 import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.fragments.AddDetailsFragment;
-import com.eswaraj.app.eswaraj.fragments.AmenitiesFragment;
+import com.eswaraj.app.eswaraj.fragments.SelectAmenityFragment;
 import com.eswaraj.app.eswaraj.fragments.AmenityBannerFragment;
 import com.eswaraj.app.eswaraj.fragments.CommentsFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryFragment;
@@ -68,7 +68,7 @@ import de.greenrobot.event.EventBus;
                 LoginActivity.class,
                 LoginFragment.class,
                 SelectAmenityActivity.class,
-                AmenitiesFragment.class,
+                SelectAmenityFragment.class,
                 Cache.class,
                 Server.class,
                 NetworkAccessHelper.class,
