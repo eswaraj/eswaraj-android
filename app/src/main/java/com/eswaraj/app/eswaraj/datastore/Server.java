@@ -5,6 +5,7 @@ import android.location.Location;
 
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.ImageType;
+import com.eswaraj.app.eswaraj.events.UserLocationSavedEvent;
 import com.eswaraj.app.eswaraj.volley.CommentPostRequest;
 import com.eswaraj.app.eswaraj.volley.CommentsRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintCloseRequest;
@@ -113,7 +114,8 @@ public class Server extends BaseClass implements ServerInterface {
 
     @Override
     public void saveUserLocation(Context context, UserDto userDto, double lat, double lng) {
-        //TODO: Implement post request here
+        //TODO: Implement post request here which will post this event
+        eventBus.post(new UserLocationSavedEvent());
     }
 
     @Override

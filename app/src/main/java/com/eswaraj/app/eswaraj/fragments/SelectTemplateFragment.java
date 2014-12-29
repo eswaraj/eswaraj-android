@@ -24,7 +24,7 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class TemplatesFragment extends BaseFragment {
+public class SelectTemplateFragment extends BaseFragment {
 
     @Inject
     EventBus eventBus;
@@ -33,7 +33,7 @@ public class TemplatesFragment extends BaseFragment {
     private AmenityBannerFragment amenityBannerFragment;
     private ListView listView;
 
-    public TemplatesFragment() {
+    public SelectTemplateFragment() {
 
     }
 

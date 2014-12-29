@@ -29,10 +29,10 @@ import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.fragments.GooglePlacesListFragment;
 import com.eswaraj.app.eswaraj.fragments.ImageFragment;
 import com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment;
+import com.eswaraj.app.eswaraj.fragments.SelectTemplateFragment;
 import com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment;
 import com.eswaraj.app.eswaraj.fragments.LoginFragment;
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
-import com.eswaraj.app.eswaraj.fragments.TemplatesFragment;
 import com.eswaraj.app.eswaraj.helpers.CameraHelper;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
@@ -79,7 +79,7 @@ import de.greenrobot.event.EventBus;
                 MiddlewareServiceImpl.class,
                 ReverseGeocodingTask.class,
                 SelectTemplateActivity.class,
-                TemplatesFragment.class,
+                SelectTemplateFragment.class,
                 AmenityBannerFragment.class,
                 YoutubeActivity.class,
                 GoogleMapFragment.class,

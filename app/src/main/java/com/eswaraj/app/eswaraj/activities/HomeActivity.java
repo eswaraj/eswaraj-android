@@ -101,8 +101,13 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         leaders.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userSession.isUserLoggedIn(v.getContext())) {
+                if(userSession.isUserLoggedIn(v.getContext()) && userSession.isUserLocationKnown()) {
                     Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
+                    startActivity(i);
+                }
+                else if(userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
+                    Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
+                    i.putExtra("MODE", true);
                     startActivity(i);
                 }
                 else {
@@ -115,8 +120,13 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         constituency.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userSession.isUserLoggedIn(v.getContext())) {
+                if(userSession.isUserLoggedIn(v.getContext()) && userSession.isUserLocationKnown()) {
                     Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
+                    startActivity(i);
+                }
+                else if(userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
+                    Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
+                    i.putExtra("MODE", true);
                     startActivity(i);
                 }
                 else {

@@ -15,6 +15,7 @@ import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.events.GooglePlaceDetailsEvent;
+import com.eswaraj.app.eswaraj.events.UserLocationSavedEvent;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.fragments.GooglePlacesListFragment;
 import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
@@ -22,6 +23,7 @@ import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.GooglePlace;
 import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.web.dto.UserDto;
 import com.github.amlcurran.showcaseview.ShowcaseView;
@@ -45,23 +47,29 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     GooglePlacesUtil googlePlacesUtil;
     @Inject
     Context applicationContext;
+    @Inject
+    UserSessionUtil userSession;
 
     private GoogleMapFragment googleMapFragment;
     private GooglePlacesListFragment googlePlacesListFragment;
-    private UserDto userDto;
     private Boolean markerUpdatedOnce;
     private Boolean mapReady;
     private Button mlSaveLocation;
+    private Button mlSkip;
     private EditText mlSearchText;
     private Button mlSearchButton;
     private CustomProgressDialog pDialog;
     private Boolean mapDisplayed;
     private GooglePlace googlePlace;
+    private Boolean dialogMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mark_location);
+
+        dialogMode = getIntent().getBooleanExtra("MODE", false);
+
         googleMapFragment = new GoogleMapFragment();
         googlePlacesListFragment = new GooglePlacesListFragment();
 
@@ -74,6 +82,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         //Initialization
         googleMapFragment.setContext(this);
         mlSaveLocation = (Button) findViewById(R.id.mlSaveLocation);
+        mlSkip = (Button) findViewById(R.id.mlSkip);
         mlSearchText = (EditText) findViewById(R.id.mlSearchText);
         mlSearchButton = (Button) findViewById(R.id.mlSearchButton);
         markerUpdatedOnce = false;
@@ -85,10 +94,8 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
             public void onClick(View view) {
                 double lat = googleMapFragment.getMarkerLatitude();
                 double lng = googleMapFragment.getMarkerLongitude();
-                middlewareService.saveUserLocation(view.getContext(), userDto, lat, lng);
-                Intent i = new Intent(view.getContext(), HomeActivity.class);
-                view.getContext().startActivity(i);
-                finish();
+                middlewareService.saveUserLocation(view.getContext(), userSession.getUser(), lat, lng);
+
             }
         });
 
@@ -115,6 +122,20 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
 
                     getSupportFragmentManager().beginTransaction().remove(googleMapFragment).commit();
                     getSupportFragmentManager().beginTransaction().add(R.id.mlContainer, googlePlacesListFragment).commit();
+                }
+            }
+        });
+        mlSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(dialogMode) {
+                    finish();
+                }
+                else {
+                    userSession.setUserSkipMarkLocation(v.getContext(), true);
+                    Intent i = new Intent(v.getContext(), HomeActivity.class);
+                    v.getContext().startActivity(i);
+                    finish();
                 }
             }
         });
@@ -166,16 +187,6 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         }
     }
 
-    public void onEventMainThread(GetUserEvent event) {
-        if(event.getSuccess()) {
-            this.userDto = event.getUserDto();
-        }
-        else {
-            Toast.makeText(this, "Could not fetch user details from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-            //Show retry button which will re-trigger the request.
-        }
-    }
-
     public void onEventMainThread(GooglePlaceDetailsEvent event) {
         if(!mapDisplayed) {
             mapDisplayed = true;
@@ -194,6 +205,24 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         }
         else {
             Toast.makeText(this, "Could not fetch details of selected place. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onEventMainThread(UserLocationSavedEvent event) {
+        //TODO:Uncomment this code later
+        if(event.getSuccess()) {
+            //userSession.setUser(event.getUserDto());
+            if(dialogMode) {
+                finish();
+            }
+            else {
+                Intent i = new Intent(this, HomeActivity.class);
+                startActivity(i);
+                finish();
+            }
+        }
+        else {
+            Toast.makeText(this, "Could not save location. Please retry. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
     }
 

@@ -5,19 +5,6 @@
     android:orientation="vertical"
     tools:context="com.eswaraj.app.eswaraj.activities.MyComplaintsActivity">
 
-    <Button
-        android:id="@+id/mcShowList"
-        android:text="List"
-        android:layout_weight="0.5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/mcShowMap"
-        android:text="Map"
-        android:layout_weight="0.5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
     <!--
     <fragment

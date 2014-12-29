@@ -1,21 +1,14 @@
 package com.eswaraj.app.eswaraj.activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.BannerClickEvent;
 import com.eswaraj.app.eswaraj.events.TemplateSelectEvent;
-import com.eswaraj.app.eswaraj.fragments.AmenityBannerFragment;
-import com.eswaraj.app.eswaraj.fragments.BottomMenuBarFragment;
-import com.eswaraj.app.eswaraj.fragments.TemplatesFragment;
+import com.eswaraj.app.eswaraj.fragments.SelectTemplateFragment;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-
-import java.io.Serializable;
 
 import javax.inject.Inject;
 
@@ -26,7 +19,7 @@ public class SelectTemplateActivity extends BaseActivity {
     @Inject
     EventBus eventBus;
 
-    private TemplatesFragment templatesFragment;
+    private SelectTemplateFragment selectTemplateFragment;
     private CategoryWithChildCategoryDto amenity;
 
     @Override
@@ -39,12 +32,12 @@ public class SelectTemplateActivity extends BaseActivity {
         amenity = (CategoryWithChildCategoryDto) i.getSerializableExtra("AMENITY");
 
         //Create fragment
-        templatesFragment = new TemplatesFragment();
-        templatesFragment.setAmenity(amenity);
+        selectTemplateFragment = new SelectTemplateFragment();
+        selectTemplateFragment.setAmenity(amenity);
 
         //Add all fragments
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.stContainer, templatesFragment).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.stContainer, selectTemplateFragment).commit();
         }
     }
 

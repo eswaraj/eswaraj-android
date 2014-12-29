@@ -144,7 +144,7 @@ public class LoginActivity extends BaseActivity {
             finish();
         }
         else {
-            loginFragment.setShowInstruction(!userSession.isUserLocationKnown() && userSession.isUserLoggedIn(this));
+            loginFragment.setShowInstruction(!userSession.isUserLocationKnown() && userSession.isUserLoggedIn(this) && !userSession.didUserSkipMarkLocation(this));
             loginFragment.notifyAppReady();
             if (userSession.isUserLocationKnown()) {
                 takeUserToNextScreen();
@@ -163,11 +163,12 @@ public class LoginActivity extends BaseActivity {
             } else {
                 redirectDone = true;
                 Intent i = null;
-                if(userSession.isUserLocationKnown() || !userSession.isUserLoggedIn(this)) {
+                if(userSession.isUserLocationKnown() || !userSession.isUserLoggedIn(this) || userSession.didUserSkipMarkLocation(this)) {
                     i = new Intent(this, HomeActivity.class);
                 }
                 else {
                     i = new Intent(this, MarkLocationActivity.class);
+                    i.putExtra("MODE", false);
                 }
                 startActivity(i);
                 locationUtil.stopLocationService();

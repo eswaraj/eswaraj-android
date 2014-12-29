@@ -2,6 +2,9 @@ package com.eswaraj.app.eswaraj.config;
 
 public class PreferenceConstants {
     public static final String FILE_SERVER_DATA = "ServerDataPrefFile";
+    public static final String FILE_USER_PREFS = "UserPrefsFile";
+
+    public static final String MARK_LOCATION_SKIPPED = "MarkLocationSkipped";
 
     public static final String CATEGORY_DATA_AVAILABLE = "CategoryDataAvailable";
     public static final String CATEGORY_DATA = "CategoryData";

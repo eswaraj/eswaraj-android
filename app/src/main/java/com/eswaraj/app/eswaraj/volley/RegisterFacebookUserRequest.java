@@ -38,7 +38,7 @@ public class RegisterFacebookUserRequest extends BaseClass {
         final RegisterFacebookAccountRequest registerFacebookAccountRequest = new RegisterFacebookAccountRequest();
 
         registerFacebookAccountRequest.setExpireTime(session.getExpirationDate());
-        registerFacebookAccountRequest.setFacebookAppId(context.getString(R.string.facebook_app_id));
+        registerFacebookAccountRequest.setFacebookAppId(context.getString(R.string.facebook_app_id_old));
         registerFacebookAccountRequest.setToken(session.getAccessToken());
         registerFacebookAccountRequest.setDeviceId(androidId);
         registerFacebookAccountRequest.setDeviceTypeRef(deviceTypeRef);
