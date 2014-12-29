@@ -23,6 +23,7 @@ import com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment;
 import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
+import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.google.android.gms.maps.GoogleMap;
@@ -51,6 +52,7 @@ public class MyComplaintsActivity extends BaseActivity implements OnMapReadyCall
     private Button mapButton;
     private Button listButton;
     private FrameLayout mcContainer;
+    private CustomProgressDialog pDialog;
 
     private Boolean mapDisplayed = false;
     private Boolean mapReady = false;
@@ -73,6 +75,9 @@ public class MyComplaintsActivity extends BaseActivity implements OnMapReadyCall
         getSupportFragmentManager().beginTransaction().hide(googleMapFragment).commit();
         getSupportFragmentManager().executePendingTransactions();
         mapDisplayed = false;
+
+        pDialog = new CustomProgressDialog(this, false, true, "Fetching your complaints ...");
+        pDialog.show();
 
         mapButton = (Button) findViewById(R.id.mcShowMap);
         listButton = (Button) findViewById(R.id.mcShowList);
@@ -147,6 +152,7 @@ public class MyComplaintsActivity extends BaseActivity implements OnMapReadyCall
         else {
             Toast.makeText(this, "Could not fetch user complaints. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
+        pDialog.dismiss();
     }
 
     public void onEventMainThread(ComplaintSelectedEvent event) {

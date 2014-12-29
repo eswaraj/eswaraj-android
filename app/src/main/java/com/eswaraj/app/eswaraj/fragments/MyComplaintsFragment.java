@@ -27,6 +27,7 @@ import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.UserDto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,9 +40,9 @@ public class MyComplaintsFragment extends BaseFragment {
     @Inject
     EventBus eventBus;
 
-    private ListView mcList;
+    private ListView mcListOpen;
+    private ListView mcListClosed;
 
-    private List<CategoryWithChildCategoryDto> categoryDtoList;
 
     public MyComplaintsFragment() {
         // Required empty public constructor
@@ -51,42 +52,50 @@ public class MyComplaintsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_my_complaints, container, false);
-        mcList = (ListView) rootView.findViewById(R.id.mcList);
+        mcListOpen = (ListView) rootView.findViewById(R.id.mcListOpen);
+        mcListClosed = (ListView) rootView.findViewById(R.id.mcListClosed);
 
-        mcList.setOnItemClickListener(new ListView.OnItemClickListener() {
+        mcListOpen.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ComplaintSelectedEvent event = new ComplaintSelectedEvent();
-                event.setComplaintDto((ComplaintDto) mcList.getAdapter().getItem(position));
+                event.setComplaintDto((ComplaintDto) mcListOpen.getAdapter().getItem(position));
                 eventBus.post(event);
             }
         });
+
+        mcListClosed.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ComplaintSelectedEvent event = new ComplaintSelectedEvent();
+                event.setComplaintDto((ComplaintDto) mcListClosed.getAdapter().getItem(position));
+                eventBus.post(event);
+            }
+        });
+
         return rootView;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        eventBus.registerSticky(this);
-    }
-
-    @Override
-    public void onStop() {
-        eventBus.unregister(this);
-        super.onStop();
-    }
-
-    public void onEventMainThread(GetCategoriesDataEvent event) {
-        if(event.getSuccess()) {
-            categoryDtoList = event.getCategoryList();
-        }
-        else {
-            //This will never happen
-        }
-    }
 
     public void setComplaintData(List<ComplaintDto> complaintDtoList) {
-        mcList.setAdapter(new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, complaintDtoList, categoryDtoList));
+        filterListAndSetAdapter(complaintDtoList);
+    }
+
+    private void filterListAndSetAdapter(List<ComplaintDto> complaintDtoList) {
+        List<ComplaintDto> closedComplaints = new ArrayList<ComplaintDto>();
+        List<ComplaintDto> openComplaints = new ArrayList<ComplaintDto>();
+
+        for(ComplaintDto complaintDto : complaintDtoList) {
+            if(complaintDto.getStatus().equals("Closed")) {
+                closedComplaints.add(complaintDto);
+            }
+            else {
+                openComplaints.add(complaintDto);
+            }
+        }
+
+        mcListOpen.setAdapter(new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, openComplaints));
+        mcListClosed.setAdapter(new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, closedComplaints));
     }
 
 }

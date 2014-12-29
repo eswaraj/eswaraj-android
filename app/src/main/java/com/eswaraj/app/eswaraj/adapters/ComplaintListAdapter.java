@@ -3,13 +3,17 @@ package com.eswaraj.app.eswaraj.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.ComplaintDto;
 
@@ -22,14 +26,12 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
     private Context context;
     private int layoutResourceId;
     private List<ComplaintDto> complaintDtoList;
-    private List<CategoryWithChildCategoryDto> categoryDtoList;
 
-    public ComplaintListAdapter(Context context, int layoutResourceId, List<ComplaintDto> complaintDtoList, List<CategoryWithChildCategoryDto> categoryDtoList) {
+    public ComplaintListAdapter(Context context, int layoutResourceId, List<ComplaintDto> complaintDtoList) {
         super(context, layoutResourceId, complaintDtoList);
         this.context = context;
         this.layoutResourceId = layoutResourceId;
         this.complaintDtoList = complaintDtoList;
-        this.categoryDtoList = categoryDtoList;
     }
 
     @Override
@@ -46,6 +48,8 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
             holder.mcId = (TextView)row.findViewById(R.id.mcID);
             holder.mcCategory = (TextView)row.findViewById(R.id.mcCategory);
             holder.mcDate = (TextView)row.findViewById(R.id.mcDate);
+            holder.mcStatus = (TextView)row.findViewById(R.id.mcStatus);
+            holder.mcIcon = (ImageView)row.findViewById(R.id.mcIcon);
 
             row.setTag(holder);
         }
@@ -56,20 +60,27 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
 
         ComplaintDto complaintDto = complaintDtoList.get(position);
 
-        for(CategoryWithChildCategoryDto root : categoryDtoList) {
-            if(root.getChildCategories() != null) {
-                for (CategoryWithChildCategoryDto child : root.getChildCategories()) {
-                    if (child.getId() == complaintDto.getCategoryId()) {
-                        holder.mcCategory.setText(child.getName());
-                        break;
-                    }
-                }
+        for(CategoryDto categoryDto : complaintDto.getCategories()) {
+            if(!categoryDto.isRoot()) {
+                holder.mcCategory.setText(categoryDto.getName());
             }
         }
 
         holder.mcId.setText(complaintDto.getId().toString());
-        holder.mcDate.setText(new Date(complaintDto.getComplaintTime()).toString());
+        //holder.mcDate.setText(new Date(complaintDto.getComplaintTime()).toString());
+        holder.mcDate.setText(DateUtils.getRelativeTimeSpanString(complaintDto.getComplaintTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
+        holder.mcStatus.setText(complaintDto.getStatus());
+        holder.mcIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(getRootCategoryId(complaintDto)) + ".png"));
         return row;
+    }
+
+    private Long getRootCategoryId(ComplaintDto complaintDto) {
+        for(CategoryDto categoryDto : complaintDto.getCategories()) {
+            if(categoryDto.isRoot()) {
+                return categoryDto.getId();
+            }
+        }
+        return null;
     }
 
     static class ComplaintDtoHolder
@@ -77,5 +88,7 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         TextView mcId;
         TextView mcCategory;
         TextView mcDate;
+        TextView mcStatus;
+        ImageView mcIcon;
     }
 }

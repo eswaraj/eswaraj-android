@@ -22,6 +22,7 @@ public class TextPagerFragment extends Fragment {
     private ImageView mImage;
     private Button mButton;
     private ProgressWheel progressWheel;
+    private View root;
 
     private SplashScreenItem splashScreenItem;
     private Button.OnClickListener onClickListener;
@@ -50,6 +51,7 @@ public class TextPagerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.splash_pager, container, false);
         Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/HandmadeTypewriter.ttf");
+        root = rootView;
         mText = (TextView) rootView.findViewById(R.id.splash_pager_text);
         mImage = (ImageView) rootView.findViewById(R.id.splash_pager_image);
         mHeading = (TextView) rootView.findViewById(R.id.splash_pager_heading);
@@ -68,13 +70,18 @@ public class TextPagerFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        root.setBackground(splashScreenItem.getBgImage());
+
         mText.setText(splashScreenItem.getText());
         mText.setTextSize(18);
         mText.setTextColor(Color.parseColor("#e47979"));
+
         mHeading.setText(splashScreenItem.getHeading());
         mHeading.setTextSize(40);
         mHeading.setPadding(0,30,0,0);
         mHeading.setTextColor(Color.parseColor("#ea5c5c"));
+
         mImage.setImageDrawable(splashScreenItem.getImage());
         mImage.setPadding(0, 10,0,0 );
     }
