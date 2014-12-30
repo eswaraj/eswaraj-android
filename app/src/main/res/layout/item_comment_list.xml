@@ -2,21 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@drawable/issue_detail_button"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp">
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <TextView
         android:id="@+id/cName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Anonymous"
+        android:layout_weight="0.5"
+        android:textStyle="bold"
+        android:textColor="#fff15605"/>
 
     <TextView
         android:id="@+id/cTime"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+        android:text="Tue Dec 30 03:36:48 GMT +5:30 2014"
+        android:layout_weight="0.5"
+        android:gravity="right"
+        android:textColor="#fff1a03a"/>
+    </LinearLayout>
     <TextView
         android:id="@+id/cText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="13453657767ufhhggguy9786ydfcvi78fghgjhgjghgjhkghjgjg687ghj"
+        android:gravity="left"
+        android:textColor="#333"
+        android:layout_marginTop="5dp" />
 
 </LinearLayout>

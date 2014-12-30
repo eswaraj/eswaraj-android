@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_weight="0.5"
+            android:weightSum="1"
+            >
+
+            <TextView
+                android:id="@+id/csMlaName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Ravi Sharma"
+                android:gravity="bottom|right"
+                android:textStyle="bold"
+                android:layout_weight="0.5"
+                android:textColor="#222" />
+            <TextView
+                android:id="@+id/csMlaLocation"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="MLA, Bangalore"
+                android:gravity="top|right"
+                android:layout_weight="0.5"
+                android:textColor="#929292" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/csMlaPhoto"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:src="@drawable/profile_image"
+            android:padding="15dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

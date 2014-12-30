@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.eswaraj.app.eswaraj.activities.SingleComplaintActivity">
+    tools:context="com.eswaraj.app.eswaraj.activities.SingleComplaintActivity"
+    android:background="#ffffff">
 
     <fragment
         class="com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment"

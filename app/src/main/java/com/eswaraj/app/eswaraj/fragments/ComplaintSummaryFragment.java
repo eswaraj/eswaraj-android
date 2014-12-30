@@ -168,7 +168,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
             mlaPhoto.setImageBitmap(storageCache.getBitmap(id, getActivity(), ImageType.PROFILE));
         }
         else {
-            Toast.makeText(getActivity(), "Could not fetch complaint image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Could not fetch MLA image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
     }
 }

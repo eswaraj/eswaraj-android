@@ -7,15 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.config.ImageType;
+import com.eswaraj.app.eswaraj.datastore.StorageCache;
+import com.eswaraj.app.eswaraj.events.ComplaintClosedEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
+import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
+import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
+import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
+import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,19 +43,26 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     UserSessionUtil userSession;
     @Inject
     MiddlewareServiceImpl middlewareService;
+    @Inject
+    StorageCache storageCache;
 
     private CommentsFragment commentsFragment;
-    private ImageFragment imageFragment;
+    private ImageView complaintImage;
+    private ImageView submitterImage;
+    private TextView submitterName;
     private GoogleMapFragment googleMapFragment;
     private ComplaintDto complaintDto;
-    private List<CategoryWithChildCategoryDto> categoryList;
-    private Boolean imageSelected = true;
+    private CustomProgressDialog pDialog;
 
-    private Button scPhoto;
-    private Button scMap;
     private Button scClose;
+    private TextView scComplaintId;
+    private TextView scStatus;
     private TextView scCategory;
+    private TextView scSubCategory;
     private TextView scDescription;
+
+    Long complaintId;
+    Long personId;
 
     public SingleComplaintFragment() {
         // Required empty public constructor
@@ -60,15 +74,18 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         View rootView = inflater.inflate(R.layout.fragment_single_complaint, container, false);
 
         //Get handles
-        scPhoto = (Button) rootView.findViewById(R.id.scPhoto);
-        scMap = (Button) rootView.findViewById(R.id.scMap);
         scClose = (Button) rootView.findViewById(R.id.scClose);
         scCategory = (TextView) rootView.findViewById(R.id.scCategory);
+        scSubCategory = (TextView) rootView.findViewById(R.id.scSubCategory);
         scDescription = (TextView) rootView.findViewById(R.id.scDescription);
+        complaintImage = (ImageView) rootView.findViewById(R.id.scComplaintPhoto);
+        submitterName = (TextView) rootView.findViewById(R.id.scSubmitterName);
+        submitterImage = (ImageView) rootView.findViewById(R.id.scSubmitterImage);
+        scStatus = (TextView) rootView.findViewById(R.id.scStatus);
+        scComplaintId = (TextView) rootView.findViewById(R.id.scComplaintId);
 
         //Create fragments
         commentsFragment = new CommentsFragment();
-        imageFragment = new ImageFragment();
         googleMapFragment = new GoogleMapFragment();
 
         //Get data from intent
@@ -76,50 +93,47 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
 
 
         scDescription.setText(complaintDto.getDescription());
-        if(userSession.getUser().getPerson().getId() != complaintDto.getPersonId()) {
+        scComplaintId.setText(complaintDto.getId().toString());
+        scStatus.setText(complaintDto.getStatus());
+
+        for(CategoryDto category : complaintDto.getCategories()) {
+            if(category.isRoot()) {
+                scCategory.setText(category.getName());
+            }
+            else {
+                scSubCategory.setText(category.getName());
+            }
+        }
+        if(userSession.getUser().getPerson().getId() != complaintDto.getPersonId() || complaintDto.getStatus().equals("Closed")) {
             scClose.setVisibility(View.INVISIBLE);
+        }
+        if(complaintDto.getImages() != null) {
+            complaintId = complaintDto.getId();
+            middlewareService.loadComplaintImage(getActivity(), complaintDto.getImages().get(0).getOrgUrl(), complaintId);
+        }
+
+        //Submitter details
+        submitterName.setText(complaintDto.getCreatedBy().get(0).getName());
+        if(!complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
+            personId = complaintDto.getCreatedBy().get(0).getId();
+            middlewareService.loadProfileImage(getActivity(), complaintDto.getCreatedBy().get(0).getProfilePhoto(), personId);
         }
 
         //Set up fragments
         commentsFragment.setComplaintDto(complaintDto);
-        if(complaintDto.getImages() != null) {
-            imageFragment.setImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId(), ImageType.COMPLAINT);
-        }
         googleMapFragment.setContext(this);
 
         //Add fragments
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.scCommentContainer, commentsFragment).commit();
-        if(complaintDto.getImages() != null) {
-            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.scDisplayContainer, imageFragment).commit();
-        }
-        else {
-            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.scDisplayContainer, googleMapFragment).commit();
-            scPhoto.setVisibility(View.INVISIBLE);
-            scMap.setVisibility(View.INVISIBLE);
+        if(savedInstanceState == null) {
+            getChildFragmentManager().beginTransaction().add(R.id.scCommentContainer, commentsFragment).commit();
+            getChildFragmentManager().beginTransaction().add(R.id.scDisplayContainer, googleMapFragment).commit();
         }
 
-        //Register listeners
-        scPhoto.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!imageSelected) {
-                    imageSelected = true;
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.scDisplayContainer, imageFragment).commit();
-                }
-            }
-        });
-        scMap.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(imageSelected) {
-                    imageSelected = false;
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.scDisplayContainer, googleMapFragment).commit();
-                }
-            }
-        });
         scClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pDialog = new CustomProgressDialog(getActivity(), false, true, "Closing your complaint ...");
+                pDialog.show();
                 middlewareService.closeComplaint(complaintDto);
             }
         });
@@ -129,7 +143,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     @Override
     public void onStart() {
         super.onStart();
-        eventBus.registerSticky(this);
+        eventBus.register(this);
     }
 
     @Override
@@ -138,29 +152,37 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         super.onStop();
     }
 
-    public void onEventMainThread(GetCategoriesDataEvent event) {
-        if(event.getSuccess()) {
-            categoryList = event.getCategoryList();
-            //Update text
-            for(CategoryWithChildCategoryDto root : categoryList) {
-                if(root.getChildCategories() != null) {
-                    for (CategoryWithChildCategoryDto child : root.getChildCategories()) {
-                        if (child.getId() == complaintDto.getCategoryId()) {
-                            scCategory.setText(child.getName());
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        else {
-            //This will never happen
-        }
-    }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMapFragment.disableGestures();
         googleMapFragment.updateMarkerLocation(complaintDto.getLattitude(), complaintDto.getLongitude());
+    }
+
+    public void onEventMainThread(ComplaintClosedEvent event) {
+        if(event.getSuccess()) {
+            scClose.setVisibility(View.INVISIBLE);
+        }
+        else {
+            Toast.makeText(getActivity(),"Failed to close complaint. Please try again. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+        pDialog.dismiss();
+    }
+
+    public void onEventMainThread(GetComplaintImageEvent event) {
+        if(event.getSuccess()) {
+            complaintImage.setImageBitmap(storageCache.getBitmap(complaintId, getActivity(), ImageType.COMPLAINT));
+        }
+        else {
+            Toast.makeText(getActivity(), "Could not fetch complaint image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onEventMainThread(GetProfileImageEvent event) {
+        if(event.getSuccess()) {
+            submitterImage.setImageBitmap(storageCache.getBitmap(personId, getActivity(), ImageType.PROFILE));
+        }
+        else {
+            Toast.makeText(getActivity(), "Could not fetch submitter image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
     }
 }

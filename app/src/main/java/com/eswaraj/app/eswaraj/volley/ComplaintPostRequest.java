@@ -40,7 +40,6 @@ public class ComplaintPostRequest extends BaseClass {
     NetworkAccessHelper networkAccessHelper;
 
     public void processRequest(UserDto userDto, CategoryWithChildCategoryDto amenity, CategoryWithChildCategoryDto template, Location location, String description, File image, Boolean anonymous, String userGoogleLocation) {
-        Log.e("processrequest: ", userDto.toString());
         SaveComplaintRequestDto saveComplaintRequestDto = new SaveComplaintRequestDto();
         saveComplaintRequestDto.setUserExternalid(userDto.getExternalId());
         saveComplaintRequestDto.setCategoryId(template.getId());
@@ -77,7 +76,6 @@ public class ComplaintPostRequest extends BaseClass {
                 complaintPostResponseDto.setTemplate(template);
                 complaintPostResponseDto.getComplaintDto().setDescription(description);
                 complaintPostResponseDto.getComplaintDto().setLocationString(userLocationString);
-                Log.e("ComplaintPostRequest", complaintPostResponseDto.toString());
                 SavedComplaintEvent event = new SavedComplaintEvent();
                 event.setSuccess(true);
                 event.setComplaintPostResponseDto(complaintPostResponseDto);
