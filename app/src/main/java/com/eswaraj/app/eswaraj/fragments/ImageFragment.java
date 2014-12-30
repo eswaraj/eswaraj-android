@@ -71,7 +71,7 @@ public class ImageFragment extends BaseFragment {
             middlewareService.loadComplaintImage(getActivity(), path, id);
         }
         else if(type == ImageType.PROFILE) {
-
+            middlewareService.loadProfileImage(getActivity(), path, id);
         }
     }
 

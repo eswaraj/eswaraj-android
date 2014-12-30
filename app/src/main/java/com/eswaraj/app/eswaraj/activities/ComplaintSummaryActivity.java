@@ -45,6 +45,20 @@ public class ComplaintSummaryActivity extends BaseActivity {
     }
 
     public void onEventMainThread(UserContinueEvent event) {
+        if(event.getAnother()) {
+            Intent i = new Intent(this, SelectAmenityActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+        }
+        else {
+            Intent i = new Intent(this, HomeActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
         Intent i = new Intent(this, HomeActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);

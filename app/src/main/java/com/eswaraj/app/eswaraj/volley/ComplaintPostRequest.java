@@ -14,6 +14,7 @@ import com.eswaraj.app.eswaraj.config.Constants;
 
 import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
+import com.eswaraj.app.eswaraj.models.ComplaintPostResponseDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.ComplaintDto;
 import com.eswaraj.web.dto.SaveComplaintRequestDto;
@@ -64,10 +65,11 @@ public class ComplaintPostRequest extends BaseClass {
         return new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                ComplaintDto complaintDto = new Gson().fromJson(response, ComplaintDto.class);
+                ComplaintPostResponseDto complaintPostResponseDto = new Gson().fromJson(response, ComplaintPostResponseDto.class);
+                Log.e("ComplaintPostRequest", complaintPostResponseDto.toString());
                 SavedComplaintEvent event = new SavedComplaintEvent();
                 event.setSuccess(true);
-                event.setComplaintDto(complaintDto);
+                event.setComplaintPostResponseDto(complaintPostResponseDto);
                 eventBus.post(event);
             }
         };

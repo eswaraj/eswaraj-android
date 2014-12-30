@@ -4,6 +4,9 @@ import com.eswaraj.app.eswaraj.base.BaseEvent;
 
 public class UserContinueEvent extends BaseEvent {
 
+    private Boolean loggedIn;
+    private Boolean another;
+
     public Boolean getLoggedIn() {
         return loggedIn;
     }
@@ -12,5 +15,11 @@ public class UserContinueEvent extends BaseEvent {
         this.loggedIn = loggedIn;
     }
 
-    private Boolean loggedIn;
+    public Boolean getAnother() {
+        return another;
+    }
+
+    public void setAnother(Boolean another) {
+        this.another = another;
+    }
 }

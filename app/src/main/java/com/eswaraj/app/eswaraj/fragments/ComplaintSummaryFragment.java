@@ -18,10 +18,17 @@ import android.widget.Toast;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
+import com.eswaraj.app.eswaraj.config.ImageType;
+import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
+import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
+import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
 import com.eswaraj.app.eswaraj.helpers.BitmapWorkerTask;
+import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.models.ComplaintPostResponseDto;
+import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.ComplaintDto;
@@ -41,17 +48,27 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
 
     @Inject
     EventBus eventBus;
+    @Inject
+    MiddlewareServiceImpl middlewareService;
+    @Inject
+    StorageCache storageCache;
 
     private GoogleMapFragment googleMapFragment;
     private File imageFile;
-    private ComplaintDto complaintDto;
+    private ComplaintPostResponseDto complaintPostResponseDto;
 
     private TextView mlaName;
     private ImageView mlaPhoto;
+    private TextView mlaLocation;
     private TextView rootCategory;
     private TextView subCategory;
     private ImageView complaintPhoto;
+    private TextView address;
+    private TextView description;
     private Button done;
+    private Button another;
+
+    private Long id;
 
     public ComplaintSummaryFragment() {
         // Required empty public constructor
@@ -62,28 +79,35 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_complaint_summary, container, false);
         mlaName = (TextView) rootView.findViewById(R.id.csMlaName);
+        mlaLocation = (TextView) rootView.findViewById(R.id.csMlaLocation);
         mlaPhoto = (ImageView) rootView.findViewById(R.id.csMlaPhoto);
         rootCategory = (TextView) rootView.findViewById(R.id.csRootCategory);
         subCategory = (TextView) rootView.findViewById(R.id.csSubCategory);
+        address = (TextView) rootView.findViewById(R.id.csAddress);
+        description = (TextView) rootView.findViewById(R.id.csDescription);
         complaintPhoto = (ImageView) rootView.findViewById(R.id.csComplaintPhoto);
         done = (Button) rootView.findViewById(R.id.csDone);
+        another = (Button) rootView.findViewById(R.id.csAnother);
 
         googleMapFragment = new GoogleMapFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.csMapContainer, googleMapFragment).commit();
+        getChildFragmentManager().beginTransaction().add(R.id.csMapContainer, googleMapFragment).commit();
         googleMapFragment.setContext(this);
 
         imageFile = (File) getActivity().getIntent().getSerializableExtra("IMAGE");
-        complaintDto = (ComplaintDto) getActivity().getIntent().getSerializableExtra("COMPLAINT");
+        complaintPostResponseDto = (ComplaintPostResponseDto) getActivity().getIntent().getSerializableExtra("COMPLAINT");
+
+        //Fill all complaint related details
+        //TODO:Uncomment address setting after field added in response
+        //description.setText(complaintPostResponseDto.getComplaintDto().getDescription());
+        //address.setText(complaintPostResponseDto.getComplaintDto().getLocationString());
 
         if(imageFile != null) {
             new BitmapWorkerTask(complaintPhoto, 200).execute(imageFile.getAbsolutePath());
-            //Bitmap myBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-            //complaintPhoto.setImageBitmap(myBitmap);
         }
 
 
-        if(complaintDto.getCategories() != null) {
-            for (CategoryDto categoryDto : complaintDto.getCategories()) {
+        if(complaintPostResponseDto.getComplaintDto().getCategories() != null) {
+            for (CategoryDto categoryDto : complaintPostResponseDto.getComplaintDto().getCategories()) {
                 if (categoryDto.isRoot()) {
                     rootCategory.setText(categoryDto.getName());
                 } else {
@@ -92,21 +116,68 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
             }
         }
 
+
+        //Fill all admin related details
+        for(PoliticalBodyAdminDto politicalBodyAdminDto : complaintPostResponseDto.getPoliticalBodyAdminDtoList()) {
+            if(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName().equals("CM")) {
+                mlaName.setText(politicalBodyAdminDto.getName());
+                //TODO:Uncomment location setting after field added in response
+                //mlaLocation.setText(politicalBodyAdminDto.getConstituency().getName());
+                if(!politicalBodyAdminDto.getProfilePhoto().equals("")) {
+                    id = politicalBodyAdminDto.getId();
+                    middlewareService.loadProfileImage(getActivity(), politicalBodyAdminDto.getProfilePhoto().replace("http", "https"), politicalBodyAdminDto.getId());
+                }
+            }
+        }
+
+
         done.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserContinueEvent event = new UserContinueEvent();
                 event.setSuccess(true);
+                event.setAnother(false);
                 eventBus.post(event);
             }
 
+        });
+
+        another.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserContinueEvent event = new UserContinueEvent();
+                event.setSuccess(true);
+                event.setAnother(true);
+                eventBus.post(event);
+            }
         });
         return rootView;
     }
 
     @Override
+    public void onStop() {
+        eventBus.unregister(this);
+        super.onStop();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        eventBus.register(this);
+    }
+
+    @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMapFragment.disableGestures();
-        googleMapFragment.updateMarkerLocation(complaintDto.getLattitude(), complaintDto.getLongitude());
+        googleMapFragment.updateMarkerLocation(complaintPostResponseDto.getComplaintDto().getLattitude(), complaintPostResponseDto.getComplaintDto().getLongitude());
+    }
+
+    public void onEventMainThread(GetProfileImageEvent event) {
+        if(event.getSuccess()) {
+            mlaPhoto.setImageBitmap(storageCache.getBitmap(id, getActivity(), ImageType.PROFILE));
+        }
+        else {
+            Toast.makeText(getActivity(), "Could not fetch complaint image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
     }
 }

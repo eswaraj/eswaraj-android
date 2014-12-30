@@ -45,11 +45,12 @@ public class AddDetailsActivity extends BaseActivity {
 
     public void onEventMainThread(ComplaintPostedEvent event) {
         Intent i = new Intent(this, ComplaintSummaryActivity.class);
-        i.putExtra("COMPLAINT", event.getComplaintDto());
+        i.putExtra("COMPLAINT", event.getComplaintPostResponseDto());
         if(event.getImageFile() != null) {
             i.putExtra("IMAGE", event.getImageFile());
         }
         startActivity(i);
+        finish();
     }
 
     @Override

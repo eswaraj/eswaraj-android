@@ -1,7 +1,9 @@
 package com.eswaraj.app.eswaraj.fragments;
 
+import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,6 +30,7 @@ public class TextPagerFragment extends Fragment {
     private Button.OnClickListener onClickListener;
 
     private Boolean showSpinner = false;
+    private Boolean showContinueButton = false;
 
 
     public void setOnClickListener(Button.OnClickListener onClickListener) {
@@ -62,15 +65,21 @@ public class TextPagerFragment extends Fragment {
         if(showSpinner) {
             progressWheel.setVisibility(View.VISIBLE);
         }
+        if(showContinueButton) {
+            progressWheel.setVisibility(View.INVISIBLE);
+            mButton.setVisibility(View.VISIBLE);
+        }
         progressWheel.spin();
         mButton.setOnClickListener(onClickListener);
         return rootView;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        //TODO:Remove the bg setting from here if needed as it is only support from api level 16
         root.setBackground(splashScreenItem.getBgImage());
 
         mText.setText(splashScreenItem.getText());
@@ -87,8 +96,13 @@ public class TextPagerFragment extends Fragment {
     }
 
     public void showContinueButton() {
-        progressWheel.setVisibility(View.INVISIBLE);
-        mButton.setVisibility(View.VISIBLE);
+        if(mButton != null) {
+            progressWheel.setVisibility(View.INVISIBLE);
+            mButton.setVisibility(View.VISIBLE);
+        }
+        else {
+            showContinueButton = true;
+        }
     }
 
     public void showSpinner() {

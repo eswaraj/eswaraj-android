@@ -2,17 +2,18 @@ package com.eswaraj.app.eswaraj.events;
 
 
 import com.eswaraj.app.eswaraj.base.BaseEvent;
+import com.eswaraj.app.eswaraj.models.ComplaintPostResponseDto;
 import com.eswaraj.web.dto.ComplaintDto;
 
 public class SavedComplaintEvent extends BaseEvent {
 
-    private ComplaintDto complaintDto;
+    private ComplaintPostResponseDto complaintPostResponseDto;
 
-    public void setComplaintDto(ComplaintDto complaintDto) {
-        this.complaintDto = complaintDto;
+    public ComplaintPostResponseDto getComplaintPostResponseDto() {
+        return complaintPostResponseDto;
     }
 
-    public ComplaintDto getComplaintDto() {
-        return complaintDto;
+    public void setComplaintPostResponseDto(ComplaintPostResponseDto complaintPostResponseDto) {
+        this.complaintPostResponseDto = complaintPostResponseDto;
     }
 }

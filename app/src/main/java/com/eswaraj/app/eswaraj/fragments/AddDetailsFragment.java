@@ -236,7 +236,7 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
         if(event.getSuccess()) {
             ComplaintPostedEvent complaintPostedEvent = new ComplaintPostedEvent();
             complaintPostedEvent.setSuccess(true);
-            complaintPostedEvent.setComplaintDto(event.getComplaintDto());
+            complaintPostedEvent.setComplaintPostResponseDto(event.getComplaintPostResponseDto());
             complaintPostedEvent.setImageFile(cameraHelper.getImageFile());
             eventBus.post(complaintPostedEvent);
             posted = true;
