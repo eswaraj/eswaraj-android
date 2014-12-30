@@ -19,7 +19,7 @@ import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.events.SavedCommentEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.CommentDto;
-import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.UserDto;
 
 import java.util.List;

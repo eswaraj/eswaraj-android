@@ -19,6 +19,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/mcShowAnalytics"
+        android:text="Analytics"
+        android:layout_toRightOf="@+id/mcShowMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <RelativeLayout
         android:layout_weight="6"
         android:layout_width="match_parent"
@@ -28,6 +35,11 @@
             android:id="@+id/mcMapContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <FrameLayout
+            android:id="@+id/mcChartContainer"
+            android:layout_width="400dp"
+            android:layout_height="400dp"/>
 
         <LinearLayout
             android:id="@+id/mcListContainer"

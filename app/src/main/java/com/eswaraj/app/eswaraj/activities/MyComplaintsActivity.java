@@ -25,7 +25,7 @@ import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 

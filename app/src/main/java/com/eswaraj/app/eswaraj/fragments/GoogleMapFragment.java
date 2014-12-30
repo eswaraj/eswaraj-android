@@ -6,8 +6,9 @@ import android.util.Log;
 
 import com.eswaraj.app.eswaraj.application.EswarajApplication;
 import com.eswaraj.app.eswaraj.events.MarkerClickEvent;
+import com.eswaraj.app.eswaraj.models.ComplaintDto;
+import com.eswaraj.web.dto.UserDto;
 import com.eswaraj.app.eswaraj.models.GoogleMapCluster;
-import com.eswaraj.web.dto.ComplaintDto;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

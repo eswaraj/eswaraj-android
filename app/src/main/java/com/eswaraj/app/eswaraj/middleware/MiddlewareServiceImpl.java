@@ -12,7 +12,7 @@ import com.eswaraj.app.eswaraj.datastore.CacheInterface;
 import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.datastore.ServerInterface;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;

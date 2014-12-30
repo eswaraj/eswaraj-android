@@ -13,9 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.models.ComplaintDto;
+import com.eswaraj.web.dto.UserDto;
 import com.eswaraj.web.dto.CategoryDto;
-import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.web.dto.ComplaintDto;
 
 import java.util.Date;
 import java.util.List;

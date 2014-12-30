@@ -15,23 +15,25 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
-import com.eswaraj.app.eswaraj.activities.SingleComplaintActivity;
 import com.eswaraj.app.eswaraj.adapters.ComplaintListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.ComplaintSelectedEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetUserComplaintsEvent;
-import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.models.ComplaintCounter;
+import com.eswaraj.app.eswaraj.models.ComplaintDto;
+import com.eswaraj.web.dto.UserDto;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
+import com.eswaraj.app.eswaraj.widgets.PieChartView;
+import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.web.dto.ComplaintDto;
-import com.eswaraj.web.dto.UserDto;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
-import java.io.Serializable;
+import org.achartengine.GraphicalView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,18 +53,24 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
 
     private GoogleMapFragment googleMapFragment;
     private List<ComplaintDto> complaintDtoList;
+    private List<CategoryWithChildCategoryDto> categoryDtoList;
 
     private ListView mcListOpen;
     private ListView mcListClosed;
     private Button mapButton;
     private Button listButton;
+    private Button analyticsButton;
     private CustomProgressDialog pDialog;
     private FrameLayout mcMapContainer;
+    private FrameLayout mcChartContainer;
     private ViewGroup mcListContainer;
 
     private Boolean mapDisplayed = false;
     private Boolean mapReady = false;
     private Boolean markersAdded = false;
+    private Boolean categoriesDataAvailable = false;
+    private Boolean complaintDataAvailable = false;
+    private Boolean dataAlreadySet = false;
 
 
     public MyComplaintsFragment() {
@@ -86,8 +94,6 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         pDialog = new CustomProgressDialog(getActivity(), false, true, "Fetching your complaints ...");
         pDialog.show();
 
-
-
         middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), true);
     }
 
@@ -98,8 +104,12 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         mcListClosed = (ListView) rootView.findViewById(R.id.mcListClosed);
         mapButton = (Button) rootView.findViewById(R.id.mcShowMap);
         listButton = (Button) rootView.findViewById(R.id.mcShowList);
+        analyticsButton = (Button) rootView.findViewById(R.id.mcShowAnalytics);
         mcMapContainer = (FrameLayout) rootView.findViewById(R.id.mcMapContainer);
         mcListContainer = (ViewGroup) rootView.findViewById(R.id.mcListContainer);
+        mcChartContainer = (FrameLayout) rootView.findViewById(R.id.mcChartContainer);
+
+        mcChartContainer.setVisibility(View.INVISIBLE);
 
         mcListOpen.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
@@ -123,20 +133,20 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         listButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mapDisplayed) {
                     mapDisplayed = false;
+                    mcChartContainer.setVisibility(View.INVISIBLE);
                     getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
-                    mcListContainer.setVisibility(View.VISIBLE);
                     getChildFragmentManager().executePendingTransactions();
-                }
+                    mcListContainer.setVisibility(View.VISIBLE);
+
             }
         });
         mapButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mapDisplayed) {
                     mapDisplayed = true;
                     mcListContainer.setVisibility(View.INVISIBLE);
+                    mcChartContainer.setVisibility(View.INVISIBLE);
                     getChildFragmentManager().beginTransaction().show(googleMapFragment).commit();
                     getChildFragmentManager().executePendingTransactions();
                     //Post it on UI thread so that it gets en-queued behind fragment transactions and gets executed only after layout has happened for map
@@ -150,6 +160,15 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
                         }
                     });
                 }
+
+        });
+        analyticsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
+                mcListContainer.setVisibility(View.INVISIBLE);
+                getChildFragmentManager().executePendingTransactions();
+                mcChartContainer.setVisibility(View.VISIBLE);
             }
         });
 
@@ -160,6 +179,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     public void onStart() {
         super.onStart();
         eventBus.register(this);
+        middlewareService.loadCategoriesData(getActivity());
     }
 
     @Override
@@ -168,8 +188,16 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         super.onStop();
     }
 
-    public void setComplaintData(List<ComplaintDto> complaintDtoList) {
-        filterListAndSetAdapter(complaintDtoList);
+    public synchronized void setComplaintData(List<ComplaintDto> complaintDtoList) {
+        if(!dataAlreadySet) {
+            filterListAndSetAdapter(complaintDtoList);
+            populateCountersAndCreateChart();
+            if (mapReady && mapDisplayed) {
+                googleMapFragment.addMarkers(complaintDtoList);
+                markersAdded = true;
+            }
+            dataAlreadySet = true;
+        }
     }
 
 
@@ -180,6 +208,28 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
             googleMapFragment.addMarkers(complaintDtoList);
             markersAdded = true;
         }
+    }
+
+    public void populateCountersAndCreateChart() {
+        ArrayList<ComplaintCounter> complaintCounters = new ArrayList<ComplaintCounter>();
+        for(CategoryWithChildCategoryDto categoryDto : categoryDtoList) {
+            ComplaintCounter complaintCounter = new ComplaintCounter();
+            complaintCounter.setId(categoryDto.getId());
+            complaintCounter.setName(categoryDto.getName());
+            complaintCounter.setCount(0L);
+            complaintCounters.add(complaintCounter);
+        }
+        for(ComplaintDto complaintDto : complaintDtoList) {
+            for(ComplaintCounter complaintCounter : complaintCounters) {
+                for(CategoryDto categoryDto : complaintDto.getCategories()) {
+                    if (categoryDto.getId().equals(complaintCounter.getId())) {
+                        complaintCounter.setCount(complaintCounter.getCount() + 1);
+                    }
+                }
+            }
+        }
+        GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters);
+        mcChartContainer.addView(chartView);
     }
 
     private void filterListAndSetAdapter(List<ComplaintDto> complaintDtoList) {
@@ -202,15 +252,24 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     public void onEventMainThread(GetUserComplaintsEvent event) {
         if(event.getSuccess()) {
             complaintDtoList = event.getComplaintDtoList();
-            setComplaintData(complaintDtoList);
-            if(mapReady && mapDisplayed) {
-                googleMapFragment.addMarkers(complaintDtoList);
-                markersAdded = true;
+            complaintDataAvailable = true;
+            if(categoriesDataAvailable && !dataAlreadySet) {
+                setComplaintData(complaintDtoList);
             }
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch user complaints. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
         pDialog.dismiss();
+    }
+
+    public void onEventMainThread(GetCategoriesDataEvent event) {
+        if(event.getSuccess()) {
+            categoryDtoList = event.getCategoryList();
+            categoriesDataAvailable = true;
+            if(complaintDataAvailable && !dataAlreadySet) {
+                setComplaintData(complaintDtoList);
+            }
+        }
     }
 }

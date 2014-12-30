@@ -12,7 +12,7 @@ import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.events.GetUserComplaintsEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
-import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.UserDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;

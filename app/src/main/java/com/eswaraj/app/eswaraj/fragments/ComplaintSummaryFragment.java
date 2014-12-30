@@ -31,7 +31,7 @@ import com.eswaraj.app.eswaraj.models.ComplaintPostResponseDto;
 import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -112,8 +112,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         for(PoliticalBodyAdminDto politicalBodyAdminDto : complaintPostResponseDto.getPoliticalBodyAdminDtoList()) {
             if(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName().equals("CM")) {
                 mlaName.setText(politicalBodyAdminDto.getName());
-                //TODO:Uncomment location setting after field added in response
-                //mlaLocation.setText(politicalBodyAdminDto.getConstituency().getName());
+                mlaLocation.setText(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
                 if(!politicalBodyAdminDto.getProfilePhoto().equals("")) {
                     id = politicalBodyAdminDto.getId();
                     middlewareService.loadProfileImage(getActivity(), politicalBodyAdminDto.getProfilePhoto().replace("http", "https"), politicalBodyAdminDto.getId());

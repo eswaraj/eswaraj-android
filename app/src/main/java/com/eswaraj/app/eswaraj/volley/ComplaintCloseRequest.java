@@ -7,7 +7,7 @@ import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.events.ComplaintClosedEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
-import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPersonRequestDto;
 import com.eswaraj.web.dto.ComplaintStatusChangeByPoliticalAdminRequestDto;
 

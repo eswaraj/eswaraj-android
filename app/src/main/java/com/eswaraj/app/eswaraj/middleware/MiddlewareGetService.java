@@ -4,7 +4,7 @@ package com.eswaraj.app.eswaraj.middleware;
 import android.content.Context;
 
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
 

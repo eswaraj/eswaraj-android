@@ -17,7 +17,7 @@ import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
 import com.eswaraj.app.eswaraj.volley.UserComplaintsRequest;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
 

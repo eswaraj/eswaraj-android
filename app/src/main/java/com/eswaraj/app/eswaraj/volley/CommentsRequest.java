@@ -12,7 +12,7 @@ import com.eswaraj.app.eswaraj.events.GetCommentsEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.CommentDto;
-import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;

@@ -17,7 +17,7 @@ import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.models.ComplaintPostResponseDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.SaveComplaintRequestDto;
 import com.eswaraj.web.dto.UserDto;
 import com.google.gson.Gson;

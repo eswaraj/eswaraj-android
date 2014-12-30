@@ -3,7 +3,7 @@ package com.eswaraj.app.eswaraj.datastore;
 import android.content.Context;
 
 import com.eswaraj.app.eswaraj.middleware.MiddlewareGetService;
-import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.UserDto;
 
 public interface CacheInterface extends MiddlewareGetService {
