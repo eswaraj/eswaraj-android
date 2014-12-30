@@ -55,7 +55,8 @@ public class SelectTemplateActivity extends BaseActivity {
 
     public void onEventMainThread(TemplateSelectEvent event) {
         Intent i = new Intent(this, AddDetailsActivity.class);
-        i.putExtra("TEMPLATE", event.getCategoryWithChildCategoryDto());
+        i.putExtra("TEMPLATE", event.getTemplate());
+        i.putExtra("AMENITY", event.getAmenity());
         startActivity(i);
     }
 

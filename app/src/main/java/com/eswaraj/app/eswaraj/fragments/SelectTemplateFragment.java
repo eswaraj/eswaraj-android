@@ -65,7 +65,8 @@ public class SelectTemplateFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
                 TemplateSelectEvent event = new TemplateSelectEvent();
                 event.setSuccess(true);
-                event.setCategoryWithChildCategoryDto((CategoryWithChildCategoryDto) listView.getAdapter().getItem(pos));
+                event.setTemplate((CategoryWithChildCategoryDto) listView.getAdapter().getItem(pos));
+                event.setAmenity(amenity);
                 eventBus.post(event);
             }
         });

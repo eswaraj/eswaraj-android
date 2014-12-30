@@ -66,7 +66,8 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
     private ViewGroup takePhotoContainer;
     private ViewGroup photoTakenContainer;
 
-    private CategoryWithChildCategoryDto categoryWithChildCategoryDto;
+    private CategoryWithChildCategoryDto amenity;
+    private CategoryWithChildCategoryDto template;
     private Location location;
 
     private static final int SELECT_PHOTO = 1;
@@ -123,8 +124,9 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
         locationUtil.setup(getActivity());
 
         //Get the data from intent and display
-        categoryWithChildCategoryDto = (CategoryWithChildCategoryDto) getActivity().getIntent().getSerializableExtra("TEMPLATE");
-        selected.setText(categoryWithChildCategoryDto.getName());
+        template = (CategoryWithChildCategoryDto) getActivity().getIntent().getSerializableExtra("TEMPLATE");
+        amenity = (CategoryWithChildCategoryDto) getActivity().getIntent().getSerializableExtra("AMENITY");
+        selected.setText(template.getName());
 
         //Initial state
         descriptionBtn.setVisibility(View.VISIBLE);
@@ -165,7 +167,7 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
             public void onClick(View view) {
                 if(userSession.isUserLoggedIn(getActivity())) {
                     if (!posted) {
-                        middlewareService.postComplaint(userSession.getUser(), categoryWithChildCategoryDto, location, description.getText().toString(), cameraHelper.getImageFile(), anonCheckbox.isChecked(), userSession.getUserRevGeocodedLocation());
+                        middlewareService.postComplaint(userSession.getUser(), amenity, template, location, description.getText().toString(), cameraHelper.getImageFile(), anonCheckbox.isChecked(), userSession.getUserRevGeocodedLocation());
                         pDialog = new CustomProgressDialog(getActivity(), false, true, "Posting your complaint ...");
                         pDialog.show();
                     }

@@ -2,6 +2,7 @@ package com.eswaraj.app.eswaraj.volley;
 
 
 
+import android.location.Address;
 import android.location.Location;
 import android.util.Log;
 
@@ -24,6 +25,7 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 
 import javax.inject.Inject;
@@ -37,11 +39,11 @@ public class ComplaintPostRequest extends BaseClass {
     @Inject
     NetworkAccessHelper networkAccessHelper;
 
-    public void processRequest(UserDto userDto, CategoryWithChildCategoryDto categoryDto, Location location, String description, File image, Boolean anonymous, String userGoogleLocation) {
+    public void processRequest(UserDto userDto, CategoryWithChildCategoryDto amenity, CategoryWithChildCategoryDto template, Location location, String description, File image, Boolean anonymous, String userGoogleLocation) {
         Log.e("processrequest: ", userDto.toString());
         SaveComplaintRequestDto saveComplaintRequestDto = new SaveComplaintRequestDto();
         saveComplaintRequestDto.setUserExternalid(userDto.getExternalId());
-        saveComplaintRequestDto.setCategoryId(categoryDto.getId());
+        saveComplaintRequestDto.setCategoryId(template.getId());
         saveComplaintRequestDto.setDescription(description);
         saveComplaintRequestDto.setTitle(description);
         saveComplaintRequestDto.setLattitude(location.getLatitude());
@@ -51,7 +53,7 @@ public class ComplaintPostRequest extends BaseClass {
 
         ComplaintPostVolleyRequest request = null;
         try {
-            request = new ComplaintPostVolleyRequest(createErrorListener(), createSuccessListener(), saveComplaintRequestDto, image, Constants.POST_COMPLAINT_URL);
+            request = new ComplaintPostVolleyRequest(createErrorListener(), createSuccessListener(amenity, template, userGoogleLocation, description), saveComplaintRequestDto, image, Constants.POST_COMPLAINT_URL);
             request.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 3));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -61,11 +63,20 @@ public class ComplaintPostRequest extends BaseClass {
 
     }
 
-    private Response.Listener<String> createSuccessListener() {
+    private Response.Listener<String> createSuccessListener(final CategoryWithChildCategoryDto amenity, final CategoryWithChildCategoryDto template, final String userGoogleLocation, final String description) {
         return new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Address bestMatch = new Gson().fromJson(userGoogleLocation, Address.class);
+                String userLocationString = null;
+                if(bestMatch != null) {
+                    userLocationString = bestMatch.getAddressLine(1) + ", " + bestMatch.getAddressLine(2);
+                }
                 ComplaintPostResponseDto complaintPostResponseDto = new Gson().fromJson(response, ComplaintPostResponseDto.class);
+                complaintPostResponseDto.setAmenity(amenity);
+                complaintPostResponseDto.setTemplate(template);
+                complaintPostResponseDto.getComplaintDto().setDescription(description);
+                complaintPostResponseDto.getComplaintDto().setLocationString(userLocationString);
                 Log.e("ComplaintPostRequest", complaintPostResponseDto.toString());
                 SavedComplaintEvent event = new SavedComplaintEvent();
                 event.setSuccess(true);

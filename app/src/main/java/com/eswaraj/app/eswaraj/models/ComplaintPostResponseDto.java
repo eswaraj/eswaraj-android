@@ -1,7 +1,7 @@
 package com.eswaraj.app.eswaraj.models;
 
 import com.eswaraj.web.dto.BaseDto;
-import com.eswaraj.web.dto.ComplaintDto;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,28 @@ public class ComplaintPostResponseDto extends BaseDto {
 
     private List<PoliticalBodyAdminDto> politicalbodyadmin;
     private ComplaintDto complaint;
+    private CategoryWithChildCategoryDto amenity;
+    private CategoryWithChildCategoryDto template;
 
     public ComplaintPostResponseDto() {
         politicalbodyadmin = new ArrayList<PoliticalBodyAdminDto>();
         complaint = new ComplaintDto();
+    }
+
+    public CategoryWithChildCategoryDto getAmenity() {
+        return amenity;
+    }
+
+    public void setAmenity(CategoryWithChildCategoryDto amenity) {
+        this.amenity = amenity;
+    }
+
+    public CategoryWithChildCategoryDto getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(CategoryWithChildCategoryDto template) {
+        this.template = template;
     }
 
     public List<PoliticalBodyAdminDto> getPoliticalBodyAdminDtoList() {

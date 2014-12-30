@@ -97,24 +97,15 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         complaintPostResponseDto = (ComplaintPostResponseDto) getActivity().getIntent().getSerializableExtra("COMPLAINT");
 
         //Fill all complaint related details
-        //TODO:Uncomment address setting after field added in response
-        //description.setText(complaintPostResponseDto.getComplaintDto().getDescription());
-        //address.setText(complaintPostResponseDto.getComplaintDto().getLocationString());
+        description.setText(complaintPostResponseDto.getComplaintDto().getDescription());
+        address.setText(complaintPostResponseDto.getComplaintDto().getLocationString());
 
         if(imageFile != null) {
             new BitmapWorkerTask(complaintPhoto, 200).execute(imageFile.getAbsolutePath());
         }
 
-
-        if(complaintPostResponseDto.getComplaintDto().getCategories() != null) {
-            for (CategoryDto categoryDto : complaintPostResponseDto.getComplaintDto().getCategories()) {
-                if (categoryDto.isRoot()) {
-                    rootCategory.setText(categoryDto.getName());
-                } else {
-                    subCategory.setText(categoryDto.getName());
-                }
-            }
-        }
+        rootCategory.setText(complaintPostResponseDto.getAmenity().getName());
+        subCategory.setText(complaintPostResponseDto.getTemplate().getName());
 
 
         //Fill all admin related details

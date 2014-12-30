@@ -6,13 +6,23 @@ import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
 public class TemplateSelectEvent extends BaseEvent {
 
-    CategoryWithChildCategoryDto categoryWithChildCategoryDto;
+    private CategoryWithChildCategoryDto amenity;
 
-    public CategoryWithChildCategoryDto getCategoryWithChildCategoryDto() {
-        return categoryWithChildCategoryDto;
+    public CategoryWithChildCategoryDto getTemplate() {
+        return template;
     }
 
-    public void setCategoryWithChildCategoryDto(CategoryWithChildCategoryDto categoryWithChildCategoryDto) {
-        this.categoryWithChildCategoryDto = categoryWithChildCategoryDto;
+    public void setTemplate(CategoryWithChildCategoryDto template) {
+        this.template = template;
     }
+
+    public CategoryWithChildCategoryDto getAmenity() {
+        return amenity;
+    }
+
+    public void setAmenity(CategoryWithChildCategoryDto amenity) {
+        this.amenity = amenity;
+    }
+
+    private CategoryWithChildCategoryDto template;
 }

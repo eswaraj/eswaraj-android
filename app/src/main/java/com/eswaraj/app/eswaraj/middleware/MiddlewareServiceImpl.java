@@ -191,8 +191,8 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void postComplaint(UserDto userDto, CategoryWithChildCategoryDto categoryDto, Location location, String description, File image, Boolean anonymous, String userGoogleLocation) {
-        server.postComplaint(userDto, categoryDto, location, description, image, anonymous, userGoogleLocation);
+    public void postComplaint(UserDto userDto, CategoryWithChildCategoryDto amenity, CategoryWithChildCategoryDto template, Location location, String description, File image, Boolean anonymous, String userGoogleLocation) {
+        server.postComplaint(userDto, amenity, template, location, description, image, anonymous, userGoogleLocation);
     }
 
     @Override
