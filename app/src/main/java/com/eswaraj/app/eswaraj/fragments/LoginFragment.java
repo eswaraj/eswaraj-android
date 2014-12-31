@@ -15,10 +15,9 @@ import android.widget.Toast;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.FacebookSessionEvent;
-import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
+import com.eswaraj.app.eswaraj.events.LoginStatusEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
-import com.eswaraj.app.eswaraj.events.UserDataAvailableEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
@@ -200,9 +199,10 @@ public class LoginFragment extends BaseFragment {
                     buttonSkip.setVisibility(View.INVISIBLE);
                     progressWheel.setVisibility(View.VISIBLE);
                     progressWheel.spin();
-                    GetUserEvent event = new GetUserEvent();
-                    event.setSuccess(true);
-                    eventBus.post(event);
+                    LoginStatusEvent loginStatusEvent = new LoginStatusEvent();
+                    loginStatusEvent.setSuccess(true);
+                    loginStatusEvent.setLoggedIn(false);
+                    eventBus.post(loginStatusEvent);
                 }
             });
         }
@@ -241,9 +241,11 @@ public class LoginFragment extends BaseFragment {
         if(event.getSuccess()) {
             Log.d("LoginFragment", "GetUserEvent:Success");
             userSession.setUser(event.getUserDto());
-            UserDataAvailableEvent userDataAvailableEvent = new UserDataAvailableEvent();
-            userDataAvailableEvent.setSuccess(true);
-            eventBus.post(userDataAvailableEvent);
+            userSession.setToken(event.getToken());
+            LoginStatusEvent loginStatusEvent = new LoginStatusEvent();
+            loginStatusEvent.setSuccess(true);
+            loginStatusEvent.setLoggedIn(true);
+            eventBus.post(loginStatusEvent);
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch user details from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();

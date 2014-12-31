@@ -54,9 +54,9 @@ public class GenericPostVolleyRequest<T> extends Request<String> {
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
         try {
-            Log.i("eswaraj", "Status Code = " + response.statusCode);
+            Log.e("eswaraj", "Status Code = " + response.statusCode);
             String json = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            Log.i("eswaraj", "json response = "+json);
+            Log.e("eswaraj", "json response = "+json);
             return Response.success(json, HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
@@ -65,7 +65,7 @@ public class GenericPostVolleyRequest<T> extends Request<String> {
 
     @Override
     protected void deliverResponse(String response) {
-        Log.i("eswaraj", " response = "+response);
+        Log.e("eswaraj", " response = "+response);
         if(mListener != null) {
             mListener.onResponse(response);
         }

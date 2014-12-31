@@ -11,14 +11,24 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.adapters.AmenityListAdapter;
 import com.eswaraj.app.eswaraj.adapters.ComplaintListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
+import com.eswaraj.app.eswaraj.config.ImageType;
+import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.events.ComplaintSelectedEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
+import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
+import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
+import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.GetUserComplaintsEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.ComplaintCounter;
@@ -50,6 +60,8 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     MiddlewareServiceImpl middlewareService;
     @Inject
     UserSessionUtil userSession;
+    @Inject
+    StorageCache storageCache;
 
     private GoogleMapFragment googleMapFragment;
     private List<ComplaintDto> complaintDtoList;
@@ -64,6 +76,10 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     private FrameLayout mcMapContainer;
     private FrameLayout mcChartContainer;
     private ViewGroup mcListContainer;
+    private GridView mcAmenityList;
+    private LinearLayout mcAnalyticsContainer;
+    private TextView mcName;
+    private ImageView mcPhoto;
 
     private Boolean mapDisplayed = false;
     private Boolean mapReady = false;
@@ -95,6 +111,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         pDialog.show();
 
         middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), true);
+        middlewareService.loadProfileImage(getActivity(), userSession.getProfilePhoto(), userSession.getUser().getPerson().getId());
     }
 
     @Override
@@ -108,8 +125,13 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         mcMapContainer = (FrameLayout) rootView.findViewById(R.id.mcMapContainer);
         mcListContainer = (ViewGroup) rootView.findViewById(R.id.mcListContainer);
         mcChartContainer = (FrameLayout) rootView.findViewById(R.id.mcChartContainer);
+        mcAmenityList = (GridView) rootView.findViewById(R.id.mcAmenityList);
+        mcAnalyticsContainer = (LinearLayout) rootView.findViewById(R.id.mcAnalyticsContainer);
+        mcName = (TextView) rootView.findViewById(R.id.mcName);
+        mcPhoto = (ImageView) rootView.findViewById(R.id.mcPhoto);
 
-        mcChartContainer.setVisibility(View.INVISIBLE);
+        mcAnalyticsContainer.setVisibility(View.INVISIBLE);
+        mcName.setText(userSession.getUser().getPerson().getName());
 
         mcListOpen.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
@@ -134,7 +156,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
             @Override
             public void onClick(View v) {
                     mapDisplayed = false;
-                    mcChartContainer.setVisibility(View.INVISIBLE);
+                    mcAnalyticsContainer.setVisibility(View.INVISIBLE);
                     getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
                     getChildFragmentManager().executePendingTransactions();
                     mcListContainer.setVisibility(View.VISIBLE);
@@ -146,7 +168,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
             public void onClick(View v) {
                     mapDisplayed = true;
                     mcListContainer.setVisibility(View.INVISIBLE);
-                    mcChartContainer.setVisibility(View.INVISIBLE);
+                    mcAnalyticsContainer.setVisibility(View.INVISIBLE);
                     getChildFragmentManager().beginTransaction().show(googleMapFragment).commit();
                     getChildFragmentManager().executePendingTransactions();
                     //Post it on UI thread so that it gets en-queued behind fragment transactions and gets executed only after layout has happened for map
@@ -168,7 +190,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
                 getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
                 mcListContainer.setVisibility(View.INVISIBLE);
                 getChildFragmentManager().executePendingTransactions();
-                mcChartContainer.setVisibility(View.VISIBLE);
+                mcAnalyticsContainer.setVisibility(View.VISIBLE);
             }
         });
 
@@ -270,6 +292,23 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
             if(complaintDataAvailable && !dataAlreadySet) {
                 setComplaintData(complaintDtoList);
             }
+            middlewareService.loadCategoriesImages(getActivity(), categoryDtoList);
+        }
+    }
+
+    public void onEventMainThread(GetCategoriesImagesEvent event) {
+        if(event.getSuccess()) {
+            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryDtoList);
+            mcAmenityList.setAdapter(amenityListAdapter);
+        }
+    }
+
+    public void onEventMainThread(GetProfileImageEvent event) {
+        if(event.getSuccess()) {
+            mcPhoto.setImageBitmap(storageCache.getBitmap(userSession.getUser().getPerson().getId(), getActivity(), ImageType.PROFILE));
+        }
+        else {
+            Toast.makeText(getActivity(), "Could not fetch your profile image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
     }
 }

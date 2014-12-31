@@ -21,6 +21,7 @@ public class UserSessionUtil extends BaseClass {
 
     private UserDto user;
     private String userRevGeocodedLocation;
+    private String token;
 
     public String getUserRevGeocodedLocation() {
         return userRevGeocodedLocation;
@@ -36,7 +37,15 @@ public class UserSessionUtil extends BaseClass {
 
     public void setUser(UserDto user) {
         this.user = user;
-        Log.e("UserSession", user.toString());
+        Log.e("UserSessionUtil", user.toString());
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Boolean isUserLocationKnown() {

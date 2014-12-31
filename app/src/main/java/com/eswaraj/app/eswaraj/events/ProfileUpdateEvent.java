@@ -4,7 +4,7 @@ import com.eswaraj.app.eswaraj.base.BaseEvent;
 import com.eswaraj.web.dto.UserDto;
 
 
-public class UserLocationSavedEvent extends BaseEvent {
+public class ProfileUpdateEvent extends BaseEvent {
 
     private UserDto userDto;
 

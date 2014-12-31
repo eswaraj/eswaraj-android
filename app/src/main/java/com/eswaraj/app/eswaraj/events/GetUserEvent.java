@@ -7,6 +7,7 @@ import com.eswaraj.web.dto.UserDto;
 public class GetUserEvent extends BaseEvent {
 
     private UserDto userDto;
+    private String token;
 
     public GetUserEvent() {
         super();
@@ -19,5 +20,13 @@ public class GetUserEvent extends BaseEvent {
 
     public void setUserDto(UserDto userDto) {
         this.userDto = userDto;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

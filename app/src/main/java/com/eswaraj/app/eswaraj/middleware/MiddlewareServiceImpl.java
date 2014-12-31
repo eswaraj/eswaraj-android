@@ -186,8 +186,8 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void saveUserLocation(Context context, UserDto userDto, double lat, double lng) {
-        server.saveUserLocation(context, userDto, lat, lng);
+    public void updateProfile(Context context, String token, String name, double lat, double lng) {
+        server.updateProfile(context, token, name, lat, lng);
     }
 
     @Override

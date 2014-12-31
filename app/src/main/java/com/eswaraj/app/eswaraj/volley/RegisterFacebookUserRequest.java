@@ -46,7 +46,7 @@ public class RegisterFacebookUserRequest extends BaseClass {
 
         RegisterFacebookUserVolleyRequest request = null;
         try {
-            request = new RegisterFacebookUserVolleyRequest(createErrorListener(context), createSuccessListener(context), registerFacebookAccountRequest, Constants.SAVE_FACEBOOK_USER_URL);
+            request = new RegisterFacebookUserVolleyRequest(createErrorListener(context), createSuccessListener(context, session), registerFacebookAccountRequest, Constants.SAVE_FACEBOOK_USER_URL);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -55,7 +55,7 @@ public class RegisterFacebookUserRequest extends BaseClass {
 
     }
 
-    private Response.Listener<String> createSuccessListener(final Context context) {
+    private Response.Listener<String> createSuccessListener(final Context context, final Session session) {
         return new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -63,6 +63,7 @@ public class RegisterFacebookUserRequest extends BaseClass {
                 GetUserEvent event = new GetUserEvent();
                 event.setSuccess(true);
                 event.setUserDto(userDto);
+                event.setToken(session.getAccessToken());
                 eventBus.postSticky(event);
                 cache.updateUserData(context, response);
             }

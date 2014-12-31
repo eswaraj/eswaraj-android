@@ -53,6 +53,7 @@ import com.eswaraj.app.eswaraj.volley.LoadImageRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
+import com.eswaraj.app.eswaraj.volley.ProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
 import com.eswaraj.app.eswaraj.volley.UserComplaintsRequest;
@@ -111,7 +112,8 @@ import de.greenrobot.event.EventBus;
                 LoginDialogActivity.class,
                 GoogleMapFragment.class,
                 ComplaintCloseRequest.class,
-                StorageCacheClearingTask.class
+                StorageCacheClearingTask.class,
+                ProfileUpdateRequest.class
         },
         complete = false,
         library = true
@@ -245,5 +247,10 @@ public class MiddlewareGraph {
     @Provides
     CameraHelper provideCameraHelper() {
         return new CameraHelper();
+    }
+
+    @Provides @Singleton
+    ProfileUpdateRequest provideProfileUpdateRequest() {
+        return new ProfileUpdateRequest();
     }
 }

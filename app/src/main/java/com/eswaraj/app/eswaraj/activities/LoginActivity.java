@@ -5,22 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
-import com.eswaraj.app.eswaraj.events.CacheClearedEvent;
-import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
-import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
-import com.eswaraj.app.eswaraj.events.GetUserEvent;
+import com.eswaraj.app.eswaraj.events.LoginStatusEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
-import com.eswaraj.app.eswaraj.events.UserDataAvailableEvent;
 import com.eswaraj.app.eswaraj.fragments.LoginFragment;
-import com.eswaraj.app.eswaraj.helpers.StorageCacheClearingTask;
-import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
-import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
@@ -126,7 +117,7 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    public void onEventMainThread(UserDataAvailableEvent event) {
+    public void onEventMainThread(LoginStatusEvent event) {
         if(event.getSuccess()) {
             Log.d("LoginActivity", "UserDataAvailable:Success");
             appReady();

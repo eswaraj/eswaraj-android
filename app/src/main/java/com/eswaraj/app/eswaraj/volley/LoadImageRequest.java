@@ -38,9 +38,11 @@ public class LoadImageRequest extends BaseClass {
     StorageCache storageCache;
 
     public void processRequest(Context context, String url, Long id, ImageType type) {
-        if(!url.equals("")) {
-            com.android.volley.toolbox.ImageRequest request = new com.android.volley.toolbox.ImageRequest(url, createSuccessListener(context, id, type), 0, 0, null, createErrorListener(context, type));
-            this.networkAccessHelper.submitNetworkRequest("GetImage" + type + "_" + id, request);
+        if(url != null) {
+            if (!url.equals("")) {
+                com.android.volley.toolbox.ImageRequest request = new com.android.volley.toolbox.ImageRequest(url, createSuccessListener(context, id, type), 0, 0, null, createErrorListener(context, type));
+                this.networkAccessHelper.submitNetworkRequest("GetImage" + type + "_" + id, request);
+            }
         }
     }
 

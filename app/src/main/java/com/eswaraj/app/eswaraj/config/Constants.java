@@ -21,6 +21,8 @@ public class Constants {
     public static final String USER_COMPLAINTS_URL = BASE_URL + "/user/complaints";
     public static final String COMMENT_POST_URL = BASE_URL + "/complaint/user/comment";
     public static final String COMPLAINT_CLOSE_URL = BASE_URL + "/complaint/user/status";
+    public static final String UPDATE_PROFILE_URL = BASE_URL + "/mobile/user/profile";
+    public static final String GET_PROFILE_URL = BASE_URL + "/mobile/user/profile/";
     public static final String LOCATION_COUNTERS_URL = BASE_URL_2 + "/stats/counter/location/";
 
     //Google URLS

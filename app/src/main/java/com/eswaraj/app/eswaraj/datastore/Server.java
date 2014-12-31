@@ -5,7 +5,6 @@ import android.location.Location;
 
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.ImageType;
-import com.eswaraj.app.eswaraj.events.UserLocationSavedEvent;
 import com.eswaraj.app.eswaraj.volley.CommentPostRequest;
 import com.eswaraj.app.eswaraj.volley.CommentsRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintCloseRequest;
@@ -13,6 +12,7 @@ import com.eswaraj.app.eswaraj.volley.LoadImageRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
+import com.eswaraj.app.eswaraj.volley.ProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
 import com.eswaraj.app.eswaraj.volley.UserComplaintsRequest;
@@ -53,6 +53,8 @@ public class Server extends BaseClass implements ServerInterface {
     CommentPostRequest commentPostRequest;
     @Inject
     ComplaintCloseRequest complaintCloseRequest;
+    @Inject
+    ProfileUpdateRequest profileUpdateRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -113,9 +115,8 @@ public class Server extends BaseClass implements ServerInterface {
     }
 
     @Override
-    public void saveUserLocation(Context context, UserDto userDto, double lat, double lng) {
-        //TODO: Implement post request here which will post this event
-        eventBus.post(new UserLocationSavedEvent());
+    public void updateProfile(Context context, String token, String name, double lat, double lng) {
+        profileUpdateRequest.processRequest(token, name, lat, lng);
     }
 
     @Override

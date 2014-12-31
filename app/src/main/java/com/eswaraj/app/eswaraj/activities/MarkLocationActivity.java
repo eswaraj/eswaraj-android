@@ -13,19 +13,16 @@ import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
-import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.events.GooglePlaceDetailsEvent;
-import com.eswaraj.app.eswaraj.events.UserLocationSavedEvent;
+import com.eswaraj.app.eswaraj.events.ProfileUpdateEvent;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.fragments.GooglePlacesListFragment;
-import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.GooglePlace;
 import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
-import com.eswaraj.web.dto.UserDto;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.PointTarget;
 import com.google.android.gms.maps.GoogleMap;
@@ -94,7 +91,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
             public void onClick(View view) {
                 double lat = googleMapFragment.getMarkerLatitude();
                 double lng = googleMapFragment.getMarkerLongitude();
-                middlewareService.saveUserLocation(view.getContext(), userSession.getUser(), lat, lng);
+                middlewareService.updateProfile(view.getContext(), userSession.getToken(), userSession.getUser().getPerson().getName(), lat, lng);
 
             }
         });
@@ -208,10 +205,9 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         }
     }
 
-    public void onEventMainThread(UserLocationSavedEvent event) {
-        //TODO:Uncomment this code later
+    public void onEventMainThread(ProfileUpdateEvent event) {
         if(event.getSuccess()) {
-            //userSession.setUser(event.getUserDto());
+            userSession.setUser(event.getUserDto());
             if(dialogMode) {
                 finish();
             }
