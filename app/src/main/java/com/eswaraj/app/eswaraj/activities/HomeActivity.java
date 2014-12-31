@@ -55,6 +55,11 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
 
     private Boolean retryRevGeocoding = false;
 
+    private final int REQUEST_MY_COMPLAINTS = 0;
+    private final int REQUEST_MY_CONSTITUENCY = 1;
+    private final int REQUEST_MY_LEADERS = 2;
+    private final int REQUEST_MY_PROFILE = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +98,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 else {
                     Intent i = new Intent(v.getContext(), LoginActivity.class);
                     i.putExtra("MODE", true);
-                    startActivity(i);
+                    startActivityForResult(i, REQUEST_MY_COMPLAINTS);
                 }
             }
         });
@@ -108,12 +113,12 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 else if(userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
                     Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
                     i.putExtra("MODE", true);
-                    startActivity(i);
+                    startActivityForResult(i, REQUEST_MY_LEADERS);
                 }
                 else {
                     Intent i = new Intent(v.getContext(), LoginActivity.class);
                     i.putExtra("MODE", true);
-                    startActivity(i);
+                    startActivityForResult(i, REQUEST_MY_LEADERS);
                 }
             }
         });
@@ -127,12 +132,12 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 else if(userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
                     Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
                     i.putExtra("MODE", true);
-                    startActivity(i);
+                    startActivityForResult(i, REQUEST_MY_CONSTITUENCY);
                 }
                 else {
                     Intent i = new Intent(v.getContext(), LoginActivity.class);
                     i.putExtra("MODE", true);
-                    startActivity(i);
+                    startActivityForResult(i, REQUEST_MY_CONSTITUENCY);
                 }
             }
         });
@@ -146,7 +151,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 else {
                     Intent i = new Intent(v.getContext(), LoginActivity.class);
                     i.putExtra("MODE", true);
-                    startActivity(i);
+                    startActivityForResult(i, REQUEST_MY_PROFILE);
                 }
             }
         });
@@ -217,6 +222,27 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         }
         else {
             retryRevGeocoding = true;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_MY_COMPLAINTS:
+                    complaints.performClick();
+                    break;
+                case REQUEST_MY_CONSTITUENCY:
+                    constituency.performClick();
+                    break;
+                case REQUEST_MY_LEADERS:
+                    leaders.performClick();
+                    break;
+                case REQUEST_MY_PROFILE:
+                    profile.performClick();
+                    break;
+            }
         }
     }
 }

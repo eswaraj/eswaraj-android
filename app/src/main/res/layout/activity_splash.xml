@@ -9,9 +9,8 @@
     android:background="@drawable/bgpic"
     tools:context="com.eswaraj.app.eswaraj.activities.SplashActivity">
 
-    <fragment
-        class="com.eswaraj.app.eswaraj.fragments.SplashFragment"
-        android:id="@+id/splashFragment"
+    <com.eswaraj.app.eswaraj.widgets.CustomViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

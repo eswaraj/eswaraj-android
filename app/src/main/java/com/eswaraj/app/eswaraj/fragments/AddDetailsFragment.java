@@ -1,6 +1,7 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -70,11 +71,7 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
     private CategoryWithChildCategoryDto template;
     private Location location;
 
-    private static final int SELECT_PHOTO = 1;
-    private static final int TAKE_PHOTO = 2;
-
-    private File photoFile;
-    private File selectedFile = null;
+    private static final int REQUEST_POST_BUTTON = 11;
 
     private Boolean posted = false;
     private CustomProgressDialog pDialog;
@@ -174,7 +171,7 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
                 }
                 else {
                     Intent i = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(i);
+                    startActivityForResult(i, REQUEST_POST_BUTTON);
                 }
             }
         });
@@ -227,6 +224,11 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         cameraHelper.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Activity.RESULT_OK) {
+            if(requestCode == REQUEST_POST_BUTTON) {
+                post.performClick();
+            }
+        }
     }
 
     public void onEventMainThread(Location location) {

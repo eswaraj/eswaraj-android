@@ -138,6 +138,8 @@
         <activity
             android:name=".activities.MyProfileActivity"
             android:label="@string/title_activity_my_profile"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:parentActivityName=".activities.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -1,93 +1,116 @@
 package com.eswaraj.app.eswaraj.fragments;
 
-
+import android.annotation.TargetApi;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
-import com.eswaraj.app.eswaraj.adapters.TextPagerAdapter;
-import com.eswaraj.app.eswaraj.base.BaseFragment;
-import com.eswaraj.app.eswaraj.events.UserReadyEvent;
 import com.eswaraj.app.eswaraj.models.SplashScreenItem;
-import com.eswaraj.app.eswaraj.widgets.CustomViewPager;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
-import java.util.ArrayList;
+public class SplashFragment extends Fragment {
 
-import javax.inject.Inject;
+    private TextView mText;
+    private TextView mHeading;
+    private ImageView mImage;
+    private Button mButton;
+    private ProgressWheel progressWheel;
+    private View root;
 
-import de.greenrobot.event.EventBus;
+    private SplashScreenItem splashScreenItem;
+    private Button.OnClickListener onClickListener;
+
+    private Boolean showSpinner = false;
+    private Boolean showContinueButton = false;
 
 
-public class SplashFragment extends BaseFragment {
-
-    @Inject
-    EventBus eventBus;
-
-    private CustomViewPager pager;
-    private TextPagerAdapter adapter;
-    private ArrayList<SplashScreenItem> splashScreenItems;
-    private View.OnClickListener onClickListener;
-
-    public SplashFragment() {
-        // Required empty public constructor
+    public void setOnClickListener(Button.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
+
+    public  void setSplashScreenItem (SplashScreenItem splashScreenItem) {
+        this.splashScreenItem = splashScreenItem;
+    }
+
+    public SplashFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_splash, container, false);
-        pager = (CustomViewPager) rootView.findViewById(R.id.viewPager);
-        setUpListener();
-        setUpPagerData();
-        setUpPager();
+        View rootView = inflater.inflate(R.layout.splash_pager, container, false);
+        Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/HandmadeTypewriter.ttf");
+        root = rootView;
+        mText = (TextView) rootView.findViewById(R.id.splash_pager_text);
+        mImage = (ImageView) rootView.findViewById(R.id.splash_pager_image);
+        mHeading = (TextView) rootView.findViewById(R.id.splash_pager_heading);
+        mButton = (Button) rootView.findViewById(R.id.splash_pager_button);
+        progressWheel = (ProgressWheel) rootView.findViewById(R.id.splashProgressWheel);
+        mText.setTypeface(custom_font);
+
+        if(showSpinner) {
+            progressWheel.setVisibility(View.VISIBLE);
+        }
+        if(showContinueButton) {
+            progressWheel.setVisibility(View.INVISIBLE);
+            mButton.setVisibility(View.VISIBLE);
+        }
+        progressWheel.spin();
+        mButton.setOnClickListener(onClickListener);
         return rootView;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        //TODO:Remove the bg setting from here if needed as it is only support from api level 16
+        root.setBackground(splashScreenItem.getBgImage());
+
+        mText.setText(splashScreenItem.getText());
+        mText.setTextSize(18);
+        mText.setTextColor(Color.parseColor("#e47979"));
+
+        mHeading.setText(splashScreenItem.getHeading());
+        mHeading.setTextSize(40);
+        mHeading.setPadding(0,30,0,0);
+        mHeading.setTextColor(Color.parseColor("#ea5c5c"));
+
+        mImage.setImageDrawable(splashScreenItem.getImage());
+        mImage.setPadding(0, 10,0,0 );
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
+    public void showContinueButton() {
+        if(mButton != null) {
+            progressWheel.setVisibility(View.INVISIBLE);
+            mButton.setVisibility(View.VISIBLE);
+        }
+        else {
+            showContinueButton = true;
+        }
     }
 
-    private void setUpPager() {
-        pager.setScrollDurationFactor(2);
-        adapter = new TextPagerAdapter(getActivity().getSupportFragmentManager(), splashScreenItems);
-        adapter.setOnClickListener(onClickListener);
-        pager.setAdapter(adapter);
-        pager.setOffscreenPageLimit(2);
-        pager.setCurrentItem(0);
+    public void showSpinner() {
+        if(progressWheel != null) {
+            progressWheel.setVisibility(View.VISIBLE);
+        }
+        else {
+            showSpinner = true;
+        }
     }
-
-    private void setUpPagerData() {
-        splashScreenItems = new ArrayList<SplashScreenItem>();
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswarajlogo), getResources().getDrawable(R.drawable.bgpic),"Welcome to eSwaraj", "A Mobile & Web Platform for better Governance"));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswarajposter), getResources().getDrawable(R.drawable.bgpic),"About eSwaraj","eSwaraj is for everyone. It enables citizens to report issues in their neighbourhood and provides trends and statistics to the government to govern better."));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.mobile), getResources().getDrawable(R.drawable.bgpic),"Why eSwaraj ?","Let's try to understand the need for eSwaraj."));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj01), getResources().getDrawable(R.drawable.bgpic),"Signing the constitution", "We came together and signed a contract named Constitution which paved the way for founding of this great nation. A contract that promised that our lives would be much better by being part of this nation. A contract that promised that together we can be much more than we are as individuals."));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj02), getResources().getDrawable(R.drawable.bgpic), "Administrative Structure", "A system of administration was laid out to achieve the promises in the Constitution. Considering everyone's similar basic needs, India was divided in multiple parts, each with same administrative and political structure."));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj03), getResources().getDrawable(R.drawable.bgpic), "The need for social audit", "But then, Even the greatest plans fall short if ground-level feedback is not taken from end beneficiaries. eSwaraj aims to remove the disconnect between ground level realities and top level perception and bring transparency in quality of service delivery and governance."));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj04), getResources().getDrawable(R.drawable.bgpic), "Analytics and More", "Visual analytics offering deeper insights to improve governance Per constituency/colony based map view to locate problems"));
-    }
-
-    private void setUpListener() {
-        onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserReadyEvent event = new UserReadyEvent();
-                event.setSuccess(true);
-                eventBus.post(event);
-            }
-        };
-    }
-
-    public void readyToProceed() {
-        adapter.showProceedButton();
-    }
-    
 }

@@ -34,7 +34,6 @@ import com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment;
 import com.eswaraj.app.eswaraj.fragments.SelectTemplateFragment;
 import com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment;
 import com.eswaraj.app.eswaraj.fragments.LoginFragment;
-import com.eswaraj.app.eswaraj.fragments.SplashFragment;
 import com.eswaraj.app.eswaraj.helpers.CameraHelper;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
@@ -110,7 +109,6 @@ import de.greenrobot.event.EventBus;
                 GooglePlacesListFragment.class,
                 HomeActivity.class,
                 UserSessionUtil.class,
-                SplashFragment.class,
                 SplashActivity.class,
                 LoginDialogActivity.class,
                 GoogleMapFragment.class,

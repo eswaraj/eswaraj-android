@@ -1,5 +1,6 @@
 package com.eswaraj.app.eswaraj.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -132,6 +133,11 @@ public class LoginActivity extends BaseActivity {
 
     private void appReady() {
         if(dialogMode) {
+            if (getParent() == null) {
+                setResult(Activity.RESULT_OK, null);
+            } else {
+                getParent().setResult(Activity.RESULT_OK, null);
+            }
             finish();
         }
         else {

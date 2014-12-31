@@ -40,7 +40,6 @@ public class CameraHelper {
 
 
 	public static final int PICTURE_REQUEST_CODE = 0x10;
-	//private static final Log logger = new Log();
 
 	private Uri outputFileUri;
 	private String imagePath;

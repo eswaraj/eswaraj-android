@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.widget.Button;
 
 import com.eswaraj.app.eswaraj.fragments.SplashFragment;
-import com.eswaraj.app.eswaraj.fragments.TextPagerFragment;
 import com.eswaraj.app.eswaraj.models.SplashScreenItem;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ public class TextPagerAdapter extends FragmentPagerAdapter {
 
     private ArrayList<SplashScreenItem> splashScreenItems;
     private Button.OnClickListener onClickListener;
-    private TextPagerFragment lastFragment;
+    private SplashFragment lastFragment;
     private Boolean showButton = false;
 
     public TextPagerAdapter(FragmentManager fragmentManager, ArrayList<SplashScreenItem> splashScreenItems) {
@@ -34,7 +33,7 @@ public class TextPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        TextPagerFragment fragment = new TextPagerFragment();
+        SplashFragment fragment = new SplashFragment();
         fragment.setSplashScreenItem(splashScreenItems.get(position));
         if(position == splashScreenItems.size() - 1) {
             lastFragment = fragment;
