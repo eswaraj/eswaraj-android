@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
+import com.eswaraj.app.eswaraj.events.GetProfileEvent;
 import com.eswaraj.app.eswaraj.events.GooglePlaceDetailsEvent;
 import com.eswaraj.app.eswaraj.events.ProfileUpdateEvent;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
@@ -60,6 +61,9 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     private GooglePlace googlePlace;
     private Boolean dialogMode;
 
+    private Boolean gotLocation = false;
+    private Boolean gotProfileUpdate = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +73,9 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
 
         googleMapFragment = new GoogleMapFragment();
         googlePlacesListFragment = new GooglePlacesListFragment();
+
+        eventBus.registerSticky(this);
+        middlewareService.loadProfileUpdates(this, userSession.getToken());
 
         //Add all fragments
         if (savedInstanceState == null) {
@@ -92,7 +99,6 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
                 double lat = googleMapFragment.getMarkerLatitude();
                 double lng = googleMapFragment.getMarkerLongitude();
                 middlewareService.updateProfile(view.getContext(), userSession.getToken(), userSession.getUser().getPerson().getName(), lat, lng);
-
             }
         });
 
@@ -150,7 +156,6 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
 
     @Override
     protected void onStop() {
-        eventBus.unregister(this);
         locationUtil.unsubscribe();
         super.onStop();
     }
@@ -158,11 +163,16 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     @Override
     protected void onStart() {
         super.onStart();
-        eventBus.registerSticky(this);
         locationUtil.subscribe(applicationContext, true);
 
-        pDialog = new CustomProgressDialog(this, false, true, "Getting your locating...");
+        pDialog = new CustomProgressDialog(this, false, true, "Getting your location...");
         pDialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        eventBus.unregister(this);
+        super.onDestroy();
     }
 
     @Override
@@ -178,7 +188,10 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
 
     public void onEventMainThread(Location location) {
         if(mapReady && !markerUpdatedOnce) {
-            pDialog.dismiss();
+            gotLocation = true;
+            if(gotProfileUpdate) {
+                pDialog.dismiss();
+            }
             googleMapFragment.updateMarkerLocation(location.getLatitude(), location.getLongitude());
             markerUpdatedOnce = true;
         }
@@ -218,7 +231,20 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
             }
         }
         else {
-            Toast.makeText(this, "Could not save location. Please retry. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Could not save location to server. Please retry. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onEventMainThread(GetProfileEvent event) {
+        if(event.getSuccess()) {
+            userSession.setUser(event.getUserDto());
+        }
+        else {
+            Toast.makeText(this, "Could not get profile updates from server" + event.getError(), Toast.LENGTH_LONG).show();
+        }
+        gotProfileUpdate = true;
+        if(gotLocation) {
+            pDialog.dismiss();
         }
     }
 

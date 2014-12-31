@@ -161,6 +161,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     public void onEventMainThread(ComplaintClosedEvent event) {
         if(event.getSuccess()) {
             scClose.setVisibility(View.INVISIBLE);
+            scStatus.setText("Closed");
         }
         else {
             Toast.makeText(getActivity(),"Failed to close complaint. Please try again. Error = " + event.getError(), Toast.LENGTH_LONG).show();

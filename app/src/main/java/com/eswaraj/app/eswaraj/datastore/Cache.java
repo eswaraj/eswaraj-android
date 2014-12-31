@@ -19,10 +19,18 @@ import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,13 +47,28 @@ public class Cache extends BaseClass implements CacheInterface {
     EventBus eventBus;
 
     public void loadUserData(Context context, Session session) {
-        Gson gson = new Gson();
+        JsonDeserializer<Date> deser = new JsonDeserializer<Date>() {
+            @Override
+            public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                return json == null ? null : new Date(json.getAsLong());
+            }
+        };
+        JsonSerializer<Date> ser = new JsonSerializer<Date>() {
+
+            @Override
+            public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+                return src == null ? null : new JsonPrimitive(src.getTime());
+            }
+        };
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
         String json = sharedPreferencesHelper.getString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_DATA, null);
         try {
-            UserDto userDto = new Gson().fromJson(json, UserDto.class);
+
+            UserDto userDto = gson.fromJson(json, UserDto.class);
             GetUserEvent event = new GetUserEvent();
             event.setSuccess(true);
             event.setUserDto(userDto);
+            event.setToken(session.getAccessToken());
             eventBus.postSticky(event);
         } catch (JsonParseException e) {
             //This should never happen since json would only be stored in server if de-serialization was successful in Server class
@@ -212,5 +235,20 @@ public class Cache extends BaseClass implements CacheInterface {
     @Override
     public void loadProfileImage(Context context, String url, Long id) {
         //Will never get called
+    }
+
+    @Override
+    public Boolean isProfileUpdateAvailable(Context context) {
+        return false;
+    }
+
+    @Override
+    public void updateProfileUpdate(Context context, String token) {
+        assert false;
+    }
+
+    @Override
+    public void loadProfileUpdates(Context context, String token) {
+        assert false;
     }
 }

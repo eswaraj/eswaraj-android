@@ -2,6 +2,7 @@ package com.eswaraj.app.eswaraj.volley;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -16,8 +17,18 @@ import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -59,11 +70,26 @@ public class RegisterFacebookUserRequest extends BaseClass {
         return new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                UserDto userDto = new Gson().fromJson(response, UserDto.class);
+                JsonDeserializer<Date> deser = new JsonDeserializer<Date>() {
+                    @Override
+                    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                        return json == null ? null : new Date(json.getAsLong());
+                    }
+                };
+                JsonSerializer<Date> ser = new JsonSerializer<Date>() {
+
+                    @Override
+                    public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+                        return src == null ? null : new JsonPrimitive(src.getTime());
+                    }
+                };
+                Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
+                UserDto userDto = gson.fromJson(response, UserDto.class);
                 GetUserEvent event = new GetUserEvent();
                 event.setSuccess(true);
                 event.setUserDto(userDto);
                 event.setToken(session.getAccessToken());
+                Log.e("RegisterFacebookUser", session.getAccessToken());
                 eventBus.postSticky(event);
                 cache.updateUserData(context, response);
             }

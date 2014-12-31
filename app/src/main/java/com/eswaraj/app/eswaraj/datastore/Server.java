@@ -12,6 +12,7 @@ import com.eswaraj.app.eswaraj.volley.LoadImageRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
+import com.eswaraj.app.eswaraj.volley.LoadProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.ProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
@@ -55,6 +56,8 @@ public class Server extends BaseClass implements ServerInterface {
     ComplaintCloseRequest complaintCloseRequest;
     @Inject
     ProfileUpdateRequest profileUpdateRequest;
+    @Inject
+    LoadProfileUpdateRequest loadProfileUpdateRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -115,7 +118,7 @@ public class Server extends BaseClass implements ServerInterface {
     }
 
     @Override
-    public void updateProfile(Context context, String token, String name, double lat, double lng) {
+    public void updateProfile(Context context, String token, String name, Double lat, Double lng) {
         profileUpdateRequest.processRequest(token, name, lat, lng);
     }
 
@@ -137,5 +140,10 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void loadProfileImage(Context context, String url, Long id) {
         loadImageRequest.processRequest(context, url, id, ImageType.PROFILE);
+    }
+
+    @Override
+    public void loadProfileUpdates(Context context, String token) {
+        loadProfileUpdateRequest.processRequest(context, token);
     }
 }

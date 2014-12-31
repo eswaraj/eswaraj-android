@@ -11,6 +11,7 @@ import com.eswaraj.app.eswaraj.activities.LoginActivity;
 import com.eswaraj.app.eswaraj.activities.LoginDialogActivity;
 import com.eswaraj.app.eswaraj.activities.MarkLocationActivity;
 import com.eswaraj.app.eswaraj.activities.MyComplaintsActivity;
+import com.eswaraj.app.eswaraj.activities.MyProfileActivity;
 import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
 import com.eswaraj.app.eswaraj.activities.SelectTemplateActivity;
 import com.eswaraj.app.eswaraj.activities.SingleComplaintActivity;
@@ -21,6 +22,7 @@ import com.eswaraj.app.eswaraj.datastore.CacheInterface;
 import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.fragments.AddDetailsFragment;
+import com.eswaraj.app.eswaraj.fragments.MyProfileFragment;
 import com.eswaraj.app.eswaraj.fragments.SelectAmenityFragment;
 import com.eswaraj.app.eswaraj.fragments.AmenityBannerFragment;
 import com.eswaraj.app.eswaraj.fragments.CommentsFragment;
@@ -53,6 +55,7 @@ import com.eswaraj.app.eswaraj.volley.LoadImageRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
+import com.eswaraj.app.eswaraj.volley.LoadProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.ProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
@@ -113,7 +116,10 @@ import de.greenrobot.event.EventBus;
                 GoogleMapFragment.class,
                 ComplaintCloseRequest.class,
                 StorageCacheClearingTask.class,
-                ProfileUpdateRequest.class
+                ProfileUpdateRequest.class,
+                LoadProfileUpdateRequest.class,
+                MyProfileActivity.class,
+                MyProfileFragment.class
         },
         complete = false,
         library = true
@@ -252,5 +258,10 @@ public class MiddlewareGraph {
     @Provides @Singleton
     ProfileUpdateRequest provideProfileUpdateRequest() {
         return new ProfileUpdateRequest();
+    }
+
+    @Provides @Singleton
+    LoadProfileUpdateRequest provideLoadProfileUpdateRequest() {
+        return new LoadProfileUpdateRequest();
     }
 }

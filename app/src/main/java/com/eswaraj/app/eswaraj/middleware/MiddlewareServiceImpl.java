@@ -186,7 +186,7 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void updateProfile(Context context, String token, String name, double lat, double lng) {
+    public void updateProfile(Context context, String token, String name, Double lat, Double lng) {
         server.updateProfile(context, token, name, lat, lng);
     }
 
@@ -253,5 +253,25 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
         else {
             server.loadProfileImage(context, url, id);
         }
+    }
+
+    @Override
+    public void loadProfileUpdates(Context context, String token, Boolean dontGetFromCache) {
+        server.loadProfileUpdates(context, token);
+    }
+
+    @Override
+    public Boolean isProfileUpdateAvailable(Context context) {
+        return false;
+    }
+
+    @Override
+    public void updateProfileUpdate(Context context, String token) {
+        assert false;
+    }
+
+    @Override
+    public void loadProfileUpdates(Context context, String token) {
+        server.loadProfileUpdates(context, token);
     }
 }

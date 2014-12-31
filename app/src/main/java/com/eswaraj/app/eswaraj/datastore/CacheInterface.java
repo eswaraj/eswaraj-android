@@ -29,4 +29,7 @@ public interface CacheInterface extends MiddlewareGetService {
 
     public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto, int count);
     public void updateComments(Context context, String json, ComplaintDto complaintDto, int count);
+
+    public Boolean isProfileUpdateAvailable(Context context);
+    public void updateProfileUpdate(Context context, String token);
 }

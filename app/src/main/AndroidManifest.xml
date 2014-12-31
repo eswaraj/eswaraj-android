@@ -133,7 +133,15 @@
             android:name=".activities.LoginDialogActivity"
             android:label="Log In to Continue"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.Dialog">
+            android:theme="@android:style/Theme.Holo.Light.Dialog" >
+        </activity>
+        <activity
+            android:name=".activities.MyProfileActivity"
+            android:label="@string/title_activity_my_profile"
+            android:parentActivityName=".activities.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
         </activity>
     </application>
 

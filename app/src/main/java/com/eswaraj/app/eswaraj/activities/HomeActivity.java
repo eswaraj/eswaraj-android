@@ -140,7 +140,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 if(userSession.isUserLoggedIn(v.getContext())) {
-                    Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
+                    Intent i = new Intent(v.getContext(), MyProfileActivity.class);
                     startActivity(i);
                 }
                 else {

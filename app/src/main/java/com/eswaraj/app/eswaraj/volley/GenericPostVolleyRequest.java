@@ -11,6 +11,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.StringEntity;
@@ -18,11 +26,14 @@ import org.apache.http.entity.StringEntity;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.util.Date;
 
 public class GenericPostVolleyRequest<T> extends Request<String> {
 
     private final Response.Listener<String> mListener;
     HttpEntity entity;
+
 
     public GenericPostVolleyRequest(String url, Response.ErrorListener errorListener, Response.Listener<String> listener, T requestDto) {
         super(Request.Method.POST, url, errorListener);
@@ -54,9 +65,8 @@ public class GenericPostVolleyRequest<T> extends Request<String> {
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
         try {
-            Log.e("eswaraj", "Status Code = " + response.statusCode);
             String json = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            Log.e("eswaraj", "json response = "+json);
+            Log.i("eswaraj", "json response = " + json);
             return Response.success(json, HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
@@ -65,7 +75,7 @@ public class GenericPostVolleyRequest<T> extends Request<String> {
 
     @Override
     protected void deliverResponse(String response) {
-        Log.e("eswaraj", " response = "+response);
+        Log.i("eswaraj", " response = " + response);
         if(mListener != null) {
             mListener.onResponse(response);
         }
