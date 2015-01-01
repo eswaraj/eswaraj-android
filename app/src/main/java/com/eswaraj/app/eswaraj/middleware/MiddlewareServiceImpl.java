@@ -13,6 +13,7 @@ import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.datastore.ServerInterface;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
+import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
@@ -256,6 +257,31 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
+    public void loadHeaderImage(Context context, String url, Long id, Boolean dontGetFromCache) {
+        server.loadHeaderImage(context, url, id);
+    }
+
+    @Override
+    public Boolean isHeaderImageAvailable(Context context, String url, Long id) {
+        return cache.isHeaderImageAvailable(context, url, id);
+    }
+
+    @Override
+    public void updateHeaderImage(Context context) {
+        cache.updateHeaderImage(context);
+    }
+
+    @Override
+    public void loadHeaderImage(Context context, String url, Long id) {
+        if(cache.isHeaderImageAvailable(context, url, id)) {
+            cache.loadHeaderImage(context, url, id);
+        }
+        else {
+            server.loadHeaderImage(context, url, id);
+        }
+    }
+
+    @Override
     public void loadProfileUpdates(Context context, String token, Boolean dontGetFromCache) {
         server.loadProfileUpdates(context, token);
     }
@@ -273,5 +299,35 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     @Override
     public void loadProfileUpdates(Context context, String token) {
         server.loadProfileUpdates(context, token);
+    }
+
+    @Override
+    public void loadLocationComplaints(Context context, LocationDto locationDto, int start, int count, Boolean dontGetFromCache) {
+        if(dontGetFromCache) {
+            server.loadLocationComplaints(context, locationDto, start, count);
+        }
+        else {
+            loadLocationComplaints(context, locationDto, start, count);
+        }
+    }
+
+    @Override
+    public Boolean isLocationComplaintsAvailable(Context context) {
+        return cache.isLocationComplaintsAvailable(context);
+    }
+
+    @Override
+    public void updateLocationComplaints(Context context, LocationDto locationDto, int start, int count, String json) {
+        cache.updateLocationComplaints(context, locationDto, start, count, json);
+    }
+
+    @Override
+    public void loadLocationComplaints(Context context, LocationDto locationDto, int start, int count) {
+        if(cache.isLocationComplaintsAvailable(context)) {
+            cache.loadLocationComplaints(context, locationDto, start, count);
+        }
+        else {
+            server.loadLocationComplaints(context, locationDto, start, count);
+        }
     }
 }

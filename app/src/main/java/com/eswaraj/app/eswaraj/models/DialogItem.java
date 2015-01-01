@@ -3,6 +3,8 @@ package com.eswaraj.app.eswaraj.models;
 
 import android.graphics.Bitmap;
 
+import com.eswaraj.web.dto.LocationDto;
+
 public class DialogItem {
 
     private Long id;
@@ -11,6 +13,15 @@ public class DialogItem {
     private String name;
     private String title;
     private Class target;
+    LocationDto locationDto;
+
+    public LocationDto getLocationDto() {
+        return locationDto;
+    }
+
+    public void setLocationDto(LocationDto locationDto) {
+        this.locationDto = locationDto;
+    }
 
     public Long getId() {
         return id;

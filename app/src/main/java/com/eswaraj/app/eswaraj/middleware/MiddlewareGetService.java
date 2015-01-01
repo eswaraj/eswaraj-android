@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
+import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
 
@@ -18,6 +19,8 @@ public interface MiddlewareGetService {
     public void loadUserComplaints(Context context, UserDto userDto);
     public void loadComplaintImage(Context context, String url, Long id);
     public void loadProfileImage(Context context, String url, Long id);
+    public void loadHeaderImage(Context context, String url, Long id);
     public void loadComments(Context context, ComplaintDto complaintDto, int count);
     public void loadProfileUpdates(Context context, String token);
+    public void loadLocationComplaints(Context context, LocationDto locationDto, int start, int count);
 }

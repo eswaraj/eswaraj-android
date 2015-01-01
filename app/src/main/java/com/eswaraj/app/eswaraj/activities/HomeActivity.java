@@ -36,6 +36,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -157,8 +158,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                     state.setTitle("State");
                     state.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
                     state.setId(userSession.getUser().getPerson().getPersonAddress().getState().getId());
-                    //TODO:Fix the target here
-                    state.setTarget(MyComplaintsActivity.class);
+                    state.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getState());
+                    state.setTarget(ConstituencyActivity.class);
                     constituencyDialogItems.add(state);
 
                     DialogItem pc = new DialogItem();
@@ -166,8 +167,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                     pc.setTitle("Parliamentary Constituency");
                     pc.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
                     pc.setId(userSession.getUser().getPerson().getPersonAddress().getPc().getId());
-                    //TODO:Fix the target here
-                    pc.setTarget(MyComplaintsActivity.class);
+                    pc.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getPc());
+                    pc.setTarget(ConstituencyActivity.class);
                     constituencyDialogItems.add(pc);
 
                     DialogItem ac = new DialogItem();
@@ -175,8 +176,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                     ac.setTitle("Assembly Constituency");
                     ac.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
                     ac.setId(userSession.getUser().getPerson().getPersonAddress().getAc().getId());
-                    //TODO:Fix the target here
-                    ac.setTarget(MyComplaintsActivity.class);
+                    ac.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getAc());
+                    ac.setTarget(ConstituencyActivity.class);
                     constituencyDialogItems.add(ac);
 
                     DialogAdapter adapter = new DialogAdapter(v.getContext(), R.layout.item_select_dialog, constituencyDialogItems);
@@ -185,16 +186,17 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent i = new Intent(view.getContext(), ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getTarget());
-                            i.putExtra("ID", ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getId());
+                            i.putExtra("LOCATION", (Serializable) ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getLocationDto());
                             startActivity(i);
                         }
                     });
 
                     builder.setView(rootView)
-                           .setCancelable(true);
+                           .setCancelable(true)
+                           .setTitle("Select Constituency");
                     constituencyAlertDialog = builder.create();
                     constituencyAlertDialog.show();
-                    constituencyAlertDialog.getWindow().setLayout(600, 300);
+                    constituencyAlertDialog.getWindow().setLayout(700, 400);
 
                 }
                 else if(userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
@@ -314,8 +316,5 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         }
     }
 
-    private void setupConstituencyAdapter() {
-
-    }
 
 }

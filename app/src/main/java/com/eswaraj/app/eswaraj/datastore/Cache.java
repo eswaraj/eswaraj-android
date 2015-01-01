@@ -11,11 +11,13 @@ import com.eswaraj.app.eswaraj.config.PreferenceConstants;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
+import com.eswaraj.app.eswaraj.events.GetHeaderImageEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.GetUserComplaintsEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
+import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.UserDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.UserDto;
@@ -249,6 +251,25 @@ public class Cache extends BaseClass implements CacheInterface {
     }
 
     @Override
+    public Boolean isHeaderImageAvailable(Context context, String url, Long id) {
+        return storageCache.isBitmapAvailable(context, id, ImageType.HEADER);
+    }
+
+    @Override
+    public void updateHeaderImage(Context context) {
+        //Nothing to do here
+    }
+
+    @Override
+    public void loadHeaderImage(Context context, String url, Long id) {
+        GetHeaderImageEvent event = new GetHeaderImageEvent();
+        event.setSuccess(true);
+        event.setBitmap(storageCache.getBitmap(id, context, ImageType.HEADER));
+        event.setId(id);
+        eventBus.post(event);
+    }
+
+    @Override
     public Boolean isProfileUpdateAvailable(Context context) {
         return false;
     }
@@ -260,6 +281,21 @@ public class Cache extends BaseClass implements CacheInterface {
 
     @Override
     public void loadProfileUpdates(Context context, String token) {
+        assert false;
+    }
+
+    @Override
+    public Boolean isLocationComplaintsAvailable(Context context) {
+        return false;
+    }
+
+    @Override
+    public void updateLocationComplaints(Context context, LocationDto locationDto, int start, int count, String json) {
+        //Nothing to do here
+    }
+
+    @Override
+    public void loadLocationComplaints(Context context, LocationDto locationDto, int start, int count) {
         assert false;
     }
 }

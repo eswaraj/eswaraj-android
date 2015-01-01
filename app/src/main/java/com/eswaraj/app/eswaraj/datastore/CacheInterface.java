@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.eswaraj.app.eswaraj.middleware.MiddlewareGetService;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
+import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.UserDto;
 
 public interface CacheInterface extends MiddlewareGetService {
@@ -27,9 +28,15 @@ public interface CacheInterface extends MiddlewareGetService {
     public Boolean isProfileImageAvailable(Context context, String url, Long id);
     public void updateProfileImage(Context context);
 
+    public Boolean isHeaderImageAvailable(Context context, String url, Long id);
+    public void updateHeaderImage(Context context);
+
     public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto, int count);
     public void updateComments(Context context, String json, ComplaintDto complaintDto, int count);
 
     public Boolean isProfileUpdateAvailable(Context context);
     public void updateProfileUpdate(Context context, String token);
+
+    public Boolean isLocationComplaintsAvailable(Context context);
+    public void updateLocationComplaints(Context context, LocationDto locationDto, int start, int count, String json);
 }

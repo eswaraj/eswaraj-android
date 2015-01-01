@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,10 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
     private Map<String, ComplaintDto> markerMap = new HashMap<>();
     private HeatmapTileProvider mProvider;
     private TileOverlay mOverlay;
+
+    private Boolean markersDisplayed = false;
+    private Boolean heatmapDisplayed = false;
+    private Boolean clusterDisplayed = false;
 
     public GoogleMapFragment() {
         zoomLevel = 14;
@@ -144,6 +149,7 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
     }
 
     public void addMarkers(List<ComplaintDto> complaintDtos) {
+        clearMap();
         Marker m;
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
@@ -181,6 +187,10 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
                 return true;
             }
         });
+
+        markersDisplayed = true;
+        heatmapDisplayed = false;
+        clusterDisplayed = false;
     }
 
     public void removeMarkers() {
@@ -189,7 +199,8 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
     }
 
     public void addHeatMap(List<ComplaintDto> complaintDtos) {
-        List<LatLng> list = null;
+        clearMap();
+        List<LatLng> list = new ArrayList<LatLng>();
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         LatLng latLng = null;
 
@@ -218,6 +229,9 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
                     .build();
             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
+        markersDisplayed = false;
+        heatmapDisplayed = true;
+        clusterDisplayed = false;
     }
 
     public void removeHeatMap() {
@@ -225,10 +239,13 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
     }
 
     public void addCluster(List<ComplaintDto> complaintDtos) {
+        clearMap();
         GoogleMapCluster googleMapCluster;
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         ClusterManager<GoogleMapCluster> mClusterManager;
         mClusterManager = new ClusterManager<GoogleMapCluster>(getActivity(), googleMap);
+        googleMap.setOnCameraChangeListener(mClusterManager);
+        googleMap.setOnMarkerClickListener(mClusterManager);
         for(ComplaintDto complaintDto : complaintDtos) {
             googleMapCluster = new GoogleMapCluster(complaintDto.getLattitude(), complaintDto.getLongitude());
             mClusterManager.addItem(googleMapCluster);
@@ -249,9 +266,24 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
                     .build();
             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
+        markersDisplayed = false;
+        heatmapDisplayed = false;
+        clusterDisplayed = true;
     }
 
     public void removeCluster() {
         googleMap.clear();
+    }
+
+    public void clearMap() {
+        if(markersDisplayed) {
+            removeMarkers();
+        }
+        else if(clusterDisplayed) {
+            removeCluster();
+        }
+        else if(heatmapDisplayed) {
+            removeHeatMap();
+        }
     }
 }

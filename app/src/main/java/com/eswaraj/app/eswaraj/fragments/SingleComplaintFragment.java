@@ -44,8 +44,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     UserSessionUtil userSession;
     @Inject
     MiddlewareServiceImpl middlewareService;
-    @Inject
-    StorageCache storageCache;
+
 
     private CommentsFragment commentsFragment;
     private ImageView complaintImage;
@@ -105,8 +104,6 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
                 scSubCategory.setText(category.getName());
             }
         }
-        Log.e("SingleComplaint", userSession.getUser().getPerson().toString());
-        Log.e("SingleComplaint", complaintDto.getCreatedBy().get(0).toString());
         if(!userSession.getUser().getPerson().getExternalId().equals(complaintDto.getCreatedBy().get(0).getExternalId()) || complaintDto.getStatus().equals("Closed")) {
             scClose.setVisibility(View.INVISIBLE);
         }

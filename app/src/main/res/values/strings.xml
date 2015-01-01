@@ -33,5 +33,6 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_login_dialog">LoginDialogActivity</string>
     <string name="title_activity_my_profile">MyProfileActivity</string>
+    <string name="title_activity_constituency">ConstituencyActivity</string>
 
 </resources>

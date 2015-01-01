@@ -138,6 +138,16 @@
         <activity
             android:name=".activities.MyProfileActivity"
             android:label="@string/title_activity_my_profile"
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".activities.ConstituencyActivity"
+            android:label="@string/title_activity_constituency"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar"
             android:parentActivityName=".activities.HomeActivity" >

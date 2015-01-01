@@ -3,6 +3,7 @@ package com.eswaraj.app.eswaraj.fragments;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,20 +24,15 @@ import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.ComplaintSelectedEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
-import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
-import com.eswaraj.app.eswaraj.events.GetUserComplaintsEvent;
+import com.eswaraj.app.eswaraj.events.GetHeaderImageEvent;
+import com.eswaraj.app.eswaraj.events.GetLocationComplaintsEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
-import com.eswaraj.app.eswaraj.models.ComplaintCounter;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
-import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
-import com.eswaraj.app.eswaraj.widgets.PieChartView;
-import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.eswaraj.web.dto.LocationDto;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-
-import org.achartengine.GraphicalView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,16 +42,14 @@ import javax.inject.Inject;
 import de.greenrobot.event.EventBus;
 
 
-public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCallback {
+public class ConstituencyFragment extends BaseFragment implements OnMapReadyCallback{
 
     @Inject
     EventBus eventBus;
     @Inject
     MiddlewareServiceImpl middlewareService;
-    @Inject
-    UserSessionUtil userSession;
 
-    private GoogleMapFragment googleMapFragment;
+    private LocationDto locationDto;
     private List<ComplaintDto> complaintDtoList;
     private List<CategoryWithChildCategoryDto> categoryDtoList;
 
@@ -64,7 +58,6 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     private ImageView mapButton;
     private ImageView listButton;
     private ImageView analyticsButton;
-    private CustomProgressDialog pDialog;
     private FrameLayout mcMapContainer;
     private FrameLayout mcChartContainer;
     private ViewGroup mcListContainer;
@@ -72,6 +65,13 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     private LinearLayout mcAnalyticsContainer;
     private TextView mcName;
     private ImageView mcPhoto;
+    private LinearLayout mcMapButtons;
+    private GoogleMapFragment googleMapFragment;
+    private CustomProgressDialog pDialog;
+
+    private Button heatmap;
+    private Button cluster;
+    private Button markers;
 
     private Boolean mapDisplayed = false;
     private Boolean mapReady = false;
@@ -81,50 +81,68 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     private Boolean dataAlreadySet = false;
     private Bitmap photo;
 
-
-    public MyComplaintsFragment() {
+    public ConstituencyFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        locationDto = (LocationDto) getActivity().getIntent().getSerializableExtra("LOCATION");
+        eventBus.register(this);
+
         googleMapFragment = new GoogleMapFragment();
-
         googleMapFragment.setContext(this);
-
         if(savedInstanceState == null) {
-            getChildFragmentManager().beginTransaction().add(R.id.mcMapContainer, googleMapFragment).commit();
+            getChildFragmentManager().beginTransaction().add(R.id.cMap, googleMapFragment).commit();
         }
         getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
         getChildFragmentManager().executePendingTransactions();
         mapDisplayed = false;
 
-        pDialog = new CustomProgressDialog(getActivity(), false, true, "Fetching your complaints ...");
+        pDialog = new CustomProgressDialog(getActivity(), false, true, "Fetching constituency complaints ...");
         pDialog.show();
 
-        middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), true);
-        middlewareService.loadProfileImage(getActivity(), userSession.getProfilePhoto(), userSession.getUser().getPerson().getId());
+        middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, 50);
+        middlewareService.loadHeaderImage(getActivity(), locationDto.getMobileHeaderImageUrl(), locationDto.getId());
+    }
+
+    @Override
+    public void onDestroy() {
+        eventBus.unregister(this);
+        super.onDestroy();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        middlewareService.loadCategoriesData(getActivity());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_my_complaints, container, false);
-        mcListOpen = (ListView) rootView.findViewById(R.id.mcListOpen);
-        mcListClosed = (ListView) rootView.findViewById(R.id.mcListClosed);
-        mapButton = (ImageView) rootView.findViewById(R.id.mcShowMap);
-        listButton = (ImageView) rootView.findViewById(R.id.mcShowList);
-        analyticsButton = (ImageView) rootView.findViewById(R.id.mcShowAnalytics);
-        mcMapContainer = (FrameLayout) rootView.findViewById(R.id.mcMapContainer);
-        mcListContainer = (ViewGroup) rootView.findViewById(R.id.mcListContainer);
-        mcChartContainer = (FrameLayout) rootView.findViewById(R.id.mcChartContainer);
-        mcAmenityList = (GridView) rootView.findViewById(R.id.mcAmenityList);
-        mcAnalyticsContainer = (LinearLayout) rootView.findViewById(R.id.mcAnalyticsContainer);
-        mcName = (TextView) rootView.findViewById(R.id.mcName);
-        mcPhoto = (ImageView) rootView.findViewById(R.id.mcPhoto);
+        View rootView = inflater.inflate(R.layout.fragment_constituency, container, false);
+        heatmap = (Button) rootView.findViewById(R.id.heatmap);
+        cluster = (Button) rootView.findViewById(R.id.cluster);
+        markers = (Button) rootView.findViewById(R.id.marker);
+
+        mcListOpen = (ListView) rootView.findViewById(R.id.cListOpen);
+        mcListClosed = (ListView) rootView.findViewById(R.id.cListClosed);
+        mapButton = (ImageView) rootView.findViewById(R.id.cShowMap);
+        listButton = (ImageView) rootView.findViewById(R.id.cShowList);
+        analyticsButton = (ImageView) rootView.findViewById(R.id.cShowAnalytics);
+        mcMapContainer = (FrameLayout) rootView.findViewById(R.id.cMap);
+        mcListContainer = (ViewGroup) rootView.findViewById(R.id.cListContainer);
+        mcChartContainer = (FrameLayout) rootView.findViewById(R.id.cChartContainer);
+        mcAmenityList = (GridView) rootView.findViewById(R.id.cAmenityList);
+        mcAnalyticsContainer = (LinearLayout) rootView.findViewById(R.id.cAnalyticsContainer);
+        mcName = (TextView) rootView.findViewById(R.id.cName);
+        mcPhoto = (ImageView) rootView.findViewById(R.id.cPhoto);
+        mcMapButtons = (LinearLayout) rootView.findViewById(R.id.cMapButtons);
 
         mcAnalyticsContainer.setVisibility(View.INVISIBLE);
-        mcName.setText(userSession.getUser().getPerson().getName());
+        mcMapButtons.setVisibility(View.INVISIBLE);
+        mcName.setText(locationDto.getName());
         if(photo != null) {
             mcPhoto.setImageBitmap(photo);
         }
@@ -151,33 +169,35 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         listButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    mapDisplayed = false;
-                    mcAnalyticsContainer.setVisibility(View.INVISIBLE);
-                    getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
-                    getChildFragmentManager().executePendingTransactions();
-                    mcListContainer.setVisibility(View.VISIBLE);
+                mapDisplayed = false;
+                mcAnalyticsContainer.setVisibility(View.INVISIBLE);
+                mcMapButtons.setVisibility(View.INVISIBLE);
+                getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
+                getChildFragmentManager().executePendingTransactions();
+                mcListContainer.setVisibility(View.VISIBLE);
 
             }
         });
         mapButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    mapDisplayed = true;
-                    mcListContainer.setVisibility(View.INVISIBLE);
-                    mcAnalyticsContainer.setVisibility(View.INVISIBLE);
-                    getChildFragmentManager().beginTransaction().show(googleMapFragment).commit();
-                    getChildFragmentManager().executePendingTransactions();
-                    //Post it on UI thread so that it gets en-queued behind fragment transactions and gets executed only after layout has happened for map
-                    mcMapContainer.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(!markersAdded) {
-                                googleMapFragment.addMarkers(complaintDtoList);
-                                markersAdded = true;
-                            }
+                mapDisplayed = true;
+                mcListContainer.setVisibility(View.INVISIBLE);
+                mcAnalyticsContainer.setVisibility(View.INVISIBLE);
+                mcMapButtons.setVisibility(View.VISIBLE);
+                getChildFragmentManager().beginTransaction().show(googleMapFragment).commit();
+                getChildFragmentManager().executePendingTransactions();
+                //Post it on UI thread so that it gets en-queued behind fragment transactions and gets executed only after layout has happened for map
+                mcMapContainer.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(!markersAdded) {
+                            googleMapFragment.addMarkers(complaintDtoList);
+                            markersAdded = true;
                         }
-                    });
-                }
+                    }
+                });
+            }
 
         });
         analyticsButton.setOnClickListener(new View.OnClickListener() {
@@ -185,39 +205,32 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
             public void onClick(View v) {
                 getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
                 mcListContainer.setVisibility(View.INVISIBLE);
+                mcMapButtons.setVisibility(View.INVISIBLE);
                 getChildFragmentManager().executePendingTransactions();
                 mcAnalyticsContainer.setVisibility(View.VISIBLE);
             }
         });
 
+        heatmap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                googleMapFragment.addHeatMap(complaintDtoList);
+            }
+        });
+        cluster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                googleMapFragment.addCluster(complaintDtoList);
+            }
+        });
+        markers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                googleMapFragment.addMarkers(complaintDtoList);
+            }
+        });
         return rootView;
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        eventBus.register(this);
-        middlewareService.loadCategoriesData(getActivity());
-    }
-
-    @Override
-    public void onStop() {
-        eventBus.unregister(this);
-        super.onStop();
-    }
-
-    public synchronized void setComplaintData(List<ComplaintDto> complaintDtoList) {
-        if(!dataAlreadySet) {
-            filterListAndSetAdapter(complaintDtoList);
-            populateCountersAndCreateChart();
-            if (mapReady && mapDisplayed) {
-                googleMapFragment.addMarkers(complaintDtoList);
-                markersAdded = true;
-            }
-            dataAlreadySet = true;
-        }
-    }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -228,26 +241,16 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         }
     }
 
-    public void populateCountersAndCreateChart() {
-        ArrayList<ComplaintCounter> complaintCounters = new ArrayList<ComplaintCounter>();
-        for(CategoryWithChildCategoryDto categoryDto : categoryDtoList) {
-            ComplaintCounter complaintCounter = new ComplaintCounter();
-            complaintCounter.setId(categoryDto.getId());
-            complaintCounter.setName(categoryDto.getName());
-            complaintCounter.setCount(0L);
-            complaintCounters.add(complaintCounter);
-        }
-        for(ComplaintDto complaintDto : complaintDtoList) {
-            for(ComplaintCounter complaintCounter : complaintCounters) {
-                for(CategoryDto categoryDto : complaintDto.getCategories()) {
-                    if (categoryDto.getId().equals(complaintCounter.getId())) {
-                        complaintCounter.setCount(complaintCounter.getCount() + 1);
-                    }
-                }
+    public synchronized void setComplaintData() {
+        if(!dataAlreadySet) {
+            filterListAndSetAdapter(complaintDtoList);
+            //populateCountersAndCreateChart();
+            if (mapReady && mapDisplayed) {
+                googleMapFragment.addMarkers(complaintDtoList);
+                markersAdded = true;
             }
+            dataAlreadySet = true;
         }
-        GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters);
-        mcChartContainer.addView(chartView);
     }
 
     private void filterListAndSetAdapter(List<ComplaintDto> complaintDtoList) {
@@ -269,16 +272,16 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         mcListClosed.setDividerHeight(0);
     }
 
-    public void onEventMainThread(GetUserComplaintsEvent event) {
+    public void onEventMainThread(GetLocationComplaintsEvent event) {
         if(event.getSuccess()) {
             complaintDtoList = event.getComplaintDtoList();
             complaintDataAvailable = true;
             if(categoriesDataAvailable && !dataAlreadySet) {
-                setComplaintData(complaintDtoList);
+                setComplaintData();
             }
         }
         else {
-            Toast.makeText(getActivity(), "Could not fetch user complaints. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Could not fetch constituency complaints. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
         pDialog.dismiss();
     }
@@ -288,7 +291,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
             categoryDtoList = event.getCategoryList();
             categoriesDataAvailable = true;
             if(complaintDataAvailable && !dataAlreadySet) {
-                setComplaintData(complaintDtoList);
+                setComplaintData();
             }
             middlewareService.loadCategoriesImages(getActivity(), categoryDtoList);
         }
@@ -301,7 +304,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         }
     }
 
-    public void onEventMainThread(GetProfileImageEvent event) {
+    public void onEventMainThread(GetHeaderImageEvent event) {
         if(event.getSuccess()) {
             if(mcPhoto != null) {
                 mcPhoto.setImageBitmap(event.getBitmap());
@@ -311,7 +314,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
             }
         }
         else {
-            Toast.makeText(getActivity(), "Could not fetch your profile image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Could not fetch header image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
     }
 }

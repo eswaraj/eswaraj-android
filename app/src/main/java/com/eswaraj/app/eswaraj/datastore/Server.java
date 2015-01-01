@@ -13,12 +13,14 @@ import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
 import com.eswaraj.app.eswaraj.volley.LoadProfileUpdateRequest;
+import com.eswaraj.app.eswaraj.volley.LocationComplaintsRequest;
 import com.eswaraj.app.eswaraj.volley.ProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
 import com.eswaraj.app.eswaraj.volley.UserComplaintsRequest;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
+import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
 
@@ -58,6 +60,8 @@ public class Server extends BaseClass implements ServerInterface {
     ProfileUpdateRequest profileUpdateRequest;
     @Inject
     LoadProfileUpdateRequest loadProfileUpdateRequest;
+    @Inject
+    LocationComplaintsRequest locationComplaintsRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -122,7 +126,17 @@ public class Server extends BaseClass implements ServerInterface {
     }
 
     @Override
+    public void loadHeaderImage(Context context, String url, Long id) {
+        loadImageRequest.processRequest(context, url, id, ImageType.HEADER);
+    }
+
+    @Override
     public void loadProfileUpdates(Context context, String token) {
         loadProfileUpdateRequest.processRequest(context, token);
+    }
+
+    @Override
+    public void loadLocationComplaints(Context context, LocationDto locationDto, int start, int count) {
+        locationComplaintsRequest.processRequest(context, locationDto, start, count);
     }
 }

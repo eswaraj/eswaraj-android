@@ -6,6 +6,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.eswaraj.app.eswaraj.activities.AddDetailsActivity;
 import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
+import com.eswaraj.app.eswaraj.activities.ConstituencyActivity;
 import com.eswaraj.app.eswaraj.activities.HomeActivity;
 import com.eswaraj.app.eswaraj.activities.LoginActivity;
 import com.eswaraj.app.eswaraj.activities.LoginDialogActivity;
@@ -22,6 +23,7 @@ import com.eswaraj.app.eswaraj.datastore.CacheInterface;
 import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.fragments.AddDetailsFragment;
+import com.eswaraj.app.eswaraj.fragments.ConstituencyFragment;
 import com.eswaraj.app.eswaraj.fragments.MyProfileFragment;
 import com.eswaraj.app.eswaraj.fragments.SelectAmenityFragment;
 import com.eswaraj.app.eswaraj.fragments.AmenityBannerFragment;
@@ -55,6 +57,7 @@ import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
 import com.eswaraj.app.eswaraj.volley.LoadProfileUpdateRequest;
+import com.eswaraj.app.eswaraj.volley.LocationComplaintsRequest;
 import com.eswaraj.app.eswaraj.volley.ProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
@@ -117,7 +120,10 @@ import de.greenrobot.event.EventBus;
                 ProfileUpdateRequest.class,
                 LoadProfileUpdateRequest.class,
                 MyProfileActivity.class,
-                MyProfileFragment.class
+                MyProfileFragment.class,
+                ConstituencyActivity.class,
+                ConstituencyFragment.class,
+                LocationComplaintsRequest.class
         },
         complete = false,
         library = true
@@ -261,5 +267,10 @@ public class MiddlewareGraph {
     @Provides @Singleton
     LoadProfileUpdateRequest provideLoadProfileUpdateRequest() {
         return new LoadProfileUpdateRequest();
+    }
+
+    @Provides @Singleton
+    LocationComplaintsRequest provideLocationComplaintsRequest() {
+        return new LocationComplaintsRequest();
     }
 }

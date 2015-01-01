@@ -24,16 +24,21 @@ public class Constants {
     public static final String UPDATE_PROFILE_URL = BASE_URL + "/mobile/user/profile";
     public static final String GET_PROFILE_URL = BASE_URL + "/mobile/user/profile/";
     public static final String LOCATION_COUNTERS_URL = BASE_URL_2 + "/stats/counter/location/";
+    public static final String LOCATION_COMPLAINTS_URL = BASE_URL + "/complaint/location/";
 
     //Google URLS
     public static final String GOOGLE_PLACES_AUTOCOMPLETE_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?key=" + GOOGLE_API_BROWSER_KEY + "&components=country:in&input=";
     public static final String GOOGLE_PLACES_DETAILS_URL= "https://maps.googleapis.com/maps/api/place/details/json?key=" + GOOGLE_API_BROWSER_KEY + "&placeid=";
 
     public static String getCommentsUrl(Long complaintId, int count) {
-        return BASE_URL + "/complaint/" + complaintId + "/comments?count=" + count +"&order=DESC";
+        return BASE_URL + "/complaint/" + complaintId + "/comments?count=" + count + "&order=DESC";
     }
 
     public static String getLocationCountersPerRootCategoryUrl(Long locationId, Long rootCategoryId) {
         return BASE_URL_2 + "/stats/counter/location/" + locationId + "/parentcategory/" + rootCategoryId;
+    }
+
+    public static String getLocationComplaintsUrl(Long locationId, int start, int count) {
+        return LOCATION_COMPLAINTS_URL + locationId + "?count=" + count + "&start=" + start;
     }
 }

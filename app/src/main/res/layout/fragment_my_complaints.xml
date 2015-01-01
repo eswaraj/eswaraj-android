@@ -6,74 +6,151 @@
     tools:context="com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment"
     android:background="#ffffff">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp">
+    <include
+        android:id="@+id/logo_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/screen_header" />
 
-        <ImageView
-            android:id="@+id/mcPhoto"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
-
-        <TextView
-            android:id="@+id/mcName"
-            android:text="Name"
-            android:layout_below="@+id/mcPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_toRightOf="@+id/mcPhoto"
-            android:text="My Complaints"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:layout_weight="0.8"
+    android:background="#f2f2f2">
+    <include
+        android:id="@+id/mcUser"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        layout="@layout/complaint_reporters_details"
+        android:layout_weight="0.35" />
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:orientation="horizontal"
-        android:weightSum="1"
-        android:layout_weight="0.1">
+        android:weightSum="9"
+        android:layout_weight="0.65">
 
-    <Button
-        android:id="@+id/mcShowList"
-        android:text="List"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:layout_weight="3"
+            android:focusableInTouchMode="false"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
 
-    <Button
-        android:id="@+id/mcShowMap"
-        android:text="Map"
-        android:layout_toRightOf="@+id/mcShowList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <ImageView android:id="@+id/mcShowList"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/list_icon"
+                android:layout_weight="0.2" />
 
-    <Button
-        android:id="@+id/mcShowAnalytics"
-        android:text="Analytics"
-        android:layout_toRightOf="@+id/mcShowMap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <TextView android:id="@+id/mcShowList_label"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#929292"
+                android:maxLines="1"
+                android:text="List"
+                android:layout_weight="0.8"
+                android:layout_marginTop="-8dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:layout_weight="3"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
+
+            <ImageView android:id="@+id/mcShowMap"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/map_view"
+                android:layout_weight="0.2"/>
+
+            <TextView android:id="@+id/mcShowMap_label"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#929292"
+                android:maxLines="1"
+                android:text="Map"
+                android:layout_weight="0.8"
+                android:layout_marginTop="-8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:layout_weight="3"
+            android:focusableInTouchMode="false"
+            android:paddingRight="30dp"
+            android:paddingLeft="30dp">
+
+            <ImageView android:id="@+id/mcShowAnalytics"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/analytics_icon"
+                android:layout_weight="0.2" />
+
+            <TextView android:id="@+id/mcShowAnalytics_label"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#929292"
+                android:maxLines="1"
+                android:text="Analytics"
+                android:layout_weight="0.8"
+                android:layout_marginTop="-10dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
+</LinearLayout>
 
     <RelativeLayout
-        android:layout_weight="6"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_weight="0.2"
+        android:layout_width="fill_parent"
+        android:layout_height="400dp">
 
         <FrameLayout
             android:id="@+id/mcMapContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="fill_parent"/>
 
         <LinearLayout
             android:id="@+id/mcAnalyticsContainer"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="fill_parent">
             <FrameLayout
                 android:id="@+id/mcChartContainer"
                 android:layout_gravity="center"
@@ -92,20 +169,22 @@
             android:id="@+id/mcListContainer"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:weightSum="1">
 
             <TextView
                 android:text="Open Complaints"
                 android:textColor="@color/red_btn_bg_color"
                 android:textSize="18dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:padding="5dp" />
 
             <ListView
                 android:id="@+id/mcListOpen"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="fill_parent">
             </ListView>
 
             <TextView
@@ -113,16 +192,17 @@
                 android:textColor="@color/red_btn_bg_color"
                 android:textSize="18dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:padding="5dp" />
 
             <ListView
                 android:id="@+id/mcListClosed"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="fill_parent">
             </ListView>
 
         </LinearLayout>
-
     </RelativeLayout>
 
 </LinearLayout>

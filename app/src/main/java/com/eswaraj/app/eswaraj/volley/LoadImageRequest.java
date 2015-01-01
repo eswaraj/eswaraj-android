@@ -14,6 +14,7 @@ import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
+import com.eswaraj.app.eswaraj.events.GetHeaderImageEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -64,6 +65,13 @@ public class LoadImageRequest extends BaseClass {
                     event.setId(id);
                     eventBus.post(event);
                 }
+                else if(type == ImageType.HEADER) {
+                    GetHeaderImageEvent event = new GetHeaderImageEvent();
+                    event.setSuccess(false);
+                    event.setError(error.toString());
+                    event.setId(id);
+                    eventBus.post(event);
+                }
             }
         };
     }
@@ -83,6 +91,14 @@ public class LoadImageRequest extends BaseClass {
                 }
                 else if(type == ImageType.PROFILE) {
                     GetProfileImageEvent event = new GetProfileImageEvent();
+                    event.setSuccess(true);
+                    event.setBitmap(bitmap);
+                    event.setId(id);
+                    eventBus.post(event);
+                    cache.updateProfileImage(context);
+                }
+                else if(type == ImageType.HEADER) {
+                    GetHeaderImageEvent event = new GetHeaderImageEvent();
                     event.setSuccess(true);
                     event.setBitmap(bitmap);
                     event.setId(id);
