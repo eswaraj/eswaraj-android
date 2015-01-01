@@ -73,28 +73,7 @@ public class Server extends BaseClass implements ServerInterface {
 
     @Override
     public void loadUserData(Context context, Session session) {
-
         registerFacebookUserRequest.processRequest(context, session);
-
-        //TODO: Uncomment above line and delete the mock code once the server side fixes are done
-
-        /*
-        UserDto userDto = new UserDto();
-        PersonDto personDto = new PersonDto();
-        AddressDto addressDto = new AddressDto();
-        addressDto.setLattitude(28.64);
-        addressDto.setLongitude(77.22);
-        personDto.setPersonAddress(addressDto);
-        userDto.setPerson(personDto);
-        userDto.setId((long) 84076);
-        userDto.setExternalId("47cf0992-42f4-49ec-9ae0-d12ee91d4bae");
-
-        GetUserEvent event = new GetUserEvent();
-        event.setSuccess(true);
-        event.setUserDto(userDto);
-        eventBus.postSticky(event);
-        */
-
     }
 
     @Override

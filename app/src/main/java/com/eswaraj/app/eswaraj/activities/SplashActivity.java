@@ -46,7 +46,8 @@ public class SplashActivity extends BaseActivity {
     private CustomViewPager pager;
     private TextPagerAdapter adapter;
     private ArrayList<SplashScreenItem> splashScreenItems;
-    private View.OnClickListener onClickListener;
+    private View.OnClickListener onClickListenerContinue;
+    private View.OnClickListener onClickListenerRetry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,8 @@ public class SplashActivity extends BaseActivity {
     private void setUpPager() {
         pager.setScrollDurationFactor(2);
         adapter = new TextPagerAdapter(getSupportFragmentManager(), splashScreenItems);
-        adapter.setOnClickListener(onClickListener);
+        adapter.setOnClickListenerContinue(onClickListenerContinue);
+        adapter.setOnClickListenerRetry(onClickListenerRetry);
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(2);
         pager.setCurrentItem(0);
@@ -102,7 +104,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void setUpListener() {
-        onClickListener = new View.OnClickListener() {
+        onClickListenerContinue = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserReadyEvent event = new UserReadyEvent();
@@ -110,10 +112,17 @@ public class SplashActivity extends BaseActivity {
                 eventBus.post(event);
             }
         };
+        onClickListenerRetry = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                middlewareService.loadCategoriesData(v.getContext());
+                adapter.showSpinner();
+            }
+        };
     }
 
     public void readyToProceed() {
-        adapter.showProceedButton();
+        adapter.showContinueButton();
     }
 
     public void onEventMainThread(UserReadyEvent event) {
@@ -130,7 +139,7 @@ public class SplashActivity extends BaseActivity {
         }
         else {
             Toast.makeText(this, "Could not fetch categories from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-            //Show retry button which will re-trigger the request.
+            adapter.showRetryButton();
         }
     }
 

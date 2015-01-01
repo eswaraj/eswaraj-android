@@ -305,7 +305,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
 
     public void onEventMainThread(GetProfileImageEvent event) {
         if(event.getSuccess()) {
-            mcPhoto.setImageBitmap(storageCache.getBitmap(userSession.getUser().getPerson().getId(), getActivity(), ImageType.PROFILE));
+            mcPhoto.setImageBitmap(event.getBitmap());
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch your profile image. Error = " + event.getError(), Toast.LENGTH_LONG).show();

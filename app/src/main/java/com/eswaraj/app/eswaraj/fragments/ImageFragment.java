@@ -77,7 +77,7 @@ public class ImageFragment extends BaseFragment {
 
     public void onEventMainThread(GetComplaintImageEvent event) {
         if(event.getSuccess()) {
-            iImage.setImageBitmap(storageCache.getBitmap(id, getActivity(), ImageType.COMPLAINT));
+            iImage.setImageBitmap(event.getBitmap());
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch complaint image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
@@ -86,7 +86,7 @@ public class ImageFragment extends BaseFragment {
 
     public void onEventMainThread(GetProfileImageEvent event) {
         if(event.getSuccess()) {
-            iImage.setImageBitmap(storageCache.getBitmap(id, getActivity(), ImageType.PROFILE));
+            iImage.setImageBitmap(event.getBitmap());
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch profile image. Error = " + event.getError(), Toast.LENGTH_LONG).show();

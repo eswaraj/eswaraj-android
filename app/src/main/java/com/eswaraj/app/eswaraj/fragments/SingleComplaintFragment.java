@@ -171,7 +171,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
 
     public void onEventMainThread(GetComplaintImageEvent event) {
         if(event.getSuccess()) {
-            complaintImage.setImageBitmap(storageCache.getBitmap(complaintId, getActivity(), ImageType.COMPLAINT));
+            complaintImage.setImageBitmap(event.getBitmap());
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch complaint image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
@@ -180,7 +180,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
 
     public void onEventMainThread(GetProfileImageEvent event) {
         if(event.getSuccess()) {
-            submitterImage.setImageBitmap(storageCache.getBitmap(personId, getActivity(), ImageType.PROFILE));
+            submitterImage.setImageBitmap(event.getBitmap());
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch submitter image. Error = " + event.getError(), Toast.LENGTH_LONG).show();

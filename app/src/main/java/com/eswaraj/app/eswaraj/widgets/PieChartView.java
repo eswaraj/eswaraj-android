@@ -41,6 +41,8 @@ public class PieChartView extends GraphicalView {
 		defaultRenderer.setShowLegend(false);
 		defaultRenderer.setScale(1.33f);
 		defaultRenderer.setSelectableBuffer(0);
+        defaultRenderer.setPanEnabled(false);
+        defaultRenderer.setZoomEnabled(false);
 		
 		defaultRenderer.setInScroll(true);
 		return defaultRenderer;

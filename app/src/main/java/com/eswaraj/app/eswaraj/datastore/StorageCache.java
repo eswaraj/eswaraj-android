@@ -18,7 +18,6 @@ public class StorageCache {
         FileOutputStream fileOutput = null;
         try {
             String filename = "eSwaraj_" + type + "_" + id + ".png";
-            //fileOutput = context.openFileOutput(filename, Context.MODE_PRIVATE);
             File f = new File(context.getCacheDir(), filename);
             fileOutput = new FileOutputStream(f);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutput);
@@ -56,5 +55,13 @@ public class StorageCache {
         for (File file : files) {
             file.delete();
         }
+    }
+
+    public Boolean isBitmapAvailable(Context context, Long id, ImageType type) {
+        File f = new File(context.getCacheDir() + "/eSwaraj_" + type + "_" + id + ".png");
+        if(f.exists()) {
+            return true;
+        }
+        return false;
     }
 }

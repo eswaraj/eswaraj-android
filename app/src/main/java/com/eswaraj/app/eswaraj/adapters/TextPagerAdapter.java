@@ -13,17 +13,23 @@ import java.util.ArrayList;
 public class TextPagerAdapter extends FragmentPagerAdapter {
 
     private ArrayList<SplashScreenItem> splashScreenItems;
-    private Button.OnClickListener onClickListener;
+    private Button.OnClickListener onClickListenerContinue;
+    private Button.OnClickListener onClickListenerRetry;
     private SplashFragment lastFragment;
-    private Boolean showButton = false;
+    private Boolean showContinueButton = false;
+    private Boolean showRetryButton = false;
 
     public TextPagerAdapter(FragmentManager fragmentManager, ArrayList<SplashScreenItem> splashScreenItems) {
         super(fragmentManager);
         this.splashScreenItems = splashScreenItems;
     }
 
-    public void setOnClickListener(Button.OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
+    public void setOnClickListenerContinue(Button.OnClickListener onClickListener) {
+        this.onClickListenerContinue = onClickListener;
+    }
+
+    public void setOnClickListenerRetry(Button.OnClickListener onClickListener) {
+        this.onClickListenerRetry = onClickListener;
     }
 
     @Override
@@ -38,20 +44,37 @@ public class TextPagerAdapter extends FragmentPagerAdapter {
         if(position == splashScreenItems.size() - 1) {
             lastFragment = fragment;
             lastFragment.showSpinner();
-            if(showButton) {
+            if(showContinueButton) {
                 lastFragment.showContinueButton();
             }
-            fragment.setOnClickListener(onClickListener);
+            if(showRetryButton) {
+                lastFragment.showRetryButton();
+            }
+            fragment.setOnClickListenerContinue(onClickListenerContinue);
+            fragment.setOnClickListenerRetry(onClickListenerRetry);
         }
         return fragment;
     }
 
-    public void showProceedButton() {
+    public void showContinueButton() {
         if(lastFragment != null) {
             lastFragment.showContinueButton();
         }
         else {
-            showButton = true;
+            showContinueButton = true;
         }
+    }
+
+    public void showRetryButton() {
+        if(lastFragment != null) {
+            lastFragment.showRetryButton();
+        }
+        else {
+            showRetryButton = true;
+        }
+    }
+
+    public void showSpinner() {
+        lastFragment.showSpinner();
     }
 }

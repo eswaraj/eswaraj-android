@@ -21,6 +21,7 @@ import com.eswaraj.app.eswaraj.events.UserContinueEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
+import com.facebook.Session;
 import com.facebook.widget.LoginButton;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
@@ -32,7 +33,7 @@ import de.greenrobot.event.EventBus;
 public class LoginFragment extends BaseFragment {
 
     //UI elements holders
-    Button buttonQuit;
+    Button buttonRetry;
     Button buttonGotIt;
     TextView buttonSkip;
     LoginButton buttonLogin;
@@ -50,6 +51,7 @@ public class LoginFragment extends BaseFragment {
 
     private Boolean showInstruction;
     private Boolean dialogMode;
+    private Session session;
 
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
@@ -72,8 +74,8 @@ public class LoginFragment extends BaseFragment {
 
     public void notifyServiceAvailability(Boolean hasNeededServices) {
         if(!hasNeededServices) {
-            buttonQuit.setVisibility(View.VISIBLE);
             buttonLogin.setVisibility(View.INVISIBLE);
+            Toast.makeText(getActivity(), "Internet and Location services not found", Toast.LENGTH_LONG).show();
         }
         /*
         else {
@@ -90,7 +92,7 @@ public class LoginFragment extends BaseFragment {
 
     public void notifyAppReady() {
         buttonLogin.setVisibility(View.INVISIBLE);
-        buttonQuit.setVisibility(View.INVISIBLE);
+        buttonRetry.setVisibility(View.INVISIBLE);
         buttonSkip.setVisibility(View.INVISIBLE);
         if(showInstruction) {
             welcomeText.setText("The app is setup.\n\nOn the next screen you will be asked to mark your home location on a map.\n\nThis is a one-time activity and will help us serve you data about your constituency.");
@@ -160,7 +162,7 @@ public class LoginFragment extends BaseFragment {
         if(!dialogMode) {
             //References to UI elements
             buttonLogin = (LoginButton) view.findViewById(R.id.buttonLogin);
-            buttonQuit = (Button) view.findViewById(R.id.buttonQuit);
+            buttonRetry = (Button) view.findViewById(R.id.buttonRetry);
             buttonGotIt = (Button) view.findViewById(R.id.buttonGotIt);
             buttonSkip = (TextView) view.findViewById(R.id.buttonSkip);
             welcomeText = (TextView) view.findViewById(R.id.welcomeText);
@@ -168,7 +170,7 @@ public class LoginFragment extends BaseFragment {
 
 
             //Set up initial state
-            buttonQuit.setVisibility(View.INVISIBLE);
+            buttonRetry.setVisibility(View.INVISIBLE);
             buttonGotIt.setVisibility(View.INVISIBLE);
             progressWheel.setVisibility(View.INVISIBLE);
             if (facebookLoginUtil.isUserLoggedIn()) {
@@ -178,10 +180,11 @@ public class LoginFragment extends BaseFragment {
             welcomeText.setTypeface(custom_font);
 
             //Register callback handlers
-            buttonQuit.setOnClickListener(new Button.OnClickListener() {
+            buttonRetry.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getActivity().finish();
+                    middlewareService.loadUserData(getActivity(), session);
+                    progressWheel.setVisibility(View.VISIBLE);
                 }
             });
             buttonGotIt.setOnClickListener(new Button.OnClickListener() {
@@ -208,6 +211,7 @@ public class LoginFragment extends BaseFragment {
         }
         else {
             buttonLogin = (LoginButton) view.findViewById(R.id.buttonLogin);
+            buttonRetry = (Button) view.findViewById(R.id.buttonRetry);
             progressWheel = (ProgressWheel) view.findViewById(R.id.loginProgressWheel);
             progressWheel.setVisibility(View.INVISIBLE);
         }
@@ -231,6 +235,7 @@ public class LoginFragment extends BaseFragment {
             progressWheel.setVisibility(View.VISIBLE);
             progressWheel.spin();
             middlewareService.loadUserData(getActivity(), event.getSession());
+            session = event.getSession();
         }
         else {
             userSession.logoutUser(getActivity());
@@ -238,6 +243,7 @@ public class LoginFragment extends BaseFragment {
     }
 
     public void onEventMainThread(GetUserEvent event) {
+        progressWheel.setVisibility(View.INVISIBLE);
         if(event.getSuccess()) {
             Log.d("LoginFragment", "GetUserEvent:Success");
             userSession.setUser(event.getUserDto());

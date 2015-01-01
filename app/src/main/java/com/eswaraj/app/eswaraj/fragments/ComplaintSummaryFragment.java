@@ -164,7 +164,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
 
     public void onEventMainThread(GetProfileImageEvent event) {
         if(event.getSuccess()) {
-            mlaPhoto.setImageBitmap(storageCache.getBitmap(id, getActivity(), ImageType.PROFILE));
+            mlaPhoto.setImageBitmap(event.getBitmap());
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch MLA image. Error = " + event.getError(), Toast.LENGTH_LONG).show();

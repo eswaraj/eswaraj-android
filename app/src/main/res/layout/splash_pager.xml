@@ -49,9 +49,19 @@
             wheel:progressIndeterminate="true" />
 
         <Button
-            android:id="@+id/splash_pager_button"
+            android:id="@+id/splash_pager_button_continue"
             android:visibility="invisible"
             android:text="Let's get started..."
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"/>
+
+        <Button
+            android:id="@+id/splash_pager_button_retry"
+            android:visibility="invisible"
+            android:text="Retry"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"

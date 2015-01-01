@@ -127,7 +127,7 @@ public class MyProfileFragment extends BaseFragment {
 
     public void onEventMainThread(GetProfileImageEvent event) {
         if(event.getSuccess()) {
-            mpPhoto.setImageBitmap(storageCache.getBitmap(userSession.getUser().getPerson().getId(), getActivity(), ImageType.PROFILE));
+            mpPhoto.setImageBitmap(event.getBitmap());
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch your profile image. Error = " + event.getError(), Toast.LENGTH_LONG).show();

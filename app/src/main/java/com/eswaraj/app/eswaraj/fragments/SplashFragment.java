@@ -22,21 +22,27 @@ public class SplashFragment extends Fragment {
     private TextView mText;
     private TextView mHeading;
     private ImageView mImage;
-    private Button mButton;
+    private Button mButtonContinue;
+    private Button mButtonRetry;
     private ProgressWheel progressWheel;
     private View root;
 
     private SplashScreenItem splashScreenItem;
-    private Button.OnClickListener onClickListener;
+    private Button.OnClickListener onClickListenerContinue;
+    private Button.OnClickListener onClickListenerRetry;
 
     private Boolean showSpinner = false;
     private Boolean showContinueButton = false;
+    private Boolean showRetryButton = false;
 
 
-    public void setOnClickListener(Button.OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
+    public void setOnClickListenerContinue(Button.OnClickListener onClickListener) {
+        this.onClickListenerContinue = onClickListener;
     }
 
+    public void setOnClickListenerRetry(Button.OnClickListener onClickListener) {
+        this.onClickListenerRetry = onClickListener;
+    }
 
     public  void setSplashScreenItem (SplashScreenItem splashScreenItem) {
         this.splashScreenItem = splashScreenItem;
@@ -58,19 +64,29 @@ public class SplashFragment extends Fragment {
         mText = (TextView) rootView.findViewById(R.id.splash_pager_text);
         mImage = (ImageView) rootView.findViewById(R.id.splash_pager_image);
         mHeading = (TextView) rootView.findViewById(R.id.splash_pager_heading);
-        mButton = (Button) rootView.findViewById(R.id.splash_pager_button);
+        mButtonContinue = (Button) rootView.findViewById(R.id.splash_pager_button_continue);
+        mButtonRetry = (Button) rootView.findViewById(R.id.splash_pager_button_retry);
         progressWheel = (ProgressWheel) rootView.findViewById(R.id.splashProgressWheel);
         mText.setTypeface(custom_font);
 
         if(showSpinner) {
+            mButtonRetry.setVisibility(View.INVISIBLE);
+            mButtonContinue.setVisibility(View.INVISIBLE);
             progressWheel.setVisibility(View.VISIBLE);
         }
         if(showContinueButton) {
             progressWheel.setVisibility(View.INVISIBLE);
-            mButton.setVisibility(View.VISIBLE);
+            mButtonRetry.setVisibility(View.INVISIBLE);
+            mButtonContinue.setVisibility(View.VISIBLE);
+        }
+        if(showRetryButton) {
+            progressWheel.setVisibility(View.INVISIBLE);
+            mButtonContinue.setVisibility(View.INVISIBLE);
+            mButtonRetry.setVisibility(View.VISIBLE);
         }
         progressWheel.spin();
-        mButton.setOnClickListener(onClickListener);
+        mButtonContinue.setOnClickListener(onClickListenerContinue);
+        mButtonRetry.setOnClickListener(onClickListenerRetry);
         return rootView;
     }
 
@@ -96,21 +112,41 @@ public class SplashFragment extends Fragment {
     }
 
     public void showContinueButton() {
-        if(mButton != null) {
+        if(mButtonContinue != null) {
             progressWheel.setVisibility(View.INVISIBLE);
-            mButton.setVisibility(View.VISIBLE);
+            mButtonRetry.setVisibility(View.INVISIBLE);
+            mButtonContinue.setVisibility(View.VISIBLE);
         }
         else {
             showContinueButton = true;
+            showSpinner = false;
+            showRetryButton = false;
+        }
+    }
+
+    public void showRetryButton() {
+        if(mButtonRetry != null) {
+            progressWheel.setVisibility(View.INVISIBLE);
+            mButtonContinue.setVisibility(View.INVISIBLE);
+            mButtonRetry.setVisibility(View.VISIBLE);
+        }
+        else {
+            showRetryButton = true;
+            showContinueButton = false;
+            showSpinner = false;
         }
     }
 
     public void showSpinner() {
         if(progressWheel != null) {
+            mButtonRetry.setVisibility(View.INVISIBLE);
+            mButtonContinue.setVisibility(View.INVISIBLE);
             progressWheel.setVisibility(View.VISIBLE);
         }
         else {
             showSpinner = true;
+            showContinueButton = false;
+            showRetryButton = false;
         }
     }
 }

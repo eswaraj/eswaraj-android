@@ -6,10 +6,12 @@ import android.util.Log;
 import com.eswaraj.app.eswaraj.application.EswarajApplication;
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.Constants;
+import com.eswaraj.app.eswaraj.config.ImageType;
 import com.eswaraj.app.eswaraj.config.PreferenceConstants;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
+import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.GetUserComplaintsEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
@@ -45,6 +47,8 @@ public class Cache extends BaseClass implements CacheInterface {
     SharedPreferencesHelper sharedPreferencesHelper;
     @Inject
     EventBus eventBus;
+    @Inject
+    StorageCache storageCache;
 
     public void loadUserData(Context context, Session session) {
         JsonDeserializer<Date> deser = new JsonDeserializer<Date>() {
@@ -63,7 +67,6 @@ public class Cache extends BaseClass implements CacheInterface {
         Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
         String json = sharedPreferencesHelper.getString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_DATA, null);
         try {
-
             UserDto userDto = gson.fromJson(json, UserDto.class);
             GetUserEvent event = new GetUserEvent();
             event.setSuccess(true);
@@ -194,7 +197,7 @@ public class Cache extends BaseClass implements CacheInterface {
 
     @Override
     public Boolean isComplaintImageAvailable(Context context, String url, Long id) {
-        return false;
+        return storageCache.isBitmapAvailable(context, id, ImageType.COMPLAINT);
     }
 
     @Override
@@ -204,7 +207,11 @@ public class Cache extends BaseClass implements CacheInterface {
 
     @Override
     public void loadComplaintImage(Context context, String url, Long id) {
-        //Will never get called
+        GetComplaintImageEvent event = new GetComplaintImageEvent();
+        event.setSuccess(true);
+        event.setBitmap(storageCache.getBitmap(id, context, ImageType.COMPLAINT));
+        event.setId(id);
+        eventBus.post(event);
     }
 
     @Override
@@ -224,7 +231,7 @@ public class Cache extends BaseClass implements CacheInterface {
 
     @Override
     public Boolean isProfileImageAvailable(Context context, String url, Long id) {
-        return false;
+        return storageCache.isBitmapAvailable(context, id, ImageType.PROFILE);
     }
 
     @Override
@@ -234,7 +241,11 @@ public class Cache extends BaseClass implements CacheInterface {
 
     @Override
     public void loadProfileImage(Context context, String url, Long id) {
-        //Will never get called
+        GetProfileImageEvent event = new GetProfileImageEvent();
+        event.setSuccess(true);
+        event.setBitmap(storageCache.getBitmap(id, context, ImageType.PROFILE));
+        event.setId(id);
+        eventBus.post(event);
     }
 
     @Override

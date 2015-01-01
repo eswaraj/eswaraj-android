@@ -244,6 +244,21 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     public void onEventMainThread(GetProfileEvent event) {
         if(event.getSuccess()) {
             userSession.setUser(event.getUserDto());
+            if(userSession.isUserLocationKnown()) {
+                if(dialogMode) {
+                    if (getParent() == null) {
+                        setResult(Activity.RESULT_OK, null);
+                    } else {
+                        getParent().setResult(Activity.RESULT_OK, null);
+                    }
+                    finish();
+                }
+                else {
+                    Intent i = new Intent(this, HomeActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            }
         }
         else {
             Toast.makeText(this, "Could not get profile updates from server" + event.getError(), Toast.LENGTH_LONG).show();

@@ -37,7 +37,6 @@ public class UserSessionUtil extends BaseClass {
 
     public void setUser(UserDto user) {
         this.user = user;
-        Log.e("UserSessionUtil", user.toString());
     }
 
     public String getToken() {
@@ -61,7 +60,6 @@ public class UserSessionUtil extends BaseClass {
 
     public Boolean isUserLoggedIn(Context context) {
         return (user != null);
-        //return middlewareService.isUserDataAvailable(context);
     }
 
     public void logoutUser(Context context) {

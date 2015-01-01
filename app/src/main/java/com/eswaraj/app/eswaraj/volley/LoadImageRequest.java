@@ -40,13 +40,13 @@ public class LoadImageRequest extends BaseClass {
     public void processRequest(Context context, String url, Long id, ImageType type) {
         if(url != null) {
             if (!url.equals("")) {
-                com.android.volley.toolbox.ImageRequest request = new com.android.volley.toolbox.ImageRequest(url, createSuccessListener(context, id, type), 0, 0, null, createErrorListener(context, type));
+                ImageRequest request = new ImageRequest(url, createSuccessListener(context, id, type), 0, 0, null, createErrorListener(context, id, type));
                 this.networkAccessHelper.submitNetworkRequest("GetImage" + type + "_" + id, request);
             }
         }
     }
 
-    private Response.ErrorListener createErrorListener(final Context context, final ImageType type) {
+    private Response.ErrorListener createErrorListener(final Context context, final Long id, final ImageType type) {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -54,12 +54,14 @@ public class LoadImageRequest extends BaseClass {
                     GetComplaintImageEvent event = new GetComplaintImageEvent();
                     event.setSuccess(false);
                     event.setError(error.toString());
+                    event.setId(id);
                     eventBus.post(event);
                 }
                 else if(type == ImageType.PROFILE) {
                     GetProfileImageEvent event = new GetProfileImageEvent();
                     event.setSuccess(false);
                     event.setError(error.toString());
+                    event.setId(id);
                     eventBus.post(event);
                 }
             }
@@ -74,12 +76,16 @@ public class LoadImageRequest extends BaseClass {
                 if(type == ImageType.COMPLAINT) {
                     GetComplaintImageEvent event = new GetComplaintImageEvent();
                     event.setSuccess(true);
+                    event.setBitmap(bitmap);
+                    event.setId(id);
                     eventBus.post(event);
                     cache.updateComplaintImage(context);
                 }
                 else if(type == ImageType.PROFILE) {
                     GetProfileImageEvent event = new GetProfileImageEvent();
                     event.setSuccess(true);
+                    event.setBitmap(bitmap);
+                    event.setId(id);
                     eventBus.post(event);
                     cache.updateProfileImage(context);
                 }
