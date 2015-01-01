@@ -14,13 +14,17 @@ public class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
     private final WeakReference<ImageView> imageViewReference;
     private String path = null;
     private int maxSize = 0;
-    
+
     private int cornerRadius;
 
     public BitmapWorkerTask(ImageView imageView, int maxSize) {
         // Use a WeakReference to ensure the ImageView can be garbage collected
         imageViewReference = new WeakReference<ImageView>(imageView);
         this.maxSize = maxSize;
+    }
+
+    public void setContext() {
+
     }
 
     // Decode image in background.

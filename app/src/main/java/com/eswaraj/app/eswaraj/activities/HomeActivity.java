@@ -1,30 +1,42 @@
 package com.eswaraj.app.eswaraj.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.adapters.DialogAdapter;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.RevGeocodeEvent;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
+import com.eswaraj.app.eswaraj.interfaces.BitmapWorkerCallback;
+import com.eswaraj.app.eswaraj.models.DialogItem;
 import com.eswaraj.app.eswaraj.util.GenericUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.pnikosis.materialishprogress.ProgressWheel;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -54,6 +66,10 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     private Button hCreate;
 
     private Boolean retryRevGeocoding = false;
+    private ArrayList<DialogItem> constituencyDialogItems = new ArrayList<DialogItem>();
+    private GridView constituencyGridView;
+    private ProgressWheel constituencyProgressWheel;
+    private AlertDialog constituencyAlertDialog;
 
     private final int REQUEST_MY_COMPLAINTS = 0;
     private final int REQUEST_MY_CONSTITUENCY = 1;
@@ -126,8 +142,60 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 if(userSession.isUserLoggedIn(v.getContext()) && userSession.isUserLocationKnown()) {
-                    Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
-                    startActivity(i);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
+                    LayoutInflater inflater = getLayoutInflater();
+
+                    View rootView = inflater.inflate(R.layout.dialog_select, null);
+                    constituencyGridView = (GridView) rootView.findViewById(R.id.sOptionList);
+                    constituencyProgressWheel = (ProgressWheel) rootView.findViewById(R.id.sProgressWheel);
+
+                    constituencyGridView.setVisibility(View.VISIBLE);
+                    constituencyProgressWheel.setVisibility(View.INVISIBLE);
+
+                    DialogItem state = new DialogItem();
+                    state.setName(userSession.getUser().getPerson().getPersonAddress().getState().getName());
+                    state.setTitle("State");
+                    state.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
+                    state.setId(userSession.getUser().getPerson().getPersonAddress().getState().getId());
+                    //TODO:Fix the target here
+                    state.setTarget(MyComplaintsActivity.class);
+                    constituencyDialogItems.add(state);
+
+                    DialogItem pc = new DialogItem();
+                    pc.setName(userSession.getUser().getPerson().getPersonAddress().getPc().getName());
+                    pc.setTitle("Parliamentary Constituency");
+                    pc.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
+                    pc.setId(userSession.getUser().getPerson().getPersonAddress().getPc().getId());
+                    //TODO:Fix the target here
+                    pc.setTarget(MyComplaintsActivity.class);
+                    constituencyDialogItems.add(pc);
+
+                    DialogItem ac = new DialogItem();
+                    ac.setName(userSession.getUser().getPerson().getPersonAddress().getAc().getName());
+                    ac.setTitle("Assembly Constituency");
+                    ac.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
+                    ac.setId(userSession.getUser().getPerson().getPersonAddress().getAc().getId());
+                    //TODO:Fix the target here
+                    ac.setTarget(MyComplaintsActivity.class);
+                    constituencyDialogItems.add(ac);
+
+                    DialogAdapter adapter = new DialogAdapter(v.getContext(), R.layout.item_select_dialog, constituencyDialogItems);
+                    constituencyGridView.setAdapter(adapter);
+                    constituencyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent i = new Intent(view.getContext(), ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getTarget());
+                            i.putExtra("ID", ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getId());
+                            startActivity(i);
+                        }
+                    });
+
+                    builder.setView(rootView)
+                           .setCancelable(true);
+                    constituencyAlertDialog = builder.create();
+                    constituencyAlertDialog.show();
+                    constituencyAlertDialog.getWindow().setLayout(600, 300);
+
                 }
                 else if(userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
                     Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
@@ -245,4 +313,9 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
             }
         }
     }
+
+    private void setupConstituencyAdapter() {
+
+    }
+
 }

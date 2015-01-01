@@ -89,7 +89,6 @@ public class RegisterFacebookUserRequest extends BaseClass {
                 event.setSuccess(true);
                 event.setUserDto(userDto);
                 event.setToken(session.getAccessToken());
-                Log.e("RegisterFacebookUser", session.getAccessToken());
                 eventBus.postSticky(event);
                 cache.updateUserData(context, response);
             }

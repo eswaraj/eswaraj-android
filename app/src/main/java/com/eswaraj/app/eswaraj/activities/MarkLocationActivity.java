@@ -61,6 +61,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     private Boolean mapDisplayed;
     private GooglePlace googlePlace;
     private Boolean dialogMode;
+    private Boolean showAlways;
 
     private Boolean gotLocation = false;
     private Boolean gotProfileUpdate = false;
@@ -71,6 +72,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         setContentView(R.layout.activity_mark_location);
 
         dialogMode = getIntent().getBooleanExtra("MODE", false);
+        showAlways = getIntent().getBooleanExtra("ALWAYS", false);
 
         googleMapFragment = new GoogleMapFragment();
         googlePlacesListFragment = new GooglePlacesListFragment();
@@ -222,7 +224,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     public void onEventMainThread(ProfileUpdateEvent event) {
         if(event.getSuccess()) {
             userSession.setUser(event.getUserDto());
-            if(dialogMode) {
+            if (dialogMode) {
                 if (getParent() == null) {
                     setResult(Activity.RESULT_OK, null);
                 } else {
@@ -246,12 +248,14 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
             userSession.setUser(event.getUserDto());
             if(userSession.isUserLocationKnown()) {
                 if(dialogMode) {
-                    if (getParent() == null) {
-                        setResult(Activity.RESULT_OK, null);
-                    } else {
-                        getParent().setResult(Activity.RESULT_OK, null);
+                    if(!showAlways) {
+                        if (getParent() == null) {
+                            setResult(Activity.RESULT_OK, null);
+                        } else {
+                            getParent().setResult(Activity.RESULT_OK, null);
+                        }
+                        finish();
                     }
-                    finish();
                 }
                 else {
                     Intent i = new Intent(this, HomeActivity.class);

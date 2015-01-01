@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.GetProfileEvent;
+import com.eswaraj.app.eswaraj.events.LoginStatusEvent;
 import com.eswaraj.app.eswaraj.events.StartAnotherActivityEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
 import com.eswaraj.app.eswaraj.fragments.MyProfileFragment;
@@ -48,10 +49,17 @@ public class MyProfileActivity extends BaseActivity {
     public void onEventMainThread(StartAnotherActivityEvent event) {
         Intent i = new Intent(this, MarkLocationActivity.class);
         i.putExtra("MODE", true);
+        i.putExtra("ALWAYS", true);
         startActivity(i);
     }
 
     public void onEventMainThread(UserContinueEvent event) {
         finish();
+    }
+
+    public void onEventMainThread(LoginStatusEvent event) {
+        if(!event.getLoggedIn()) {
+            finish();
+        }
     }
 }

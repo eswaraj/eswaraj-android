@@ -3,6 +3,7 @@ package com.eswaraj.app.eswaraj.fragments;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +105,9 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
                 scSubCategory.setText(category.getName());
             }
         }
-        if(userSession.getUser().getPerson().getId() != complaintDto.getPersonId() || complaintDto.getStatus().equals("Closed")) {
+        Log.e("SingleComplaint", userSession.getUser().getPerson().toString());
+        Log.e("SingleComplaint", complaintDto.getCreatedBy().get(0).toString());
+        if(!userSession.getUser().getPerson().getExternalId().equals(complaintDto.getCreatedBy().get(0).getExternalId()) || complaintDto.getStatus().equals("Closed")) {
             scClose.setVisibility(View.INVISIBLE);
         }
         if(complaintDto.getImages() != null) {

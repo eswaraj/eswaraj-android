@@ -2,6 +2,7 @@ package com.eswaraj.app.eswaraj.fragments;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,9 +21,11 @@ import com.eswaraj.app.eswaraj.config.ImageType;
 import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.events.GetProfileEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
+import com.eswaraj.app.eswaraj.events.LoginStatusEvent;
 import com.eswaraj.app.eswaraj.events.ProfileUpdateEvent;
 import com.eswaraj.app.eswaraj.events.StartAnotherActivityEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
+import com.eswaraj.app.eswaraj.interfaces.BitmapWorkerCallback;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareService;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
@@ -50,8 +53,10 @@ public class MyProfileFragment extends BaseFragment {
     private ImageView mpMarkLocationButton;
     private Button mpSave;
     private Button mpCancel;
+    private Button mpLogout;
 
     private CustomProgressDialog pDialog;
+    private Bitmap profilePhoto;
 
     public MyProfileFragment() {
         // Required empty public constructor
@@ -83,9 +88,13 @@ public class MyProfileFragment extends BaseFragment {
         mpMarkLocationButton = (ImageView) rootView.findViewById(R.id.mpMarkLocation);
         mpSave = (Button) rootView.findViewById(R.id.mpSave);
         mpCancel = (Button) rootView.findViewById(R.id.mpCancel);
+        mpLogout = (Button) rootView.findViewById(R.id.mpLogout);
 
         mpName.setText(userSession.getUser().getPerson().getName());
         mpInputName.setText(userSession.getUser().getPerson().getName());
+        if(profilePhoto != null) {
+            mpPhoto.setImageBitmap(profilePhoto);
+        }
 
         mpMarkLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +121,16 @@ public class MyProfileFragment extends BaseFragment {
                 eventBus.post(event);
             }
         });
+        mpLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userSession.logoutUser(v.getContext());
+                LoginStatusEvent event = new LoginStatusEvent();
+                event.setLoggedIn(false);
+                event.setSuccess(true);
+                eventBus.post(event);
+            }
+        });
         return rootView;
     }
 
@@ -127,7 +146,12 @@ public class MyProfileFragment extends BaseFragment {
 
     public void onEventMainThread(GetProfileImageEvent event) {
         if(event.getSuccess()) {
-            mpPhoto.setImageBitmap(event.getBitmap());
+            if(mpPhoto != null) {
+                mpPhoto.setImageBitmap(event.getBitmap());
+            }
+            else {
+                profilePhoto = event.getBitmap();
+            }
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch your profile image. Error = " + event.getError(), Toast.LENGTH_LONG).show();

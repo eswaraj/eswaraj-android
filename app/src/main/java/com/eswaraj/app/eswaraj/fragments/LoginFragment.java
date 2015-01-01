@@ -214,6 +214,7 @@ public class LoginFragment extends BaseFragment {
             buttonRetry = (Button) view.findViewById(R.id.buttonRetry);
             progressWheel = (ProgressWheel) view.findViewById(R.id.loginProgressWheel);
             progressWheel.setVisibility(View.INVISIBLE);
+            buttonRetry.setVisibility(View.INVISIBLE);
         }
 
         return view;

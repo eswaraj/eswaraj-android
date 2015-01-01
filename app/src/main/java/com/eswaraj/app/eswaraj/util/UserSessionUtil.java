@@ -9,6 +9,7 @@ import com.eswaraj.app.eswaraj.config.PreferenceConstants;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.web.dto.UserDto;
+import com.facebook.Session;
 
 import javax.inject.Inject;
 
@@ -66,6 +67,13 @@ public class UserSessionUtil extends BaseClass {
         //Update the cache with null to indicate that user has logged out and user object in cache is not valid anymore
         middlewareService.updateUserData(context, null);
         setUserSkipMarkLocation(context, false);
+        Session session = Session.getActiveSession();
+        if (session != null) {
+            if (!session.isClosed()) {
+                session.closeAndClearTokenInformation();
+            }
+        }
+        user = null;
     }
 
     public String getProfilePhoto() {
