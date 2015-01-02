@@ -2,7 +2,6 @@ package com.eswaraj.app.eswaraj.fragments;
 
 
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +14,11 @@ import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.adapters.CommentListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.GetCommentsEvent;
-import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.events.SavedCommentEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.CommentDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
-import com.eswaraj.app.eswaraj.util.GenericUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
-import com.eswaraj.web.dto.UserDto;
 
 import java.util.List;
 
@@ -102,18 +98,15 @@ public class CommentsFragment extends BaseFragment {
                 commentDtoList = event.getCommentDtos();
                 commentListAdapter = new CommentListAdapter(getActivity(), R.layout.item_comment_list, commentDtoList);
                 cOldComments.setAdapter(commentListAdapter);
-                GenericUtil.setListViewHeightBasedOnChildren(cOldComments);
             }
             else {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //commentDtoList = event.getCommentDtos();
                         for(CommentDto commentDto : event.getCommentDtos()) {
                             commentListAdapter.addComment(commentDto, false);
                         }
                         commentListAdapter.notifyDataSetChanged();
-                        GenericUtil.setListViewHeightBasedOnChildren(cOldComments);
                     }
                 });
             }
@@ -130,7 +123,6 @@ public class CommentsFragment extends BaseFragment {
                 public void run() {
                     commentListAdapter.addComment(event.getCommentDto(), true);
                     commentListAdapter.notifyDataSetChanged();
-                    GenericUtil.setListViewHeightBasedOnChildren(cOldComments);
                 }
             });
             Toast.makeText(getActivity(), "Comment Posted", Toast.LENGTH_LONG).show();
