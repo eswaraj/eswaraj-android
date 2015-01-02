@@ -217,18 +217,18 @@ public class Cache extends BaseClass implements CacheInterface {
     }
 
     @Override
-    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto, int count) {
+    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto, int start, int count) {
         return false;
     }
 
     @Override
-    public void updateComments(Context context, String json, ComplaintDto complaintDto, int count) {
+    public void updateComments(Context context, String json, ComplaintDto complaintDto, int start, int count) {
         //Nothing to do here right now. Might update later
     }
 
     @Override
-    public void loadComments(Context context, ComplaintDto complaintDto, int count) {
-        //Will not get called right now
+    public void loadComments(Context context, ComplaintDto complaintDto, int start, int count) {
+        assert false;
     }
 
     @Override
@@ -296,6 +296,21 @@ public class Cache extends BaseClass implements CacheInterface {
 
     @Override
     public void loadLocationComplaints(Context context, LocationDto locationDto, int start, int count) {
+        assert false;
+    }
+
+    @Override
+    public Boolean isLocationComplaintCountersAvailable(Context context) {
+        return false;
+    }
+
+    @Override
+    public void updateLocationComplaintCounters(Context context, LocationDto locationDto, String json) {
+        //Nothing to do here
+    }
+
+    @Override
+    public void loadLocationComplaintCounters(Context context, LocationDto locationDto) {
         assert false;
     }
 }

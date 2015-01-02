@@ -57,6 +57,7 @@ import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
 import com.eswaraj.app.eswaraj.volley.LoadProfileUpdateRequest;
+import com.eswaraj.app.eswaraj.volley.LocationComplaintCountersRequest;
 import com.eswaraj.app.eswaraj.volley.LocationComplaintsRequest;
 import com.eswaraj.app.eswaraj.volley.ProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
@@ -123,7 +124,8 @@ import de.greenrobot.event.EventBus;
                 MyProfileFragment.class,
                 ConstituencyActivity.class,
                 ConstituencyFragment.class,
-                LocationComplaintsRequest.class
+                LocationComplaintsRequest.class,
+                LocationComplaintCountersRequest.class
         },
         complete = false,
         library = true
@@ -272,5 +274,10 @@ public class MiddlewareGraph {
     @Provides @Singleton
     LocationComplaintsRequest provideLocationComplaintsRequest() {
         return new LocationComplaintsRequest();
+    }
+
+    @Provides @Singleton
+    LocationComplaintCountersRequest provideLocationComplaintCountersRequest() {
+        return new LocationComplaintCountersRequest();
     }
 }

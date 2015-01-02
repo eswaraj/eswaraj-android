@@ -13,6 +13,7 @@ import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
 import com.eswaraj.app.eswaraj.volley.LoadProfileUpdateRequest;
+import com.eswaraj.app.eswaraj.volley.LocationComplaintCountersRequest;
 import com.eswaraj.app.eswaraj.volley.LocationComplaintsRequest;
 import com.eswaraj.app.eswaraj.volley.ProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
@@ -62,6 +63,8 @@ public class Server extends BaseClass implements ServerInterface {
     LoadProfileUpdateRequest loadProfileUpdateRequest;
     @Inject
     LocationComplaintsRequest locationComplaintsRequest;
+    @Inject
+    LocationComplaintCountersRequest locationComplaintCountersRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -91,8 +94,8 @@ public class Server extends BaseClass implements ServerInterface {
     }
 
     @Override
-    public void loadComments(Context context, ComplaintDto complaintDto, int count) {
-        commentsRequest.processRequest(context, complaintDto, count);
+    public void loadComments(Context context, ComplaintDto complaintDto, int start, int count) {
+        commentsRequest.processRequest(context, complaintDto, start, count);
     }
 
     @Override
@@ -138,5 +141,10 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void loadLocationComplaints(Context context, LocationDto locationDto, int start, int count) {
         locationComplaintsRequest.processRequest(context, locationDto, start, count);
+    }
+
+    @Override
+    public void loadLocationComplaintCounters(Context context, LocationDto locationDto) {
+        locationComplaintCountersRequest.processRequest(context, locationDto);
     }
 }

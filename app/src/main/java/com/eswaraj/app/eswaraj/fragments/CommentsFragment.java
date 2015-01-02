@@ -20,6 +20,8 @@ import com.eswaraj.app.eswaraj.events.SavedCommentEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.CommentDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
+import com.eswaraj.app.eswaraj.util.GenericUtil;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.web.dto.UserDto;
 
 import java.util.List;
@@ -35,8 +37,9 @@ public class CommentsFragment extends BaseFragment {
     EventBus eventBus;
     @Inject
     MiddlewareServiceImpl middlewareService;
+    @Inject
+    UserSessionUtil userSession;
 
-    private UserDto userDto;
     private ComplaintDto complaintDto;
     private List<CommentDto> commentDtoList;
     private CommentListAdapter commentListAdapter;
@@ -66,7 +69,7 @@ public class CommentsFragment extends BaseFragment {
         cSend.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                middlewareService.postComment(userDto, complaintDto, cComment.getText().toString());
+                middlewareService.postComment(userSession.getUser(), complaintDto, cComment.getText().toString());
                 cComment.setText("");
             }
         });
@@ -74,23 +77,23 @@ public class CommentsFragment extends BaseFragment {
         cShowMore.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                middlewareService.loadComments(getActivity(), complaintDto, commentDtoList.size() + 50);
+                middlewareService.loadComments(getActivity(), complaintDto, commentDtoList.size(), 5);
             }
         });
         return rootView;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        eventBus.registerSticky(this);
-        middlewareService.loadComments(getActivity(), complaintDto, 50);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        eventBus.register(this);
+        middlewareService.loadComments(getActivity(), complaintDto, 0, 5);
     }
 
     @Override
-    public void onStop() {
+    public void onDestroy() {
         eventBus.unregister(this);
-        super.onStop();
+        super.onDestroy();
     }
 
     public void onEventMainThread(final GetCommentsEvent event) {
@@ -99,13 +102,18 @@ public class CommentsFragment extends BaseFragment {
                 commentDtoList = event.getCommentDtos();
                 commentListAdapter = new CommentListAdapter(getActivity(), R.layout.item_comment_list, commentDtoList);
                 cOldComments.setAdapter(commentListAdapter);
+                GenericUtil.setListViewHeightBasedOnChildren(cOldComments);
             }
             else {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        commentDtoList = event.getCommentDtos();
+                        //commentDtoList = event.getCommentDtos();
+                        for(CommentDto commentDto : event.getCommentDtos()) {
+                            commentListAdapter.addComment(commentDto, false);
+                        }
                         commentListAdapter.notifyDataSetChanged();
+                        GenericUtil.setListViewHeightBasedOnChildren(cOldComments);
                     }
                 });
             }
@@ -115,22 +123,14 @@ public class CommentsFragment extends BaseFragment {
         }
     }
 
-    public void onEventMainThread(GetUserEvent event) {
-        if(event.getSuccess()) {
-            userDto = event.getUserDto();
-        }
-        else {
-            //This will never happen
-        }
-    }
-
     public void onEventMainThread(final SavedCommentEvent event) {
         if(event.getSuccess()) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    commentListAdapter.addComment(event.getCommentDto());
+                    commentListAdapter.addComment(event.getCommentDto(), true);
                     commentListAdapter.notifyDataSetChanged();
+                    GenericUtil.setListViewHeightBasedOnChildren(cOldComments);
                 }
             });
             Toast.makeText(getActivity(), "Comment Posted", Toast.LENGTH_LONG).show();

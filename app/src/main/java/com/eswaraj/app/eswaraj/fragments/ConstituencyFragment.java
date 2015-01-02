@@ -14,6 +14,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,14 +27,20 @@ import com.eswaraj.app.eswaraj.events.ComplaintSelectedEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetHeaderImageEvent;
+import com.eswaraj.app.eswaraj.events.GetLocationComplaintCountersEvent;
 import com.eswaraj.app.eswaraj.events.GetLocationComplaintsEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.models.ComplaintCounter;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
+import com.eswaraj.app.eswaraj.widgets.PieChartView;
+import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+
+import org.achartengine.GraphicalView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,12 +60,14 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
     private LocationDto locationDto;
     private List<ComplaintDto> complaintDtoList;
     private List<CategoryWithChildCategoryDto> categoryDtoList;
+    private List<ComplaintCounter> complaintCounters;
 
     private ListView mcListOpen;
     private ListView mcListClosed;
     private ImageView mapButton;
     private ImageView listButton;
     private ImageView analyticsButton;
+    private ImageView infoButton;
     private FrameLayout mcMapContainer;
     private FrameLayout mcChartContainer;
     private ViewGroup mcListContainer;
@@ -65,9 +75,12 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
     private LinearLayout mcAnalyticsContainer;
     private TextView mcName;
     private ImageView mcPhoto;
+    private TextView mcIssueCount;
     private LinearLayout mcMapButtons;
     private GoogleMapFragment googleMapFragment;
     private CustomProgressDialog pDialog;
+    private Button mcShowMore;
+    private LinearLayout mcInfoContainer;
 
     private Button heatmap;
     private Button cluster;
@@ -78,8 +91,12 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
     private Boolean markersAdded = false;
     private Boolean categoriesDataAvailable = false;
     private Boolean complaintDataAvailable = false;
+    private Boolean counterDataAvailable = false;
     private Boolean dataAlreadySet = false;
     private Bitmap photo;
+    private Long totalComplaints = 0L;
+    private ComplaintListAdapter openListAdapter;
+    private ComplaintListAdapter closeListAdapter;
 
     public ConstituencyFragment() {
         // Required empty public constructor
@@ -104,6 +121,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         pDialog.show();
 
         middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, 50);
+        middlewareService.loadLocationComplaintCounters(getActivity(), locationDto);
         middlewareService.loadHeaderImage(getActivity(), locationDto.getMobileHeaderImageUrl(), locationDto.getId());
     }
 
@@ -131,6 +149,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         mapButton = (ImageView) rootView.findViewById(R.id.cShowMap);
         listButton = (ImageView) rootView.findViewById(R.id.cShowList);
         analyticsButton = (ImageView) rootView.findViewById(R.id.cShowAnalytics);
+        infoButton = (ImageView) rootView.findViewById(R.id.cShowInfo);
         mcMapContainer = (FrameLayout) rootView.findViewById(R.id.cMap);
         mcListContainer = (ViewGroup) rootView.findViewById(R.id.cListContainer);
         mcChartContainer = (FrameLayout) rootView.findViewById(R.id.cChartContainer);
@@ -139,13 +158,30 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         mcName = (TextView) rootView.findViewById(R.id.cName);
         mcPhoto = (ImageView) rootView.findViewById(R.id.cPhoto);
         mcMapButtons = (LinearLayout) rootView.findViewById(R.id.cMapButtons);
+        mcIssueCount = (TextView) rootView.findViewById(R.id.issue_issues);
+        mcShowMore = (Button) rootView.findViewById(R.id.cShowMore);
+        mcInfoContainer = (LinearLayout) rootView.findViewById(R.id.cInfoContainer);
 
         mcAnalyticsContainer.setVisibility(View.INVISIBLE);
         mcMapButtons.setVisibility(View.INVISIBLE);
+        mcInfoContainer.setVisibility(View.INVISIBLE);
         mcName.setText(locationDto.getName());
         if(photo != null) {
             mcPhoto.setImageBitmap(photo);
         }
+
+        //TODO:Add actual data here
+        TableLayout tableLayout = new TableLayout(getActivity());
+        TableRow tableRow;
+        TextView heading = new TextView(getActivity());
+        TextView content = new TextView(getActivity());
+        heading.setText("Total Population");
+        content.setText("500");
+        mcInfoContainer.addView(tableLayout);
+        tableRow = new TableRow(getActivity());
+        tableRow.addView(heading);
+        tableRow.addView(content);
+        tableLayout.addView(tableRow);
 
         mcListOpen.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
@@ -172,6 +208,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
                 mapDisplayed = false;
                 mcAnalyticsContainer.setVisibility(View.INVISIBLE);
                 mcMapButtons.setVisibility(View.INVISIBLE);
+                mcInfoContainer.setVisibility(View.INVISIBLE);
                 getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
                 getChildFragmentManager().executePendingTransactions();
                 mcListContainer.setVisibility(View.VISIBLE);
@@ -184,6 +221,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
                 mapDisplayed = true;
                 mcListContainer.setVisibility(View.INVISIBLE);
                 mcAnalyticsContainer.setVisibility(View.INVISIBLE);
+                mcInfoContainer.setVisibility(View.INVISIBLE);
                 mcMapButtons.setVisibility(View.VISIBLE);
                 getChildFragmentManager().beginTransaction().show(googleMapFragment).commit();
                 getChildFragmentManager().executePendingTransactions();
@@ -206,8 +244,29 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
                 getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
                 mcListContainer.setVisibility(View.INVISIBLE);
                 mcMapButtons.setVisibility(View.INVISIBLE);
+                mcInfoContainer.setVisibility(View.INVISIBLE);
                 getChildFragmentManager().executePendingTransactions();
                 mcAnalyticsContainer.setVisibility(View.VISIBLE);
+            }
+        });
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
+                mcListContainer.setVisibility(View.INVISIBLE);
+                mcMapButtons.setVisibility(View.INVISIBLE);
+                getChildFragmentManager().executePendingTransactions();
+                mcAnalyticsContainer.setVisibility(View.INVISIBLE);
+                mcInfoContainer.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mcShowMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                middlewareService.loadLocationComplaints(getActivity(), locationDto, complaintDtoList.size(), 50);
+                markersAdded = false;
+                dataAlreadySet = false;
             }
         });
 
@@ -243,8 +302,8 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
 
     public synchronized void setComplaintData() {
         if(!dataAlreadySet) {
-            filterListAndSetAdapter(complaintDtoList);
-            //populateCountersAndCreateChart();
+            filterListAndSetAdapter();
+            populateCountersAndCreateChart();
             if (mapReady && mapDisplayed) {
                 googleMapFragment.addMarkers(complaintDtoList);
                 markersAdded = true;
@@ -253,9 +312,9 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         }
     }
 
-    private void filterListAndSetAdapter(List<ComplaintDto> complaintDtoList) {
-        List<ComplaintDto> closedComplaints = new ArrayList<ComplaintDto>();
-        List<ComplaintDto> openComplaints = new ArrayList<ComplaintDto>();
+    private void filterListAndSetAdapter() {
+        final List<ComplaintDto> closedComplaints = new ArrayList<ComplaintDto>();
+        final List<ComplaintDto> openComplaints = new ArrayList<ComplaintDto>();
 
         for(ComplaintDto complaintDto : complaintDtoList) {
             if(complaintDto.getStatus().equals("Closed")) {
@@ -266,17 +325,58 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
             }
         }
 
-        mcListOpen.setAdapter(new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, openComplaints));
-        mcListOpen.setDividerHeight(0);
-        mcListClosed.setAdapter(new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, closedComplaints));
-        mcListClosed.setDividerHeight(0);
+        if(openListAdapter == null) {
+
+            openListAdapter = new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, openComplaints);
+            closeListAdapter = new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, closedComplaints);
+
+            mcListOpen.setAdapter(openListAdapter);
+            mcListOpen.setDividerHeight(0);
+            mcListClosed.setAdapter(closeListAdapter);
+            mcListClosed.setDividerHeight(0);
+        }
+        else {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    openListAdapter.clear();
+                    closeListAdapter.clear();
+                    for(ComplaintDto complaintDto : openComplaints) {
+                        openListAdapter.addComplaint(complaintDto);
+                    }
+                    for(ComplaintDto complaintDto : closedComplaints) {
+                        closeListAdapter.addComplaint(complaintDto);
+                    }
+                    openListAdapter.notifyDataSetChanged();
+                    closeListAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+    }
+
+    public void populateCountersAndCreateChart() {
+        GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters);
+        mcChartContainer.removeAllViews();
+        mcChartContainer.addView(chartView);
+        totalComplaints = 0L;
+        for(ComplaintCounter complaintCounter : complaintCounters) {
+            totalComplaints += complaintCounter.getCount();
+        }
+        mcIssueCount.setText(totalComplaints + " Issues");
     }
 
     public void onEventMainThread(GetLocationComplaintsEvent event) {
         if(event.getSuccess()) {
-            complaintDtoList = event.getComplaintDtoList();
+            if(complaintDtoList == null) {
+                complaintDtoList = event.getComplaintDtoList();
+            }
+            else {
+                for(ComplaintDto complaintDto : event.getComplaintDtoList()) {
+                    complaintDtoList.add(complaintDto);
+                }
+            }
             complaintDataAvailable = true;
-            if(categoriesDataAvailable && !dataAlreadySet) {
+            if(categoriesDataAvailable && counterDataAvailable && !dataAlreadySet) {
                 setComplaintData();
             }
         }
@@ -286,11 +386,24 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         pDialog.dismiss();
     }
 
+    public void onEventMainThread(GetLocationComplaintCountersEvent event) {
+        if(event.getSuccess()) {
+            complaintCounters = event.getComplaintCounters();
+            counterDataAvailable = true;
+            if(categoriesDataAvailable && complaintDataAvailable && !dataAlreadySet) {
+                setComplaintData();
+            }
+        }
+        else {
+            Toast.makeText(getActivity(), "Could not fetch constituency complaint counters. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
+
     public void onEventMainThread(GetCategoriesDataEvent event) {
         if(event.getSuccess()) {
             categoryDtoList = event.getCategoryList();
             categoriesDataAvailable = true;
-            if(complaintDataAvailable && !dataAlreadySet) {
+            if(complaintDataAvailable && counterDataAvailable && !dataAlreadySet) {
                 setComplaintData();
             }
             middlewareService.loadCategoriesImages(getActivity(), categoryDtoList);

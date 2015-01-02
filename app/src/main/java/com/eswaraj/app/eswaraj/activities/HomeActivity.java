@@ -153,6 +153,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                     constituencyGridView.setVisibility(View.VISIBLE);
                     constituencyProgressWheel.setVisibility(View.INVISIBLE);
 
+                    constituencyDialogItems.clear();
+
                     DialogItem state = new DialogItem();
                     state.setName(userSession.getUser().getPerson().getPersonAddress().getState().getName());
                     state.setTitle("State");
@@ -185,6 +187,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                     constituencyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            constituencyAlertDialog.dismiss();
                             Intent i = new Intent(view.getContext(), ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getTarget());
                             i.putExtra("LOCATION", (Serializable) ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getLocationDto());
                             startActivity(i);

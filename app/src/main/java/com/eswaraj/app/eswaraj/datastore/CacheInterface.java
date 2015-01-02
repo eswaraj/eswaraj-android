@@ -31,12 +31,15 @@ public interface CacheInterface extends MiddlewareGetService {
     public Boolean isHeaderImageAvailable(Context context, String url, Long id);
     public void updateHeaderImage(Context context);
 
-    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto, int count);
-    public void updateComments(Context context, String json, ComplaintDto complaintDto, int count);
+    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto, int start, int count);
+    public void updateComments(Context context, String json, ComplaintDto complaintDto, int start, int count);
 
     public Boolean isProfileUpdateAvailable(Context context);
     public void updateProfileUpdate(Context context, String token);
 
     public Boolean isLocationComplaintsAvailable(Context context);
     public void updateLocationComplaints(Context context, LocationDto locationDto, int start, int count, String json);
+
+    public Boolean isLocationComplaintCountersAvailable(Context context);
+    public void updateLocationComplaintCounters(Context context, LocationDto locationDto, String json);
 }

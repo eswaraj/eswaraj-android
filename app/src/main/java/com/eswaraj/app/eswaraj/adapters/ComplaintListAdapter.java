@@ -70,7 +70,9 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         //holder.mcDate.setText(new Date(complaintDto.getComplaintTime()).toString());
         holder.mcDate.setText(DateUtils.getRelativeTimeSpanString(complaintDto.getComplaintTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
         holder.mcStatus.setText(complaintDto.getStatus());
-        holder.mcIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(getRootCategoryId(complaintDto)) + ".png"));
+        if(getRootCategoryId(complaintDto) != null) {
+            holder.mcIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(getRootCategoryId(complaintDto)) + ".png"));
+        }
         return row;
     }
 
@@ -81,6 +83,14 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
             }
         }
         return null;
+    }
+
+    public void addComplaint(ComplaintDto newComplaintDto) {
+        complaintDtoList.add(newComplaintDto);
+    }
+
+    public void clearComplaints() {
+        complaintDtoList.clear();
     }
 
     static class ComplaintDtoHolder

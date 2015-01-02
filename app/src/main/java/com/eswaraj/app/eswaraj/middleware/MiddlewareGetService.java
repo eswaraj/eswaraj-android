@@ -20,7 +20,8 @@ public interface MiddlewareGetService {
     public void loadComplaintImage(Context context, String url, Long id);
     public void loadProfileImage(Context context, String url, Long id);
     public void loadHeaderImage(Context context, String url, Long id);
-    public void loadComments(Context context, ComplaintDto complaintDto, int count);
+    public void loadComments(Context context, ComplaintDto complaintDto, int start, int count);
     public void loadProfileUpdates(Context context, String token);
     public void loadLocationComplaints(Context context, LocationDto locationDto, int start, int count);
+    public void loadLocationComplaintCounters(Context context, LocationDto locationDto);
 }

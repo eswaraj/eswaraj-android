@@ -197,27 +197,27 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void loadComments(Context context, ComplaintDto complaintDto, int count, Boolean dontGetFromCache) {
-        server.loadComments(context, complaintDto, count);
+    public void loadComments(Context context, ComplaintDto complaintDto, int start, int count, Boolean dontGetFromCache) {
+        server.loadComments(context, complaintDto, start, count);
     }
 
     @Override
-    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto, int count) {
-        return cache.isCommentsAvailable(context, complaintDto, count);
+    public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto, int start, int count) {
+        return cache.isCommentsAvailable(context, complaintDto, start, count);
     }
 
     @Override
-    public void updateComments(Context context, String json, ComplaintDto complaintDto, int count) {
-        cache.updateComments(context, json, complaintDto, count);
+    public void updateComments(Context context, String json, ComplaintDto complaintDto, int start, int count) {
+        cache.updateComments(context, json, complaintDto, start, count);
     }
 
     @Override
-    public void loadComments(Context context, ComplaintDto complaintDto, int count) {
-        if(cache.isCommentsAvailable(context, complaintDto, count)) {
-            cache.loadComments(context, complaintDto, count);
+    public void loadComments(Context context, ComplaintDto complaintDto, int start, int count) {
+        if(cache.isCommentsAvailable(context, complaintDto, start, count)) {
+            cache.loadComments(context, complaintDto, start, count);
         }
         else {
-            server.loadComments(context, complaintDto, count);
+            server.loadComments(context, complaintDto, start, count);
         }
     }
 
@@ -328,6 +328,36 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
         }
         else {
             server.loadLocationComplaints(context, locationDto, start, count);
+        }
+    }
+
+    @Override
+    public void loadLocationComplaintCounters(Context context, LocationDto locationDto, Boolean dontGetFromCache) {
+        if(dontGetFromCache) {
+            server.loadLocationComplaintCounters(context, locationDto);
+        }
+        else {
+            loadLocationComplaintCounters(context, locationDto);
+        }
+    }
+
+    @Override
+    public Boolean isLocationComplaintCountersAvailable(Context context) {
+        return cache.isLocationComplaintCountersAvailable(context);
+    }
+
+    @Override
+    public void updateLocationComplaintCounters(Context context, LocationDto locationDto, String json) {
+        cache.updateLocationComplaintCounters(context, locationDto, json);
+    }
+
+    @Override
+    public void loadLocationComplaintCounters(Context context, LocationDto locationDto) {
+        if(cache.isLocationComplaintCountersAvailable(context)) {
+            cache.loadLocationComplaintCounters(context, locationDto);
+        }
+        else {
+            server.loadLocationComplaintCounters(context, locationDto);
         }
     }
 }
