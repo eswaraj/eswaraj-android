@@ -43,6 +43,7 @@ import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.helpers.StorageCacheClearingTask;
 import com.eswaraj.app.eswaraj.util.DeviceUtil;
+import com.eswaraj.app.eswaraj.util.FacebookSharingUtil;
 import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -128,7 +129,8 @@ import de.greenrobot.event.EventBus;
                 ConstituencyFragment.class,
                 LocationComplaintsRequest.class,
                 LocationComplaintCountersRequest.class,
-                VolleyUtil.class
+                VolleyUtil.class,
+                FacebookSharingUtil.class
         },
         complete = false,
         library = true
@@ -292,5 +294,10 @@ public class MiddlewareGraph {
     @Provides @Singleton
     LruBitmapCache provideLruBitmapCache() {
         return new LruBitmapCache(this.applicationContext);
+    }
+
+    @Provides @Singleton
+    FacebookSharingUtil provideFacebookSharingUtil() {
+        return new FacebookSharingUtil();
     }
 }

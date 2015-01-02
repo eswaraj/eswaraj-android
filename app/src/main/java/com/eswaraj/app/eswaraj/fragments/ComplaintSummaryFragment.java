@@ -1,6 +1,7 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,6 +30,7 @@ import com.eswaraj.app.eswaraj.helpers.BitmapWorkerTask;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.ComplaintPostResponseDto;
 import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
+import com.eswaraj.app.eswaraj.util.FacebookSharingUtil;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
@@ -51,7 +53,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     @Inject
     MiddlewareServiceImpl middlewareService;
     @Inject
-    StorageCache storageCache;
+    FacebookSharingUtil facebookSharingUtil;
 
     private GoogleMapFragment googleMapFragment;
     private File imageFile;
@@ -67,6 +69,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     private TextView description;
     private Button done;
     private Button another;
+    private ImageView facebook;
 
     private Long id;
 
@@ -88,6 +91,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         complaintPhoto = (ImageView) rootView.findViewById(R.id.csComplaintPhoto);
         done = (Button) rootView.findViewById(R.id.csDone);
         another = (Button) rootView.findViewById(R.id.csAnother);
+        facebook = (ImageView) rootView.findViewById(R.id.csFacebook);
 
         googleMapFragment = new GoogleMapFragment();
         getChildFragmentManager().beginTransaction().add(R.id.csMapContainer, googleMapFragment).commit();
@@ -141,6 +145,18 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
                 eventBus.post(event);
             }
         });
+
+        facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(complaintPostResponseDto.getComplaintDto().getImages() != null) {
+                    facebookSharingUtil.shareComplaintWithImage((Activity) v.getContext(), "Submitted new complaint using eSwaraj", complaintPostResponseDto.getComplaintDto().getDescription(), complaintPostResponseDto.getComplaintDto().getImages().get(0).getOrgUrl(), "http://dev.eswaraj.com/complaint/" + complaintPostResponseDto.getComplaintDto().getId() + ".html");
+                }
+                else {
+                    facebookSharingUtil.shareComplaint((Activity) v.getContext(), "Submitted new complaint using eSwaraj", complaintPostResponseDto.getComplaintDto().getDescription(), "http://dev.eswaraj.com/complaint/" + complaintPostResponseDto.getComplaintDto().getId() + ".html");
+                }
+            }
+        });
         return rootView;
     }
 
@@ -169,5 +185,41 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         else {
             Toast.makeText(getActivity(), "Could not fetch MLA image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        facebookSharingUtil.onCreate(getActivity(), savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        facebookSharingUtil.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        facebookSharingUtil.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        facebookSharingUtil.onDestroy();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        facebookSharingUtil.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        facebookSharingUtil.onSaveInstanceState(outState);
     }
 }

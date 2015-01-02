@@ -208,7 +208,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:orientation="horizontal">
 
     <Button
@@ -216,7 +216,7 @@
         android:text="Another Complaint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
         android:layout_marginRight="2dp"
         android:textColor="#333" />
 
@@ -225,9 +225,16 @@
         android:text="Done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
         android:layout_marginLeft="2dp"
         android:textColor="#333" />
+
+        <ImageView
+            android:id="@+id/csFacebook"
+            android:src="@drawable/facebook_share_button"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
