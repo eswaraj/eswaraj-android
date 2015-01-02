@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 
-public class NonScrollableListView extends ListView{
+public class NonScrollableListView extends ListView {
 
     public NonScrollableListView(Context context) {
         super(context);

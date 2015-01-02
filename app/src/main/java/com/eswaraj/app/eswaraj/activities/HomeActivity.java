@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
@@ -26,8 +27,6 @@ import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.RevGeocodeEvent;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
-import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
-import com.eswaraj.app.eswaraj.interfaces.BitmapWorkerCallback;
 import com.eswaraj.app.eswaraj.models.DialogItem;
 import com.eswaraj.app.eswaraj.util.GenericUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
@@ -58,13 +57,15 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     private Boolean mapReady = false;
     private Location lastLocation;
     private ReverseGeocodingTask reverseGeocodingTask;
-    
+
     private ImageView complaints;
     private ImageView leaders;
     private ImageView constituency;
     private ImageView profile;
     private TextView hRevGeocode;
     private Button hCreate;
+    private LinearLayout sError;
+    private Button sClose;
 
     private Boolean retryRevGeocoding = false;
     private ArrayList<DialogItem> constituencyDialogItems = new ArrayList<DialogItem>();
@@ -88,6 +89,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         profile = (ImageView) findViewById(R.id.hProfile);
         hRevGeocode = (TextView) findViewById(R.id.hRevGeocode);
         hCreate = (Button) findViewById(R.id.hCreate);
+
 
         complaints.setImageDrawable(getResources().getDrawable(R.drawable.complaint));
         leaders.setImageDrawable(getResources().getDrawable(R.drawable.leader));
@@ -149,57 +151,80 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                     View rootView = inflater.inflate(R.layout.dialog_select, null);
                     constituencyGridView = (GridView) rootView.findViewById(R.id.sOptionList);
                     constituencyProgressWheel = (ProgressWheel) rootView.findViewById(R.id.sProgressWheel);
+                    sError = (LinearLayout) rootView.findViewById(R.id.sError);
+                    sClose = (Button) rootView.findViewById(R.id.sClose);
 
                     constituencyGridView.setVisibility(View.VISIBLE);
                     constituencyProgressWheel.setVisibility(View.INVISIBLE);
+                    sError.setVisibility(View.INVISIBLE);
 
-                    constituencyDialogItems.clear();
-
-                    DialogItem state = new DialogItem();
-                    state.setName(userSession.getUser().getPerson().getPersonAddress().getState().getName());
-                    state.setTitle("State");
-                    state.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
-                    state.setId(userSession.getUser().getPerson().getPersonAddress().getState().getId());
-                    state.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getState());
-                    state.setTarget(ConstituencyActivity.class);
-                    constituencyDialogItems.add(state);
-
-                    DialogItem pc = new DialogItem();
-                    pc.setName(userSession.getUser().getPerson().getPersonAddress().getPc().getName());
-                    pc.setTitle("Parliamentary Constituency");
-                    pc.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
-                    pc.setId(userSession.getUser().getPerson().getPersonAddress().getPc().getId());
-                    pc.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getPc());
-                    pc.setTarget(ConstituencyActivity.class);
-                    constituencyDialogItems.add(pc);
-
-                    DialogItem ac = new DialogItem();
-                    ac.setName(userSession.getUser().getPerson().getPersonAddress().getAc().getName());
-                    ac.setTitle("Assembly Constituency");
-                    ac.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
-                    ac.setId(userSession.getUser().getPerson().getPersonAddress().getAc().getId());
-                    ac.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getAc());
-                    ac.setTarget(ConstituencyActivity.class);
-                    constituencyDialogItems.add(ac);
-
-                    DialogAdapter adapter = new DialogAdapter(v.getContext(), R.layout.item_select_dialog, constituencyDialogItems);
-                    constituencyGridView.setAdapter(adapter);
-                    constituencyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    sClose.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        public void onClick(View v) {
                             constituencyAlertDialog.dismiss();
-                            Intent i = new Intent(view.getContext(), ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getTarget());
-                            i.putExtra("LOCATION", (Serializable) ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getLocationDto());
-                            startActivity(i);
                         }
                     });
 
+                    constituencyDialogItems.clear();
+
+                    if(userSession.getUser().getPerson().getPersonAddress().getState() != null) {
+                        DialogItem state = new DialogItem();
+                        state.setName(userSession.getUser().getPerson().getPersonAddress().getState().getName());
+                        state.setTitle("State");
+                        state.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
+                        state.setId(userSession.getUser().getPerson().getPersonAddress().getState().getId());
+                        state.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getState());
+                        state.setTarget(ConstituencyActivity.class);
+                        constituencyDialogItems.add(state);
+                    }
+
+                    if(userSession.getUser().getPerson().getPersonAddress().getPc() != null) {
+                        DialogItem pc = new DialogItem();
+                        pc.setName(userSession.getUser().getPerson().getPersonAddress().getPc().getName());
+                        pc.setTitle("Parliamentary Constituency");
+                        pc.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
+                        pc.setId(userSession.getUser().getPerson().getPersonAddress().getPc().getId());
+                        pc.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getPc());
+                        pc.setTarget(ConstituencyActivity.class);
+                        constituencyDialogItems.add(pc);
+                    }
+
+                    if(userSession.getUser().getPerson().getPersonAddress().getAc() != null) {
+                        DialogItem ac = new DialogItem();
+                        ac.setName(userSession.getUser().getPerson().getPersonAddress().getAc().getName());
+                        ac.setTitle("Assembly Constituency");
+                        ac.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
+                        ac.setId(userSession.getUser().getPerson().getPersonAddress().getAc().getId());
+                        ac.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getAc());
+                        ac.setTarget(ConstituencyActivity.class);
+                        constituencyDialogItems.add(ac);
+                    }
+
+                    if(constituencyDialogItems.size() > 0) {
+                        DialogAdapter adapter = new DialogAdapter(v.getContext(), R.layout.item_select_dialog, constituencyDialogItems);
+                        constituencyGridView.setAdapter(adapter);
+                        constituencyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                constituencyAlertDialog.dismiss();
+                                Intent i = new Intent(view.getContext(), ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getTarget());
+                                i.putExtra("LOCATION", (Serializable) ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getLocationDto());
+                                startActivity(i);
+                            }
+                        });
+                    }
+                    else {
+                        sError.setVisibility(View.VISIBLE);
+                        constituencyGridView.setVisibility(View.INVISIBLE);
+                    }
+
                     builder.setView(rootView)
-                           .setCancelable(true)
-                           .setTitle("Select Constituency");
+                            .setCancelable(true)
+                            .setTitle("Select Constituency");
                     constituencyAlertDialog = builder.create();
                     constituencyAlertDialog.show();
                     constituencyAlertDialog.getWindow().setLayout(700, 400);
+
 
                 }
                 else if(userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {

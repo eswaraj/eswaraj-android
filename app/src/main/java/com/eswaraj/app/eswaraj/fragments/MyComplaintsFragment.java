@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +60,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     private GoogleMapFragment googleMapFragment;
     private List<ComplaintDto> complaintDtoList;
     private List<CategoryWithChildCategoryDto> categoryDtoList;
+    ArrayList<ComplaintCounter> complaintCounters;
 
     private ListView mcListOpen;
     private ListView mcListClosed;
@@ -73,6 +75,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     private LinearLayout mcAnalyticsContainer;
     private TextView mcName;
     private ImageView mcPhoto;
+    private RelativeLayout mcDataView;
 
     private Boolean mapDisplayed = false;
     private Boolean mapReady = false;
@@ -80,6 +83,8 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     private Boolean categoriesDataAvailable = false;
     private Boolean complaintDataAvailable = false;
     private Boolean dataAlreadySet = false;
+    private Boolean categoriesImagesAvailable = false;
+    private Boolean countersDataAvailable = false;
     private Bitmap photo;
 
 
@@ -123,6 +128,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         mcAnalyticsContainer = (LinearLayout) rootView.findViewById(R.id.mcAnalyticsContainer);
         mcName = (TextView) rootView.findViewById(R.id.mcName);
         mcPhoto = (ImageView) rootView.findViewById(R.id.mcPhoto);
+        mcDataView = (RelativeLayout) rootView.findViewById(R.id.mcDataView);
 
         mcAnalyticsContainer.setVisibility(View.INVISIBLE);
         mcName.setText(userSession.getUser().getPerson().getName());
@@ -152,41 +158,40 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         listButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    mapDisplayed = false;
-                    mcAnalyticsContainer.setVisibility(View.INVISIBLE);
-                    getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
-                    getChildFragmentManager().executePendingTransactions();
-                    mcListContainer.setVisibility(View.VISIBLE);
+                mapDisplayed = false;
+                mcDataView.removeAllViews();
+                mcDataView.addView(mcListContainer);
+                mcListContainer.setVisibility(View.VISIBLE);
 
             }
         });
         mapButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    mapDisplayed = true;
-                    mcListContainer.setVisibility(View.INVISIBLE);
-                    mcAnalyticsContainer.setVisibility(View.INVISIBLE);
-                    getChildFragmentManager().beginTransaction().show(googleMapFragment).commit();
-                    getChildFragmentManager().executePendingTransactions();
-                    //Post it on UI thread so that it gets en-queued behind fragment transactions and gets executed only after layout has happened for map
-                    mcMapContainer.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(!markersAdded) {
-                                googleMapFragment.addMarkers(complaintDtoList);
-                                markersAdded = true;
-                            }
+                mapDisplayed = true;
+                getChildFragmentManager().beginTransaction().show(googleMapFragment).commit();
+                getChildFragmentManager().executePendingTransactions();
+                mcDataView.removeAllViews();
+                mcDataView.addView(mcMapContainer);
+                //Post it on UI thread so that it gets en-queued behind fragment transactions and gets executed only after layout has happened for map
+                mcMapContainer.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(!markersAdded) {
+                            googleMapFragment.addMarkers(complaintDtoList);
+                            markersAdded = true;
                         }
-                    });
-                }
+                    }
+                });
+            }
 
         });
         analyticsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
-                mcListContainer.setVisibility(View.INVISIBLE);
-                getChildFragmentManager().executePendingTransactions();
+                mapDisplayed = false;
+                mcDataView.removeAllViews();
+                mcDataView.addView(mcAnalyticsContainer);
                 mcAnalyticsContainer.setVisibility(View.VISIBLE);
             }
         });
@@ -249,6 +254,11 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         }
         GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters);
         mcChartContainer.addView(chartView);
+        countersDataAvailable = true;
+        if(categoriesImagesAvailable) {
+            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryDtoList, complaintCounters);
+            mcAmenityList.setAdapter(amenityListAdapter);
+        }
     }
 
     private void filterListAndSetAdapter(List<ComplaintDto> complaintDtoList) {
@@ -296,9 +306,12 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     }
 
     public void onEventMainThread(GetCategoriesImagesEvent event) {
+        categoriesImagesAvailable = true;
         if(event.getSuccess()) {
-            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryDtoList);
-            mcAmenityList.setAdapter(amenityListAdapter);
+            if(countersDataAvailable) {
+                AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryDtoList, complaintCounters);
+                mcAmenityList.setAdapter(amenityListAdapter);
+            }
         }
     }
 

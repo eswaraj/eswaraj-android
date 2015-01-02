@@ -4,6 +4,7 @@ package com.eswaraj.app.eswaraj.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.models.ComplaintCounter;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDto>{
@@ -21,12 +24,22 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
     private Context context;
     private int layoutResourceId;
     private List<CategoryWithChildCategoryDto> categoryList;
+    private List<ComplaintCounter> complaintCounterList;
+    private Long totalComplaints;
 
-    public AmenityListAdapter(Context context, int layoutResourceId, List<CategoryWithChildCategoryDto> categoryList) {
+    public AmenityListAdapter(Context context, int layoutResourceId, List<CategoryWithChildCategoryDto> categoryList, List<ComplaintCounter> complaintCounterList) {
         super(context, layoutResourceId, categoryList);
         this.context = context;
         this.layoutResourceId = layoutResourceId;
         this.categoryList = categoryList;
+        this.complaintCounterList = complaintCounterList;
+
+        totalComplaints = 0L;
+        if(complaintCounterList != null) {
+            for (ComplaintCounter complaintCounter : complaintCounterList) {
+                totalComplaints += complaintCounter.getCount();
+            }
+        }
     }
 
     @Override
@@ -42,6 +55,7 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
             holder = new CategoryDtoHolder();
             holder.saIcon = (ImageView)row.findViewById(R.id.saIcon);
             holder.saTitle = (TextView)row.findViewById(R.id.saTitle);
+            holder.saStats = (TextView)row.findViewById(R.id.saStats);
 
             row.setTag(holder);
         }
@@ -53,6 +67,14 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
         CategoryWithChildCategoryDto categoryDto = categoryList.get(position);
         holder.saTitle.setText(categoryDto.getName());
         holder.saIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(categoryDto.getId()) + ".png"));
+        if(complaintCounterList != null) {
+            for(ComplaintCounter complaintCounter : complaintCounterList) {
+                if(complaintCounter.getId().equals(categoryDto.getId())) {
+                    holder.saStats.setText(new DecimalFormat("#.##").format(complaintCounter.getCount().doubleValue()*100/totalComplaints) + "%");
+                    holder.saStats.setVisibility(View.VISIBLE);
+                }
+            }
+        }
 
         return row;
     }
@@ -61,5 +83,6 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
     {
         ImageView saIcon;
         TextView saTitle;
+        TextView saStats;
     }
 }

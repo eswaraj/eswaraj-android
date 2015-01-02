@@ -1,10 +1,13 @@
 package com.eswaraj.app.eswaraj.volley;
 
 
+import android.content.Context;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.Constants;
+import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.events.ProfileUpdateEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.web.dto.UpdateMobileUserRequestDto;
@@ -31,8 +34,10 @@ public class ProfileUpdateRequest extends BaseClass {
     EventBus eventBus;
     @Inject
     NetworkAccessHelper networkAccessHelper;
+    @Inject
+    Cache cache;
 
-    public void processRequest(String token, String name, Double latitude, Double longitude)
+    public void processRequest(Context context, String token, String name, Double latitude, Double longitude)
     {
         UpdateMobileUserRequestDto updateMobileUserRequestDto = new UpdateMobileUserRequestDto();
         updateMobileUserRequestDto.setToken(token);
@@ -40,11 +45,11 @@ public class ProfileUpdateRequest extends BaseClass {
         updateMobileUserRequestDto.setLattitude(latitude);
         updateMobileUserRequestDto.setLongitude(longitude);
 
-        GenericPostVolleyRequest request = new GenericPostVolleyRequest(Constants.UPDATE_PROFILE_URL, createErrorListener(), createSuccessListener(), updateMobileUserRequestDto);
+        GenericPostVolleyRequest request = new GenericPostVolleyRequest(Constants.UPDATE_PROFILE_URL, createErrorListener(), createSuccessListener(context), updateMobileUserRequestDto);
         networkAccessHelper.submitNetworkRequest("UpdateProfile", request);
     }
 
-    private Response.Listener<String> createSuccessListener() {
+    private Response.Listener<String> createSuccessListener(final Context context) {
         return new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -68,6 +73,7 @@ public class ProfileUpdateRequest extends BaseClass {
                 event.setSuccess(true);
                 event.setUserDto(userDto);
                 eventBus.post(event);
+                cache.updateUserData(context, response);
             }
         };
     }

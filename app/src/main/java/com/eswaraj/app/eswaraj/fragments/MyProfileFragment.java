@@ -30,13 +30,15 @@ import com.eswaraj.app.eswaraj.middleware.MiddlewareService;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
 import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
 
-public class MyProfileFragment extends BaseFragment {
+public class MyProfileFragment extends BaseFragment implements OnMapReadyCallback {
 
     @Inject
     EventBus eventBus;
@@ -50,10 +52,11 @@ public class MyProfileFragment extends BaseFragment {
     private ImageView mpPhoto;
     private TextView mpName;
     private EditText mpInputName;
-    private ImageView mpMarkLocationButton;
+    private TextView mpMarkLocationButton;
     private Button mpSave;
     private Button mpCancel;
     private Button mpLogout;
+    private GoogleMapFragment googleMapFragment;
 
     private CustomProgressDialog pDialog;
     private Bitmap profilePhoto;
@@ -82,10 +85,10 @@ public class MyProfileFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_my_profile, container, false);
-        mpPhoto = (ImageView) rootView.findViewById(R.id.mpPhoto);
-        mpName = (TextView) rootView.findViewById(R.id.mpName);
+        mpPhoto = (ImageView) rootView.findViewById(R.id.mcPhoto);
+        mpName = (TextView) rootView.findViewById(R.id.mcName);
         mpInputName = (EditText) rootView.findViewById(R.id.mpInputName);
-        mpMarkLocationButton = (ImageView) rootView.findViewById(R.id.mpMarkLocation);
+        mpMarkLocationButton = (TextView) rootView.findViewById(R.id.mpMarkLocation);
         mpSave = (Button) rootView.findViewById(R.id.mpSave);
         mpCancel = (Button) rootView.findViewById(R.id.mpCancel);
         mpLogout = (Button) rootView.findViewById(R.id.mpLogout);
@@ -94,6 +97,12 @@ public class MyProfileFragment extends BaseFragment {
         mpInputName.setText(userSession.getUser().getPerson().getName());
         if(profilePhoto != null) {
             mpPhoto.setImageBitmap(profilePhoto);
+        }
+
+        if(savedInstanceState == null) {
+            googleMapFragment = new GoogleMapFragment();
+            googleMapFragment.setContext(this);
+            getChildFragmentManager().beginTransaction().add(R.id.mpMap, googleMapFragment).commit();
         }
 
         mpMarkLocationButton.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +174,15 @@ public class MyProfileFragment extends BaseFragment {
         }
         else {
             Toast.makeText(getActivity(), "Could not save changes to server. Please retry. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        if(userSession.getUser().getPerson().getPersonAddress() != null) {
+            if (userSession.getUser().getPerson().getPersonAddress().getLattitude() != null) {
+                googleMapFragment.updateMarkerLocation(userSession.getUser().getPerson().getPersonAddress().getLattitude(), userSession.getUser().getPerson().getPersonAddress().getLongitude());
+            }
         }
     }
 }

@@ -13,6 +13,7 @@
         layout="@layout/screen_header" />
 
     <ScrollView
+        android:id="@+id/cScrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -227,6 +228,7 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/cDataView"
                 android:layout_weight="0.1"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
@@ -235,7 +237,7 @@
                     android:id="@+id/cMapContainer"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="fill_parent">
+                    android:layout_height="500dp">
                     <LinearLayout
                         android:id="@+id/cMapButtons"
                         android:orientation="horizontal"
@@ -276,13 +278,13 @@
                         android:layout_gravity="center"
                         android:layout_width="200dp"
                         android:layout_height="200dp"/>
-                    <GridView
+                    <com.eswaraj.app.eswaraj.widgets.NonScrollableGridView
                         android:id="@+id/cAmenityList"
                         android:layout_height="0dp"
                         android:layout_weight="7"
                         android:layout_width="match_parent"
                         android:numColumns="3">
-                    </GridView>
+                    </com.eswaraj.app.eswaraj.widgets.NonScrollableGridView>
                 </LinearLayout>
 
                 <LinearLayout

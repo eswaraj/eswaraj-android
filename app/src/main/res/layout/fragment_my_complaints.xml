@@ -148,6 +148,7 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/mcDataView"
                 android:layout_weight="1"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
@@ -155,7 +156,7 @@
                 <FrameLayout
                     android:id="@+id/mcMapContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="fill_parent"/>
+                    android:layout_height="500dp"/>
 
                 <LinearLayout
                     android:id="@+id/mcAnalyticsContainer"
@@ -169,7 +170,7 @@
                         android:layout_width="200dp"
                         android:layout_height="200dp"/>
 
-                    <GridView
+                    <com.eswaraj.app.eswaraj.widgets.NonScrollableGridView
                         android:id="@+id/mcAmenityList"
                         android:layout_height="0dp"
                         android:layout_weight="7"

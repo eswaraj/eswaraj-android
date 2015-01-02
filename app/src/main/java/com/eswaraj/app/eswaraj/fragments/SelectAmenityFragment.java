@@ -133,7 +133,7 @@ public class SelectAmenityFragment extends BaseFragment implements OnMapReadyCal
         if(event.getSuccess()) {
             //All needed data is available now. Set the adapter for gridview
             Log.d("SelectAmenityFragment", "GetCategoriesImagesEvent:Success");
-            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryList);
+            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryList, null);
             gvAmenityList.setAdapter(amenityListAdapter);
         }
         else {
