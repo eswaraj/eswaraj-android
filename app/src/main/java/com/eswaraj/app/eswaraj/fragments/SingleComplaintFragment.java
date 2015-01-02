@@ -1,6 +1,7 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.config.ImageType;
@@ -22,6 +24,7 @@ import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
+import com.eswaraj.app.eswaraj.util.VolleyUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
@@ -44,11 +47,13 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     UserSessionUtil userSession;
     @Inject
     MiddlewareServiceImpl middlewareService;
+    @Inject
+    VolleyUtil volleyUtil;
 
 
     private CommentsFragment commentsFragment;
     private ImageView complaintImage;
-    private ImageView submitterImage;
+    private NetworkImageView submitterImage;
     private TextView submitterName;
     private GoogleMapFragment googleMapFragment;
     private ComplaintDto complaintDto;
@@ -63,11 +68,24 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
 
     Long complaintId;
     Long personId;
+    private Bitmap submitterBitmap;
+    private Bitmap complaintBitmap;
 
     public SingleComplaintFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        eventBus.register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        eventBus.unregister(this);
+        super.onDestroy();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,7 +98,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         scDescription = (TextView) rootView.findViewById(R.id.scDescription);
         complaintImage = (ImageView) rootView.findViewById(R.id.scComplaintPhoto);
         submitterName = (TextView) rootView.findViewById(R.id.scSubmitterName);
-        submitterImage = (ImageView) rootView.findViewById(R.id.scSubmitterImage);
+        submitterImage = (NetworkImageView) rootView.findViewById(R.id.scSubmitterImage);
         scStatus = (TextView) rootView.findViewById(R.id.scStatus);
         scComplaintId = (TextView) rootView.findViewById(R.id.scComplaintId);
 
@@ -111,12 +129,20 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
             complaintId = complaintDto.getId();
             middlewareService.loadComplaintImage(getActivity(), complaintDto.getImages().get(0).getOrgUrl(), complaintId);
         }
+        if(complaintBitmap != null) {
+            complaintImage.setImageBitmap(complaintBitmap);
+        }
 
         //Submitter details
         submitterName.setText(complaintDto.getCreatedBy().get(0).getName());
         if(!complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
+            //PersonId is null. Using complaintId for caching
             personId = complaintDto.getCreatedBy().get(0).getId();
-            middlewareService.loadProfileImage(getActivity(), complaintDto.getCreatedBy().get(0).getProfilePhoto(), personId);
+            //middlewareService.loadProfileImage(getActivity(), complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getId());
+            submitterImage.setImageUrl(complaintDto.getCreatedBy().get(0).getProfilePhoto(), volleyUtil.getImageLoader());
+        }
+        if(submitterBitmap != null) {
+            //submitterImage.setImageBitmap(submitterBitmap);
         }
 
         //Set up fragments
@@ -141,18 +167,6 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        eventBus.register(this);
-    }
-
-    @Override
-    public void onStop() {
-        eventBus.unregister(this);
-        super.onStop();
-    }
-
-    @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMapFragment.disableGestures();
         googleMapFragment.updateMarkerLocation(complaintDto.getLattitude(), complaintDto.getLongitude());
@@ -171,7 +185,12 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
 
     public void onEventMainThread(GetComplaintImageEvent event) {
         if(event.getSuccess()) {
-            complaintImage.setImageBitmap(event.getBitmap());
+            if(complaintImage != null) {
+                complaintImage.setImageBitmap(event.getBitmap());
+            }
+            else {
+                complaintBitmap = event.getBitmap();
+            }
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch complaint image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
@@ -180,7 +199,12 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
 
     public void onEventMainThread(GetProfileImageEvent event) {
         if(event.getSuccess()) {
-            submitterImage.setImageBitmap(event.getBitmap());
+            if(submitterImage != null) {
+                submitterImage.setImageBitmap(event.getBitmap());
+            }
+            else {
+                submitterBitmap = event.getBitmap();
+            }
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch submitter image. Error = " + event.getError(), Toast.LENGTH_LONG).show();

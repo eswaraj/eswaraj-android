@@ -2,6 +2,7 @@ package com.eswaraj.app.eswaraj.datastore;
 
 import android.content.Context;
 import android.location.Location;
+import android.util.Log;
 
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.ImageType;

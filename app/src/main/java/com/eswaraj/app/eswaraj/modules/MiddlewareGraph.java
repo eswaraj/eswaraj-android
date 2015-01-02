@@ -20,6 +20,7 @@ import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.activities.YoutubeActivity;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.datastore.CacheInterface;
+import com.eswaraj.app.eswaraj.datastore.LruBitmapCache;
 import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.fragments.AddDetailsFragment;
@@ -49,6 +50,7 @@ import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
+import com.eswaraj.app.eswaraj.util.VolleyUtil;
 import com.eswaraj.app.eswaraj.volley.CommentPostRequest;
 import com.eswaraj.app.eswaraj.volley.CommentsRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintCloseRequest;
@@ -125,7 +127,8 @@ import de.greenrobot.event.EventBus;
                 ConstituencyActivity.class,
                 ConstituencyFragment.class,
                 LocationComplaintsRequest.class,
-                LocationComplaintCountersRequest.class
+                LocationComplaintCountersRequest.class,
+                VolleyUtil.class
         },
         complete = false,
         library = true
@@ -279,5 +282,15 @@ public class MiddlewareGraph {
     @Provides @Singleton
     LocationComplaintCountersRequest provideLocationComplaintCountersRequest() {
         return new LocationComplaintCountersRequest();
+    }
+
+    @Provides @Singleton
+    VolleyUtil provideVolleyUtil() {
+        return new VolleyUtil();
+    }
+
+    @Provides @Singleton
+    LruBitmapCache provideLruBitmapCache() {
+        return new LruBitmapCache(this.applicationContext);
     }
 }

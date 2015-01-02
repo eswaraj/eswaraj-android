@@ -109,8 +109,17 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         pDialog = new CustomProgressDialog(getActivity(), false, true, "Fetching your complaints ...");
         pDialog.show();
 
+        eventBus.register(this);
+
         middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), true);
         middlewareService.loadProfileImage(getActivity(), userSession.getProfilePhoto(), userSession.getUser().getPerson().getId());
+        middlewareService.loadCategoriesData(getActivity());
+    }
+
+    @Override
+    public void onDestroy() {
+        eventBus.unregister(this);
+        super.onDestroy();
     }
 
     @Override
@@ -197,19 +206,6 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         });
 
         return rootView;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        eventBus.register(this);
-        middlewareService.loadCategoriesData(getActivity());
-    }
-
-    @Override
-    public void onStop() {
-        eventBus.unregister(this);
-        super.onStop();
     }
 
     public synchronized void setComplaintData(List<ComplaintDto> complaintDtoList) {

@@ -22,161 +22,221 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                android:layout_gravity="left">
+                android:weightSum="1"
+                android:layout_weight="0.3">
 
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:orientation="vertical"
-                    android:layout_weight="0.5"
-                    android:weightSum="1"
-                    >
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.5">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="0.8"
+                        android:weightSum="1"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+                        <com.android.volley.toolbox.NetworkImageView
+                            android:id="@+id/scSubmitterImage"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:src="@drawable/profile_image"
+                            android:layout_weight="0.5"/>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:orientation="vertical"
+                            android:weightSum="1"
+                            android:layout_weight="0.5">
+
+                            <TextView
+                                android:id="@+id/scSubmitterName"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:text="Aam Aadmi"
+                                android:layout_weight="0.5"
+                                android:gravity="left|bottom" />
+
+                            <TextView
+                                android:id="@+id/scSubmitterDetails"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:text="25Yrs, Male"
+                                android:layout_weight="0.5"
+                                android:gravity="top|left"
+                                android:textColor="#929292" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical"
+                        android:weightSum="1"
+                        android:layout_weight="0.2">
+
+                        <TextView
+                            android:id="@+id/scStatusLabel"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.08"
+                            android:text="Issue Status"
+                            android:paddingLeft="15dp"
+                            android:textColor="#828282" />
+
+                        <TextView
+                            android:id="@+id/scStatus"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.08"
+                            android:text="Pending"
+                            android:textStyle="bold"
+                            android:paddingLeft="15dp"
+                            android:textColor="#ff32acf1" />
+
+                        <TextView
+                            android:id="@+id/scComplaintIdLabel"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.08"
+                            android:text="Issue Id"
+                            android:paddingLeft="15dp"
+                            android:textColor="#828282" />
+
+                        <TextView
+                            android:id="@+id/scComplaintId"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.08"
+                            android:text="84801"
+                            android:paddingLeft="15dp"
+                            android:textStyle="bold"
+                            android:textColor="#ff32acf1" />
+
+                        <TextView
+                            android:id="@+id/scCategory_label"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.08"
+                            android:text="Citizen Service"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="15dp"
+                            android:textColor="#828282" />
+
+                        <TextView
+                            android:id="@+id/scCategory"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.08"
+                            android:text="Water"
+                            android:paddingLeft="15dp"
+                            android:textStyle="bold"
+                            android:textColor="#ff32acf1" />
+
+                        <TextView
+                            android:id="@+id/scSubCategory_label"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.08"
+                            android:text="Issue Name"
+                            android:paddingLeft="15dp"
+                            android:textColor="#828282" />
+
+                        <TextView
+                            android:id="@+id/scSubCategory"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.08"
+                            android:text="Leaking Water Pipes"
+                            android:paddingLeft="15dp"
+                            android:textStyle="bold"
+                            android:textColor="#ff32acf1" />
+
+                        <TextView
+                            android:id="@+id/cs_address_label"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.08"
+                            android:text="Issue Reported From"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="15dp"
+                            android:textColor="#828282" />
+
+                        <TextView
+                            android:id="@+id/cs_address"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.08"
+                            android:text="Govind Vihar, Delhi"
+                            android:paddingLeft="15dp"
+                            android:textStyle="bold"
+                            android:textColor="#ff32acf1" />
+
+                        <TextView
+                            android:id="@+id/cs_issue_desc_label"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.08"
+                            android:text="Issue Description"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="15dp"
+                            android:textColor="#828282" />
+
+                        <TextView
+                            android:id="@+id/scDescription"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.08"
+                            android:text="Too much problem"
+                            android:paddingLeft="15dp"
+                            android:textStyle="bold"
+                            android:textColor="#ff32acf1" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="0.5">
+
+                    <Button
+                        android:id="@+id/scClose"
+                        android:text="Close Complaint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal" />
+
+                    <FrameLayout
+                        android:id="@+id/scDisplayContainer"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.5"
+                        android:padding="10dp"/>
 
                     <ImageView
-                        android:id="@+id/scSubmitterImage"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" />
-
-                    <TextView
-                        android:id="@+id/scSubmitterName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/scStatus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/scComplaintId"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/scCategory_label"
+                        android:id="@+id/scComplaintPhoto"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
-                        android:text="Citizen Service"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="15dp"
-                        android:textColor="#828282" />
-
-                    <TextView
-                        android:id="@+id/scCategory"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
-                        android:text="Water"
-                        android:paddingLeft="15dp"
-                        android:textStyle="bold"
-                        android:textColor="#ff32acf1" />
-
-                    <TextView
-                        android:id="@+id/scSubCategory_label"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
-                        android:text="Issue Name"
-                        android:paddingLeft="15dp"
-                        android:textColor="#828282" />
-
-                    <TextView
-                        android:id="@+id/scSubCategory"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
-                        android:text="Leaking Water Pipes"
-                        android:paddingLeft="15dp"
-                        android:textStyle="bold"
-                        android:textColor="#ff32acf1" />
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.5"
+                        android:padding="5dp" />
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/scComplaintPhoto"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="0.5"
-                    android:padding="5dp" />
-
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="140dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="0.5"
-                    android:weightSum="1"
-                    >
-
-                    <TextView
-                        android:id="@+id/cs_address_label"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
-                        android:text="Issue Reported From"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="15dp"
-                        android:textColor="#828282" />
-
-                    <TextView
-                        android:id="@+id/cs_address"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
-                        android:text="Govind Vihar, Delhi"
-                        android:paddingLeft="15dp"
-                        android:textStyle="bold"
-                        android:textColor="#ff32acf1" />
-
-                    <TextView
-                        android:id="@+id/cs_issue_desc_label"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
-                        android:text="Issue Description"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="15dp"
-                        android:textColor="#828282" />
-
-                    <TextView
-                        android:id="@+id/scDescription"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
-                        android:text="Too much problem"
-                        android:paddingLeft="15dp"
-                        android:textStyle="bold"
-                        android:textColor="#ff32acf1" />
-
-                </LinearLayout>
-
-                <FrameLayout
-                    android:id="@+id/scDisplayContainer"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="0.5"
-                    android:padding="10dp"/>
-
-            </LinearLayout>
-
-
-            <Button
-                android:id="@+id/scClose"
-                android:text="Close Complaint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" />
 
             <FrameLayout
                 android:id="@+id/scCommentContainer"

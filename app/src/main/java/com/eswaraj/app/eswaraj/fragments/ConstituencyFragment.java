@@ -104,6 +104,20 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
     private ComplaintListAdapter openListAdapter;
     private ComplaintListAdapter closeListAdapter;
 
+    private TextView cTotalHouses;
+    private TextView cTotalPopulation;
+    private TextView cTotalMalePopulation;
+    private TextView cTotalFemalePopulation;
+    private TextView cTotalLiteratePopulation;
+    private TextView cTotalMaleLiteratePopulation;
+    private TextView cTotalFemaleLiteratePopulation;
+    private TextView cTotalWorkingPopulation;
+    private TextView cTotalMaleWorkingPopulation;
+    private TextView cTotalFemaleWorkingPopulation;
+    private TextView cArea;
+    private TextView cPerimeter;
+
+
     public ConstituencyFragment() {
         // Required empty public constructor
     }
@@ -171,6 +185,19 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         cScrollView = (ScrollView) rootView.findViewById(R.id.cScrollView);
         cDataView = (RelativeLayout) rootView.findViewById(R.id.cDataView);
 
+        cTotalHouses = (TextView)rootView.findViewById( R.id.cTotalHouses );
+        cTotalPopulation = (TextView)rootView.findViewById( R.id.cTotalPopulation );
+        cTotalMalePopulation = (TextView)rootView.findViewById( R.id.cTotalMalePopulation );
+        cTotalFemalePopulation = (TextView)rootView.findViewById( R.id.cTotalFemalePopulation );
+        cTotalLiteratePopulation = (TextView)rootView.findViewById( R.id.cTotalLiteratePopulation );
+        cTotalMaleLiteratePopulation = (TextView)rootView.findViewById( R.id.cTotalMaleLiteratePopulation );
+        cTotalFemaleLiteratePopulation = (TextView)rootView.findViewById( R.id.cTotalFemaleLiteratePopulation );
+        cTotalWorkingPopulation = (TextView)rootView.findViewById( R.id.cTotalWorkingPopulation );
+        cTotalMaleWorkingPopulation = (TextView)rootView.findViewById( R.id.cTotalMaleWorkingPopulation );
+        cTotalFemaleWorkingPopulation = (TextView)rootView.findViewById( R.id.cTotalFemaleWorkingPopulation );
+        cArea = (TextView)rootView.findViewById( R.id.cArea );
+        cPerimeter = (TextView)rootView.findViewById( R.id.cPerimeter );
+
         mcAnalyticsContainer.setVisibility(View.INVISIBLE);
         mcMapButtons.setVisibility(View.INVISIBLE);
         mcInfoContainer.setVisibility(View.INVISIBLE);
@@ -179,18 +206,21 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
             mcPhoto.setImageBitmap(photo);
         }
 
-        //TODO:Add actual data here
-        TableLayout tableLayout = new TableLayout(getActivity());
-        TableRow tableRow;
-        TextView heading = new TextView(getActivity());
-        TextView content = new TextView(getActivity());
-        heading.setText("Total Population");
-        content.setText("500");
-        mcInfoContainer.addView(tableLayout);
-        tableRow = new TableRow(getActivity());
-        tableRow.addView(heading);
-        tableRow.addView(content);
-        tableLayout.addView(tableRow);
+        //Info data
+        if(locationDto.getTotalNumberOfHouses() != null) {
+            cTotalHouses.setText(locationDto.getTotalNumberOfHouses().toString());
+            cTotalPopulation.setText(locationDto.getTotalPopulation().toString());
+            cTotalMalePopulation.setText(locationDto.getTotalMalePopulation().toString());
+            cTotalFemalePopulation.setText(locationDto.getTotalFemalePopulation().toString());
+            cTotalLiteratePopulation.setText(locationDto.getTotalLiteratePopulation().toString());
+            cTotalMaleLiteratePopulation.setText(locationDto.getTotalMaleLiteratePopulation().toString());
+            cTotalFemaleLiteratePopulation.setText(locationDto.getTotalFemaleLiteratePopulation().toString());
+            cTotalWorkingPopulation.setText(locationDto.getTotalWorkingPopulation().toString());
+            cTotalMaleWorkingPopulation.setText(locationDto.getTotalMaleWorkingPopulation().toString());
+            cTotalFemaleWorkingPopulation.setText(locationDto.getTotalFemaleWorkingPopulation().toString());
+            cArea.setText(locationDto.getArea().toString());
+            cPerimeter.setText(locationDto.getPerimeter().toString());
+        }
 
         mcListOpen.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
