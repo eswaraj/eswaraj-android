@@ -32,10 +32,12 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/issue_detail_button"
         android:drawableLeft="@drawable/ic_delete"
-        android:drawablePadding="8dp"
+        android:drawablePadding="2dp"
         android:text="Remove Photo"
         android:textColor="#ff1c33b0"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp" />
 
     <Button
         android:id="@+id/adRetakePhoto"
@@ -45,9 +47,11 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/issue_detail_button"
         android:drawableLeft="@drawable/ic_retake"
-        android:drawablePadding="8dp"
+        android:drawablePadding="2dp"
         android:text="Retake Photo"
         android:textColor="#ff1c33b0"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp" />
 
 </RelativeLayout>

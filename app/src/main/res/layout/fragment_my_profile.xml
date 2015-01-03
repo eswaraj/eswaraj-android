@@ -48,12 +48,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_edit"
-        android:textColor="#fff"
-        android:background="@color/red"
+        android:drawablePadding="5dp"
+        android:textColor="@color/red"
         android:singleLine="false"
         android:padding="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="150dp" />
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="150dp"
+        android:textStyle="bold" />
 
     </RelativeLayout>
 

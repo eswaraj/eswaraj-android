@@ -208,33 +208,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="1"
         android:orientation="horizontal">
-
-    <Button
-        android:id="@+id/csAnother"
-        android:text="Another Complaint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginRight="2dp"
-        android:textColor="#333" />
-
-    <Button
-        android:id="@+id/csDone"
-        android:text="Done"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginLeft="2dp"
-        android:textColor="#333" />
 
         <ImageView
             android:id="@+id/csFacebook"
             android:src="@drawable/facebook_share_button"
             android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="4dp" />
+
+        <Button
+        android:id="@+id/csAnother"
+        android:text="New Complaint"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:layout_marginRight="2dp"
+        android:textColor="#333"
+        android:textSize="12dp"
+            android:layout_marginLeft="2dp" />
+
+    <Button
+        android:id="@+id/csDone"
+        android:text="Done"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:textColor="#333"
+        android:textSize="12dp"
+        android:layout_marginRight="2dp" />
 
     </LinearLayout>
 
