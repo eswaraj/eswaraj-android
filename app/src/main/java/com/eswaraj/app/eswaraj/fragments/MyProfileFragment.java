@@ -28,10 +28,13 @@ import com.eswaraj.app.eswaraj.events.UserContinueEvent;
 import com.eswaraj.app.eswaraj.interfaces.BitmapWorkerCallback;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareService;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.util.GenericUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -46,8 +49,6 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
     UserSessionUtil userSession;
     @Inject
     MiddlewareServiceImpl middlewareService;
-    @Inject
-    StorageCache storageCache;
 
     private ImageView mpPhoto;
     private TextView mpName;
@@ -57,6 +58,7 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
     private Button mpCancel;
     private Button mpLogout;
     private GoogleMapFragment googleMapFragment;
+    private TextView mpUserDetails;
 
     private CustomProgressDialog pDialog;
     private Bitmap profilePhoto;
@@ -92,9 +94,11 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
         mpSave = (Button) rootView.findViewById(R.id.mpSave);
         mpCancel = (Button) rootView.findViewById(R.id.mpCancel);
         mpLogout = (Button) rootView.findViewById(R.id.mpLogout);
+        mpUserDetails = (TextView) rootView.findViewById(R.id.mcUserDetails);
 
         mpName.setText(userSession.getUser().getPerson().getName());
         mpInputName.setText(userSession.getUser().getPerson().getName());
+        mpUserDetails.setText(GenericUtil.getAge(userSession.getUser().getPerson().getDob()) + " Years, " + userSession.getUser().getPerson().getGender());
         if(profilePhoto != null) {
             mpPhoto.setImageBitmap(profilePhoto);
         }

@@ -45,7 +45,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp">
 
-                        <com.android.volley.toolbox.NetworkImageView
+                        <ImageView
                             android:id="@+id/scSubmitterImage"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
@@ -71,7 +71,6 @@
                                 android:id="@+id/scSubmitterDetails"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
-                                android:text="25Yrs, Male"
                                 android:layout_weight="0.5"
                                 android:gravity="top|left"
                                 android:textColor="#929292" />

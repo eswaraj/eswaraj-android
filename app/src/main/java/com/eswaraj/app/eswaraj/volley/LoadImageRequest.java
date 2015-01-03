@@ -42,6 +42,7 @@ public class LoadImageRequest extends BaseClass {
         if(url != null) {
             if (!url.equals("")) {
                 ImageRequest request = new ImageRequest(url, createSuccessListener(context, id, type), 0, 0, null, createErrorListener(context, id, type));
+                request.setShouldCache(false);
                 this.networkAccessHelper.submitNetworkRequest("GetImage" + type + "_" + id, request);
             }
         }

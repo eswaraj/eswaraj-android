@@ -72,6 +72,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     private ImageView facebook;
 
     private Long id;
+    private Bitmap mlaBitmap;
 
     public ComplaintSummaryFragment() {
         // Required empty public constructor
@@ -123,6 +124,9 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
                 }
             }
         }
+        if(mlaBitmap != null) {
+            mlaPhoto.setImageBitmap(mlaBitmap);
+        }
 
 
         done.setOnClickListener(new Button.OnClickListener() {
@@ -161,18 +165,6 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     }
 
     @Override
-    public void onStop() {
-        eventBus.unregister(this);
-        super.onStop();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        eventBus.register(this);
-    }
-
-    @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMapFragment.disableGestures();
         googleMapFragment.updateMarkerLocation(complaintPostResponseDto.getComplaintDto().getLattitude(), complaintPostResponseDto.getComplaintDto().getLongitude());
@@ -180,7 +172,12 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
 
     public void onEventMainThread(GetProfileImageEvent event) {
         if(event.getSuccess()) {
-            mlaPhoto.setImageBitmap(event.getBitmap());
+            if(mlaPhoto != null) {
+                mlaPhoto.setImageBitmap(event.getBitmap());
+            }
+            else {
+                mlaBitmap = event.getBitmap();
+            }
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch MLA image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
@@ -190,6 +187,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        eventBus.register(this);
         facebookSharingUtil.onCreate(getActivity(), savedInstanceState);
     }
 
@@ -207,6 +205,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
 
     @Override
     public void onDestroy() {
+        eventBus.unregister(this);
         super.onDestroy();
         facebookSharingUtil.onDestroy();
     }

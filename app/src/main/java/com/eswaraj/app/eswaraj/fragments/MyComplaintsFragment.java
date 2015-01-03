@@ -32,6 +32,7 @@ import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.app.eswaraj.util.GenericUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
+import com.eswaraj.app.eswaraj.widgets.CustomScrollView;
 import com.eswaraj.app.eswaraj.widgets.PieChartView;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
@@ -76,6 +77,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     private TextView mcName;
     private ImageView mcPhoto;
     private RelativeLayout mcDataView;
+    private CustomScrollView mcScrollView;
 
     private Boolean mapDisplayed = false;
     private Boolean mapReady = false;
@@ -138,6 +140,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         mcName = (TextView) rootView.findViewById(R.id.mcName);
         mcPhoto = (ImageView) rootView.findViewById(R.id.mcPhoto);
         mcDataView = (RelativeLayout) rootView.findViewById(R.id.mcDataView);
+        mcScrollView = (CustomScrollView) rootView.findViewById(R.id.mcScrollView);
 
         mcAnalyticsContainer.setVisibility(View.INVISIBLE);
         mcName.setText(userSession.getUser().getPerson().getName());
@@ -228,6 +231,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
             googleMapFragment.addMarkers(complaintDtoList);
             markersAdded = true;
         }
+        mcScrollView.addInterceptScrollView(googleMapFragment.getView());
     }
 
     public void populateCountersAndCreateChart() {

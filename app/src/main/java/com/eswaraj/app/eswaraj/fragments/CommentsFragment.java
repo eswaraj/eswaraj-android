@@ -110,6 +110,9 @@ public class CommentsFragment extends BaseFragment {
                     }
                 });
             }
+            if(commentListAdapter.getCount() < 5) {
+                cShowMore.setVisibility(View.INVISIBLE);
+            }
         }
         else {
             Toast.makeText(getActivity(), "Failed to fetch comments. Error = " + event.getError(), Toast.LENGTH_LONG).show();
@@ -125,6 +128,9 @@ public class CommentsFragment extends BaseFragment {
                     commentListAdapter.notifyDataSetChanged();
                 }
             });
+            if(commentListAdapter.getCount() >= 5) {
+                cShowMore.setVisibility(View.VISIBLE);
+            }
             Toast.makeText(getActivity(), "Comment Posted", Toast.LENGTH_LONG).show();
         }
         else {

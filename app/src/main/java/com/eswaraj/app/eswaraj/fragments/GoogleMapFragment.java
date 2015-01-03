@@ -168,7 +168,7 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 0);
         googleMap.animateCamera(cu);
         }
-        else {
+        else if(complaintDtos.size() > 0) {
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(complaintDtos.get(0).getLattitude(), complaintDtos.get(0).getLongitude()))
                     .zoom(zoomLevel)
@@ -220,7 +220,7 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
             CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 0);
             googleMap.animateCamera(cu);
         }
-        else {
+        else if(complaintDtos.size() > 0) {
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(latLng)
                     .zoom(zoomLevel)
@@ -257,7 +257,7 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
             CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 0);
             googleMap.animateCamera(cu);
         }
-        else {
+        else if(complaintDtos.size() > 0) {
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(complaintDtos.get(0).getLattitude(), complaintDtos.get(0).getLongitude()))
                     .zoom(zoomLevel)
@@ -273,6 +273,8 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
 
     public void removeCluster() {
         googleMap.clear();
+        googleMap.setOnCameraChangeListener(null);
+        googleMap.setOnMarkerClickListener(null);
     }
 
     public void clearMap() {

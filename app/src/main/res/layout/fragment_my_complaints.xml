@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         layout="@layout/screen_header" />
 
-    <ScrollView
+    <com.eswaraj.app.eswaraj.widgets.CustomScrollView
+        android:id="@+id/mcScrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -220,7 +221,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </com.eswaraj.app.eswaraj.widgets.CustomScrollView>
 
 
 </LinearLayout>

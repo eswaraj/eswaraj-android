@@ -35,6 +35,7 @@ import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.ComplaintCounter;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
+import com.eswaraj.app.eswaraj.widgets.CustomScrollView;
 import com.eswaraj.app.eswaraj.widgets.PieChartView;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
@@ -84,7 +85,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
     private CustomProgressDialog pDialog;
     private Button mcShowMore;
     private LinearLayout mcInfoContainer;
-    private ScrollView cScrollView;
+    private CustomScrollView cScrollView;
     private RelativeLayout cDataView;
 
     private Button heatmap;
@@ -182,7 +183,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         mcIssueCount = (TextView) rootView.findViewById(R.id.issue_issues);
         mcShowMore = (Button) rootView.findViewById(R.id.cShowMore);
         mcInfoContainer = (LinearLayout) rootView.findViewById(R.id.cInfoContainer);
-        cScrollView = (ScrollView) rootView.findViewById(R.id.cScrollView);
+        cScrollView = (CustomScrollView) rootView.findViewById(R.id.cScrollView);
         cDataView = (RelativeLayout) rootView.findViewById(R.id.cDataView);
 
         cTotalHouses = (TextView)rootView.findViewById( R.id.cTotalHouses );
@@ -327,6 +328,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
             googleMapFragment.addMarkers(complaintDtoList);
             markersAdded = true;
         }
+        cScrollView.addInterceptScrollView(googleMapFragment.getView());
     }
 
     public synchronized void setComplaintData() {

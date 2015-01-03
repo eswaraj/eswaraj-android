@@ -53,8 +53,9 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
 
     private CommentsFragment commentsFragment;
     private ImageView complaintImage;
-    private NetworkImageView submitterImage;
+    private ImageView submitterImage;
     private TextView submitterName;
+    private TextView submitterDetails;
     private GoogleMapFragment googleMapFragment;
     private ComplaintDto complaintDto;
     private CustomProgressDialog pDialog;
@@ -98,7 +99,8 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         scDescription = (TextView) rootView.findViewById(R.id.scDescription);
         complaintImage = (ImageView) rootView.findViewById(R.id.scComplaintPhoto);
         submitterName = (TextView) rootView.findViewById(R.id.scSubmitterName);
-        submitterImage = (NetworkImageView) rootView.findViewById(R.id.scSubmitterImage);
+        submitterImage = (ImageView) rootView.findViewById(R.id.scSubmitterImage);
+        submitterDetails = (TextView) rootView.findViewById(R.id.scSubmitterDetails);
         scStatus = (TextView) rootView.findViewById(R.id.scStatus);
         scComplaintId = (TextView) rootView.findViewById(R.id.scComplaintId);
 
@@ -138,11 +140,11 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         if(!complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
             //PersonId is null. Using complaintId for caching
             personId = complaintDto.getCreatedBy().get(0).getId();
-            //middlewareService.loadProfileImage(getActivity(), complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getId());
-            submitterImage.setImageUrl(complaintDto.getCreatedBy().get(0).getProfilePhoto(), volleyUtil.getImageLoader());
+            middlewareService.loadProfileImage(getActivity(), complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getId());
+            //submitterImage.setImageUrl(complaintDto.getCreatedBy().get(0).getProfilePhoto(), volleyUtil.getImageLoader());
         }
         if(submitterBitmap != null) {
-            //submitterImage.setImageBitmap(submitterBitmap);
+            submitterImage.setImageBitmap(submitterBitmap);
         }
 
         //Set up fragments
