@@ -17,20 +17,15 @@ public class Internet extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if(intent.getAction().equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
-            NetworkInfo networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
-            if(networkInfo.isConnected()) {
-                // Wifi is connected
-                Log.d("Inetify", "Wifi is connected: " + String.valueOf(networkInfo));
+        if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+            ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+            if(isConnected) {
                 Intent i = new Intent(context, ComplaintPostService.class);
                 context.startService(i);
             }
-        } else if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-            NetworkInfo networkInfo = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
-            if(networkInfo.getType() == ConnectivityManager.TYPE_WIFI && !networkInfo.isConnected()) {
-                // Wifi is disconnected
-                Log.d("Inetify", "Wifi is disconnected: " + String.valueOf(networkInfo));
-            }
+
         }
     }
 }

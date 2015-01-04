@@ -130,12 +130,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.LoginDialogActivity"
-            android:label="Log In to Continue"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.Dialog" >
-        </activity>
-        <activity
             android:name=".activities.MyProfileActivity"
             android:label="@string/title_activity_my_profile"
             android:parentActivityName=".activities.HomeActivity"
@@ -162,7 +156,6 @@
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="android.net.wifi.STATE_CHANGE" />
             </intent-filter>
         </receiver>
 

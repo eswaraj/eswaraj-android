@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.base.BaseService;
 import com.eswaraj.app.eswaraj.events.DatabaseComplaintPostEvent;
+import com.eswaraj.app.eswaraj.helpers.NotificationHelper;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 
 import javax.inject.Inject;
@@ -19,6 +20,10 @@ public class ComplaintPostService extends BaseService {
     MiddlewareServiceImpl middlewareService;
     @Inject
     EventBus eventBus;
+    @Inject
+    NotificationHelper notificationHelper;
+
+    int count = 0;
 
     public ComplaintPostService() {
     }
@@ -44,9 +49,13 @@ public class ComplaintPostService extends BaseService {
     public void onEventMainThread(DatabaseComplaintPostEvent event) {
         if(event.getSuccess()) {
             if(event.getEnd()) {
+                if(count > 0) {
+                    notificationHelper.sendNotification(this, null, "eSwaraj: Posting complaints", "Offline complaints are sent to server", 9999);
+                }
                 stopSelf();
             }
             else {
+                count++;
                 middlewareService.postOneComplaint();
             }
         }

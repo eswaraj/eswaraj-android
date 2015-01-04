@@ -9,7 +9,6 @@ import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
 import com.eswaraj.app.eswaraj.activities.ConstituencyActivity;
 import com.eswaraj.app.eswaraj.activities.HomeActivity;
 import com.eswaraj.app.eswaraj.activities.LoginActivity;
-import com.eswaraj.app.eswaraj.activities.LoginDialogActivity;
 import com.eswaraj.app.eswaraj.activities.MarkLocationActivity;
 import com.eswaraj.app.eswaraj.activities.MyComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.MyProfileActivity;
@@ -42,6 +41,7 @@ import com.eswaraj.app.eswaraj.fragments.LoginFragment;
 import com.eswaraj.app.eswaraj.helpers.CameraHelper;
 import com.eswaraj.app.eswaraj.helpers.DatabaseHelper;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
+import com.eswaraj.app.eswaraj.helpers.NotificationHelper;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.helpers.StorageCacheClearingTask;
@@ -121,7 +121,6 @@ import de.greenrobot.event.EventBus;
                 HomeActivity.class,
                 UserSessionUtil.class,
                 SplashActivity.class,
-                LoginDialogActivity.class,
                 GoogleMapFragment.class,
                 ComplaintCloseRequest.class,
                 StorageCacheClearingTask.class,
@@ -316,5 +315,10 @@ public class MiddlewareGraph {
     @Provides @Singleton
     Database provideDatabase() {
         return new Database();
+    }
+
+    @Provides @Singleton
+    NotificationHelper provideNotificationHelper() {
+        return new NotificationHelper();
     }
 }
