@@ -3,6 +3,7 @@ package com.eswaraj.app.eswaraj.middleware;
 
 import android.content.Context;
 
+import com.eswaraj.app.eswaraj.models.ComplaintRequestDBItem;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.LocationDto;
@@ -24,4 +25,5 @@ public interface MiddlewareGetService {
     public void loadProfileUpdates(Context context, String token);
     public void loadLocationComplaints(Context context, LocationDto locationDto, int start, int count);
     public void loadLocationComplaintCounters(Context context, LocationDto locationDto);
+
 }

@@ -4,6 +4,7 @@ package com.eswaraj.app.eswaraj.middleware;
 import android.content.Context;
 
 import com.eswaraj.app.eswaraj.datastore.CacheInterface;
+import com.eswaraj.app.eswaraj.datastore.DatabaseInterface;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.LocationDto;
@@ -12,7 +13,7 @@ import com.facebook.Session;
 
 import java.util.List;
 
-public interface MiddlewareService extends MiddlewareGetService, MiddlewarePostService, CacheInterface {
+public interface MiddlewareService extends MiddlewareGetService, MiddlewarePostService, CacheInterface, DatabaseInterface {
 
     //Add these for each GET services
     public void loadCategoriesData(Context context, Boolean dontGetFromCache);

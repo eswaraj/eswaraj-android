@@ -1,16 +1,13 @@
 package com.eswaraj.app.eswaraj.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.ComplaintPostedEvent;
-import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
+import com.eswaraj.app.eswaraj.events.ComplaintSavedEvent;
 import com.eswaraj.app.eswaraj.fragments.AddDetailsFragment;
-import com.eswaraj.app.eswaraj.util.LocationUtil;
-import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 
 import javax.inject.Inject;
 
@@ -45,7 +42,19 @@ public class AddDetailsActivity extends BaseActivity {
 
     public void onEventMainThread(ComplaintPostedEvent event) {
         Intent i = new Intent(this, ComplaintSummaryActivity.class);
+        i.putExtra("MODE", true);
         i.putExtra("COMPLAINT", event.getComplaintPostResponseDto());
+        if(event.getImageFile() != null) {
+            i.putExtra("IMAGE", event.getImageFile());
+        }
+        startActivity(i);
+        finish();
+    }
+
+    public void onEventMainThread(ComplaintSavedEvent event) {
+        Intent i = new Intent(this, ComplaintSummaryActivity.class);
+        i.putExtra("MODE", false);
+        i.putExtra("COMPLAINT", event.getComplaintSavedResponseDto());
         if(event.getImageFile() != null) {
             i.putExtra("IMAGE", event.getImageFile());
         }

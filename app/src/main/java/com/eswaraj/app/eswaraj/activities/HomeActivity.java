@@ -2,6 +2,7 @@ package com.eswaraj.app.eswaraj.activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,6 +30,8 @@ import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.models.DialogItem;
 import com.eswaraj.app.eswaraj.util.GenericUtil;
+import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
+import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.google.android.gms.maps.GoogleMap;
@@ -52,6 +55,10 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     Context applicationContext;
     @Inject
     UserSessionUtil userSession;
+    @Inject
+    InternetServicesCheckUtil internetServicesCheckUtil;
+    @Inject
+    LocationServicesCheckUtil locationServicesCheckUtil;
 
     private GoogleMapFragment googleMapFragment;
     private Boolean mapReady = false;
@@ -102,22 +109,53 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         hCreate.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), SelectAmenityActivity.class);
-                startActivity(i);
+                if(locationServicesCheckUtil.isServiceAvailable(v.getContext())) {
+                    Intent i = new Intent(v.getContext(), SelectAmenityActivity.class);
+                    startActivity(i);
+                }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
+                    builder.setMessage("You need location services enabled to use this feature")
+                            .setCancelable(false)
+                            .setTitle("Location Service needed")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
             }
         });
 
         complaints.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userSession.isUserLoggedIn(v.getContext())) {
-                    Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
-                    startActivity(i);
+                if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
+                    if (userSession.isUserLoggedIn(v.getContext())) {
+                        Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
+                        startActivity(i);
+                    } else {
+                        Intent i = new Intent(v.getContext(), LoginActivity.class);
+                        i.putExtra("MODE", true);
+                        startActivityForResult(i, REQUEST_MY_COMPLAINTS);
+                    }
                 }
                 else {
-                    Intent i = new Intent(v.getContext(), LoginActivity.class);
-                    i.putExtra("MODE", true);
-                    startActivityForResult(i, REQUEST_MY_COMPLAINTS);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
+                    builder.setMessage("You need internet services enabled to use this feature")
+                            .setCancelable(false)
+                            .setTitle("Internet Connection needed")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
             }
         });
@@ -125,131 +163,177 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         leaders.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userSession.isUserLoggedIn(v.getContext()) && userSession.isUserLocationKnown()) {
-                    Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
-                    startActivity(i);
-                }
-                else if(userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
-                    Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
-                    i.putExtra("MODE", true);
-                    startActivityForResult(i, REQUEST_MY_LEADERS);
+                if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
+                    if (userSession.isUserLoggedIn(v.getContext()) && userSession.isUserLocationKnown()) {
+                        Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
+                        startActivity(i);
+                    } else if (userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
+                        Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
+                        i.putExtra("MODE", true);
+                        startActivityForResult(i, REQUEST_MY_LEADERS);
+                    } else {
+                        Intent i = new Intent(v.getContext(), LoginActivity.class);
+                        i.putExtra("MODE", true);
+                        startActivityForResult(i, REQUEST_MY_LEADERS);
+                    }
                 }
                 else {
-                    Intent i = new Intent(v.getContext(), LoginActivity.class);
-                    i.putExtra("MODE", true);
-                    startActivityForResult(i, REQUEST_MY_LEADERS);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
+                    builder.setMessage("You need internet services enabled to use this feature")
+                            .setCancelable(false)
+                            .setTitle("Internet Connection needed")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
             }
         });
         constituency.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userSession.isUserLoggedIn(v.getContext()) && userSession.isUserLocationKnown()) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
-                    LayoutInflater inflater = getLayoutInflater();
+                if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
+                    if(userSession.isUserLoggedIn(v.getContext()) && userSession.isUserLocationKnown()) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
+                        LayoutInflater inflater = getLayoutInflater();
 
-                    View rootView = inflater.inflate(R.layout.dialog_select, null);
-                    constituencyGridView = (GridView) rootView.findViewById(R.id.sOptionList);
-                    constituencyProgressWheel = (ProgressWheel) rootView.findViewById(R.id.sProgressWheel);
-                    sError = (LinearLayout) rootView.findViewById(R.id.sError);
-                    sClose = (Button) rootView.findViewById(R.id.sClose);
+                        View rootView = inflater.inflate(R.layout.dialog_select, null);
+                        constituencyGridView = (GridView) rootView.findViewById(R.id.sOptionList);
+                        constituencyProgressWheel = (ProgressWheel) rootView.findViewById(R.id.sProgressWheel);
+                        sError = (LinearLayout) rootView.findViewById(R.id.sError);
+                        sClose = (Button) rootView.findViewById(R.id.sClose);
 
-                    constituencyGridView.setVisibility(View.VISIBLE);
-                    constituencyProgressWheel.setVisibility(View.INVISIBLE);
-                    sError.setVisibility(View.INVISIBLE);
+                        constituencyGridView.setVisibility(View.VISIBLE);
+                        constituencyProgressWheel.setVisibility(View.INVISIBLE);
+                        sError.setVisibility(View.INVISIBLE);
 
-                    sClose.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            constituencyAlertDialog.dismiss();
-                        }
-                    });
-
-                    constituencyDialogItems.clear();
-
-                    if(userSession.getUser().getPerson().getPersonAddress().getState() != null) {
-                        DialogItem state = new DialogItem();
-                        state.setName(userSession.getUser().getPerson().getPersonAddress().getState().getName());
-                        state.setTitle("State");
-                        state.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
-                        state.setId(userSession.getUser().getPerson().getPersonAddress().getState().getId());
-                        state.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getState());
-                        state.setTarget(ConstituencyActivity.class);
-                        constituencyDialogItems.add(state);
-                    }
-
-                    if(userSession.getUser().getPerson().getPersonAddress().getPc() != null) {
-                        DialogItem pc = new DialogItem();
-                        pc.setName(userSession.getUser().getPerson().getPersonAddress().getPc().getName());
-                        pc.setTitle("Parliamentary Constituency");
-                        pc.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
-                        pc.setId(userSession.getUser().getPerson().getPersonAddress().getPc().getId());
-                        pc.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getPc());
-                        pc.setTarget(ConstituencyActivity.class);
-                        constituencyDialogItems.add(pc);
-                    }
-
-                    if(userSession.getUser().getPerson().getPersonAddress().getAc() != null) {
-                        DialogItem ac = new DialogItem();
-                        ac.setName(userSession.getUser().getPerson().getPersonAddress().getAc().getName());
-                        ac.setTitle("Assembly Constituency");
-                        ac.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
-                        ac.setId(userSession.getUser().getPerson().getPersonAddress().getAc().getId());
-                        ac.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getAc());
-                        ac.setTarget(ConstituencyActivity.class);
-                        constituencyDialogItems.add(ac);
-                    }
-
-                    if(constituencyDialogItems.size() > 0) {
-                        DialogAdapter adapter = new DialogAdapter(v.getContext(), R.layout.item_select_dialog, constituencyDialogItems);
-                        constituencyGridView.setAdapter(adapter);
-                        constituencyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        sClose.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            public void onClick(View v) {
                                 constituencyAlertDialog.dismiss();
-                                Intent i = new Intent(view.getContext(), ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getTarget());
-                                i.putExtra("LOCATION", (Serializable) ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getLocationDto());
-                                startActivity(i);
                             }
                         });
+
+                        constituencyDialogItems.clear();
+
+                        if(userSession.getUser().getPerson().getPersonAddress().getState() != null) {
+                            DialogItem state = new DialogItem();
+                            state.setName(userSession.getUser().getPerson().getPersonAddress().getState().getName());
+                            state.setTitle("State");
+                            state.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
+                            state.setId(userSession.getUser().getPerson().getPersonAddress().getState().getId());
+                            state.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getState());
+                            state.setTarget(ConstituencyActivity.class);
+                            constituencyDialogItems.add(state);
+                        }
+
+                        if(userSession.getUser().getPerson().getPersonAddress().getPc() != null) {
+                            DialogItem pc = new DialogItem();
+                            pc.setName(userSession.getUser().getPerson().getPersonAddress().getPc().getName());
+                            pc.setTitle("Parliamentary Constituency");
+                            pc.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
+                            pc.setId(userSession.getUser().getPerson().getPersonAddress().getPc().getId());
+                            pc.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getPc());
+                            pc.setTarget(ConstituencyActivity.class);
+                            constituencyDialogItems.add(pc);
+                        }
+
+                        if(userSession.getUser().getPerson().getPersonAddress().getAc() != null) {
+                            DialogItem ac = new DialogItem();
+                            ac.setName(userSession.getUser().getPerson().getPersonAddress().getAc().getName());
+                            ac.setTitle("Assembly Constituency");
+                            ac.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
+                            ac.setId(userSession.getUser().getPerson().getPersonAddress().getAc().getId());
+                            ac.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getAc());
+                            ac.setTarget(ConstituencyActivity.class);
+                            constituencyDialogItems.add(ac);
+                        }
+
+                        if(constituencyDialogItems.size() > 0) {
+                            DialogAdapter adapter = new DialogAdapter(v.getContext(), R.layout.item_select_dialog, constituencyDialogItems);
+                            constituencyGridView.setAdapter(adapter);
+                            constituencyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    constituencyAlertDialog.dismiss();
+                                    Intent i = new Intent(view.getContext(), ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getTarget());
+                                    i.putExtra("LOCATION", (Serializable) ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getLocationDto());
+                                    startActivity(i);
+                                }
+                            });
+                        }
+                        else {
+                            sError.setVisibility(View.VISIBLE);
+                            constituencyGridView.setVisibility(View.INVISIBLE);
+                        }
+
+                        builder.setView(rootView)
+                                .setCancelable(true)
+                                .setTitle("Select Constituency");
+                        constituencyAlertDialog = builder.create();
+                        constituencyAlertDialog.show();
+                        constituencyAlertDialog.getWindow().setLayout(700, 400);
+
+
+                    }
+                    else if(userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
+                        Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
+                        i.putExtra("MODE", true);
+                        startActivityForResult(i, REQUEST_MY_CONSTITUENCY);
                     }
                     else {
-                        sError.setVisibility(View.VISIBLE);
-                        constituencyGridView.setVisibility(View.INVISIBLE);
+                        Intent i = new Intent(v.getContext(), LoginActivity.class);
+                        i.putExtra("MODE", true);
+                        startActivityForResult(i, REQUEST_MY_CONSTITUENCY);
                     }
-
-                    builder.setView(rootView)
-                            .setCancelable(true)
-                            .setTitle("Select Constituency");
-                    constituencyAlertDialog = builder.create();
-                    constituencyAlertDialog.show();
-                    constituencyAlertDialog.getWindow().setLayout(700, 400);
-
-
-                }
-                else if(userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
-                    Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
-                    i.putExtra("MODE", true);
-                    startActivityForResult(i, REQUEST_MY_CONSTITUENCY);
                 }
                 else {
-                    Intent i = new Intent(v.getContext(), LoginActivity.class);
-                    i.putExtra("MODE", true);
-                    startActivityForResult(i, REQUEST_MY_CONSTITUENCY);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
+                    builder.setMessage("You need internet services enabled to use this feature")
+                            .setCancelable(false)
+                            .setTitle("Internet Connection needed")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
             }
         });
         profile.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userSession.isUserLoggedIn(v.getContext())) {
-                    Intent i = new Intent(v.getContext(), MyProfileActivity.class);
-                    startActivity(i);
+                if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
+                    if(userSession.isUserLoggedIn(v.getContext())) {
+                        Intent i = new Intent(v.getContext(), MyProfileActivity.class);
+                        startActivity(i);
+                    }
+                    else {
+                        Intent i = new Intent(v.getContext(), LoginActivity.class);
+                        i.putExtra("MODE", true);
+                        startActivityForResult(i, REQUEST_MY_PROFILE);
+                    }
                 }
                 else {
-                    Intent i = new Intent(v.getContext(), LoginActivity.class);
-                    i.putExtra("MODE", true);
-                    startActivityForResult(i, REQUEST_MY_PROFILE);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
+                    builder.setMessage("You need internet services enabled to use this feature")
+                            .setCancelable(false)
+                            .setTitle("Internet Connection needed")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
             }
         });

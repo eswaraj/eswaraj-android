@@ -4,6 +4,7 @@ package com.eswaraj.app.eswaraj.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,19 +21,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
-import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
 import com.eswaraj.app.eswaraj.activities.LoginActivity;
 import com.eswaraj.app.eswaraj.events.ComplaintPostedEvent;
-import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
+import com.eswaraj.app.eswaraj.events.ComplaintReportedEvent;
+import com.eswaraj.app.eswaraj.events.ComplaintSavedEvent;
 import com.eswaraj.app.eswaraj.helpers.BitmapWorkerTask;
 import com.eswaraj.app.eswaraj.helpers.CameraHelper;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.models.ComplaintSavedResponseDto;
+import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-
-import java.io.File;
+import com.google.gson.Gson;
 
 import javax.inject.Inject;
 
@@ -53,6 +55,8 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
     UserSessionUtil userSession;
     @Inject
     CameraHelper cameraHelper;
+    @Inject
+    InternetServicesCheckUtil internetServicesCheckUtil;
 
     private Button takePhoto;
     private Button attachPhoto;
@@ -164,9 +168,29 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
             public void onClick(View view) {
                 if(userSession.isUserLoggedIn(getActivity())) {
                     if (!posted) {
-                        middlewareService.postComplaint(userSession.getUser(), amenity, template, location, description.getText().toString(), cameraHelper.getImageFile(), anonCheckbox.isChecked(), userSession.getUserRevGeocodedLocation());
-                        pDialog = new CustomProgressDialog(getActivity(), false, true, "Posting your complaint ...");
-                        pDialog.show();
+                        if(internetServicesCheckUtil.isServiceAvailable(getActivity())) {
+                            middlewareService.postComplaint(userSession.getUser(), amenity, template, location, description.getText().toString(), cameraHelper.getImageFile(), anonCheckbox.isChecked(), userSession.getUserRevGeocodedLocation());
+                            pDialog = new CustomProgressDialog(getActivity(), false, true, "Posting your complaint ...");
+                            pDialog.show();
+                        }
+                        else {
+                            middlewareService.saveComplaint(userSession.getUser(), amenity, template, location, description.getText().toString(), cameraHelper.getImageFile(), anonCheckbox.isChecked(), userSession.getUserRevGeocodedLocation());
+                            Address bestMatch = new Gson().fromJson(userSession.getUserRevGeocodedLocation(), Address.class);
+                            String userLocationString = null;
+                            if(bestMatch != null) {
+                                userLocationString = bestMatch.getAddressLine(1) + ", " + bestMatch.getAddressLine(2);
+                            }
+                            ComplaintSavedResponseDto complaintSavedResponseDto = new ComplaintSavedResponseDto();
+                            ComplaintSavedEvent event = new ComplaintSavedEvent();
+                            complaintSavedResponseDto.setAmenity(amenity);
+                            complaintSavedResponseDto.setTemplate(template);
+                            complaintSavedResponseDto.setDescription(description.getText().toString());
+                            complaintSavedResponseDto.setAnonymous(anonCheckbox.isChecked());
+                            complaintSavedResponseDto.setLocationString(userLocationString);
+                            event.setComplaintSavedResponseDto(complaintSavedResponseDto);
+                            event.setImageFile(cameraHelper.getImageFile());
+                            eventBus.post(event);
+                        }
                     }
                 }
                 else {
@@ -235,7 +259,7 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
         this.location = location;
     }
 
-    public void onEventMainThread(SavedComplaintEvent event) {
+    public void onEventMainThread(ComplaintReportedEvent event) {
         pDialog.dismiss();
         if(event.getSuccess()) {
             ComplaintPostedEvent complaintPostedEvent = new ComplaintPostedEvent();

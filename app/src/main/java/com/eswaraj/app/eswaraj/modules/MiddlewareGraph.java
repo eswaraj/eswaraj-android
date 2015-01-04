@@ -20,10 +20,12 @@ import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.activities.YoutubeActivity;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.datastore.CacheInterface;
+import com.eswaraj.app.eswaraj.datastore.Database;
 import com.eswaraj.app.eswaraj.datastore.LruBitmapCache;
 import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.fragments.AddDetailsFragment;
+import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryOfflineFragment;
 import com.eswaraj.app.eswaraj.fragments.ConstituencyFragment;
 import com.eswaraj.app.eswaraj.fragments.MyProfileFragment;
 import com.eswaraj.app.eswaraj.fragments.SelectAmenityFragment;
@@ -38,10 +40,12 @@ import com.eswaraj.app.eswaraj.fragments.SelectTemplateFragment;
 import com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment;
 import com.eswaraj.app.eswaraj.fragments.LoginFragment;
 import com.eswaraj.app.eswaraj.helpers.CameraHelper;
+import com.eswaraj.app.eswaraj.helpers.DatabaseHelper;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.helpers.StorageCacheClearingTask;
+import com.eswaraj.app.eswaraj.services.ComplaintPostService;
 import com.eswaraj.app.eswaraj.util.DeviceUtil;
 import com.eswaraj.app.eswaraj.util.FacebookSharingUtil;
 import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
@@ -130,7 +134,10 @@ import de.greenrobot.event.EventBus;
                 LocationComplaintsRequest.class,
                 LocationComplaintCountersRequest.class,
                 VolleyUtil.class,
-                FacebookSharingUtil.class
+                FacebookSharingUtil.class,
+                Database.class,
+                ComplaintPostService.class,
+                ComplaintSummaryOfflineFragment.class
         },
         complete = false,
         library = true
@@ -299,5 +306,15 @@ public class MiddlewareGraph {
     @Provides @Singleton
     FacebookSharingUtil provideFacebookSharingUtil() {
         return new FacebookSharingUtil();
+    }
+
+    @Provides @Singleton
+    DatabaseHelper provideDatabaseHelper() {
+        return new DatabaseHelper(applicationContext);
+    }
+
+    @Provides @Singleton
+    Database provideDatabase() {
+        return new Database();
     }
 }

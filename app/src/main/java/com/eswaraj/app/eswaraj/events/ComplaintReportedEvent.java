@@ -5,7 +5,7 @@ import com.eswaraj.app.eswaraj.base.BaseEvent;
 import com.eswaraj.app.eswaraj.models.ComplaintPostResponseDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 
-public class SavedComplaintEvent extends BaseEvent {
+public class ComplaintReportedEvent extends BaseEvent {
 
     private ComplaintPostResponseDto complaintPostResponseDto;
 

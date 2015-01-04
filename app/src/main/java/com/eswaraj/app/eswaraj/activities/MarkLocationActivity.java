@@ -153,6 +153,8 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
                 .setTarget(new PointTarget(size.x/2, size.y/2))
                 .setContentTitle("Mark your home")
                 .setContentText("Touch and hold the marker for a second and then drag to mark your home on the map")
+                .setStyle(R.style.CustomShowcaseTheme2)
+                .singleShot(42)
                 .hideOnTouchOutside()
                 .build();
     }

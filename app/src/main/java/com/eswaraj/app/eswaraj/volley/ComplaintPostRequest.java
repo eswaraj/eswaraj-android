@@ -4,20 +4,17 @@ package com.eswaraj.app.eswaraj.volley;
 
 import android.location.Address;
 import android.location.Location;
-import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.Constants;
 
-import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
+import com.eswaraj.app.eswaraj.events.ComplaintReportedEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.models.ComplaintPostResponseDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.SaveComplaintRequestDto;
 import com.eswaraj.web.dto.UserDto;
 import com.google.gson.Gson;
@@ -25,7 +22,6 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 
 
 import javax.inject.Inject;
@@ -76,7 +72,7 @@ public class ComplaintPostRequest extends BaseClass {
                 complaintPostResponseDto.setTemplate(template);
                 complaintPostResponseDto.getComplaintDto().setDescription(description);
                 complaintPostResponseDto.getComplaintDto().setLocationString(userLocationString);
-                SavedComplaintEvent event = new SavedComplaintEvent();
+                ComplaintReportedEvent event = new ComplaintReportedEvent();
                 event.setSuccess(true);
                 event.setComplaintPostResponseDto(complaintPostResponseDto);
                 eventBus.post(event);
@@ -89,7 +85,7 @@ public class ComplaintPostRequest extends BaseClass {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                SavedComplaintEvent event = new SavedComplaintEvent();
+                ComplaintReportedEvent event = new ComplaintReportedEvent();
                 event.setSuccess(false);
                 event.setError(error.toString());
                 eventBus.post(event);

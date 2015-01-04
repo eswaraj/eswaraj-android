@@ -65,8 +65,10 @@ public class CommentsFragment extends BaseFragment {
         cSend.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                middlewareService.postComment(userSession.getUser(), complaintDto, cComment.getText().toString());
-                cComment.setText("");
+                if(!cComment.getText().toString().equals("")) {
+                    middlewareService.postComment(userSession.getUser(), complaintDto, cComment.getText().toString());
+                    cComment.setText("");
+                }
             }
         });
 

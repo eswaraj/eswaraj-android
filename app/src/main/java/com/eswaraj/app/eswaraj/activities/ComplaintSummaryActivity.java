@@ -11,6 +11,7 @@ import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
 import com.eswaraj.app.eswaraj.fragments.BottomMenuBarFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryFragment;
+import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryOfflineFragment;
 import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
 
 import javax.inject.Inject;
@@ -23,13 +24,26 @@ public class ComplaintSummaryActivity extends BaseActivity {
     EventBus eventBus;
 
     private ComplaintSummaryFragment complaintSummaryFragment;
+    private ComplaintSummaryOfflineFragment complaintSummaryOfflineFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complaint_summary);
 
-        complaintSummaryFragment = (ComplaintSummaryFragment) getSupportFragmentManager().findFragmentById(R.id.csFragment);
+        Boolean mode = getIntent().getBooleanExtra("MODE", false);
+        if(mode) {
+            complaintSummaryFragment = new ComplaintSummaryFragment();
+            if(savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction().add(R.id.csFragment, complaintSummaryFragment).commit();
+            }
+        }
+        else {
+            complaintSummaryOfflineFragment = new ComplaintSummaryOfflineFragment();
+            if(savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction().add(R.id.csFragment, complaintSummaryOfflineFragment).commit();
+            }
+        }
     }
 
     @Override

@@ -74,7 +74,7 @@ public class LoginFragment extends BaseFragment {
 
     public void notifyServiceAvailability(Boolean hasNeededServices) {
         if(!hasNeededServices) {
-            buttonLogin.setVisibility(View.INVISIBLE);
+            //buttonLogin.setVisibility(View.INVISIBLE);
             Toast.makeText(getActivity(), "Internet and Location services not found", Toast.LENGTH_LONG).show();
         }
         /*

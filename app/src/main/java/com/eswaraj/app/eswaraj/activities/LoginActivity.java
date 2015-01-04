@@ -151,9 +151,11 @@ public class LoginActivity extends BaseActivity {
 
     public void takeUserToNextScreen() {
         Log.d("LoginActivity", "takeUserToNextScreen");
+        /*
         if(!checkLocationAndInternet()) {
             return;
         }
+        */
         synchronized(this) {
             if (redirectDone) {
                 return;

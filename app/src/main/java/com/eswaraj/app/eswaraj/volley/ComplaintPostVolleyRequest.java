@@ -33,16 +33,6 @@ public class ComplaintPostVolleyRequest extends Request<String> {
     private  File issueImage;
 
 
-    /*
-	@Override
-    public Map<String, String> getHeaders() throws AuthFailureError {
-        Map<String,String> params = new HashMap<String, String>();
-        params.put("Content-Type","multipart/form-data");
-        return params;
-    }
-    */
-    
-
     public ComplaintPostVolleyRequest(Response.ErrorListener errorListener, Response.Listener<String> listener, SaveComplaintRequestDto saveComplaintRequestDto, File image, String url) throws UnsupportedEncodingException {
         super(Method.POST, url, errorListener);
 

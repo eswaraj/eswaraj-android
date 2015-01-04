@@ -9,8 +9,11 @@ import android.widget.Toast;
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.datastore.CacheInterface;
+import com.eswaraj.app.eswaraj.datastore.Database;
 import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.datastore.ServerInterface;
+import com.eswaraj.app.eswaraj.helpers.DatabaseHelper;
+import com.eswaraj.app.eswaraj.models.ComplaintRequestDBItem;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.LocationDto;
@@ -28,6 +31,8 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     CacheInterface cache;
     @Inject
     ServerInterface server;
+    @Inject
+    Database database;
 
     @Override
     public void loadCategoriesData(Context context) {
@@ -359,5 +364,17 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
         else {
             server.loadLocationComplaintCounters(context, locationDto);
         }
+    }
+
+    //Database
+
+    @Override
+    public void postOneComplaint() {
+        database.postOneComplaint();
+    }
+
+    @Override
+    public void saveComplaint(UserDto userDto, CategoryWithChildCategoryDto amenity, CategoryWithChildCategoryDto template, Location location, String description, File image, Boolean anonymous, String userGoogleLocation) {
+        database.saveComplaint(userDto, amenity, template, location, description, image, anonymous, userGoogleLocation);
     }
 }

@@ -4,10 +4,7 @@ package com.eswaraj.app.eswaraj.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,29 +14,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
-import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
-import com.eswaraj.app.eswaraj.config.ImageType;
-import com.eswaraj.app.eswaraj.datastore.StorageCache;
-import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
-import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
-import com.eswaraj.app.eswaraj.events.SavedComplaintEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
 import com.eswaraj.app.eswaraj.helpers.BitmapWorkerTask;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.ComplaintPostResponseDto;
 import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
 import com.eswaraj.app.eswaraj.util.FacebookSharingUtil;
-import com.eswaraj.web.dto.CategoryDto;
-import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 
 import java.io.File;
-import java.util.List;
 
 import javax.inject.Inject;
 

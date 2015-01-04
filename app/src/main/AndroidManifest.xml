@@ -148,13 +148,34 @@
         <activity
             android:name=".activities.ConstituencyActivity"
             android:label="@string/title_activity_constituency"
+            android:parentActivityName=".activities.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
-            android:parentActivityName=".activities.HomeActivity" >
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
         </activity>
+
+        <receiver
+            android:name=".broadcast_receivers.Internet"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".services.ComplaintPostService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+        <service
+            android:name=".base.BaseService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>
