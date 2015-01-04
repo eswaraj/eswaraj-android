@@ -66,12 +66,14 @@ public class MyComplaintsActivity extends BaseActivity {
     public void onEventMainThread(ComplaintSelectedEvent event) {
         Intent i = new Intent(this, SingleComplaintActivity.class);
         i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
+        i.putExtra("DATA_PRESENT", true);
         startActivity(i);
     }
 
     public void onEventMainThread(MarkerClickEvent event) {
         Intent i = new Intent(this, SingleComplaintActivity.class);
         i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
+        i.putExtra("DATA_PRESENT", true);
         startActivity(i);
     }
 }

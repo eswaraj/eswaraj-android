@@ -22,10 +22,11 @@ public class Constants {
     public static final String COMMENT_POST_URL = BASE_URL + "/complaint/user/comment";
     public static final String COMPLAINT_CLOSE_URL = BASE_URL + "/complaint/user/status";
     public static final String UPDATE_PROFILE_URL = BASE_URL + "/mobile/user/profile";
-    public static final String GET_PROFILE_URL = BASE_URL + "/mobile/user/profile/";
-    public static final String LOCATION_COUNTERS_URL = BASE_URL_2 + "/stats/counter/location/";
-    public static final String LOCATION_COMPLAINTS_URL = BASE_URL + "/complaint/location/";
-    public static final String SAVE_GCM_ID_URL = BASE_URL + "/user/device/gcm/";
+    public static final String GET_PROFILE_URL = BASE_URL + "/mobile/user/profile";
+    public static final String LOCATION_COUNTERS_URL = BASE_URL_2 + "/stats/counter/location";
+    public static final String LOCATION_COMPLAINTS_URL = BASE_URL + "/complaint/location";
+    public static final String SAVE_GCM_ID_URL = BASE_URL + "/user/device/gcm";
+    public static final String GET_SINGLE_COMPLAINT_URL = BASE_URL + "/complaint";
 
     //Google URLS
     public static final String GOOGLE_PLACES_AUTOCOMPLETE_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?key=" + GOOGLE_API_BROWSER_KEY + "&components=country:in&input=";
@@ -40,6 +41,6 @@ public class Constants {
     }
 
     public static String getLocationComplaintsUrl(Long locationId, int start, int count) {
-        return LOCATION_COMPLAINTS_URL + locationId + "?count=" + count + "&start=" + start;
+        return LOCATION_COMPLAINTS_URL + "/" + locationId + "?count=" + count + "&start=" + start;
     }
 }

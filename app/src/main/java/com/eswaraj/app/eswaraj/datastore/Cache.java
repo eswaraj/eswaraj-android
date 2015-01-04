@@ -313,4 +313,19 @@ public class Cache extends BaseClass implements CacheInterface {
     public void loadLocationComplaintCounters(Context context, LocationDto locationDto) {
         assert false;
     }
+
+    @Override
+    public Boolean isSingleComplaintAvailable(Context context, Long id) {
+        return false;
+    }
+
+    @Override
+    public void updateSingleComplaint(Context context, Long id, String json) {
+        //Nothing to do here
+    }
+
+    @Override
+    public void loadSingleComplaint(Context context, Long id) {
+        assert false;
+    }
 }

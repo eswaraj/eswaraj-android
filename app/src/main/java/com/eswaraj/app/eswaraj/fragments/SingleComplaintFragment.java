@@ -22,6 +22,7 @@ import com.eswaraj.app.eswaraj.events.ComplaintClosedEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
+import com.eswaraj.app.eswaraj.events.GetSingleComplaintEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.util.VolleyUtil;
@@ -67,10 +68,11 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     private TextView scSubCategory;
     private TextView scDescription;
 
-    Long complaintId;
-    Long personId;
+    private Long complaintId;
+    private Long personId;
     private Bitmap submitterBitmap;
     private Bitmap complaintBitmap;
+    private Bundle savedInstanceState;
 
     public SingleComplaintFragment() {
         // Required empty public constructor
@@ -108,10 +110,31 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         commentsFragment = new CommentsFragment();
         googleMapFragment = new GoogleMapFragment();
 
+        this.savedInstanceState = savedInstanceState;
+
         //Get data from intent
-        complaintDto = (ComplaintDto) getActivity().getIntent().getSerializableExtra("COMPLAINT");
+        if(getActivity().getIntent().getBooleanExtra("DATA_PRESENT", false)) {
+            complaintDto = (ComplaintDto) getActivity().getIntent().getSerializableExtra("COMPLAINT");
+            showData();
+        }
+        else {
+            middlewareService.loadSingleComplaint(getActivity(), getActivity().getIntent().getLongExtra("COMPLAINT_ID", 0L));
+            pDialog = new CustomProgressDialog(getActivity(), false, true, "Loading your complaint ...");
+            pDialog.show();
+        }
 
+        scClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pDialog = new CustomProgressDialog(getActivity(), false, true, "Closing your complaint ...");
+                pDialog.show();
+                middlewareService.closeComplaint(complaintDto);
+            }
+        });
+        return rootView;
+    }
 
+    private void showData() {
         scDescription.setText(complaintDto.getDescription());
         scComplaintId.setText(complaintDto.getId().toString());
         scStatus.setText(complaintDto.getStatus());
@@ -156,16 +179,6 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
             getChildFragmentManager().beginTransaction().add(R.id.scCommentContainer, commentsFragment).commit();
             getChildFragmentManager().beginTransaction().add(R.id.scDisplayContainer, googleMapFragment).commit();
         }
-
-        scClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pDialog = new CustomProgressDialog(getActivity(), false, true, "Closing your complaint ...");
-                pDialog.show();
-                middlewareService.closeComplaint(complaintDto);
-            }
-        });
-        return rootView;
     }
 
     @Override
@@ -211,5 +224,16 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         else {
             Toast.makeText(getActivity(), "Could not fetch submitter image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void onEventMainThread(GetSingleComplaintEvent event) {
+        if(event.getSuccess()) {
+            complaintDto = event.getComplaintDto();
+            showData();
+        }
+        else {
+            Toast.makeText(getActivity(), "Could not fetch complaint from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+        pDialog.dismiss();
     }
 }

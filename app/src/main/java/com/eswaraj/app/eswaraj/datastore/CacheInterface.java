@@ -42,4 +42,7 @@ public interface CacheInterface extends MiddlewareGetService {
 
     public Boolean isLocationComplaintCountersAvailable(Context context);
     public void updateLocationComplaintCounters(Context context, LocationDto locationDto, String json);
+
+    public Boolean isSingleComplaintAvailable(Context context, Long id);
+    public void updateSingleComplaint(Context context, Long id, String json);
 }

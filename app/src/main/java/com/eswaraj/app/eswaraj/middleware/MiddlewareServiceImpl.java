@@ -371,6 +371,35 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
         server.registerGcmId(context);
     }
 
+    @Override
+    public void loadSingleComplaint(Context context, Long id, Boolean dontGetFromCache) {
+        if(dontGetFromCache) {
+            server.loadSingleComplaint(context, id);
+        }
+        else {
+            loadSingleComplaint(context, id);
+        }
+    }
+
+    @Override
+    public Boolean isSingleComplaintAvailable(Context context, Long id) {
+        return cache.isSingleComplaintAvailable(context, id);
+    }
+
+    @Override
+    public void updateSingleComplaint(Context context, Long id, String json) {
+        cache.updateSingleComplaint(context, id, json);
+    }
+
+    @Override
+    public void loadSingleComplaint(Context context, Long id) {
+        if(cache.isSingleComplaintAvailable(context, id)) {
+            cache.loadSingleComplaint(context, id);
+        }
+        else {
+            server.loadSingleComplaint(context, id);
+        }
+    }
 
 //Database
 

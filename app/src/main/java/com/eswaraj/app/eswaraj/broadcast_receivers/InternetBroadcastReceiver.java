@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.services.ComplaintPostService;
 
-public class Internet extends BroadcastReceiver {
-    public Internet() {
+public class InternetBroadcastReceiver extends BroadcastReceiver {
+    public InternetBroadcastReceiver() {
     }
 
     @Override

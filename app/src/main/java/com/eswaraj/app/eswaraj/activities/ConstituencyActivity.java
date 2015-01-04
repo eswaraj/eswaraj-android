@@ -48,12 +48,16 @@ public class ConstituencyActivity extends BaseActivity {
     public void onEventMainThread(ComplaintSelectedEvent event) {
         Intent i = new Intent(this, SingleComplaintActivity.class);
         i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
+        i.putExtra("DATA_PRESENT", true);
+        //i.putExtra("COMPLAINT_ID", event.getComplaintDto().getId());
+        //i.putExtra("DATA_PRESENT", false);
         startActivity(i);
     }
 
     public void onEventMainThread(MarkerClickEvent event) {
         Intent i = new Intent(this, SingleComplaintActivity.class);
         i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
+        i.putExtra("DATA_PRESENT", true);
         startActivity(i);
     }
 }

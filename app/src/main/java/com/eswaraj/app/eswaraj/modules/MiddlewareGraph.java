@@ -71,6 +71,7 @@ import com.eswaraj.app.eswaraj.volley.ProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterGcmIdRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
+import com.eswaraj.app.eswaraj.volley.SingleComplaintRequest;
 import com.eswaraj.app.eswaraj.volley.UserComplaintsRequest;
 
 import javax.inject.Singleton;
@@ -140,7 +141,8 @@ import de.greenrobot.event.EventBus;
                 ComplaintPostService.class,
                 ComplaintSummaryOfflineFragment.class,
                 GcmUtil.class,
-                RegisterGcmIdRequest.class
+                RegisterGcmIdRequest.class,
+                SingleComplaintRequest.class
         },
         complete = false,
         library = true
@@ -334,5 +336,10 @@ public class MiddlewareGraph {
     @Provides @Singleton
     RegisterGcmIdRequest provideRegisterGcmIdRequest() {
         return new RegisterGcmIdRequest();
+    }
+
+    @Provides @Singleton
+    SingleComplaintRequest provideSingleComplaintRequest() {
+        return new SingleComplaintRequest();
     }
 }

@@ -25,5 +25,5 @@ public interface MiddlewareGetService {
     public void loadProfileUpdates(Context context, String token);
     public void loadLocationComplaints(Context context, LocationDto locationDto, int start, int count);
     public void loadLocationComplaintCounters(Context context, LocationDto locationDto);
-
+    public void loadSingleComplaint(Context context, Long id);
 }

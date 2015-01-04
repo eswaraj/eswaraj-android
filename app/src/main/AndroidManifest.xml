@@ -159,7 +159,7 @@
         </activity>
 
         <receiver
-            android:name=".broadcast_receivers.Internet"
+            android:name=".broadcast_receivers.InternetBroadcastReceiver"
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
@@ -177,6 +177,15 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <receiver
+            android:name=".broadcast_receivers.GcmBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

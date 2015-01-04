@@ -45,7 +45,7 @@ public class LoadProfileUpdateRequest extends BaseClass {
     NetworkAccessHelper networkAccessHelper;
 
     public void processRequest(Context context, String token) {
-        StringRequest request = new StringRequest(Constants.GET_PROFILE_URL + token, createSuccessListener(context), createErrorListener(context));
+        StringRequest request = new StringRequest(Constants.GET_PROFILE_URL + "/" +token, createSuccessListener(context), createErrorListener(context));
         this.networkAccessHelper.submitNetworkRequest("GetProfile", request);
     }
 
