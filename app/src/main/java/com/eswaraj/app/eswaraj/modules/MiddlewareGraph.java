@@ -48,6 +48,7 @@ import com.eswaraj.app.eswaraj.helpers.StorageCacheClearingTask;
 import com.eswaraj.app.eswaraj.services.ComplaintPostService;
 import com.eswaraj.app.eswaraj.util.DeviceUtil;
 import com.eswaraj.app.eswaraj.util.FacebookSharingUtil;
+import com.eswaraj.app.eswaraj.util.GcmUtil;
 import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -68,6 +69,7 @@ import com.eswaraj.app.eswaraj.volley.LocationComplaintCountersRequest;
 import com.eswaraj.app.eswaraj.volley.LocationComplaintsRequest;
 import com.eswaraj.app.eswaraj.volley.ProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
+import com.eswaraj.app.eswaraj.volley.RegisterGcmIdRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
 import com.eswaraj.app.eswaraj.volley.UserComplaintsRequest;
 
@@ -136,7 +138,9 @@ import de.greenrobot.event.EventBus;
                 FacebookSharingUtil.class,
                 Database.class,
                 ComplaintPostService.class,
-                ComplaintSummaryOfflineFragment.class
+                ComplaintSummaryOfflineFragment.class,
+                GcmUtil.class,
+                RegisterGcmIdRequest.class
         },
         complete = false,
         library = true
@@ -320,5 +324,15 @@ public class MiddlewareGraph {
     @Provides @Singleton
     NotificationHelper provideNotificationHelper() {
         return new NotificationHelper();
+    }
+
+    @Provides @Singleton
+    GcmUtil provideGcmUtil() {
+        return new GcmUtil();
+    }
+
+    @Provides @Singleton
+    RegisterGcmIdRequest provideRegisterGcmIdRequest() {
+        return new RegisterGcmIdRequest();
     }
 }

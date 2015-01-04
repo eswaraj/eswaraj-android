@@ -21,6 +21,7 @@ import com.eswaraj.app.eswaraj.helpers.StorageCacheClearingTask;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareService;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.SplashScreenItem;
+import com.eswaraj.app.eswaraj.util.GcmUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomViewPager;
 
@@ -33,15 +34,16 @@ import de.greenrobot.event.EventBus;
 public class SplashActivity extends BaseActivity {
 
     @Inject
-    UserSessionUtil userSession;
-    @Inject
     EventBus eventBus;
     @Inject
     MiddlewareServiceImpl middlewareService;
+    @Inject
+    GcmUtil gcmUtil;
 
     private StorageCacheClearingTask storageCacheClearingTask;
     private Boolean serverDataDownloadDone;
     private Boolean cacheCleared;
+    private Boolean exitOnCacheCleared;
 
     private CustomViewPager pager;
     private TextPagerAdapter adapter;
@@ -61,18 +63,22 @@ public class SplashActivity extends BaseActivity {
 
         cacheCleared = false;
         serverDataDownloadDone = false;
+        exitOnCacheCleared = false;
 
         storageCacheClearingTask = new StorageCacheClearingTask(this);
 
         eventBus.register(this);
-        middlewareService.loadCategoriesData(this);
         storageCacheClearingTask.execute();
+        gcmUtil.registerWithGcmServerIfNeeded(this);
 
-        //if(userSession.isUserLoggedIn(this)) {
         if(middlewareService.isCategoriesDataAvailable(this) && middlewareService.isCategoriesImagesAvailable(this)) {
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-            finish();
+            //Intent i = new Intent(this, LoginActivity.class);
+            //startActivity(i);
+            //finish();
+            exitOnCacheCleared = true;
+        }
+        else {
+            middlewareService.loadCategoriesData(this);
         }
     }
 
@@ -160,6 +166,11 @@ public class SplashActivity extends BaseActivity {
 
     public void onEventMainThread(CacheClearedEvent event) {
         cacheCleared = true;
+        if(exitOnCacheCleared) {
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+            finish();
+        }
         if(serverDataDownloadDone) {
             readyToProceed();
         }

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.PreferenceConstants;
+import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.web.dto.UserDto;
@@ -16,7 +17,7 @@ import javax.inject.Inject;
 public class UserSessionUtil extends BaseClass {
 
     @Inject
-    MiddlewareServiceImpl middlewareService;
+    Cache cache;
     @Inject
     SharedPreferencesHelper sharedPreferencesHelper;
 
@@ -65,7 +66,7 @@ public class UserSessionUtil extends BaseClass {
 
     public void logoutUser(Context context) {
         //Update the cache with null to indicate that user has logged out and user object in cache is not valid anymore
-        middlewareService.updateUserData(context, null);
+        cache.updateUserData(context, null);
         setUserSkipMarkLocation(context, false);
         Session session = Session.getActiveSession();
         if (session != null) {

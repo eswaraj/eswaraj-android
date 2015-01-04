@@ -18,6 +18,7 @@ import com.eswaraj.app.eswaraj.volley.LocationComplaintCountersRequest;
 import com.eswaraj.app.eswaraj.volley.LocationComplaintsRequest;
 import com.eswaraj.app.eswaraj.volley.ProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterFacebookUserRequest;
+import com.eswaraj.app.eswaraj.volley.RegisterGcmIdRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
 import com.eswaraj.app.eswaraj.volley.UserComplaintsRequest;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
@@ -66,6 +67,8 @@ public class Server extends BaseClass implements ServerInterface {
     LocationComplaintsRequest locationComplaintsRequest;
     @Inject
     LocationComplaintCountersRequest locationComplaintCountersRequest;
+    @Inject
+    RegisterGcmIdRequest registerGcmIdRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -147,5 +150,10 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void loadLocationComplaintCounters(Context context, LocationDto locationDto) {
         locationComplaintCountersRequest.processRequest(context, locationDto);
+    }
+
+    @Override
+    public void registerGcmId(Context context) {
+        registerGcmIdRequest.processRequest(context);
     }
 }

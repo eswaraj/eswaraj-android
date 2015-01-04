@@ -19,4 +19,5 @@ public interface MiddlewarePostService {
     public void postComplaint(UserDto userDto, CategoryWithChildCategoryDto amenity, CategoryWithChildCategoryDto template, Location location, String description, File image, Boolean anonymous, String userGoogleLocation);
     public void postComment(UserDto userDto, ComplaintDto complaintDto, String comment);
     public void closeComplaint(ComplaintDto complaintDto);
+    public void registerGcmId(Context context);
 }

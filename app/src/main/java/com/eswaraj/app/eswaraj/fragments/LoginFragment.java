@@ -20,6 +20,7 @@ import com.eswaraj.app.eswaraj.events.LoginStatusEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
+import com.eswaraj.app.eswaraj.util.GcmUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.facebook.Session;
 import com.facebook.widget.LoginButton;
@@ -48,6 +49,8 @@ public class LoginFragment extends BaseFragment {
     MiddlewareServiceImpl middlewareService;
     @Inject
     UserSessionUtil userSession;
+    @Inject
+    GcmUtil gcmUtil;
 
     private Boolean showInstruction;
     private Boolean dialogMode;
@@ -249,6 +252,10 @@ public class LoginFragment extends BaseFragment {
             Log.d("LoginFragment", "GetUserEvent:Success");
             userSession.setUser(event.getUserDto());
             userSession.setToken(event.getToken());
+            //GCM ID registration, if pending
+            if(!gcmUtil.isSyncedWithServer(getActivity())) {
+                middlewareService.registerGcmId(getActivity());
+            }
             LoginStatusEvent loginStatusEvent = new LoginStatusEvent();
             loginStatusEvent.setSuccess(true);
             loginStatusEvent.setLoggedIn(true);

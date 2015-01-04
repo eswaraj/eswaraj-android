@@ -366,7 +366,13 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
         }
     }
 
-    //Database
+    @Override
+    public void registerGcmId(Context context) {
+        server.registerGcmId(context);
+    }
+
+
+//Database
 
     @Override
     public void postOneComplaint() {

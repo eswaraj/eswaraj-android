@@ -27,7 +27,7 @@ public class ComplaintCloseRequest extends BaseClass {
         ComplaintStatusChangeByPersonRequestDto complaintStatusChangeByPersonRequestDto = new ComplaintStatusChangeByPersonRequestDto();
         complaintStatusChangeByPersonRequestDto.setComplaintId(complaintDto.getId());
         complaintStatusChangeByPersonRequestDto.setPersonId(complaintDto.getCreatedBy().get(0).getId());
-        complaintStatusChangeByPersonRequestDto.setStatus("Closed");
+        complaintStatusChangeByPersonRequestDto.setStatus("Done");
 
         GenericPostVolleyRequest request = new GenericPostVolleyRequest(Constants.COMPLAINT_CLOSE_URL, createErrorListener(), createSuccessListener(), complaintStatusChangeByPersonRequestDto);
         networkAccessHelper.submitNetworkRequest("CloseComplaint", request);
