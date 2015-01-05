@@ -12,11 +12,13 @@ import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
 import com.eswaraj.app.eswaraj.events.GetHeaderImageEvent;
+import com.eswaraj.app.eswaraj.events.GetLeadersEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.GetUserComplaintsEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
+import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.UserDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
@@ -175,6 +177,7 @@ public class Cache extends BaseClass implements CacheInterface {
 
     @Override
     public void updateUserComplaints(Context context, String json) {
+        sharedPreferencesHelper.putString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_COMPLAINTS, json);
         sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_COMPLAINTS_AVAILABLE, true);
         sharedPreferencesHelper.putLong(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_COMPLAINTS_DOWNLOAD_TIME_IN_MS, new Date().getTime());
     }
@@ -328,5 +331,56 @@ public class Cache extends BaseClass implements CacheInterface {
     @Override
     public void loadSingleComplaint(Context context, Long id) {
         assert false;
+    }
+
+    @Override
+    public Boolean isLeadersAvailable(Context context) {
+        if(sharedPreferencesHelper.getBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.LEADERS_AVAILABLE, false)) {
+            if((new Date().getTime() - sharedPreferencesHelper.getLong(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.LEADERS_DOWNLOAD_TIME_IN_MS, 0L)) < Constants.SERVER_DATA_UPDATE_INTERVAL_IN_MS) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void updateLeaders(Context context, String json) {
+        sharedPreferencesHelper.putString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.LEADERS, json);
+        sharedPreferencesHelper.putLong(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.LEADERS_DOWNLOAD_TIME_IN_MS, new Date().getTime());
+        sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.LEADERS_AVAILABLE, true);
+    }
+
+    @Override
+    public void loadLeaders(Context context) {
+        JsonDeserializer<Date> deser = new JsonDeserializer<Date>() {
+            @Override
+            public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                return json == null ? null : new Date(json.getAsLong());
+            }
+        };
+        JsonSerializer<Date> ser = new JsonSerializer<Date>() {
+
+            @Override
+            public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+                return src == null ? null : new JsonPrimitive(src.getTime());
+            }
+        };
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
+        String json = sharedPreferencesHelper.getString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.LEADERS, null);
+        try {
+            List<PoliticalBodyAdminDto> politicalBodyAdminDtos;
+            politicalBodyAdminDtos = gson.fromJson(json, new TypeToken<List<PoliticalBodyAdminDto>>(){}.getType());
+            GetLeadersEvent event = new GetLeadersEvent();
+            event.setSuccess(true);
+            event.setLoadProfilePhotos(false);
+            event.setPoliticalBodyAdminDtos(politicalBodyAdminDtos);
+            eventBus.post(event);
+        } catch (JsonParseException e) {
+            //This should never happen since json would only be stored in server if de-serialization was successful in Server class
+            GetLeadersEvent event = new GetLeadersEvent();
+            event.setSuccess(false);
+            event.setError("Invalid json");
+            eventBus.post(event);
+        }
     }
 }

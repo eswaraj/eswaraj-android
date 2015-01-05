@@ -45,4 +45,7 @@ public interface CacheInterface extends MiddlewareGetService {
 
     public Boolean isSingleComplaintAvailable(Context context, Long id);
     public void updateSingleComplaint(Context context, Long id, String json);
+
+    public Boolean isLeadersAvailable(Context context);
+    public void updateLeaders(Context context, String json);
 }

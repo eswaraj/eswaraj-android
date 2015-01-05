@@ -43,4 +43,8 @@ public class Constants {
     public static String getLocationComplaintsUrl(Long locationId, int start, int count) {
         return LOCATION_COMPLAINTS_URL + "/" + locationId + "?count=" + count + "&start=" + start;
     }
+
+    public static String getLeadersUrl(Double lat, Double lng) {
+        return BASE_URL + "/leaders?lat=" + lat + "&long=" + lng;
+    }
 }

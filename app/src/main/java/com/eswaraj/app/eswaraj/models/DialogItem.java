@@ -13,7 +13,8 @@ public class DialogItem {
     private String name;
     private String title;
     private Class target;
-    LocationDto locationDto;
+    private LocationDto locationDto;
+    private PoliticalBodyAdminDto politicalBodyAdminDto;
 
     public LocationDto getLocationDto() {
         return locationDto;
@@ -69,5 +70,13 @@ public class DialogItem {
 
     public void setTarget(Class target) {
         this.target = target;
+    }
+
+    public PoliticalBodyAdminDto getPoliticalBodyAdminDto() {
+        return politicalBodyAdminDto;
+    }
+
+    public void setPoliticalBodyAdminDto(PoliticalBodyAdminDto politicalBodyAdminDto) {
+        this.politicalBodyAdminDto = politicalBodyAdminDto;
     }
 }

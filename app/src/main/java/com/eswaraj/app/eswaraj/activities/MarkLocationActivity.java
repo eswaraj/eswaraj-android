@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
+import com.eswaraj.app.eswaraj.events.GetLeadersEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.GooglePlaceDetailsEvent;
@@ -21,7 +22,9 @@ import com.eswaraj.app.eswaraj.events.ProfileUpdateEvent;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.fragments.GooglePlacesListFragment;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.models.DialogItem;
 import com.eswaraj.app.eswaraj.models.GooglePlace;
+import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
 import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
@@ -30,6 +33,8 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.PointTarget;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -66,6 +71,9 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
 
     private Boolean gotLocation = false;
     private Boolean gotProfileUpdate = false;
+
+    private AtomicInteger leaderCount = new AtomicInteger(0);
+    private AtomicInteger leaderTotal = new AtomicInteger(0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -227,6 +235,40 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     public void onEventMainThread(ProfileUpdateEvent event) {
         if(event.getSuccess()) {
             userSession.setUser(event.getUserDto());
+            middlewareService.loadLeaders(this, true);
+        }
+        else {
+            Toast.makeText(this, "Could not save location to server. Please retry. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onEventMainThread(GetLeadersEvent event) {
+        if(event.getSuccess()) {
+            if(event.getPoliticalBodyAdminDtos().size() > 0) {
+                leaderTotal.set(event.getPoliticalBodyAdminDtos().size());
+                leaderCount.set(0);
+                for (PoliticalBodyAdminDto politicalBodyAdminDto : event.getPoliticalBodyAdminDtos()) {
+                    middlewareService.loadProfileImage(this, politicalBodyAdminDto.getProfilePhoto(), politicalBodyAdminDto.getId(), true, true);
+                }
+            }
+            else {
+                if (dialogMode) {
+                    if (getParent() == null) {
+                        setResult(Activity.RESULT_OK, null);
+                    } else {
+                        getParent().setResult(Activity.RESULT_OK, null);
+                    }
+                    finish();
+                }
+                else {
+                    Intent i = new Intent(this, HomeActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            }
+        }
+        else {
+            Toast.makeText(this, "Could not fetch leaders for new location from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
             if (dialogMode) {
                 if (getParent() == null) {
                     setResult(Activity.RESULT_OK, null);
@@ -240,9 +282,6 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
                 startActivity(i);
                 finish();
             }
-        }
-        else {
-            Toast.makeText(this, "Could not save location to server. Please retry. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -262,9 +301,31 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     }
 
     public void onEventMainThread(GetProfileImageEvent event) {
-        if(userSession.isUserLocationKnown()) {
-            if(dialogMode) {
-                if(!showAlways) {
+        if(event.getId().equals(userSession.getUser().getId())) {
+            if (userSession.isUserLocationKnown()) {
+                if (dialogMode) {
+                    if (!showAlways) {
+                        if (getParent() == null) {
+                            setResult(Activity.RESULT_OK, null);
+                        } else {
+                            getParent().setResult(Activity.RESULT_OK, null);
+                        }
+                        finish();
+                    }
+                } else {
+                    Intent i = new Intent(this, HomeActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            }
+            gotProfileUpdate = true;
+            if (gotLocation) {
+                pDialog.dismiss();
+            }
+        }
+        else {
+            if(leaderCount.incrementAndGet() == leaderTotal.get()) {
+                if (dialogMode) {
                     if (getParent() == null) {
                         setResult(Activity.RESULT_OK, null);
                     } else {
@@ -272,16 +333,12 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
                     }
                     finish();
                 }
+                else {
+                    Intent i = new Intent(this, HomeActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             }
-            else {
-                Intent i = new Intent(this, HomeActivity.class);
-                startActivity(i);
-                finish();
-            }
-        }
-        gotProfileUpdate = true;
-        if(gotLocation) {
-            pDialog.dismiss();
         }
     }
 

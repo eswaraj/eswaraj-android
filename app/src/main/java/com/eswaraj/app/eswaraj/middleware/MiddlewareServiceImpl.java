@@ -50,12 +50,7 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
             server.loadCategoriesData(context);
         }
         else {
-            if (cache.isCategoriesDataAvailable(context)) {
-                cache.loadCategoriesData(context);
-            }
-            else {
-                server.loadCategoriesData(context);
-            }
+            loadCategoriesData(context);
         }
     }
 
@@ -85,12 +80,7 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
             server.loadCategoriesImages(context, categoriesList);
         }
         else {
-            if (cache.isCategoriesImagesAvailable(context)) {
-                cache.loadCategoriesImages(context, categoriesList);
-            }
-            else {
-                server.loadCategoriesImages(context, categoriesList);
-            }
+            loadCategoriesImages(context, categoriesList);
         }
     }
 
@@ -117,7 +107,12 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
 
     @Override
     public void loadUserData(Context context, Session session, Boolean dontGetFromCache) {
-        server.loadUserData(context, session);
+        if(dontGetFromCache) {
+            server.loadUserData(context, session);
+        }
+        else {
+            loadUserData(context, session);
+        }
     }
 
     @Override
@@ -132,7 +127,12 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
 
     @Override
     public void loadUserComplaints(Context context, UserDto userDto, Boolean dontGetFromCache) {
-        server.loadUserComplaints(context, userDto);
+        if(dontGetFromCache) {
+            server.loadUserComplaints(context, userDto);
+        }
+        else {
+            loadUserComplaints(context, userDto);
+        }
     }
 
     @Override
@@ -157,7 +157,12 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
 
     @Override
     public void loadComplaintImage(Context context, String url, Long id, Boolean keep, Boolean dontGetFromCache) {
-        server.loadComplaintImage(context, url, id, keep);
+        if(dontGetFromCache) {
+            server.loadComplaintImage(context, url, id, keep);
+        }
+        else {
+            loadComplaintImage(context, url, id, keep);
+        }
     }
 
     @Override
@@ -203,7 +208,12 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
 
     @Override
     public void loadComments(Context context, ComplaintDto complaintDto, int start, int count, Boolean dontGetFromCache) {
-        server.loadComments(context, complaintDto, start, count);
+        if(dontGetFromCache) {
+            server.loadComments(context, complaintDto, start, count);
+        }
+        else {
+            loadComments(context, complaintDto, start, count);
+        }
     }
 
     @Override
@@ -238,7 +248,12 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
 
     @Override
     public void loadProfileImage(Context context, String url, Long id, Boolean keep, Boolean dontGetFromCache) {
-        server.loadProfileImage(context, url, id, keep);
+        if(dontGetFromCache) {
+            server.loadProfileImage(context, url, id, keep);
+        }
+        else {
+            loadProfileImage(context, url, id, keep);
+        }
     }
 
     @Override
@@ -263,7 +278,12 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
 
     @Override
     public void loadHeaderImage(Context context, String url, Long id, Boolean keep, Boolean dontGetFromCache) {
-        server.loadHeaderImage(context, url, id, keep);
+        if(dontGetFromCache) {
+            server.loadHeaderImage(context, url, id, keep);
+        }
+        else {
+            loadHeaderImage(context, url, id, keep);
+        }
     }
 
     @Override
@@ -288,7 +308,13 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
 
     @Override
     public void loadProfileUpdates(Context context, String token, Boolean dontGetFromCache) {
-        server.loadProfileUpdates(context, token);
+        if(dontGetFromCache) {
+            assert false;
+            server.loadProfileUpdates(context, token);
+        }
+        else {
+            loadProfileUpdates(context, token);
+        }
     }
 
     @Override
@@ -401,6 +427,35 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
         }
     }
 
+    @Override
+    public void loadLeaders(Context context, Boolean dontGetFromCache) {
+        if(dontGetFromCache) {
+            server.loadLeaders(context);
+        }
+        else {
+            loadLeaders(context);
+        }
+    }
+
+    @Override
+    public Boolean isLeadersAvailable(Context context) {
+        return cache.isLeadersAvailable(context);
+    }
+
+    @Override
+    public void updateLeaders(Context context, String json) {
+        cache.updateLeaders(context, json);
+    }
+
+    @Override
+    public void loadLeaders(Context context) {
+        if(cache.isLeadersAvailable(context)) {
+            cache.loadLeaders(context);
+        }
+        else {
+            server.loadLeaders(context);
+        }
+    }
 //Database
 
     @Override

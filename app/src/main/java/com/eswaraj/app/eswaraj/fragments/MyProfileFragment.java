@@ -159,11 +159,12 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
 
     public void onEventMainThread(GetProfileImageEvent event) {
         if(event.getSuccess()) {
-            if(mpPhoto != null) {
-                mpPhoto.setImageBitmap(event.getBitmap());
-            }
-            else {
-                profilePhoto = event.getBitmap();
+            if(event.getId().equals(userSession.getUser().getPerson().getId())) {
+                if (mpPhoto != null) {
+                    mpPhoto.setImageBitmap(event.getBitmap());
+                } else {
+                    profilePhoto = event.getBitmap();
+                }
             }
         }
         else {

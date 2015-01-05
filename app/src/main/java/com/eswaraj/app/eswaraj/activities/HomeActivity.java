@@ -11,6 +11,7 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,10 +26,14 @@ import android.widget.TextView;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.adapters.DialogAdapter;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
+import com.eswaraj.app.eswaraj.events.GetLeadersEvent;
+import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.RevGeocodeEvent;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
+import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.DialogItem;
+import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
 import com.eswaraj.app.eswaraj.util.GenericUtil;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
@@ -40,6 +45,7 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -59,6 +65,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     InternetServicesCheckUtil internetServicesCheckUtil;
     @Inject
     LocationServicesCheckUtil locationServicesCheckUtil;
+    @Inject
+    MiddlewareServiceImpl middlewareService;
 
     private GoogleMapFragment googleMapFragment;
     private Boolean mapReady = false;
@@ -75,10 +83,18 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     private Button sClose;
 
     private Boolean retryRevGeocoding = false;
+
     private ArrayList<DialogItem> constituencyDialogItems = new ArrayList<DialogItem>();
     private GridView constituencyGridView;
     private ProgressWheel constituencyProgressWheel;
     private AlertDialog constituencyAlertDialog;
+
+    private ArrayList<DialogItem> leaderDialogItems = new ArrayList<DialogItem>();
+    private GridView leaderGridView;
+    private ProgressWheel leaderProgressWheel;
+    private AlertDialog leaderAlertDialog;
+    private AtomicInteger leaderCount = new AtomicInteger(0);
+    private AtomicInteger leaderTotal = new AtomicInteger(0);
 
     private final int REQUEST_MY_COMPLAINTS = 0;
     private final int REQUEST_MY_CONSTITUENCY = 1;
@@ -159,14 +175,39 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 }
             }
         });
-        //TODO:Fix the activity targets
         leaders.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     if (userSession.isUserLoggedIn(v.getContext()) && userSession.isUserLocationKnown()) {
-                        Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
-                        startActivity(i);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
+                        LayoutInflater inflater = getLayoutInflater();
+
+                        View rootView = inflater.inflate(R.layout.dialog_select, null);
+                        leaderGridView = (GridView) rootView.findViewById(R.id.sOptionList);
+                        leaderProgressWheel = (ProgressWheel) rootView.findViewById(R.id.sProgressWheel);
+                        sError = (LinearLayout) rootView.findViewById(R.id.sError);
+                        sClose = (Button) rootView.findViewById(R.id.sClose);
+
+                        leaderGridView.setVisibility(View.INVISIBLE);
+                        leaderProgressWheel.setVisibility(View.VISIBLE);
+                        sError.setVisibility(View.INVISIBLE);
+
+                        builder.setView(rootView)
+                                .setCancelable(true)
+                                .setTitle("Select Leader");
+                        leaderAlertDialog = builder.create();
+                        leaderAlertDialog.show();
+                        leaderAlertDialog.getWindow().setLayout(700, 400);
+
+                        sClose.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                leaderAlertDialog.dismiss();
+                            }
+                        });
+
+                        middlewareService.loadLeaders(v.getContext());
                     } else if (userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
                         Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
                         i.putExtra("MODE", true);
@@ -404,6 +445,53 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         }
         else {
             retryRevGeocoding = true;
+        }
+    }
+
+    public void onEventMainThread(GetLeadersEvent event) {
+        if(event.getSuccess()) {
+            leaderDialogItems.clear();
+            leaderTotal.set(event.getPoliticalBodyAdminDtos().size());
+            leaderCount.set(0);
+            for(PoliticalBodyAdminDto politicalBodyAdminDto : event.getPoliticalBodyAdminDtos()) {
+                DialogItem dialogItem = new DialogItem();
+                dialogItem.setId(politicalBodyAdminDto.getId());
+                dialogItem.setName(politicalBodyAdminDto.getName());
+                dialogItem.setTitle(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
+                dialogItem.setPoliticalBodyAdminDto(politicalBodyAdminDto);
+                //TODO:Fix the target
+                dialogItem.setTarget(MyComplaintsActivity.class);
+                leaderDialogItems.add(dialogItem);
+                middlewareService.loadProfileImage(this, politicalBodyAdminDto.getProfilePhoto(), politicalBodyAdminDto.getId(), true, event.getLoadProfilePhotos());
+            }
+            if(event.getPoliticalBodyAdminDtos() == null || event.getPoliticalBodyAdminDtos().size() == 0) {
+                leaderProgressWheel.setVisibility(View.INVISIBLE);
+                sError.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    public void onEventMainThread(GetProfileImageEvent event) {
+        for(DialogItem dialogItem : leaderDialogItems) {
+            if(dialogItem.getId().equals(event.getId())) {
+                dialogItem.setIcon(event.getBitmap());
+            }
+        }
+        if(leaderCount.incrementAndGet() == leaderTotal.get()) {
+            DialogAdapter adapter = new DialogAdapter(this, R.layout.item_select_dialog, leaderDialogItems);
+            leaderGridView.setNumColumns(leaderTotal.get());
+            leaderGridView.setAdapter(adapter);
+            leaderGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    leaderAlertDialog.dismiss();
+                    Intent i = new Intent(view.getContext(), ((DialogItem) leaderGridView.getAdapter().getItem(position)).getTarget());
+                    i.putExtra("LEADER", (Serializable) ((DialogItem) leaderGridView.getAdapter().getItem(position)).getPoliticalBodyAdminDto());
+                    startActivity(i);
+                }
+            });
+            leaderProgressWheel.setVisibility(View.INVISIBLE);
+            leaderGridView.setVisibility(View.VISIBLE);
         }
     }
 

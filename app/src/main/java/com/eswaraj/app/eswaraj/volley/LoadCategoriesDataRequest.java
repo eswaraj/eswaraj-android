@@ -43,6 +43,7 @@ public class LoadCategoriesDataRequest extends BaseClass {
             @Override
             public void onErrorResponse(VolleyError error) {
                 GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
+                getCategoriesDataEvent.setSuccess(false);
                 getCategoriesDataEvent.setError(error.toString());
                 eventBus.postSticky(getCategoriesDataEvent);
             }
@@ -65,6 +66,7 @@ public class LoadCategoriesDataRequest extends BaseClass {
                     cache.updateCategoriesData(context, json);
                 } catch (JsonParseException e) {
                     GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
+                    getCategoriesDataEvent.setSuccess(false);
                     getCategoriesDataEvent.setError("Invalid json");
                     eventBus.postSticky(getCategoriesDataEvent);
                 }
