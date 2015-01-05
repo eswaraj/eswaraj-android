@@ -64,14 +64,14 @@ public class ImageFragment extends BaseFragment {
         super.onStop();
     }
 
-    public void setImage(String path, Long id, ImageType type) {
+    public void setImage(String path, Long id, ImageType type, Boolean keep) {
         this.path = path;
         this.id = id;
         if(type == ImageType.COMPLAINT) {
-            middlewareService.loadComplaintImage(getActivity(), path, id);
+            middlewareService.loadComplaintImage(getActivity(), path, id, keep);
         }
         else if(type == ImageType.PROFILE) {
-            middlewareService.loadProfileImage(getActivity(), path, id);
+            middlewareService.loadProfileImage(getActivity(), path, id, keep);
         }
     }
 

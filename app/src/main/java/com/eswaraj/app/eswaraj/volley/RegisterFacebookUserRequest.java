@@ -89,6 +89,7 @@ public class RegisterFacebookUserRequest extends BaseClass {
                 event.setSuccess(true);
                 event.setUserDto(userDto);
                 event.setToken(session.getAccessToken());
+                event.setDownloadProfilePhoto(true);
                 eventBus.postSticky(event);
                 cache.updateUserData(context, response);
             }

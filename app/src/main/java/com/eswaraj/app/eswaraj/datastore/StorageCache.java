@@ -14,10 +14,16 @@ import java.io.IOException;
 
 public class StorageCache {
 
-    public void saveBitmap(Bitmap bitmap, Long id, Context context, ImageType type) {
+    public void saveBitmap(Bitmap bitmap, Long id, Context context, ImageType type, Boolean keep) {
         FileOutputStream fileOutput = null;
         try {
-            String filename = "eSwaraj_" + type + "_" + id + ".png";
+            String filename;
+            if(keep) {
+                filename = "eSwaraj_" + type + "_" + id + ".png";
+            }
+            else {
+                filename = "eSwaraj_" + type + "_" + id + "_remove.png";
+            }
             File f = new File(context.getCacheDir(), filename);
             fileOutput = new FileOutputStream(f);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutput);
@@ -35,9 +41,15 @@ public class StorageCache {
         }
     }
 
-    public Bitmap getBitmap(Long id, Context context, ImageType type) {
+    public Bitmap getBitmap(Long id, Context context, ImageType type, Boolean keep) {
         Bitmap bitmap = null;
-        File f = new File(context.getCacheDir() + "/eSwaraj_" + type + "_" + id + ".png");
+        File f;
+        if(keep) {
+            f = new File(context.getCacheDir() + "/eSwaraj_" + type + "_" + id + ".png");
+        }
+        else {
+            f = new File(context.getCacheDir() + "/eSwaraj_" + type + "_" + id + "_remove.png");
+        }
         if(f.exists()) {
             bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
         }
@@ -49,7 +61,7 @@ public class StorageCache {
         {
             public boolean accept(File dir, String name)
             {
-                return name.endsWith(".png");
+                return name.endsWith("_remove.png");
             }
         });
         for (File file : files) {
@@ -57,8 +69,15 @@ public class StorageCache {
         }
     }
 
-    public Boolean isBitmapAvailable(Context context, Long id, ImageType type) {
-        File f = new File(context.getCacheDir() + "/eSwaraj_" + type + "_" + id + ".png");
+    public Boolean isBitmapAvailable(Context context, Long id, ImageType type, Boolean keep) {
+        File f;
+        if(keep) {
+            f = new File(context.getCacheDir() + "/eSwaraj_" + type + "_" + id + ".png");
+        }
+        else {
+            f = new File(context.getCacheDir() + "/eSwaraj_" + type + "_" + id + "_remove.png");
+        }
+
         if(f.exists()) {
             return true;
         }

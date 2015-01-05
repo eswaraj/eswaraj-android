@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.FacebookSessionEvent;
+import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.events.LoginStatusEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
@@ -252,19 +253,33 @@ public class LoginFragment extends BaseFragment {
             Log.d("LoginFragment", "GetUserEvent:Success");
             userSession.setUser(event.getUserDto());
             userSession.setToken(event.getToken());
+
             //GCM ID registration, if pending
             if(!gcmUtil.isSyncedWithServer(getActivity())) {
                 middlewareService.registerGcmId(getActivity());
             }
-            LoginStatusEvent loginStatusEvent = new LoginStatusEvent();
-            loginStatusEvent.setSuccess(true);
-            loginStatusEvent.setLoggedIn(true);
-            eventBus.post(loginStatusEvent);
+
+            if(event.getDownloadProfilePhoto()) {
+                middlewareService.loadProfileImage(getActivity(), userSession.getProfilePhoto(), userSession.getUser().getId(), true);
+            }
+            else {
+                LoginStatusEvent loginStatusEvent = new LoginStatusEvent();
+                loginStatusEvent.setSuccess(true);
+                loginStatusEvent.setLoggedIn(true);
+                eventBus.post(loginStatusEvent);
+            }
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch user details from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
             //Show retry button which will re-trigger the request.
         }
+    }
+
+    public void onEventMainThread(GetProfileImageEvent event) {
+        LoginStatusEvent loginStatusEvent = new LoginStatusEvent();
+        loginStatusEvent.setSuccess(true);
+        loginStatusEvent.setLoggedIn(true);
+        eventBus.post(loginStatusEvent);
     }
 
     public void setMode(Boolean mode) {

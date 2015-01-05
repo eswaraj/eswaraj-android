@@ -74,6 +74,7 @@ public class Cache extends BaseClass implements CacheInterface {
             event.setSuccess(true);
             event.setUserDto(userDto);
             event.setToken(session.getAccessToken());
+            event.setDownloadProfilePhoto(false);
             eventBus.postSticky(event);
         } catch (JsonParseException e) {
             //This should never happen since json would only be stored in server if de-serialization was successful in Server class
@@ -198,8 +199,8 @@ public class Cache extends BaseClass implements CacheInterface {
     }
 
     @Override
-    public Boolean isComplaintImageAvailable(Context context, String url, Long id) {
-        return storageCache.isBitmapAvailable(context, id, ImageType.COMPLAINT);
+    public Boolean isComplaintImageAvailable(Context context, String url, Long id, Boolean keep) {
+        return storageCache.isBitmapAvailable(context, id, ImageType.COMPLAINT, keep);
     }
 
     @Override
@@ -208,10 +209,10 @@ public class Cache extends BaseClass implements CacheInterface {
     }
 
     @Override
-    public void loadComplaintImage(Context context, String url, Long id) {
+    public void loadComplaintImage(Context context, String url, Long id, Boolean keep) {
         GetComplaintImageEvent event = new GetComplaintImageEvent();
         event.setSuccess(true);
-        event.setBitmap(storageCache.getBitmap(id, context, ImageType.COMPLAINT));
+        event.setBitmap(storageCache.getBitmap(id, context, ImageType.COMPLAINT, keep));
         event.setId(id);
         eventBus.post(event);
     }
@@ -232,8 +233,8 @@ public class Cache extends BaseClass implements CacheInterface {
     }
 
     @Override
-    public Boolean isProfileImageAvailable(Context context, String url, Long id) {
-        return storageCache.isBitmapAvailable(context, id, ImageType.PROFILE);
+    public Boolean isProfileImageAvailable(Context context, String url, Long id, Boolean keep) {
+        return storageCache.isBitmapAvailable(context, id, ImageType.PROFILE, keep);
     }
 
     @Override
@@ -242,17 +243,17 @@ public class Cache extends BaseClass implements CacheInterface {
     }
 
     @Override
-    public void loadProfileImage(Context context, String url, Long id) {
+    public void loadProfileImage(Context context, String url, Long id, Boolean keep) {
         GetProfileImageEvent event = new GetProfileImageEvent();
         event.setSuccess(true);
-        event.setBitmap(storageCache.getBitmap(id, context, ImageType.PROFILE));
+        event.setBitmap(storageCache.getBitmap(id, context, ImageType.PROFILE, keep));
         event.setId(id);
         eventBus.post(event);
     }
 
     @Override
-    public Boolean isHeaderImageAvailable(Context context, String url, Long id) {
-        return storageCache.isBitmapAvailable(context, id, ImageType.HEADER);
+    public Boolean isHeaderImageAvailable(Context context, String url, Long id, Boolean keep) {
+        return storageCache.isBitmapAvailable(context, id, ImageType.HEADER, keep);
     }
 
     @Override
@@ -261,10 +262,10 @@ public class Cache extends BaseClass implements CacheInterface {
     }
 
     @Override
-    public void loadHeaderImage(Context context, String url, Long id) {
+    public void loadHeaderImage(Context context, String url, Long id, Boolean keep) {
         GetHeaderImageEvent event = new GetHeaderImageEvent();
         event.setSuccess(true);
-        event.setBitmap(storageCache.getBitmap(id, context, ImageType.HEADER));
+        event.setBitmap(storageCache.getBitmap(id, context, ImageType.HEADER, keep));
         event.setId(id);
         eventBus.post(event);
     }

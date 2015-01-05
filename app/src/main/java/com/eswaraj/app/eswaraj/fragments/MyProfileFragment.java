@@ -74,7 +74,6 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
         pDialog.show();
         eventBus.register(this);
         middlewareService.loadProfileUpdates(getActivity(), userSession.getToken());
-        middlewareService.loadProfileImage(getActivity(), userSession.getProfilePhoto(), userSession.getUser().getPerson().getId());
 
     }
 
@@ -150,11 +149,12 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
     public void onEventMainThread(GetProfileEvent event) {
         if(event.getSuccess()) {
             userSession.setUser(event.getUserDto());
+            middlewareService.loadProfileImage(getActivity(), userSession.getProfilePhoto(), userSession.getUser().getPerson().getId(), true, true);
         }
         else {
             Toast.makeText(getActivity(), "Could not get profile updates from server" + event.getError(), Toast.LENGTH_LONG).show();
+            middlewareService.loadProfileImage(getActivity(), userSession.getProfilePhoto(), userSession.getUser().getPerson().getId(), true);
         }
-        pDialog.dismiss();
     }
 
     public void onEventMainThread(GetProfileImageEvent event) {
@@ -169,6 +169,7 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
         else {
             Toast.makeText(getActivity(), "Could not fetch your profile image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
+        pDialog.dismiss();
     }
 
     public void onEventMainThread(ProfileUpdateEvent event) {

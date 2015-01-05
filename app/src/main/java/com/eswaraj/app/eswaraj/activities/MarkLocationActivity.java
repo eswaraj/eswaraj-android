@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.GetProfileEvent;
+import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.GooglePlaceDetailsEvent;
 import com.eswaraj.app.eswaraj.events.ProfileUpdateEvent;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
@@ -248,26 +249,35 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     public void onEventMainThread(GetProfileEvent event) {
         if(event.getSuccess()) {
             userSession.setUser(event.getUserDto());
-            if(userSession.isUserLocationKnown()) {
-                if(dialogMode) {
-                    if(!showAlways) {
-                        if (getParent() == null) {
-                            setResult(Activity.RESULT_OK, null);
-                        } else {
-                            getParent().setResult(Activity.RESULT_OK, null);
-                        }
-                        finish();
-                    }
-                }
-                else {
-                    Intent i = new Intent(this, HomeActivity.class);
-                    startActivity(i);
-                    finish();
-                }
-            }
+            middlewareService.loadProfileImage(this, userSession.getProfilePhoto(), userSession.getUser().getId(), true, true);
         }
         else {
             Toast.makeText(this, "Could not get profile updates from server" + event.getError(), Toast.LENGTH_LONG).show();
+            gotProfileUpdate = true;
+            if(gotLocation) {
+                pDialog.dismiss();
+            }
+        }
+
+    }
+
+    public void onEventMainThread(GetProfileImageEvent event) {
+        if(userSession.isUserLocationKnown()) {
+            if(dialogMode) {
+                if(!showAlways) {
+                    if (getParent() == null) {
+                        setResult(Activity.RESULT_OK, null);
+                    } else {
+                        getParent().setResult(Activity.RESULT_OK, null);
+                    }
+                    finish();
+                }
+            }
+            else {
+                Intent i = new Intent(this, HomeActivity.class);
+                startActivity(i);
+                finish();
+            }
         }
         gotProfileUpdate = true;
         if(gotLocation) {

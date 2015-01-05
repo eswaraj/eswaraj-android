@@ -106,7 +106,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
                 mlaLocation.setText(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
                 if(!politicalBodyAdminDto.getProfilePhoto().equals("")) {
                     id = politicalBodyAdminDto.getId();
-                    middlewareService.loadProfileImage(getActivity(), politicalBodyAdminDto.getProfilePhoto().replace("http", "https"), politicalBodyAdminDto.getId());
+                    middlewareService.loadProfileImage(getActivity(), politicalBodyAdminDto.getProfilePhoto().replace("http", "https"), politicalBodyAdminDto.getId(), false);
                 }
             }
         }

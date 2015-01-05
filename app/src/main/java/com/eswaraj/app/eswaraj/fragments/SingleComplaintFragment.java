@@ -152,7 +152,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         }
         if(complaintDto.getImages() != null) {
             complaintId = complaintDto.getId();
-            middlewareService.loadComplaintImage(getActivity(), complaintDto.getImages().get(0).getOrgUrl(), complaintId);
+            middlewareService.loadComplaintImage(getActivity(), complaintDto.getImages().get(0).getOrgUrl(), complaintId, false);
         }
         if(complaintBitmap != null) {
             complaintImage.setImageBitmap(complaintBitmap);
@@ -163,7 +163,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         if(!complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
             //PersonId is null. Using complaintId for caching
             personId = complaintDto.getCreatedBy().get(0).getId();
-            middlewareService.loadProfileImage(getActivity(), complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getId());
+            middlewareService.loadProfileImage(getActivity(), complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getId(), false);
             //submitterImage.setImageUrl(complaintDto.getCreatedBy().get(0).getProfilePhoto(), volleyUtil.getImageLoader());
         }
         if(submitterBitmap != null) {

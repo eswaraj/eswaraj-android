@@ -143,7 +143,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
 
         middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, 50);
         middlewareService.loadLocationComplaintCounters(getActivity(), locationDto);
-        middlewareService.loadHeaderImage(getActivity(), locationDto.getMobileHeaderImageUrl(), locationDto.getId());
+        middlewareService.loadHeaderImage(getActivity(), locationDto.getMobileHeaderImageUrl(), locationDto.getId(), false);
     }
 
     @Override

@@ -96,8 +96,8 @@ public class Server extends BaseClass implements ServerInterface {
     }
 
     @Override
-    public void loadComplaintImage(Context context, String url, Long id) {
-        loadImageRequest.processRequest(context, url, id, ImageType.COMPLAINT);
+    public void loadComplaintImage(Context context, String url, Long id, Boolean keep) {
+        loadImageRequest.processRequest(context, url, id, ImageType.COMPLAINT, keep);
     }
 
     @Override
@@ -131,13 +131,13 @@ public class Server extends BaseClass implements ServerInterface {
     }
 
     @Override
-    public void loadProfileImage(Context context, String url, Long id) {
-        loadImageRequest.processRequest(context, url, id, ImageType.PROFILE);
+    public void loadProfileImage(Context context, String url, Long id, Boolean keep) {
+        loadImageRequest.processRequest(context, url, id, ImageType.PROFILE, keep);
     }
 
     @Override
-    public void loadHeaderImage(Context context, String url, Long id) {
-        loadImageRequest.processRequest(context, url, id, ImageType.HEADER);
+    public void loadHeaderImage(Context context, String url, Long id, Boolean keep) {
+        loadImageRequest.processRequest(context, url, id, ImageType.HEADER, keep);
     }
 
     @Override

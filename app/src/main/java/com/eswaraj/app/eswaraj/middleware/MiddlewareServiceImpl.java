@@ -156,13 +156,13 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void loadComplaintImage(Context context, String url, Long id, Boolean dontGetFromCache) {
-        server.loadComplaintImage(context, url, id);
+    public void loadComplaintImage(Context context, String url, Long id, Boolean keep, Boolean dontGetFromCache) {
+        server.loadComplaintImage(context, url, id, keep);
     }
 
     @Override
-    public Boolean isComplaintImageAvailable(Context context, String url, Long id) {
-        return cache.isComplaintImageAvailable(context, url, id);
+    public Boolean isComplaintImageAvailable(Context context, String url, Long id, Boolean keep) {
+        return cache.isComplaintImageAvailable(context, url, id, keep);
     }
 
     @Override
@@ -171,12 +171,12 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void loadComplaintImage(Context context, String url, Long id) {
-        if(cache.isComplaintImageAvailable(context, url, id)) {
-            cache.loadComplaintImage(context, url, id);
+    public void loadComplaintImage(Context context, String url, Long id, Boolean keep) {
+        if(cache.isComplaintImageAvailable(context, url, id, keep)) {
+            cache.loadComplaintImage(context, url, id, keep);
         }
         else {
-            server.loadComplaintImage(context, url, id);
+            server.loadComplaintImage(context, url, id, keep);
         }
     }
 
@@ -237,13 +237,13 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void loadProfileImage(Context context, String url, Long id, Boolean dontGetFromCache) {
-        server.loadProfileImage(context, url, id);
+    public void loadProfileImage(Context context, String url, Long id, Boolean keep, Boolean dontGetFromCache) {
+        server.loadProfileImage(context, url, id, keep);
     }
 
     @Override
-    public Boolean isProfileImageAvailable(Context context, String url, Long id) {
-        return cache.isProfileImageAvailable(context, url, id);
+    public Boolean isProfileImageAvailable(Context context, String url, Long id, Boolean keep) {
+        return cache.isProfileImageAvailable(context, url, id, keep);
     }
 
     @Override
@@ -252,23 +252,23 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void loadProfileImage(Context context, String url, Long id) {
-        if(cache.isProfileImageAvailable(context, url, id)) {
-            cache.loadProfileImage(context, url, id);
+    public void loadProfileImage(Context context, String url, Long id, Boolean keep) {
+        if(cache.isProfileImageAvailable(context, url, id, keep)) {
+            cache.loadProfileImage(context, url, id, keep);
         }
         else {
-            server.loadProfileImage(context, url, id);
+            server.loadProfileImage(context, url, id, keep);
         }
     }
 
     @Override
-    public void loadHeaderImage(Context context, String url, Long id, Boolean dontGetFromCache) {
-        server.loadHeaderImage(context, url, id);
+    public void loadHeaderImage(Context context, String url, Long id, Boolean keep, Boolean dontGetFromCache) {
+        server.loadHeaderImage(context, url, id, keep);
     }
 
     @Override
-    public Boolean isHeaderImageAvailable(Context context, String url, Long id) {
-        return cache.isHeaderImageAvailable(context, url, id);
+    public Boolean isHeaderImageAvailable(Context context, String url, Long id, Boolean keep) {
+        return cache.isHeaderImageAvailable(context, url, id, keep);
     }
 
     @Override
@@ -277,12 +277,12 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void loadHeaderImage(Context context, String url, Long id) {
-        if(cache.isHeaderImageAvailable(context, url, id)) {
-            cache.loadHeaderImage(context, url, id);
+    public void loadHeaderImage(Context context, String url, Long id, Boolean keep) {
+        if(cache.isHeaderImageAvailable(context, url, id, keep)) {
+            cache.loadHeaderImage(context, url, id, keep);
         }
         else {
-            server.loadHeaderImage(context, url, id);
+            server.loadHeaderImage(context, url, id, keep);
         }
     }
 

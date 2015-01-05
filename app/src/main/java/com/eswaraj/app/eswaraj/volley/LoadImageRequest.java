@@ -38,17 +38,17 @@ public class LoadImageRequest extends BaseClass {
     @Inject
     StorageCache storageCache;
 
-    public void processRequest(Context context, String url, Long id, ImageType type) {
+    public void processRequest(Context context, String url, Long id, ImageType type, Boolean keep) {
         if(url != null) {
             if (!url.equals("")) {
-                ImageRequest request = new ImageRequest(url, createSuccessListener(context, id, type), 0, 0, null, createErrorListener(context, id, type));
+                ImageRequest request = new ImageRequest(url, createSuccessListener(context, id, type, keep), 0, 0, null, createErrorListener(context, id, type, keep));
                 request.setShouldCache(false);
                 this.networkAccessHelper.submitNetworkRequest("GetImage" + type + "_" + id, request);
             }
         }
     }
 
-    private Response.ErrorListener createErrorListener(final Context context, final Long id, final ImageType type) {
+    private Response.ErrorListener createErrorListener(final Context context, final Long id, final ImageType type, final Boolean keep) {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -77,11 +77,11 @@ public class LoadImageRequest extends BaseClass {
         };
     }
 
-    private Response.Listener<Bitmap> createSuccessListener(final Context context, final Long id, final ImageType type) {
+    private Response.Listener<Bitmap> createSuccessListener(final Context context, final Long id, final ImageType type, final Boolean keep) {
         return new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap bitmap) {
-                storageCache.saveBitmap(bitmap, id, context, type);
+                storageCache.saveBitmap(bitmap, id, context, type, keep);
                 if(type == ImageType.COMPLAINT) {
                     GetComplaintImageEvent event = new GetComplaintImageEvent();
                     event.setSuccess(true);

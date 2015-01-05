@@ -22,13 +22,13 @@ public interface CacheInterface extends MiddlewareGetService {
     public Boolean isUserComplaintsAvailable(Context context);
     public void updateUserComplaints(Context context, String json);
 
-    public Boolean isComplaintImageAvailable(Context context, String url, Long id);
+    public Boolean isComplaintImageAvailable(Context context, String url, Long id, Boolean keep);
     public void updateComplaintImage(Context context);
 
-    public Boolean isProfileImageAvailable(Context context, String url, Long id);
+    public Boolean isProfileImageAvailable(Context context, String url, Long id, Boolean keep);
     public void updateProfileImage(Context context);
 
-    public Boolean isHeaderImageAvailable(Context context, String url, Long id);
+    public Boolean isHeaderImageAvailable(Context context, String url, Long id, Boolean keep);
     public void updateHeaderImage(Context context);
 
     public Boolean isCommentsAvailable(Context context, ComplaintDto complaintDto, int start, int count);
