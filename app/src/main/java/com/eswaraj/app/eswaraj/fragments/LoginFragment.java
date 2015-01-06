@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.FacebookSessionEvent;
+import com.eswaraj.app.eswaraj.events.GetProfileEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.events.LoginStatusEvent;
@@ -22,6 +23,7 @@ import com.eswaraj.app.eswaraj.events.UserContinueEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.GcmUtil;
+import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.facebook.Session;
 import com.facebook.widget.LoginButton;
@@ -52,6 +54,8 @@ public class LoginFragment extends BaseFragment {
     UserSessionUtil userSession;
     @Inject
     GcmUtil gcmUtil;
+    @Inject
+    InternetServicesCheckUtil internetServicesCheckUtil;
 
     private Boolean showInstruction;
     private Boolean dialogMode;
@@ -78,16 +82,8 @@ public class LoginFragment extends BaseFragment {
 
     public void notifyServiceAvailability(Boolean hasNeededServices) {
         if(!hasNeededServices) {
-            //buttonLogin.setVisibility(View.INVISIBLE);
-            Toast.makeText(getActivity(), "Internet and Location services not found", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Internet and/or Location services not found", Toast.LENGTH_LONG).show();
         }
-        /*
-        else {
-            if (facebookLoginUtil.isUserLoggedIn()) {
-                buttonLogin.setVisibility(View.INVISIBLE);
-            }
-        }
-        */
     }
 
     public void setShowInstruction(Boolean show) {
@@ -248,7 +244,6 @@ public class LoginFragment extends BaseFragment {
     }
 
     public void onEventMainThread(GetUserEvent event) {
-        progressWheel.setVisibility(View.INVISIBLE);
         if(event.getSuccess()) {
             Log.d("LoginFragment", "GetUserEvent:Success");
             userSession.setUser(event.getUserDto());
@@ -259,15 +254,17 @@ public class LoginFragment extends BaseFragment {
                 middlewareService.registerGcmId(getActivity());
             }
 
-            if(event.getDownloadProfilePhoto()) {
-                middlewareService.loadProfileImage(getActivity(), userSession.getProfilePhoto(), userSession.getUser().getId(), true);
+            if(event.getDataUpdateNeeded() && internetServicesCheckUtil.isServiceAvailable(getActivity())) {
+                middlewareService.loadProfileUpdates(getActivity(), userSession.getToken());
             }
             else {
+                progressWheel.setVisibility(View.INVISIBLE);
                 LoginStatusEvent loginStatusEvent = new LoginStatusEvent();
                 loginStatusEvent.setSuccess(true);
                 loginStatusEvent.setLoggedIn(true);
                 eventBus.post(loginStatusEvent);
             }
+
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch user details from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
@@ -275,7 +272,8 @@ public class LoginFragment extends BaseFragment {
         }
     }
 
-    public void onEventMainThread(GetProfileImageEvent event) {
+    public void onEventMainThread(GetProfileEvent event) {
+        progressWheel.setVisibility(View.INVISIBLE);
         LoginStatusEvent loginStatusEvent = new LoginStatusEvent();
         loginStatusEvent.setSuccess(true);
         loginStatusEvent.setLoggedIn(true);

@@ -207,7 +207,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                             }
                         });
 
-                        middlewareService.loadLeaders(v.getContext());
+                        middlewareService.loadLeaders(v.getContext(), true);
                     } else if (userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
                         Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
                         i.putExtra("MODE", true);

@@ -77,6 +77,7 @@ public class Cache extends BaseClass implements CacheInterface {
             event.setUserDto(userDto);
             event.setToken(session.getAccessToken());
             event.setDownloadProfilePhoto(false);
+            event.setDataUpdateNeeded(true);
             eventBus.postSticky(event);
         } catch (JsonParseException e) {
             //This should never happen since json would only be stored in server if de-serialization was successful in Server class

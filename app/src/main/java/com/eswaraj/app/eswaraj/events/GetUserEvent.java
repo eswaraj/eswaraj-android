@@ -9,6 +9,7 @@ public class GetUserEvent extends BaseEvent {
     private UserDto userDto;
     private String token;
     private Boolean downloadProfilePhoto;
+    private Boolean dataUpdateNeeded;
 
     public UserDto getUserDto() {
         return this.userDto;
@@ -32,5 +33,13 @@ public class GetUserEvent extends BaseEvent {
 
     public void setDownloadProfilePhoto(Boolean downloadProfilePhoto) {
         this.downloadProfilePhoto = downloadProfilePhoto;
+    }
+
+    public Boolean getDataUpdateNeeded() {
+        return dataUpdateNeeded;
+    }
+
+    public void setDataUpdateNeeded(Boolean dataUpdateNeeded) {
+        this.dataUpdateNeeded = dataUpdateNeeded;
     }
 }

@@ -114,7 +114,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         eventBus.register(this);
 
         middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), true);
-        middlewareService.loadProfileImage(getActivity(), userSession.getProfilePhoto(), userSession.getUser().getPerson().getId(), true);
+        middlewareService.loadProfileImage(getActivity(), userSession.getProfilePhoto(), userSession.getUser().getPerson().getId(), false);
         middlewareService.loadCategoriesData(getActivity());
     }
 
