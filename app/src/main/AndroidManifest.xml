@@ -186,6 +186,15 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".activities.LeaderActivity"
+            android:label="@string/title_activity_leader"
+            android:parentActivityName=".activities.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>

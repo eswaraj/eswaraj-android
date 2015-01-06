@@ -8,6 +8,7 @@ import com.eswaraj.app.eswaraj.activities.AddDetailsActivity;
 import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
 import com.eswaraj.app.eswaraj.activities.ConstituencyActivity;
 import com.eswaraj.app.eswaraj.activities.HomeActivity;
+import com.eswaraj.app.eswaraj.activities.LeaderActivity;
 import com.eswaraj.app.eswaraj.activities.LoginActivity;
 import com.eswaraj.app.eswaraj.activities.MarkLocationActivity;
 import com.eswaraj.app.eswaraj.activities.MyComplaintsActivity;
@@ -26,6 +27,7 @@ import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.fragments.AddDetailsFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryOfflineFragment;
 import com.eswaraj.app.eswaraj.fragments.ConstituencyFragment;
+import com.eswaraj.app.eswaraj.fragments.LeaderFragment;
 import com.eswaraj.app.eswaraj.fragments.MyProfileFragment;
 import com.eswaraj.app.eswaraj.fragments.SelectAmenityFragment;
 import com.eswaraj.app.eswaraj.fragments.AmenityBannerFragment;
@@ -144,7 +146,9 @@ import de.greenrobot.event.EventBus;
                 GcmUtil.class,
                 RegisterGcmIdRequest.class,
                 SingleComplaintRequest.class,
-                LoadLeadersRequest.class
+                LoadLeadersRequest.class,
+                LeaderActivity.class,
+                LeaderFragment.class
         },
         complete = false,
         library = true

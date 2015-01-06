@@ -459,8 +459,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 dialogItem.setName(politicalBodyAdminDto.getName());
                 dialogItem.setTitle(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
                 dialogItem.setPoliticalBodyAdminDto(politicalBodyAdminDto);
-                //TODO:Fix the target
-                dialogItem.setTarget(MyComplaintsActivity.class);
+                dialogItem.setTarget(LeaderActivity.class);
                 leaderDialogItems.add(dialogItem);
                 middlewareService.loadProfileImage(this, politicalBodyAdminDto.getProfilePhoto(), politicalBodyAdminDto.getId(), true, event.getLoadProfilePhotos());
             }
