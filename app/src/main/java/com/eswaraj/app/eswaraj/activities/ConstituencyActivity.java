@@ -24,6 +24,7 @@ public class ConstituencyActivity extends BaseActivity {
     EventBus eventBus;
 
     private ConstituencyFragment constituencyFragment;
+    private final int OPEN_COMPLAINT_REQUEST = 99;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +52,23 @@ public class ConstituencyActivity extends BaseActivity {
         i.putExtra("DATA_PRESENT", true);
         //i.putExtra("COMPLAINT_ID", event.getComplaintDto().getId());
         //i.putExtra("DATA_PRESENT", false);
-        startActivity(i);
+        startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
     }
 
     public void onEventMainThread(MarkerClickEvent event) {
         Intent i = new Intent(this, SingleComplaintActivity.class);
         i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
         i.putExtra("DATA_PRESENT", true);
-        startActivity(i);
+        startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == OPEN_COMPLAINT_REQUEST && resultCode == RESULT_OK) {
+            if(data != null) {
+                constituencyFragment.markComplaintClosed(data.getLongExtra("ID", -1));
+            }
+        }
     }
 }

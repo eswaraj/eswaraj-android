@@ -25,6 +25,7 @@ public class MyProfileActivity extends BaseActivity {
     EventBus eventBus;
 
     private MyProfileFragment myProfileFragment;
+    private final int UPDATE_LOCATION = 99;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,15 @@ public class MyProfileActivity extends BaseActivity {
         Intent i = new Intent(this, MarkLocationActivity.class);
         i.putExtra("MODE", true);
         i.putExtra("ALWAYS", true);
-        startActivity(i);
+        startActivityForResult(i, UPDATE_LOCATION);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == UPDATE_LOCATION) {
+            myProfileFragment.updateUserLocationDisplay();
+        }
     }
 
     public void onEventMainThread(UserContinueEvent event) {

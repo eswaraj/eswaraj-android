@@ -42,6 +42,7 @@ public class MyComplaintsActivity extends BaseActivity {
     EventBus eventBus;
 
     private MyComplaintsFragment myComplaintsFragment;
+    private final int OPEN_COMPLAINT_REQUEST = 99;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +68,23 @@ public class MyComplaintsActivity extends BaseActivity {
         Intent i = new Intent(this, SingleComplaintActivity.class);
         i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
         i.putExtra("DATA_PRESENT", true);
-        startActivity(i);
+        startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
     }
 
     public void onEventMainThread(MarkerClickEvent event) {
         Intent i = new Intent(this, SingleComplaintActivity.class);
         i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
         i.putExtra("DATA_PRESENT", true);
-        startActivity(i);
+        startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == OPEN_COMPLAINT_REQUEST && resultCode == RESULT_OK) {
+            if(data != null) {
+                myComplaintsFragment.markComplaintClosed(data.getLongExtra("ID", -1));
+            }
+        }
     }
 }

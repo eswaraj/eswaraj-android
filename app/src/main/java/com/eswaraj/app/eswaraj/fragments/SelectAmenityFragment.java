@@ -24,6 +24,7 @@ import com.eswaraj.app.eswaraj.events.RevGeocodeEvent;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.GenericUtil;
+import com.eswaraj.app.eswaraj.util.GlobalSessionUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
@@ -49,15 +50,16 @@ public class SelectAmenityFragment extends BaseFragment implements OnMapReadyCal
     Context applicationContext;
     @Inject
     UserSessionUtil userSession;
+    @Inject
+    GlobalSessionUtil globalSession;
 
     private GridView gvAmenityList;
-    private List<CategoryWithChildCategoryDto> categoryList;
     private GoogleMapFragment googleMapFragment;
     private Location lastLocation;
     private ReverseGeocodingTask reverseGeocodingTask;
     private Boolean mapReady;
     private Boolean retryRevGeocoding = false;
-    TextView asRevGeocode;
+    private TextView asRevGeocode;
 
     public static SelectAmenityFragment newInstance() {
         SelectAmenityFragment fragment = new SelectAmenityFragment();
@@ -89,7 +91,6 @@ public class SelectAmenityFragment extends BaseFragment implements OnMapReadyCal
         super.onStart();
         eventBus.register(this);
         locationUtil.subscribe(applicationContext, true);
-        middlewareService.loadCategoriesData(getActivity());
     }
 
     @Override
@@ -105,6 +106,9 @@ public class SelectAmenityFragment extends BaseFragment implements OnMapReadyCal
         asRevGeocode = (TextView) rootView.findViewById(R.id.asRevGeocode);
         asRevGeocode = (TextView) rootView.findViewById(R.id.asRevGeocode);
         gvAmenityList = (GridView) rootView.findViewById(R.id.gvAmenityList);
+
+        AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), null);
+        gvAmenityList.setAdapter(amenityListAdapter);
         gvAmenityList.setOnItemClickListener(new GridView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
@@ -115,23 +119,6 @@ public class SelectAmenityFragment extends BaseFragment implements OnMapReadyCal
             }
         });
         return rootView;
-    }
-
-    public void onEventMainThread(GetCategoriesDataEvent event) {
-        if(event.getSuccess()) {
-            categoryList = event.getCategoryList();
-            middlewareService.loadCategoriesImages(getActivity(), event.getCategoryList());
-        }
-        else {
-            Toast.makeText(getActivity(), "Could not fetch categories from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-            //Show retry button which will re-trigger the request.
-        }
-    }
-
-    public void onEventMainThread(GetCategoriesImagesEvent event) {
-        Log.d("SelectAmenityFragment", "GetCategoriesImagesEvent");
-        AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryList, null);
-        gvAmenityList.setAdapter(amenityListAdapter);
     }
 
     public void onEventMainThread(Location location) {

@@ -14,17 +14,13 @@ import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
-import com.eswaraj.app.eswaraj.events.GetLeadersEvent;
-import com.eswaraj.app.eswaraj.events.GetProfileEvent;
-import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.GooglePlaceDetailsEvent;
+import com.eswaraj.app.eswaraj.events.GooglePlacesListEvent;
 import com.eswaraj.app.eswaraj.events.ProfileUpdateEvent;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.fragments.GooglePlacesListFragment;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
-import com.eswaraj.app.eswaraj.models.DialogItem;
 import com.eswaraj.app.eswaraj.models.GooglePlace;
-import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
 import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
@@ -34,7 +30,6 @@ import com.github.amlcurran.showcaseview.targets.PointTarget;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -109,6 +104,8 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         mlSearchButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pDialog = new CustomProgressDialog(v.getContext(), false, true, "Getting matching locations...");
+                pDialog.show();
                 if(mapDisplayed) {
                     mapDisplayed = false;
                     mapReady = false;
@@ -241,6 +238,16 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         else {
             Toast.makeText(this, "Could not save location to server. Please retry. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void onEventMainThread(GooglePlacesListEvent event) {
+        if(event.getSuccess()) {
+            googlePlacesListFragment.setPlacesList(event.getArrayList());
+        }
+        else {
+            Toast.makeText(this, "Could not fetch list of places. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+        pDialog.dismiss();
     }
 
     private void hideKeyboard() {

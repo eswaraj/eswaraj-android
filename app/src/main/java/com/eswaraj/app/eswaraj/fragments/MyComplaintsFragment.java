@@ -30,6 +30,7 @@ import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.ComplaintCounter;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.app.eswaraj.util.GenericUtil;
+import com.eswaraj.app.eswaraj.util.GlobalSessionUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.app.eswaraj.widgets.CustomScrollView;
@@ -57,10 +58,11 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     MiddlewareServiceImpl middlewareService;
     @Inject
     UserSessionUtil userSession;
+    @Inject
+    GlobalSessionUtil globalSession;
 
     private GoogleMapFragment googleMapFragment;
     private List<ComplaintDto> complaintDtoList;
-    private List<CategoryWithChildCategoryDto> categoryDtoList;
     ArrayList<ComplaintCounter> complaintCounters;
 
     private ListView mcListOpen;
@@ -82,12 +84,12 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     private Boolean mapDisplayed = false;
     private Boolean mapReady = false;
     private Boolean markersAdded = false;
-    private Boolean categoriesDataAvailable = false;
-    private Boolean complaintDataAvailable = false;
-    private Boolean dataAlreadySet = false;
-    private Boolean categoriesImagesAvailable = false;
-    private Boolean countersDataAvailable = false;
     private Bitmap photo;
+
+    private List<ComplaintDto> closedComplaints = new ArrayList<ComplaintDto>();
+    private List<ComplaintDto> openComplaints = new ArrayList<ComplaintDto>();
+    private ComplaintListAdapter openComplaintsAdapter;
+    private ComplaintListAdapter closedComplaintsAdapter;
 
 
     public MyComplaintsFragment() {
@@ -115,7 +117,6 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
 
         middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), true);
         middlewareService.loadProfileImage(getActivity(), userSession.getProfilePhoto(), userSession.getUser().getPerson().getId(), false);
-        middlewareService.loadCategoriesData(getActivity());
     }
 
     @Override
@@ -170,6 +171,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         listButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mcScrollView.removeInterceptScrollView(googleMapFragment.getView());
                 mapDisplayed = false;
                 mcDataView.removeAllViews();
                 mcDataView.addView(mcListContainer);
@@ -180,6 +182,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         mapButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mcScrollView.addInterceptScrollView(googleMapFragment.getView());
                 mapDisplayed = true;
                 getChildFragmentManager().beginTransaction().show(googleMapFragment).commit();
                 getChildFragmentManager().executePendingTransactions();
@@ -201,6 +204,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         analyticsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mcScrollView.removeInterceptScrollView(googleMapFragment.getView());
                 mapDisplayed = false;
                 mcDataView.removeAllViews();
                 mcDataView.addView(mcAnalyticsContainer);
@@ -211,16 +215,20 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         return rootView;
     }
 
-    public synchronized void setComplaintData(List<ComplaintDto> complaintDtoList) {
-        if(!dataAlreadySet) {
+    private void setComplaintData(List<ComplaintDto> complaintDtoList) {
             filterListAndSetAdapter(complaintDtoList);
             populateCountersAndCreateChart();
             if (mapReady && mapDisplayed) {
                 googleMapFragment.addMarkers(complaintDtoList);
                 markersAdded = true;
             }
-            dataAlreadySet = true;
-        }
+    }
+
+    public void markComplaintClosed(Long id) {
+        ComplaintDto complaintDtoToMove = openComplaintsAdapter.removeComplaint(id);
+        openComplaintsAdapter.notifyDataSetChanged();
+        closedComplaintsAdapter.addComplaint(complaintDtoToMove);
+        closedComplaintsAdapter.notifyDataSetChanged();
     }
 
 
@@ -231,12 +239,11 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
             googleMapFragment.addMarkers(complaintDtoList);
             markersAdded = true;
         }
-        mcScrollView.addInterceptScrollView(googleMapFragment.getView());
     }
 
-    public void populateCountersAndCreateChart() {
+    private void populateCountersAndCreateChart() {
         ArrayList<ComplaintCounter> complaintCounters = new ArrayList<ComplaintCounter>();
-        for(CategoryWithChildCategoryDto categoryDto : categoryDtoList) {
+        for(CategoryWithChildCategoryDto categoryDto : globalSession.getCategoryDtoList()) {
             ComplaintCounter complaintCounter = new ComplaintCounter();
             complaintCounter.setId(categoryDto.getId());
             complaintCounter.setName(categoryDto.getName());
@@ -254,17 +261,11 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         }
         GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters);
         mcChartContainer.addView(chartView);
-        countersDataAvailable = true;
-        if(categoriesImagesAvailable) {
-            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryDtoList, complaintCounters);
-            mcAmenityList.setAdapter(amenityListAdapter);
-        }
+        AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), complaintCounters);
+        mcAmenityList.setAdapter(amenityListAdapter);
     }
 
     private void filterListAndSetAdapter(List<ComplaintDto> complaintDtoList) {
-        List<ComplaintDto> closedComplaints = new ArrayList<ComplaintDto>();
-        List<ComplaintDto> openComplaints = new ArrayList<ComplaintDto>();
-
         for(ComplaintDto complaintDto : complaintDtoList) {
             if(complaintDto.getStatus().equals("Done")) {
                 closedComplaints.add(complaintDto);
@@ -274,19 +275,19 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
             }
         }
 
-        mcListOpen.setAdapter(new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, openComplaints));
+        openComplaintsAdapter = new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, openComplaints);
+        closedComplaintsAdapter = new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, closedComplaints);
+
+        mcListOpen.setAdapter(openComplaintsAdapter);
         mcListOpen.setDividerHeight(0);
-        mcListClosed.setAdapter(new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, closedComplaints));
+        mcListClosed.setAdapter(closedComplaintsAdapter);
         mcListClosed.setDividerHeight(0);
     }
 
     public void onEventMainThread(GetUserComplaintsEvent event) {
         if(event.getSuccess()) {
             complaintDtoList = event.getComplaintDtoList();
-            complaintDataAvailable = true;
-            if(categoriesDataAvailable && !dataAlreadySet) {
-                setComplaintData(complaintDtoList);
-            }
+            setComplaintData(complaintDtoList);
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch user complaints. Error = " + event.getError(), Toast.LENGTH_LONG).show();
@@ -294,24 +295,6 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         pDialog.dismiss();
     }
 
-    public void onEventMainThread(GetCategoriesDataEvent event) {
-        if(event.getSuccess()) {
-            categoryDtoList = event.getCategoryList();
-            categoriesDataAvailable = true;
-            if(complaintDataAvailable && !dataAlreadySet) {
-                setComplaintData(complaintDtoList);
-            }
-            middlewareService.loadCategoriesImages(getActivity(), categoryDtoList);
-        }
-    }
-
-    public void onEventMainThread(GetCategoriesImagesEvent event) {
-        categoriesImagesAvailable = true;
-        if(countersDataAvailable) {
-            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryDtoList, complaintCounters);
-            mcAmenityList.setAdapter(amenityListAdapter);
-        }
-    }
 
     public void onEventMainThread(GetProfileImageEvent event) {
         if(event.getSuccess()) {

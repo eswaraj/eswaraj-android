@@ -1,5 +1,6 @@
 package com.eswaraj.app.eswaraj.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,11 +8,19 @@ import android.view.MenuItem;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
+import com.eswaraj.app.eswaraj.events.ComplaintClosedEvent;
 import com.eswaraj.app.eswaraj.fragments.BottomMenuBarFragment;
 import com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment;
 import com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment;
 
+import javax.inject.Inject;
+
+import de.greenrobot.event.EventBus;
+
 public class SingleComplaintActivity extends BaseActivity {
+
+    @Inject
+    EventBus eventBus;
 
     private SingleComplaintFragment singleComplaintFragment;
 
@@ -21,6 +30,20 @@ public class SingleComplaintActivity extends BaseActivity {
         setContentView(R.layout.activity_single_complaint);
 
         singleComplaintFragment = (SingleComplaintFragment) getSupportFragmentManager().findFragmentById(R.id.scFragment);
+        eventBus.register(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        eventBus.unregister(this);
+        super.onDestroy();
+    }
+
+    public void onEventMainThread(ComplaintClosedEvent event) {
+        if(event.getSuccess()) {
+            Intent i = new Intent();
+            i.putExtra("ID", event.getComplaintDto().getId());
+            setResult(RESULT_OK, i);
+        }
+    }
 }

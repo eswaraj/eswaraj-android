@@ -68,16 +68,16 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onStart() {
+        super.onStart();
         eventBus.register(this);
         middlewareService.loadProfileImage(getActivity(), userSession.getProfilePhoto(), userSession.getUser().getPerson().getId(), false);
     }
 
     @Override
-    public void onDestroy() {
+    public void onStop() {
         eventBus.unregister(this);
-        super.onDestroy();
+        super.onStop();
     }
 
     @Override
@@ -171,6 +171,14 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        if(userSession.getUser().getPerson().getPersonAddress() != null) {
+            if (userSession.getUser().getPerson().getPersonAddress().getLattitude() != null) {
+                googleMapFragment.updateMarkerLocation(userSession.getUser().getPerson().getPersonAddress().getLattitude(), userSession.getUser().getPerson().getPersonAddress().getLongitude());
+            }
+        }
+    }
+
+    public void updateUserLocationDisplay() {
         if(userSession.getUser().getPerson().getPersonAddress() != null) {
             if (userSession.getUser().getPerson().getPersonAddress().getLattitude() != null) {
                 googleMapFragment.updateMarkerLocation(userSession.getUser().getPerson().getPersonAddress().getLattitude(), userSession.getUser().getPerson().getPersonAddress().getLongitude());

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +87,19 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
     }
 
     public void addComplaint(ComplaintDto newComplaintDto) {
-        complaintDtoList.add(newComplaintDto);
+        if(newComplaintDto != null) {
+            complaintDtoList.add(newComplaintDto);
+        }
+    }
+
+    public ComplaintDto removeComplaint(Long id) {
+        for(ComplaintDto complaintDto : complaintDtoList) {
+            if(complaintDto.getId().equals(id)) {
+                complaintDtoList.remove(complaintDto);
+                return complaintDto;
+            }
+        }
+        return null;
     }
 
     public void clearComplaints() {

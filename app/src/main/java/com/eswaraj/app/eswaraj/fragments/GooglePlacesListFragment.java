@@ -17,6 +17,9 @@ import com.eswaraj.app.eswaraj.events.GooglePlacesListEvent;
 import com.eswaraj.app.eswaraj.models.GooglePlace;
 import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
@@ -24,8 +27,6 @@ import de.greenrobot.event.EventBus;
 
 public class GooglePlacesListFragment extends BaseFragment {
 
-    @Inject
-    EventBus eventBus;
     @Inject
     GooglePlacesUtil googlePlacesUtil;
 
@@ -49,26 +50,7 @@ public class GooglePlacesListFragment extends BaseFragment {
         return rootView;
     }
 
-
-    public void onEventMainThread(GooglePlacesListEvent event) {
-        if(event.getSuccess()) {
-//            mlSearchResults.setAdapter(new GooglePlacesListAdapter(getActivity(), android.R.layout.simple_list_item_1, event.getArrayList()));
-            mlSearchResults.setAdapter(new GooglePlacesListAdapter(getActivity(), R.layout.item_google_places_list, event.getArrayList()));
-        }
-        else {
-            Toast.makeText(getActivity(), "Could not fetch list of places. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        eventBus.registerSticky(this);
-    }
-
-    @Override
-    public void onStop() {
-        eventBus.unregister(this);
-        super.onStop();
+    public void setPlacesList(ArrayList<GooglePlace> googlePlaceList) {
+        mlSearchResults.setAdapter(new GooglePlacesListAdapter(getActivity(), R.layout.item_google_places_list, googlePlaceList));
     }
 }

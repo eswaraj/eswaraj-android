@@ -29,15 +29,16 @@ public class ComplaintCloseRequest extends BaseClass {
         complaintStatusChangeByPersonRequestDto.setPersonId(complaintDto.getCreatedBy().get(0).getId());
         complaintStatusChangeByPersonRequestDto.setStatus("Done");
 
-        GenericPostVolleyRequest request = new GenericPostVolleyRequest(Constants.COMPLAINT_CLOSE_URL, createErrorListener(), createSuccessListener(), complaintStatusChangeByPersonRequestDto);
+        GenericPostVolleyRequest request = new GenericPostVolleyRequest(Constants.COMPLAINT_CLOSE_URL, createErrorListener(), createSuccessListener(complaintDto), complaintStatusChangeByPersonRequestDto);
         networkAccessHelper.submitNetworkRequest("CloseComplaint", request);
     }
 
-    private Response.Listener<String> createSuccessListener() {
+    private Response.Listener<String> createSuccessListener(final ComplaintDto complaintDto) {
         return new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 ComplaintClosedEvent event = new ComplaintClosedEvent();
+                event.setComplaintDto(complaintDto);
                 event.setSuccess(true);
                 eventBus.post(event);
             }
@@ -51,6 +52,7 @@ public class ComplaintCloseRequest extends BaseClass {
             public void onErrorResponse(VolleyError error) {
                 ComplaintClosedEvent event = new ComplaintClosedEvent();
                 event.setSuccess(false);
+                event.setError(error.toString());
                 eventBus.post(event);
             }
         };
