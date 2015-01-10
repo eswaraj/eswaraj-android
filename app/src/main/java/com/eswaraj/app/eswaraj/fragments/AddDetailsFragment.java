@@ -27,6 +27,7 @@ import com.eswaraj.app.eswaraj.events.ComplaintReportedEvent;
 import com.eswaraj.app.eswaraj.events.ComplaintSavedEvent;
 import com.eswaraj.app.eswaraj.helpers.BitmapWorkerTask;
 import com.eswaraj.app.eswaraj.helpers.CameraHelper;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.ComplaintSavedResponseDto;
 import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
@@ -57,6 +58,8 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
     CameraHelper cameraHelper;
     @Inject
     InternetServicesCheckUtil internetServicesCheckUtil;
+    @Inject
+    GoogleAnalyticsTracker googleAnalyticsTracker;
 
     private Button takePhoto;
     private Button attachPhoto;
@@ -166,14 +169,17 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
         post.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Post Complaint");
                 if(userSession.isUserLoggedIn(getActivity())) {
                     if (!posted) {
                         if(internetServicesCheckUtil.isServiceAvailable(getActivity())) {
+                            googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ONLINE, "Post Complaint: Online");
                             middlewareService.postComplaint(userSession.getUser(), amenity, template, location, description.getText().toString(), cameraHelper.getImageFile(), anonCheckbox.isChecked(), userSession.getUserRevGeocodedLocation());
                             pDialog = new CustomProgressDialog(getActivity(), false, true, "Posting your complaint ...");
                             pDialog.show();
                         }
                         else {
+                            googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.OFFLINE, "Post Complaint: Offline");
                             middlewareService.saveComplaint(userSession.getUser(), amenity, template, location, description.getText().toString(), cameraHelper.getImageFile(), anonCheckbox.isChecked(), userSession.getUserRevGeocodedLocation());
                             Address bestMatch = new Gson().fromJson(userSession.getUserRevGeocodedLocation(), Address.class);
                             String userLocationString = null;
@@ -194,6 +200,7 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
                     }
                 }
                 else {
+                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "Post Complaint: Not logged-in");
                     Intent i = new Intent(getActivity(), LoginActivity.class);
                     startActivityForResult(i, REQUEST_POST_BUTTON);
                 }

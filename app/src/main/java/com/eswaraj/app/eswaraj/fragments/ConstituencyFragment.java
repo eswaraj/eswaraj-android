@@ -31,6 +31,7 @@ import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetHeaderImageEvent;
 import com.eswaraj.app.eswaraj.events.GetLocationComplaintCountersEvent;
 import com.eswaraj.app.eswaraj.events.GetLocationComplaintsEvent;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.ComplaintCounter;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
@@ -62,6 +63,8 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
     MiddlewareServiceImpl middlewareService;
     @Inject
     GlobalSessionUtil globalSession;
+    @Inject
+    GoogleAnalyticsTracker googleAnalyticsTracker;
 
     private LocationDto locationDto;
     private List<ComplaintDto> complaintDtoList;
@@ -153,12 +156,6 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        middlewareService.loadCategoriesData(getActivity());
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_constituency, container, false);
         heatmap = (Button) rootView.findViewById(R.id.heatmap);
@@ -245,6 +242,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         listButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show List");
                 cScrollView.removeInterceptScrollView(googleMapFragment.getView());
                 mapDisplayed = false;
                 cDataView.removeAllViews();
@@ -254,6 +252,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         mapButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show Map");
                 cScrollView.addInterceptScrollView(googleMapFragment.getView());
                 mapDisplayed = true;
                 mcMapButtons.setVisibility(View.VISIBLE);
@@ -277,6 +276,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         analyticsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show Analytics");
                 cScrollView.removeInterceptScrollView(googleMapFragment.getView());
                 mapDisplayed = false;
                 cDataView.removeAllViews();
@@ -287,6 +287,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show Info");
                 cScrollView.removeInterceptScrollView(googleMapFragment.getView());
                 mapDisplayed = false;
                 cDataView.removeAllViews();
@@ -298,6 +299,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         mcShowMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show More");
                 middlewareService.loadLocationComplaints(getActivity(), locationDto, complaintDtoList.size(), 50);
                 markersAdded = false;
                 dataAlreadySet = false;
@@ -309,18 +311,21 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         heatmap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show Heatmap");
                 googleMapFragment.addHeatMap(complaintDtoList);
             }
         });
         cluster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show Cluster");
                 googleMapFragment.addCluster(complaintDtoList);
             }
         });
         markers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show Markers");
                 googleMapFragment.addMarkers(complaintDtoList);
             }
         });

@@ -15,6 +15,7 @@ import com.eswaraj.app.eswaraj.activities.SelectTemplateActivity;
 import com.eswaraj.app.eswaraj.adapters.TemplateListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.TemplateSelectEvent;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
 import java.io.Serializable;

@@ -25,6 +25,7 @@ import com.eswaraj.app.eswaraj.events.LoginStatusEvent;
 import com.eswaraj.app.eswaraj.events.ProfileUpdateEvent;
 import com.eswaraj.app.eswaraj.events.StartAnotherActivityEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.interfaces.BitmapWorkerCallback;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareService;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -49,6 +50,8 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
     UserSessionUtil userSession;
     @Inject
     MiddlewareServiceImpl middlewareService;
+    @Inject
+    GoogleAnalyticsTracker googleAnalyticsTracker;
 
     private ImageView mpPhoto;
     private TextView mpName;
@@ -108,6 +111,7 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
         mpMarkLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MyProfile: Mark Location");
                 StartAnotherActivityEvent event = new StartAnotherActivityEvent();
                 event.setSuccess(true);
                 eventBus.post(event);
@@ -117,6 +121,7 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
         mpSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MyProfile: Save Profile");
                 middlewareService.updateProfile(getActivity(), userSession.getToken(), mpInputName.getText().toString(), null, null);
                 pDialog = new CustomProgressDialog(getActivity(), false, true, "Saving changes...");
                 pDialog.show();
@@ -134,6 +139,7 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
         mpLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MyProfile: Logout");
                 userSession.logoutUser(v.getContext());
                 LoginStatusEvent event = new LoginStatusEvent();
                 event.setLoggedIn(false);

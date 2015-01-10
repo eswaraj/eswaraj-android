@@ -18,6 +18,7 @@ import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
 import com.eswaraj.app.eswaraj.helpers.BitmapWorkerTask;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.ComplaintPostResponseDto;
 import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
@@ -40,6 +41,8 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     MiddlewareServiceImpl middlewareService;
     @Inject
     FacebookSharingUtil facebookSharingUtil;
+    @Inject
+    GoogleAnalyticsTracker googleAnalyticsTracker;
 
     private GoogleMapFragment googleMapFragment;
     private File imageFile;
@@ -139,6 +142,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "ComplaintSummary: Share Complaint");
                 if(complaintPostResponseDto.getComplaintDto().getImages() != null) {
                     facebookSharingUtil.shareComplaintWithImage((Activity) v.getContext(), "Submitted new complaint using eSwaraj", complaintPostResponseDto.getComplaintDto().getDescription(), complaintPostResponseDto.getComplaintDto().getImages().get(0).getOrgUrl(), "http://dev.eswaraj.com/complaint/" + complaintPostResponseDto.getComplaintDto().getId() + ".html");
                 }

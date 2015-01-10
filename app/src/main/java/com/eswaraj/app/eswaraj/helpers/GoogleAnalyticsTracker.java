@@ -134,6 +134,11 @@ public class GoogleAnalyticsTracker extends BaseClass {
         ACCESS_DENIED,
 
         /**
+         * The user tries to access a screen while services are not available
+         */
+        NO_SERVICE,
+
+        /**
          * The user attempts to perform an application-level action but fails
          * (for any reason).
          */
@@ -229,6 +234,10 @@ public class GoogleAnalyticsTracker extends BaseClass {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(applicationContext);
         mTracker = analytics.newTracker(Constants.GOOGLE_ANALYTICS_KEY);
         mTracker.enableExceptionReporting(true);
+        mTracker.enableAutoActivityTracking(true);
+        mTracker.setAppName("eSwaraj");
+        mTracker.setAppVersion("1.0");
+        mTracker.setSessionTimeout(-1);
     }
 
     public void setUserId(Long id) {

@@ -26,6 +26,7 @@ import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.GetUserComplaintsEvent;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.ComplaintCounter;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
@@ -60,6 +61,8 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     UserSessionUtil userSession;
     @Inject
     GlobalSessionUtil globalSession;
+    @Inject
+    GoogleAnalyticsTracker googleAnalyticsTracker;
 
     private GoogleMapFragment googleMapFragment;
     private List<ComplaintDto> complaintDtoList;
@@ -171,6 +174,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         listButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints: Show List");
                 mcScrollView.removeInterceptScrollView(googleMapFragment.getView());
                 mapDisplayed = false;
                 mcDataView.removeAllViews();
@@ -182,6 +186,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         mapButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints: Show Map");
                 mcScrollView.addInterceptScrollView(googleMapFragment.getView());
                 mapDisplayed = true;
                 getChildFragmentManager().beginTransaction().show(googleMapFragment).commit();
@@ -204,6 +209,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         analyticsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints: Show Analytics");
                 mcScrollView.removeInterceptScrollView(googleMapFragment.getView());
                 mapDisplayed = false;
                 mcDataView.removeAllViews();

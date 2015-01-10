@@ -30,6 +30,7 @@ import com.eswaraj.app.eswaraj.events.GetLeadersEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.RevGeocodeEvent;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.DialogItem;
@@ -67,6 +68,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     LocationServicesCheckUtil locationServicesCheckUtil;
     @Inject
     MiddlewareServiceImpl middlewareService;
+    @Inject
+    GoogleAnalyticsTracker googleAnalyticsTracker;
 
     private GoogleMapFragment googleMapFragment;
     private Boolean mapReady = false;
@@ -125,11 +128,13 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         hCreate.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Create Complaint");
                 if(locationServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     Intent i = new Intent(v.getContext(), SelectAmenityActivity.class);
                     startActivity(i);
                 }
                 else {
+                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, "Create Complaint: No Location Service");
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
                     builder.setMessage("You need location services enabled to use this feature")
                             .setCancelable(false)
@@ -149,17 +154,20 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         complaints.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints");
                 if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     if (userSession.isUserLoggedIn(v.getContext())) {
                         Intent i = new Intent(v.getContext(), MyComplaintsActivity.class);
                         startActivity(i);
                     } else {
+                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Complaints: Not Logged-in");
                         Intent i = new Intent(v.getContext(), LoginActivity.class);
                         i.putExtra("MODE", true);
                         startActivityForResult(i, REQUEST_MY_COMPLAINTS);
                     }
                 }
                 else {
+                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, "My Complaints: No Internet Service");
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
                     builder.setMessage("You need internet services enabled to use this feature")
                             .setCancelable(false)
@@ -178,6 +186,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         leaders.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Leaders");
                 if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     if (userSession.isUserLoggedIn(v.getContext()) && userSession.isUserLocationKnown()) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
@@ -209,16 +218,19 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
 
                         middlewareService.loadLeaders(v.getContext(), true);
                     } else if (userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
+                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Leaders: Location not marked");
                         Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
                         i.putExtra("MODE", true);
                         startActivityForResult(i, REQUEST_MY_LEADERS);
                     } else {
+                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Leaders: Not Logged-in");
                         Intent i = new Intent(v.getContext(), LoginActivity.class);
                         i.putExtra("MODE", true);
                         startActivityForResult(i, REQUEST_MY_LEADERS);
                     }
                 }
                 else {
+                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, "My Leaders: No Internet Service");
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
                     builder.setMessage("You need internet services enabled to use this feature")
                             .setCancelable(false)
@@ -237,6 +249,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         constituency.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Constituency");
                 if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     if(userSession.isUserLoggedIn(v.getContext()) && userSession.isUserLocationKnown()) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
@@ -322,17 +335,20 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
 
                     }
                     else if(userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
+                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Constituency: Location not marked");
                         Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
                         i.putExtra("MODE", true);
                         startActivityForResult(i, REQUEST_MY_CONSTITUENCY);
                     }
                     else {
+                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Constituency: Not Logged-in");
                         Intent i = new Intent(v.getContext(), LoginActivity.class);
                         i.putExtra("MODE", true);
                         startActivityForResult(i, REQUEST_MY_CONSTITUENCY);
                     }
                 }
                 else {
+                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, "My Constituency: No Internet Service");
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
                     builder.setMessage("You need internet services enabled to use this feature")
                             .setCancelable(false)
@@ -351,18 +367,21 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         profile.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Profile");
                 if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     if(userSession.isUserLoggedIn(v.getContext())) {
                         Intent i = new Intent(v.getContext(), MyProfileActivity.class);
                         startActivity(i);
                     }
                     else {
+                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Profile: Not Logged-in");
                         Intent i = new Intent(v.getContext(), LoginActivity.class);
                         i.putExtra("MODE", true);
                         startActivityForResult(i, REQUEST_MY_PROFILE);
                     }
                 }
                 else {
+                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, "My Profile: No Internet Service");
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
                     builder.setMessage("You need internet services enabled to use this feature")
                             .setCancelable(false)

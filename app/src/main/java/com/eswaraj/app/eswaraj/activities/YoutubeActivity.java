@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.config.Constants;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
@@ -12,16 +13,28 @@ import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 
+import java.util.Date;
+
+import javax.inject.Inject;
+
 public class YoutubeActivity extends BaseActivity implements YouTubePlayer.OnInitializedListener {
+
+    @Inject
+    GoogleAnalyticsTracker googleAnalyticsTracker;
 
     private YouTubePlayerSupportFragment youTubePlayerSupportFragment;
     private String video;
     private static final int RECOVERY_DIALOG_REQUEST = 1;
 
+    private Long startTime;
+    private Long endTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube);
+
+        startTime = new Date().getTime();
 
         youTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance();
         if (savedInstanceState == null) {
@@ -33,11 +46,18 @@ public class YoutubeActivity extends BaseActivity implements YouTubePlayer.OnIni
         video = i.getStringExtra("VIDEO_ID");
     }
 
+    @Override
+    protected void onDestroy() {
+        endTime = new Date().getTime();
+        googleAnalyticsTracker.trackTimeSpent("Youtube", video, endTime - startTime);
+        super.onDestroy();
+    }
 
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
         if(!wasRestored) {
             if(video != null) {
+                startTime = new Date().getTime();
                 youTubePlayer.cueVideo(video);
                 youTubePlayer.play();
             }

@@ -23,6 +23,7 @@ import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.GetSingleComplaintEvent;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.util.VolleyUtil;
@@ -50,6 +51,8 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     MiddlewareServiceImpl middlewareService;
     @Inject
     VolleyUtil volleyUtil;
+    @Inject
+    GoogleAnalyticsTracker googleAnalyticsTracker;
 
 
     private CommentsFragment commentsFragment;
@@ -126,6 +129,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         scClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "SingleComplaint: Close");
                 pDialog = new CustomProgressDialog(getActivity(), false, true, "Closing your complaint ...");
                 pDialog.show();
                 middlewareService.closeComplaint(complaintDto);

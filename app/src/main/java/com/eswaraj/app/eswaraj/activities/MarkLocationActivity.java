@@ -19,6 +19,7 @@ import com.eswaraj.app.eswaraj.events.GooglePlacesListEvent;
 import com.eswaraj.app.eswaraj.events.ProfileUpdateEvent;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.fragments.GooglePlacesListFragment;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.GooglePlace;
 import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
@@ -49,6 +50,8 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     Context applicationContext;
     @Inject
     UserSessionUtil userSession;
+    @Inject
+    GoogleAnalyticsTracker googleAnalyticsTracker;
 
     private GoogleMapFragment googleMapFragment;
     private GooglePlacesListFragment googlePlacesListFragment;
@@ -95,6 +98,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         mlSaveLocation.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MarkLocation: Save Location");
                 double lat = googleMapFragment.getMarkerLatitude();
                 double lng = googleMapFragment.getMarkerLongitude();
                 middlewareService.updateProfile(view.getContext(), userSession.getToken(), userSession.getUser().getPerson().getName(), lat, lng);
@@ -104,6 +108,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         mlSearchButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MarkLocation: Search Location");
                 pDialog = new CustomProgressDialog(v.getContext(), false, true, "Getting matching locations...");
                 pDialog.show();
                 if(mapDisplayed) {
@@ -132,6 +137,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         mlSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MarkLocation: Skip Location");
                 if(dialogMode) {
                     finish();
                 }

@@ -15,6 +15,7 @@ import com.eswaraj.app.eswaraj.adapters.CommentListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.GetCommentsEvent;
 import com.eswaraj.app.eswaraj.events.SavedCommentEvent;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.CommentDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
@@ -35,6 +36,8 @@ public class CommentsFragment extends BaseFragment {
     MiddlewareServiceImpl middlewareService;
     @Inject
     UserSessionUtil userSession;
+    @Inject
+    GoogleAnalyticsTracker googleAnalyticsTracker;
 
     private ComplaintDto complaintDto;
     private List<CommentDto> commentDtoList;
@@ -65,6 +68,7 @@ public class CommentsFragment extends BaseFragment {
         cSend.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "CommentsFragment: Send");
                 if(!cComment.getText().toString().equals("")) {
                     middlewareService.postComment(userSession.getUser(), complaintDto, cComment.getText().toString());
                     cComment.setText("");
@@ -75,6 +79,7 @@ public class CommentsFragment extends BaseFragment {
         cShowMore.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "CommentsFragment: Show More");
                 middlewareService.loadComments(getActivity(), complaintDto, commentDtoList.size(), 5);
             }
         });

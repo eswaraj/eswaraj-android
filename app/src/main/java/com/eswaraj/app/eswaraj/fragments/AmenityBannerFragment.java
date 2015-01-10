@@ -15,6 +15,7 @@ import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.activities.YoutubeActivity;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.BannerClickEvent;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
 import java.util.regex.Matcher;
@@ -29,6 +30,8 @@ public class AmenityBannerFragment extends BaseFragment implements View.OnClickL
 
     @Inject
     EventBus eventBus;
+    @Inject
+    GoogleAnalyticsTracker googleAnalyticsTracker;
 
     private CategoryWithChildCategoryDto amenity;
     private ImageView banner;
@@ -70,6 +73,7 @@ public class AmenityBannerFragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onClick(View view) {
+        googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "AmenityBanner: Video = " + video);
         BannerClickEvent event = new BannerClickEvent();
         event.setSuccess(true);
         event.setVideo(video);
