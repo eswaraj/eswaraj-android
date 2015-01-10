@@ -1,6 +1,8 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -142,11 +144,31 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MyProfile: Logout");
-                userSession.logoutUser(v.getContext());
-                LoginStatusEvent event = new LoginStatusEvent();
-                event.setLoggedIn(false);
-                event.setSuccess(true);
-                eventBus.post(event);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity(), AlertDialog.THEME_HOLO_LIGHT);
+                alertDialogBuilder
+                        .setTitle("Logout from eSwaraj")
+                        .setMessage("Are you sure you want to logout?")
+                        .setCancelable(true)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                userSession.logoutUser(getActivity());
+                                LoginStatusEvent event = new LoginStatusEvent();
+                                event.setLoggedIn(false);
+                                event.setSuccess(true);
+                                eventBus.post(event);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
             }
         });
         return rootView;

@@ -64,6 +64,7 @@ public class CommentsFragment extends BaseFragment {
         cOldComments = (ListView) rootView.findViewById(R.id.cOldComments);
         cShowMore = (Button) rootView.findViewById(R.id.cShowMore);
 
+        cOldComments.setDividerHeight(0);
 
         cSend.setOnClickListener(new Button.OnClickListener() {
             @Override

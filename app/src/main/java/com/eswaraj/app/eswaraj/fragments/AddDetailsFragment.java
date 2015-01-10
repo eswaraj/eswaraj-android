@@ -203,6 +203,7 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
                 else {
                     googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "Post Complaint: Not logged-in");
                     Intent i = new Intent(getActivity(), LoginActivity.class);
+                    i.putExtra("MODE", true);
                     startActivityForResult(i, REQUEST_POST_BUTTON);
                 }
             }
@@ -256,7 +257,7 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         cameraHelper.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == Activity.RESULT_OK) {
+        if(resultCode == Activity.RESULT_OK) {
             if(requestCode == REQUEST_POST_BUTTON) {
                 post.performClick();
             }

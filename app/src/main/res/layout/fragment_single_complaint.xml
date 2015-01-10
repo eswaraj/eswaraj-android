@@ -228,6 +228,7 @@
 
                     <ImageView
                         android:id="@+id/scComplaintPhoto"
+                        android:src="@drawable/no_image_placeholder"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="0.5"

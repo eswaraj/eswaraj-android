@@ -21,7 +21,7 @@
     android:layout_height="40dp"
     android:id="@+id/imageView"
     android:src="@drawable/navbar_logo"
-    android:paddingTop="0dp" />
+    android:paddingTop="5dp" />
 
 
 </RelativeLayout>

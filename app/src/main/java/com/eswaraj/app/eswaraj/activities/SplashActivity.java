@@ -26,6 +26,8 @@ import com.eswaraj.app.eswaraj.util.GcmUtil;
 import com.eswaraj.app.eswaraj.util.GlobalSessionUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomViewPager;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,6 +64,8 @@ public class SplashActivity extends BaseActivity {
     private View.OnClickListener onClickListenerContinue;
     private View.OnClickListener onClickListenerRetry;
 
+    static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +97,12 @@ public class SplashActivity extends BaseActivity {
         setUpListener();
         setUpPagerData(dontShowContinueButton);
         setUpPager();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkPlayServices();
     }
 
     @Override
@@ -160,6 +170,22 @@ public class SplashActivity extends BaseActivity {
         }
     }
 
+    private boolean checkPlayServices() {
+        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (status != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(status)) {
+                GooglePlayServicesUtil.getErrorDialog(status, this, REQUEST_CODE_RECOVER_PLAY_SERVICES).show();
+            } else {
+                Toast.makeText(this, "This device is not supported.",
+                        Toast.LENGTH_LONG).show();
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+
     public void onEventMainThread(UserReadyEvent event) {
         Intent i = new Intent(this, LoginActivity.class);
         i.putExtra("MODE", false);
@@ -203,5 +229,18 @@ public class SplashActivity extends BaseActivity {
         if(serverDataDownloadDone) {
             readyToProceed();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_RECOVER_PLAY_SERVICES:
+                if (resultCode == RESULT_CANCELED) {
+                    Toast.makeText(this, "Google Play Services must be installed.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

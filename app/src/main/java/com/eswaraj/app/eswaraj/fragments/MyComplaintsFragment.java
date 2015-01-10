@@ -182,6 +182,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
                 mcDataView.removeAllViews();
                 mcDataView.addView(mcListContainer);
                 mcListContainer.setVisibility(View.VISIBLE);
+                mcScrollView.smoothScrollTo(0, 0);
 
             }
         });
@@ -205,6 +206,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
                         }
                     }
                 });
+                mcScrollView.smoothScrollTo(0, 0);
             }
 
         });
@@ -217,6 +219,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
                 mcDataView.removeAllViews();
                 mcDataView.addView(mcAnalyticsContainer);
                 mcAnalyticsContainer.setVisibility(View.VISIBLE);
+                mcScrollView.smoothScrollTo(0, 0);
             }
         });
 
@@ -305,16 +308,16 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
 
 
     public void onEventMainThread(GetProfileImageEvent event) {
-        if(event.getSuccess()) {
-            if(mcPhoto != null) {
-                mcPhoto.setImageBitmap(event.getBitmap());
+        if(event.getId().equals(userSession.getUser().getPerson().getId())) {
+            if (event.getSuccess()) {
+                if (mcPhoto != null) {
+                    mcPhoto.setImageBitmap(event.getBitmap());
+                } else {
+                    photo = event.getBitmap();
+                }
+            } else {
+                Toast.makeText(getActivity(), "Could not fetch your profile image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
             }
-            else {
-                photo = event.getBitmap();
-            }
-        }
-        else {
-            Toast.makeText(getActivity(), "Could not fetch your profile image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
     }
 }

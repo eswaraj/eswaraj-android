@@ -235,6 +235,7 @@ public class GoogleAnalyticsTracker extends BaseClass {
         mTracker = analytics.newTracker(Constants.GOOGLE_ANALYTICS_KEY);
         mTracker.enableExceptionReporting(true);
         mTracker.enableAutoActivityTracking(true);
+        mTracker.enableAdvertisingIdCollection(true);
         mTracker.setAppName("eSwaraj");
         mTracker.setAppVersion("1.0");
         mTracker.setSessionTimeout(-1);

@@ -220,11 +220,12 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
 
     public void onEventMainThread(GetProfileImageEvent event) {
         if(event.getSuccess()) {
-            if(submitterImage != null) {
-                submitterImage.setImageBitmap(event.getBitmap());
-            }
-            else {
-                submitterBitmap = event.getBitmap();
+            if(event.getId().equals(complaintDto.getId())) {
+                if (submitterImage != null) {
+                    submitterImage.setImageBitmap(event.getBitmap());
+                } else {
+                    submitterBitmap = event.getBitmap();
+                }
             }
         }
         else {

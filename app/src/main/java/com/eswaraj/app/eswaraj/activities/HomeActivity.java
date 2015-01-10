@@ -116,6 +116,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         hRevGeocode = (TextView) findViewById(R.id.hRevGeocode);
         hCreate = (Button) findViewById(R.id.hCreate);
 
+        setupMenu(findViewById(R.id.menu));
+
 
         complaints.setImageDrawable(getResources().getDrawable(R.drawable.complaint));
         leaders.setImageDrawable(getResources().getDrawable(R.drawable.leader));

@@ -249,6 +249,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
                 mapDisplayed = false;
                 cDataView.removeAllViews();
                 cDataView.addView(mcListContainer);
+                cScrollView.smoothScrollTo(0, 0);
             }
         });
         mapButton.setOnClickListener(new Button.OnClickListener() {
@@ -272,6 +273,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
                         }
                     }
                 });
+                cScrollView.smoothScrollTo(0, 0);
             }
 
         });
@@ -284,6 +286,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
                 cDataView.removeAllViews();
                 cDataView.addView(mcAnalyticsContainer);
                 mcAnalyticsContainer.setVisibility(View.VISIBLE);
+                cScrollView.smoothScrollTo(0, 0);
             }
         });
         infoButton.setOnClickListener(new View.OnClickListener() {
@@ -295,6 +298,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
                 cDataView.removeAllViews();
                 cDataView.addView(mcInfoContainer);
                 mcInfoContainer.setVisibility(View.VISIBLE);
+                cScrollView.smoothScrollTo(0, 0);
             }
         });
 
