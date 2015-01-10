@@ -9,10 +9,8 @@ import android.view.MenuItem;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
-import com.eswaraj.app.eswaraj.fragments.BottomMenuBarFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryOfflineFragment;
-import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
 
 import javax.inject.Inject;
 

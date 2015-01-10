@@ -83,6 +83,8 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         another = (Button) rootView.findViewById(R.id.csAnother);
         facebook = (ImageView) rootView.findViewById(R.id.csFacebook);
 
+        setupMenu(rootView.findViewById(R.id.menu));
+
         googleMapFragment = new GoogleMapFragment();
         getChildFragmentManager().beginTransaction().add(R.id.csMapContainer, googleMapFragment).commit();
         googleMapFragment.setContext(this);

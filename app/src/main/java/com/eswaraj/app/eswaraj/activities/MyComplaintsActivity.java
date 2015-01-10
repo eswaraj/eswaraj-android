@@ -1,33 +1,15 @@
 package com.eswaraj.app.eswaraj.activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.Toast;
+
 
 import com.eswaraj.app.eswaraj.R;
-import com.eswaraj.app.eswaraj.adapters.ComplaintListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.ComplaintSelectedEvent;
-import com.eswaraj.app.eswaraj.events.GetUserComplaintsEvent;
 import com.eswaraj.app.eswaraj.events.MarkerClickEvent;
-import com.eswaraj.app.eswaraj.fragments.BottomMenuBarFragment;
-import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment;
-import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
-import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
-import com.eswaraj.app.eswaraj.util.UserSessionUtil;
-import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
-import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
-import com.eswaraj.app.eswaraj.models.ComplaintDto;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
+
 
 import java.io.Serializable;
 import java.util.List;

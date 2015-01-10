@@ -146,6 +146,8 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         mcDataView = (RelativeLayout) rootView.findViewById(R.id.mcDataView);
         mcScrollView = (CustomScrollView) rootView.findViewById(R.id.mcScrollView);
 
+        setupMenu(rootView.findViewById(R.id.menu));
+
         mcAnalyticsContainer.setVisibility(View.INVISIBLE);
         mcName.setText(userSession.getUser().getPerson().getName());
         if(photo != null) {

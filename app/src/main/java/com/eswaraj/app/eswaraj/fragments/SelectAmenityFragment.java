@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +62,7 @@ public class SelectAmenityFragment extends BaseFragment implements OnMapReadyCal
     private Boolean retryRevGeocoding = false;
     private TextView asRevGeocode;
 
+
     public static SelectAmenityFragment newInstance() {
         SelectAmenityFragment fragment = new SelectAmenityFragment();
         Bundle args = new Bundle();
@@ -106,6 +108,8 @@ public class SelectAmenityFragment extends BaseFragment implements OnMapReadyCal
         asRevGeocode = (TextView) rootView.findViewById(R.id.asRevGeocode);
         asRevGeocode = (TextView) rootView.findViewById(R.id.asRevGeocode);
         gvAmenityList = (GridView) rootView.findViewById(R.id.gvAmenityList);
+
+        setupMenu(rootView.findViewById(R.id.menu));
 
         AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), null);
         gvAmenityList.setAdapter(amenityListAdapter);

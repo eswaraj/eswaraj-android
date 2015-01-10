@@ -63,6 +63,8 @@ public class LeaderFragment extends BaseFragment {
         lPost = (TextView) rootView.findViewById(R.id.lPost);
         lDetails = (WebView) rootView.findViewById(R.id.lDetails);
 
+        setupMenu(rootView.findViewById(R.id.menu));
+
         if(photoBitmap != null) {
             lPhoto.setImageBitmap(photoBitmap);
         }

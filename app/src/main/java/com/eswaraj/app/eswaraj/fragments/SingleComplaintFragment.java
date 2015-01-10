@@ -109,6 +109,8 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         scStatus = (TextView) rootView.findViewById(R.id.scStatus);
         scComplaintId = (TextView) rootView.findViewById(R.id.scComplaintId);
 
+        setupMenu(rootView.findViewById(R.id.menu));
+
         //Create fragments
         commentsFragment = new CommentsFragment();
         googleMapFragment = new GoogleMapFragment();

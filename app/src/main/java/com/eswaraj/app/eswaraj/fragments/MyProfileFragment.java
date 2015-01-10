@@ -95,6 +95,8 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
         mpLogout = (Button) rootView.findViewById(R.id.mpLogout);
         mpUserDetails = (TextView) rootView.findViewById(R.id.mcUserDetails);
 
+        setupMenu(rootView.findViewById(R.id.menu));
+
         mpName.setText(userSession.getUser().getPerson().getName());
         mpInputName.setText(userSession.getUser().getPerson().getName());
         mpUserDetails.setText(GenericUtil.getAge(userSession.getUser().getPerson().getDob()) + " Years, " + userSession.getUser().getPerson().getGender());
