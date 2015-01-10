@@ -42,6 +42,7 @@ import com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment;
 import com.eswaraj.app.eswaraj.fragments.LoginFragment;
 import com.eswaraj.app.eswaraj.helpers.CameraHelper;
 import com.eswaraj.app.eswaraj.helpers.DatabaseHelper;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.helpers.NotificationHelper;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
@@ -51,6 +52,7 @@ import com.eswaraj.app.eswaraj.services.ComplaintPostService;
 import com.eswaraj.app.eswaraj.util.DeviceUtil;
 import com.eswaraj.app.eswaraj.util.FacebookSharingUtil;
 import com.eswaraj.app.eswaraj.util.GcmUtil;
+import com.eswaraj.app.eswaraj.util.GlobalSessionUtil;
 import com.eswaraj.app.eswaraj.util.GooglePlacesUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -148,7 +150,9 @@ import de.greenrobot.event.EventBus;
                 SingleComplaintRequest.class,
                 LoadLeadersRequest.class,
                 LeaderActivity.class,
-                LeaderFragment.class
+                LeaderFragment.class,
+                GoogleAnalyticsTracker.class,
+                GlobalSessionUtil.class
         },
         complete = false,
         library = true
@@ -352,5 +356,18 @@ public class MiddlewareGraph {
     @Provides @Singleton
     LoadLeadersRequest provideLoadLeadersRequest() {
         return new LoadLeadersRequest();
+    }
+
+    @Provides @Singleton
+    GoogleAnalyticsTracker provideGoogleAnalyticsTracker() {
+        GoogleAnalyticsTracker tracker = new GoogleAnalyticsTracker();
+        tracker.enableAll();
+        tracker.setAsynchronous(true);
+        return tracker;
+    }
+
+    @Provides @Singleton
+    GlobalSessionUtil provideGlobalSessionUtil() {
+        return new GlobalSessionUtil();
     }
 }

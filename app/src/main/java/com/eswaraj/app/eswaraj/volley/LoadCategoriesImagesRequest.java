@@ -47,6 +47,7 @@ public class LoadCategoriesImagesRequest extends BaseClass {
 
     public void processRequest(Context context, List<CategoryWithChildCategoryDto> categoriesList) {
         imageReqCount = categoriesList.size()*2;
+        imageResCount.set(0);
         for(CategoryWithChildCategoryDto categoryDto : categoriesList) {
             launchRequest(context, categoryDto.getImageUrl(), true, categoryDto.getId());
             launchRequest(context, categoryDto.getHeaderImageUrl(), false, categoryDto.getId());
@@ -62,6 +63,7 @@ public class LoadCategoriesImagesRequest extends BaseClass {
         }
         else {
             imageResCount.incrementAndGet();
+            Log.d("ImageCount: Empty", imageResCount.toString());
         }
     }
 
@@ -72,11 +74,13 @@ public class LoadCategoriesImagesRequest extends BaseClass {
                 successImages = false;
                 errorImages = error.toString();
                 imageResCount.incrementAndGet();
+                Log.d("ImageCount: Error", imageResCount.toString());
                 if(imageResCount.get() == imageReqCount) {
                     GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
                     getCategoriesImagesEvent.setSuccess(successImages);
                     getCategoriesImagesEvent.setError(errorImages);
                     eventBus.post(getCategoriesImagesEvent);
+                    cache.updateCategoriesImages(context, true, successImages);
                 }
             }
         };
@@ -88,11 +92,12 @@ public class LoadCategoriesImagesRequest extends BaseClass {
             public void onResponse(Bitmap bitmap) {
                 saveBitmapToFile(bitmap, id, context, icon);
                 imageResCount.incrementAndGet();
+                Log.d("ImageCount: Success", imageResCount.toString());
                 if(imageResCount.get() == imageReqCount) {
                     GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
                     getCategoriesImagesEvent.setSuccess(successImages);
                     eventBus.post(getCategoriesImagesEvent);
-                    cache.updateCategoriesImages(context);
+                    cache.updateCategoriesImages(context, true, successImages);
                 }
             }
         };

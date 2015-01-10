@@ -17,7 +17,8 @@ public interface CacheInterface extends MiddlewareGetService {
     public void updateCategoriesData(Context context, String json);
 
     public Boolean isCategoriesImagesAvailable(Context context);
-    public void updateCategoriesImages(Context context);
+    public Boolean wasImageDownloadLaunchedBefore(Context context);
+    public void updateCategoriesImages(Context context, Boolean imageDownloadLaunchedBefore, Boolean success);
 
     public Boolean isUserComplaintsAvailable(Context context);
     public void updateUserComplaints(Context context, String json);

@@ -90,10 +90,14 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void updateCategoriesImages(Context context) {
-        cache.updateCategoriesImages(context);
+    public void updateCategoriesImages(Context context, Boolean imageDownloadLaunchedBefore, Boolean success) {
+        cache.updateCategoriesImages(context, imageDownloadLaunchedBefore, success);
     }
 
+    @Override
+    public Boolean wasImageDownloadLaunchedBefore(Context context) {
+        return cache.wasImageDownloadLaunchedBefore(context);
+    }
 
     @Override
     public void loadUserData(Context context, Session session) {

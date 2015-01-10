@@ -119,7 +119,6 @@ public class SelectAmenityFragment extends BaseFragment implements OnMapReadyCal
 
     public void onEventMainThread(GetCategoriesDataEvent event) {
         if(event.getSuccess()) {
-            //Launch image download now. Always launch with dontGetFromCache=true
             categoryList = event.getCategoryList();
             middlewareService.loadCategoriesImages(getActivity(), event.getCategoryList());
         }
@@ -130,16 +129,9 @@ public class SelectAmenityFragment extends BaseFragment implements OnMapReadyCal
     }
 
     public void onEventMainThread(GetCategoriesImagesEvent event) {
-        if(event.getSuccess()) {
-            //All needed data is available now. Set the adapter for gridview
-            Log.d("SelectAmenityFragment", "GetCategoriesImagesEvent:Success");
-            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryList, null);
-            gvAmenityList.setAdapter(amenityListAdapter);
-        }
-        else {
-            Toast.makeText(getActivity(), "Could not fetch categories images from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-            //Show retry button which will re-trigger the request.
-        }
+        Log.d("SelectAmenityFragment", "GetCategoriesImagesEvent");
+        AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryList, null);
+        gvAmenityList.setAdapter(amenityListAdapter);
     }
 
     public void onEventMainThread(Location location) {

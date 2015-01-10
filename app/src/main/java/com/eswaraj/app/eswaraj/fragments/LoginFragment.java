@@ -20,6 +20,7 @@ import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.events.LoginStatusEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.FacebookLoginUtil;
 import com.eswaraj.app.eswaraj.util.GcmUtil;
@@ -56,10 +57,13 @@ public class LoginFragment extends BaseFragment {
     GcmUtil gcmUtil;
     @Inject
     InternetServicesCheckUtil internetServicesCheckUtil;
+    @Inject
+    GoogleAnalyticsTracker googleAnalyticsTracker;
 
     private Boolean showInstruction;
     private Boolean dialogMode;
     private Session session;
+    private Boolean wasUserAlreadyLoggedIn;
 
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
@@ -174,7 +178,11 @@ public class LoginFragment extends BaseFragment {
             buttonGotIt.setVisibility(View.INVISIBLE);
             progressWheel.setVisibility(View.INVISIBLE);
             if (facebookLoginUtil.isUserLoggedIn()) {
+                wasUserAlreadyLoggedIn = true;
                 buttonLogin.setVisibility(View.INVISIBLE);
+            }
+            else {
+                wasUserAlreadyLoggedIn = false;
             }
             welcomeText.setText("Lets be the change we want to see in the world.\nLets play our part in betterment of nation through click of a button.\n Lets live the dream of Swaraj");
             welcomeText.setTypeface(custom_font);
@@ -185,6 +193,7 @@ public class LoginFragment extends BaseFragment {
                 public void onClick(View view) {
                     middlewareService.loadUserData(getActivity(), session);
                     progressWheel.setVisibility(View.VISIBLE);
+                    googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "LoginFragment: Retry user data loading");
                 }
             });
             buttonGotIt.setOnClickListener(new Button.OnClickListener() {
@@ -206,6 +215,7 @@ public class LoginFragment extends BaseFragment {
                     loginStatusEvent.setSuccess(true);
                     loginStatusEvent.setLoggedIn(false);
                     eventBus.post(loginStatusEvent);
+                    googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "LoginFragment: Skip login");
                 }
             });
         }
@@ -237,6 +247,9 @@ public class LoginFragment extends BaseFragment {
             progressWheel.spin();
             middlewareService.loadUserData(getActivity(), event.getSession());
             session = event.getSession();
+            if(!wasUserAlreadyLoggedIn) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "LoginFragment: Facebook login");
+            }
         }
         else {
             userSession.logoutUser(getActivity());
@@ -248,6 +261,9 @@ public class LoginFragment extends BaseFragment {
             Log.d("LoginFragment", "GetUserEvent:Success");
             userSession.setUser(event.getUserDto());
             userSession.setToken(event.getToken());
+
+            //Set user ID for analytics tracking
+            googleAnalyticsTracker.setUserId(userSession.getUser().getId());
 
             //GCM ID registration, if pending
             if(!gcmUtil.isSyncedWithServer(getActivity())) {

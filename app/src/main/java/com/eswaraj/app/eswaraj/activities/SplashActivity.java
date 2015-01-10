@@ -17,15 +17,18 @@ import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.UserReadyEvent;
 import com.eswaraj.app.eswaraj.fragments.LoginFragment;
+import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.helpers.StorageCacheClearingTask;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareService;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.SplashScreenItem;
 import com.eswaraj.app.eswaraj.util.GcmUtil;
+import com.eswaraj.app.eswaraj.util.GlobalSessionUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomViewPager;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -39,11 +42,19 @@ public class SplashActivity extends BaseActivity {
     MiddlewareServiceImpl middlewareService;
     @Inject
     GcmUtil gcmUtil;
+    @Inject
+    GoogleAnalyticsTracker googleAnalyticsTracker;
+    @Inject
+    GlobalSessionUtil globalSession;
 
     private StorageCacheClearingTask storageCacheClearingTask;
     private Boolean serverDataDownloadDone;
     private Boolean cacheCleared;
     private Boolean exitOnCacheCleared;
+    private Boolean dontShowContinueButton;
+
+    private Long startTime;
+    private Long endTime;
 
     private CustomViewPager pager;
     private TextPagerAdapter adapter;
@@ -56,14 +67,14 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        startTime = new Date().getTime();
+
         pager = (CustomViewPager) findViewById(R.id.viewPager);
-        setUpListener();
-        setUpPagerData();
-        setUpPager();
 
         cacheCleared = false;
         serverDataDownloadDone = false;
         exitOnCacheCleared = false;
+        dontShowContinueButton = false;
 
         storageCacheClearingTask = new StorageCacheClearingTask(this);
 
@@ -72,18 +83,22 @@ public class SplashActivity extends BaseActivity {
         gcmUtil.registerWithGcmServerIfNeeded(this);
 
         if(middlewareService.isCategoriesDataAvailable(this) && middlewareService.isCategoriesImagesAvailable(this)) {
-            //Intent i = new Intent(this, LoginActivity.class);
-            //startActivity(i);
-            //finish();
             exitOnCacheCleared = true;
         }
         else {
             middlewareService.loadCategoriesData(this);
+            dontShowContinueButton = middlewareService.wasImageDownloadLaunchedBefore(this);
         }
+
+        setUpListener();
+        setUpPagerData(dontShowContinueButton);
+        setUpPager();
     }
 
     @Override
     protected void onDestroy() {
+        endTime = new Date().getTime();
+        googleAnalyticsTracker.trackTimeSpent("SplashActivity", "SplashScreens", endTime - startTime);
         eventBus.unregister(this);
         super.onDestroy();
     }
@@ -98,16 +113,21 @@ public class SplashActivity extends BaseActivity {
         pager.setCurrentItem(0);
     }
 
-    private void setUpPagerData() {
+    private void setUpPagerData(Boolean onlyOne) {
         splashScreenItems = new ArrayList<SplashScreenItem>();
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswarajlogo), getResources().getDrawable(R.drawable.bgpic),"Welcome to eSwaraj", "A Mobile & Web Platform for better Governance"));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswarajposter), getResources().getDrawable(R.drawable.bgpic),"About eSwaraj","eSwaraj is for everyone. It enables citizens to report issues in their neighbourhood and provides trends and statistics to the government to govern better."));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.mobile), getResources().getDrawable(R.drawable.bgpic),"Why eSwaraj ?","Let's try to understand the need for eSwaraj."));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj01), getResources().getDrawable(R.drawable.bgpic),"Signing the constitution", "We came together and signed a contract named Constitution which paved the way for founding of this great nation. A contract that promised that our lives would be much better by being part of this nation. A contract that promised that together we can be much more than we are as individuals."));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj02), getResources().getDrawable(R.drawable.bgpic), "Administrative Structure", "A system of administration was laid out to achieve the promises in the Constitution. Considering everyone's similar basic needs, India was divided in multiple parts, each with same administrative and political structure."));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj03), getResources().getDrawable(R.drawable.bgpic), "The need for social audit", "But then, Even the greatest plans fall short if ground-level feedback is not taken from end beneficiaries. eSwaraj aims to remove the disconnect between ground level realities and top level perception and bring transparency in quality of service delivery and governance."));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj04), getResources().getDrawable(R.drawable.bgpic), "Analytics and More", "Visual analytics offering deeper insights to improve governance Per constituency/colony based map view to locate problems"));
-        splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj04), getResources().getDrawable(R.drawable.bgpic), "Offline Mode", "You can use eSwaraj when you are not connected to internet. All the complaints will be saved on your device and will be sent to server automatically the next time when you are connected to internet"));
+        if(onlyOne) {
+            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswarajlogo), getResources().getDrawable(R.drawable.bgpic), "Welcome to eSwaraj", "A Mobile & Web Platform for better Governance"));
+        }
+        else {
+            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswarajlogo), getResources().getDrawable(R.drawable.bgpic), "Welcome to eSwaraj", "A Mobile & Web Platform for better Governance"));
+            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswarajposter), getResources().getDrawable(R.drawable.bgpic), "About eSwaraj", "eSwaraj is for everyone. It enables citizens to report issues in their neighbourhood and provides trends and statistics to the government to govern better."));
+            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.mobile), getResources().getDrawable(R.drawable.bgpic), "Why eSwaraj ?", "Let's try to understand the need for eSwaraj."));
+            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj01), getResources().getDrawable(R.drawable.bgpic), "Signing the constitution", "We came together and signed a contract named Constitution which paved the way for founding of this great nation. A contract that promised that our lives would be much better by being part of this nation. A contract that promised that together we can be much more than we are as individuals."));
+            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj02), getResources().getDrawable(R.drawable.bgpic), "Administrative Structure", "A system of administration was laid out to achieve the promises in the Constitution. Considering everyone's similar basic needs, India was divided in multiple parts, each with same administrative and political structure."));
+            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj03), getResources().getDrawable(R.drawable.bgpic), "The need for social audit", "But then, Even the greatest plans fall short if ground-level feedback is not taken from end beneficiaries. eSwaraj aims to remove the disconnect between ground level realities and top level perception and bring transparency in quality of service delivery and governance."));
+            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj04), getResources().getDrawable(R.drawable.bgpic), "Analytics and More", "Visual analytics offering deeper insights to improve governance Per constituency/colony based map view to locate problems"));
+            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj04), getResources().getDrawable(R.drawable.bgpic), "Offline Mode", "You can use eSwaraj when you are not connected to internet. All the complaints will be saved on your device and will be sent to server automatically the next time when you are connected to internet"));
+        }
     }
 
     private void setUpListener() {
@@ -129,7 +149,15 @@ public class SplashActivity extends BaseActivity {
     }
 
     public void readyToProceed() {
-        adapter.showContinueButton();
+        if(dontShowContinueButton) {
+            Intent i = new Intent(this, LoginActivity.class);
+            i.putExtra("MODE", false);
+            startActivity(i);
+            finish();
+        }
+        else {
+            adapter.showContinueButton();
+        }
     }
 
     public void onEventMainThread(UserReadyEvent event) {
@@ -142,6 +170,7 @@ public class SplashActivity extends BaseActivity {
     public void onEventMainThread(GetCategoriesDataEvent event) {
         if(event.getSuccess()) {
             //Launch image download now.
+            globalSession.setCategoryDtoList(event.getCategoryList());
             middlewareService.loadCategoriesImages(this, event.getCategoryList(), false);
         }
         else {

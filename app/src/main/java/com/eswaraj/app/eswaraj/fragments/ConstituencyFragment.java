@@ -449,12 +449,11 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
 
     public void onEventMainThread(GetCategoriesImagesEvent event) {
         categoriesImagesAvailable = true;
-        if(event.getSuccess()) {
-            if(counterDataAvailable) {
-                AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryDtoList, complaintCounters);
-                mcAmenityList.setAdapter(amenityListAdapter);
-            }
+        if(counterDataAvailable) {
+            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryDtoList, complaintCounters);
+            mcAmenityList.setAdapter(amenityListAdapter);
         }
+
     }
 
     public void onEventMainThread(GetHeaderImageEvent event) {

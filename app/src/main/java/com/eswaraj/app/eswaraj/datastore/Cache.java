@@ -161,9 +161,15 @@ public class Cache extends BaseClass implements CacheInterface {
     }
 
     @Override
-    public void updateCategoriesImages(Context context) {
-        sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_IMAGES_AVAILABLE, true);
+    public void updateCategoriesImages(Context context, Boolean imageDownloadLaunchedBefore, Boolean success) {
+        sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_IMAGES_AVAILABLE, success);
+        sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_IMAGES_DOWNLOAD_LAUNCHED_BEFORE, imageDownloadLaunchedBefore);
         sharedPreferencesHelper.putLong(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_IMAGES_DOWNLOAD_TIME_IN_MS, new Date().getTime());
+    }
+
+    @Override
+    public Boolean wasImageDownloadLaunchedBefore(Context context) {
+        return sharedPreferencesHelper.getBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_IMAGES_DOWNLOAD_LAUNCHED_BEFORE, false);
     }
 
     @Override

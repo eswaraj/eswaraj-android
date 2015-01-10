@@ -266,7 +266,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         List<ComplaintDto> openComplaints = new ArrayList<ComplaintDto>();
 
         for(ComplaintDto complaintDto : complaintDtoList) {
-            if(complaintDto.getStatus().equals("Closed")) {
+            if(complaintDto.getStatus().equals("Done")) {
                 closedComplaints.add(complaintDto);
             }
             else {
@@ -307,11 +307,9 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
 
     public void onEventMainThread(GetCategoriesImagesEvent event) {
         categoriesImagesAvailable = true;
-        if(event.getSuccess()) {
-            if(countersDataAvailable) {
-                AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryDtoList, complaintCounters);
-                mcAmenityList.setAdapter(amenityListAdapter);
-            }
+        if(countersDataAvailable) {
+            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, categoryDtoList, complaintCounters);
+            mcAmenityList.setAdapter(amenityListAdapter);
         }
     }
 
