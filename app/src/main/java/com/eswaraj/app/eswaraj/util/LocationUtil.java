@@ -52,7 +52,6 @@ public class LocationUtil extends BaseClass implements GoogleApiClient.Connectio
     }
 
     public void startLocationService() {
-        Log.d("LocationUtil", "Start called");
         lastLocationServiceStartTime = System.currentTimeMillis();
         if(!googleApiClient.isConnected()) {
             googleApiClient.connect();
@@ -60,7 +59,6 @@ public class LocationUtil extends BaseClass implements GoogleApiClient.Connectio
     }
 
     public void stopLocationService() {
-        Log.d("LocationUtil", "Stop called");
         lastLocationServiceStopTime = System.currentTimeMillis();
         if (googleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
@@ -93,7 +91,6 @@ public class LocationUtil extends BaseClass implements GoogleApiClient.Connectio
 
     //This is the user entry point to receive location updates
     public void subscribe(Context context, Boolean getContinuousUpdates) {
-        Log.d("LocationUtil", "Sub called");
         this.getContinuousUpdates = getContinuousUpdates;
         setup(context);
         startLocationListenerIfNeeded();
@@ -104,7 +101,6 @@ public class LocationUtil extends BaseClass implements GoogleApiClient.Connectio
     }
 
     public void unsubscribe() {
-        Log.d("LocationUtil", "Unsub called");
         if(!nextActivityNeedsUpdates) {
             stopLocationService();
             nextActivityNeedsUpdates = true;

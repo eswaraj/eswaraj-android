@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
+import com.eswaraj.app.eswaraj.events.StartAnotherActivityEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
 
@@ -33,6 +35,7 @@ public class LeaderFragment extends BaseFragment {
     private TextView lName;
     private TextView lPost;
     private WebView lDetails;
+    private Button lConstituency;
 
     private PoliticalBodyAdminDto politicalBodyAdminDto;
     private Bitmap photoBitmap;
@@ -62,6 +65,7 @@ public class LeaderFragment extends BaseFragment {
         lName = (TextView) rootView.findViewById(R.id.lName);
         lPost = (TextView) rootView.findViewById(R.id.lPost);
         lDetails = (WebView) rootView.findViewById(R.id.lDetails);
+        lConstituency = (Button) rootView.findViewById(R.id.lConstituency);
 
         setupMenu(rootView.findViewById(R.id.menu));
 
@@ -70,7 +74,16 @@ public class LeaderFragment extends BaseFragment {
         }
         lName.setText(politicalBodyAdminDto.getName());
         lPost.setText(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
+        lConstituency.setText("Go to " + politicalBodyAdminDto.getLocation().getName());
         //TODO: Set the html for webview here
+        lConstituency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StartAnotherActivityEvent event = new StartAnotherActivityEvent();
+                event.setId(politicalBodyAdminDto.getLocation().getId());
+                eventBus.post(event);
+            }
+        });
         return rootView;
     }
 

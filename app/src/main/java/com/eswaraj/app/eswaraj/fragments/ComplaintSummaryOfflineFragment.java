@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class ComplaintSummaryOfflineFragment extends BaseFragment {
         another = (Button) rootView.findViewById(R.id.csAnother);
 
         setupMenu(rootView.findViewById(R.id.menu));
+        description.setMovementMethod(new ScrollingMovementMethod());
 
         imageFile = (File) getActivity().getIntent().getSerializableExtra("IMAGE");
         complaintSavedResponseDto = (ComplaintSavedResponseDto) getActivity().getIntent().getSerializableExtra("COMPLAINT");

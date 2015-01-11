@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         facebook = (ImageView) rootView.findViewById(R.id.csFacebook);
 
         setupMenu(rootView.findViewById(R.id.menu));
+        description.setMovementMethod(new ScrollingMovementMethod());
 
         googleMapFragment = new GoogleMapFragment();
         getChildFragmentManager().beginTransaction().add(R.id.csMapContainer, googleMapFragment).commit();

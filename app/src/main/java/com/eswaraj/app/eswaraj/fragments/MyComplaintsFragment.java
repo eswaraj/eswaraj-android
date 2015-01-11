@@ -233,11 +233,13 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
                 googleMapFragment.addMarkers(complaintDtoList);
                 markersAdded = true;
             }
+        mcScrollView.smoothScrollTo(0, 0);
     }
 
     public void markComplaintClosed(Long id) {
         ComplaintDto complaintDtoToMove = openComplaintsAdapter.removeComplaint(id);
         openComplaintsAdapter.notifyDataSetChanged();
+        complaintDtoToMove.setStatus("Done");
         closedComplaintsAdapter.addComplaint(complaintDtoToMove);
         closedComplaintsAdapter.notifyDataSetChanged();
     }
@@ -270,9 +272,9 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
                 }
             }
         }
-        GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters);
+        GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters, globalSession.getColorMap());
         mcChartContainer.addView(chartView);
-        AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), complaintCounters);
+        AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), complaintCounters, globalSession.getColorMap());
         mcAmenityList.setAdapter(amenityListAdapter);
     }
 

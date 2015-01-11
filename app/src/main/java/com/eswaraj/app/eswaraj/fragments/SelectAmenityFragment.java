@@ -111,7 +111,7 @@ public class SelectAmenityFragment extends BaseFragment implements OnMapReadyCal
 
         setupMenu(rootView.findViewById(R.id.menu));
 
-        AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), null);
+        AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), null, null);
         gvAmenityList.setAdapter(amenityListAdapter);
         gvAmenityList.setOnItemClickListener(new GridView.OnItemClickListener() {
             @Override

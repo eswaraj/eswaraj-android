@@ -14,6 +14,7 @@ import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.models.ComplaintCounter;
 
 import java.util.List;
+import java.util.Map;
 
 public class PieChartView extends GraphicalView {
 
@@ -21,18 +22,17 @@ public class PieChartView extends GraphicalView {
 		super(context, arg1);
 	}
 
-	public static GraphicalView getNewInstance(Context context, List<ComplaintCounter> complaintCounters) {
-		GraphicalView pieChartView = ChartFactory.getPieChartView(context, getDataSet(context, complaintCounters), getRenderer(context, complaintCounters));
+	public static GraphicalView getNewInstance(Context context, List<ComplaintCounter> complaintCounters, Map<Long, Integer> colorMap) {
+		GraphicalView pieChartView = ChartFactory.getPieChartView(context, getDataSet(context, complaintCounters, colorMap), getRenderer(context, complaintCounters, colorMap));
 		pieChartView.zoomIn();
 		return pieChartView;
 	}
 
-	private static DefaultRenderer getRenderer(Context context, List<ComplaintCounter> complaintCounters) {
-		int[] colors = context.getResources().getIntArray(R.array.rainbow);
+	private static DefaultRenderer getRenderer(Context context, List<ComplaintCounter> complaintCounters, Map<Long, Integer> colorMap) {
 
 		DefaultRenderer defaultRenderer = new DefaultRenderer();
         for(int i = 0; i < complaintCounters.size(); i++) {
-            int color = colors[i];
+            int color = colorMap.get(complaintCounters.get(i).getId());
 			SimpleSeriesRenderer simpleRenderer = new SimpleSeriesRenderer();
 			simpleRenderer.setColor(color);
 			defaultRenderer.addSeriesRenderer(simpleRenderer);
@@ -48,7 +48,7 @@ public class PieChartView extends GraphicalView {
 		return defaultRenderer;
 	}
 
-	private static CategorySeries getDataSet(Context context, List<ComplaintCounter> complaintCounters) {
+	private static CategorySeries getDataSet(Context context, List<ComplaintCounter> complaintCounters, Map<Long, Integer> colorMap) {
 		CategorySeries series = new CategorySeries("Chart");
 		for (ComplaintCounter complaintCounter : complaintCounters) {
 			series.add(complaintCounter.getCount());

@@ -186,6 +186,8 @@
                 android:layout_weight="0.25"
                 android:text="Too much problem"
                 android:paddingLeft="15dp"
+                android:maxLines="2"
+                android:scrollbars="vertical"
                 android:textStyle="bold"
                 android:textColor="#ff32acf1" />
 

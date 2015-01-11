@@ -54,6 +54,7 @@ public class SplashActivity extends BaseActivity {
     private Boolean cacheCleared;
     private Boolean exitOnCacheCleared;
     private Boolean dontShowContinueButton;
+    private Boolean startedFromMenu;
 
     private Long startTime;
     private Long endTime;
@@ -70,6 +71,9 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        eventBus.register(this);
+
+        startedFromMenu = getIntent().getBooleanExtra("MODE", false);
 
         startTime = new Date().getTime();
 
@@ -82,21 +86,24 @@ public class SplashActivity extends BaseActivity {
 
         storageCacheClearingTask = new StorageCacheClearingTask(this);
 
-        eventBus.register(this);
-        storageCacheClearingTask.execute();
-        gcmUtil.registerWithGcmServerIfNeeded(this);
-
-        if(middlewareService.isCategoriesDataAvailable(this) && middlewareService.isCategoriesImagesAvailable(this)) {
-            exitOnCacheCleared = true;
-        }
-        else {
-            middlewareService.loadCategoriesData(this);
-            dontShowContinueButton = middlewareService.wasImageDownloadLaunchedBefore(this);
+        if(!startedFromMenu) {
+            storageCacheClearingTask.execute();
+            gcmUtil.registerWithGcmServerIfNeeded(this);
+            if (middlewareService.isCategoriesDataAvailable(this) && middlewareService.isCategoriesImagesAvailable(this)) {
+                exitOnCacheCleared = true;
+            } else {
+                middlewareService.loadCategoriesData(this);
+                dontShowContinueButton = middlewareService.wasImageDownloadLaunchedBefore(this);
+            }
         }
 
         setUpListener();
         setUpPagerData(dontShowContinueButton);
         setUpPager();
+
+        if(startedFromMenu) {
+            readyToProceed();
+        }
     }
 
     @Override
@@ -187,10 +194,15 @@ public class SplashActivity extends BaseActivity {
 
 
     public void onEventMainThread(UserReadyEvent event) {
-        Intent i = new Intent(this, LoginActivity.class);
-        i.putExtra("MODE", false);
-        startActivity(i);
-        finish();
+        if(startedFromMenu) {
+            finish();
+        }
+        else {
+            Intent i = new Intent(this, LoginActivity.class);
+            i.putExtra("MODE", false);
+            startActivity(i);
+            finish();
+        }
     }
 
     public void onEventMainThread(GetCategoriesDataEvent event) {

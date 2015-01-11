@@ -1,5 +1,6 @@
 package com.eswaraj.app.eswaraj.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,9 +8,17 @@ import android.view.MenuItem;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
+import com.eswaraj.app.eswaraj.events.StartAnotherActivityEvent;
 import com.eswaraj.app.eswaraj.fragments.LeaderFragment;
 
+import javax.inject.Inject;
+
+import de.greenrobot.event.EventBus;
+
 public class LeaderActivity extends BaseActivity {
+
+    @Inject
+    EventBus eventBus;
 
     private LeaderFragment leaderFragment;
 
@@ -19,6 +28,18 @@ public class LeaderActivity extends BaseActivity {
         setContentView(R.layout.activity_leader);
 
         leaderFragment = (LeaderFragment) getSupportFragmentManager().findFragmentById(R.id.leaderFragment);
+        eventBus.register(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        eventBus.unregister(this);
+        super.onDestroy();
+    }
+
+    public void onEventMainThread(StartAnotherActivityEvent event) {
+        Intent i = new Intent(this, ConstituencyActivity.class);
+        i.putExtra("ID", event.getId());
+        startActivity(i);
+    }
 }

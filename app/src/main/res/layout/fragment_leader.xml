@@ -12,6 +12,7 @@
 
     <ImageView
         android:id="@+id/lPhoto"
+        android:layout_below="@+id/logo_header"
         android:layout_width="150dp"
         android:layout_height="150dp" />
 
@@ -24,6 +25,13 @@
     <TextView
         android:id="@+id/lPost"
         android:layout_below="@+id/lPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/lConstituency"
+        android:layout_toRightOf="@+id/lPhoto"
+        android:layout_alignTop="@+id/lPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

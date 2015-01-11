@@ -31,6 +31,7 @@ import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetHeaderImageEvent;
 import com.eswaraj.app.eswaraj.events.GetLocationComplaintCountersEvent;
 import com.eswaraj.app.eswaraj.events.GetLocationComplaintsEvent;
+import com.eswaraj.app.eswaraj.events.GetLocationEvent;
 import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.ComplaintCounter;
@@ -103,6 +104,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
     private Boolean complaintDataAvailable = false;
     private Boolean counterDataAvailable = false;
     private Boolean dataAlreadySet = false;
+    private Boolean locationDtoAvailable = true;
     private Bitmap photo;
     private Long totalComplaints = 0L;
     private ComplaintListAdapter openListAdapter;
@@ -130,6 +132,10 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         locationDto = (LocationDto) getActivity().getIntent().getSerializableExtra("LOCATION");
+        if(locationDto == null) {
+            locationDtoAvailable = false;
+            middlewareService.loadLocation(getActivity(), getActivity().getIntent().getLongExtra("ID", -1));
+        }
         eventBus.register(this);
 
         googleMapFragment = new GoogleMapFragment();
@@ -144,9 +150,11 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         pDialog = new CustomProgressDialog(getActivity(), false, true, "Fetching constituency complaints ...");
         pDialog.show();
 
-        middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, 50);
-        middlewareService.loadLocationComplaintCounters(getActivity(), locationDto);
-        middlewareService.loadHeaderImage(getActivity(), locationDto.getMobileHeaderImageUrl(), locationDto.getId(), false);
+        if(locationDtoAvailable) {
+            middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, 50);
+            middlewareService.loadLocationComplaintCounters(getActivity(), locationDto);
+            middlewareService.loadHeaderImage(getActivity(), locationDto.getMobileHeaderImageUrl(), locationDto.getId(), false);
+        }
     }
 
     @Override
@@ -201,25 +209,28 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         mcAnalyticsContainer.setVisibility(View.INVISIBLE);
         mcMapButtons.setVisibility(View.INVISIBLE);
         mcInfoContainer.setVisibility(View.INVISIBLE);
-        mcName.setText(locationDto.getName());
         if(photo != null) {
             mcPhoto.setImageBitmap(photo);
         }
 
-        //Info data
-        if(locationDto.getTotalNumberOfHouses() != null) {
-            cTotalHouses.setText(locationDto.getTotalNumberOfHouses().toString());
-            cTotalPopulation.setText(locationDto.getTotalPopulation().toString());
-            cTotalMalePopulation.setText(locationDto.getTotalMalePopulation().toString());
-            cTotalFemalePopulation.setText(locationDto.getTotalFemalePopulation().toString());
-            cTotalLiteratePopulation.setText(locationDto.getTotalLiteratePopulation().toString());
-            cTotalMaleLiteratePopulation.setText(locationDto.getTotalMaleLiteratePopulation().toString());
-            cTotalFemaleLiteratePopulation.setText(locationDto.getTotalFemaleLiteratePopulation().toString());
-            cTotalWorkingPopulation.setText(locationDto.getTotalWorkingPopulation().toString());
-            cTotalMaleWorkingPopulation.setText(locationDto.getTotalMaleWorkingPopulation().toString());
-            cTotalFemaleWorkingPopulation.setText(locationDto.getTotalFemaleWorkingPopulation().toString());
-            cArea.setText(locationDto.getArea().toString());
-            cPerimeter.setText(locationDto.getPerimeter().toString());
+        if(locationDto != null) {
+            mcName.setText(locationDto.getName());
+
+            //Info data
+            if (locationDto.getTotalNumberOfHouses() != null) {
+                cTotalHouses.setText(locationDto.getTotalNumberOfHouses().toString());
+                cTotalPopulation.setText(locationDto.getTotalPopulation().toString());
+                cTotalMalePopulation.setText(locationDto.getTotalMalePopulation().toString());
+                cTotalFemalePopulation.setText(locationDto.getTotalFemalePopulation().toString());
+                cTotalLiteratePopulation.setText(locationDto.getTotalLiteratePopulation().toString());
+                cTotalMaleLiteratePopulation.setText(locationDto.getTotalMaleLiteratePopulation().toString());
+                cTotalFemaleLiteratePopulation.setText(locationDto.getTotalFemaleLiteratePopulation().toString());
+                cTotalWorkingPopulation.setText(locationDto.getTotalWorkingPopulation().toString());
+                cTotalMaleWorkingPopulation.setText(locationDto.getTotalMaleWorkingPopulation().toString());
+                cTotalFemaleWorkingPopulation.setText(locationDto.getTotalFemaleWorkingPopulation().toString());
+                cArea.setText(locationDto.getArea().toString());
+                cPerimeter.setText(locationDto.getPerimeter().toString());
+            }
         }
 
         mcListOpen.setOnItemClickListener(new ListView.OnItemClickListener() {
@@ -357,6 +368,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
             }
             dataAlreadySet = true;
         }
+        cScrollView.smoothScrollTo(0, 0);
     }
 
     private void filterListAndSetAdapter() {
@@ -402,7 +414,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
     }
 
     public void populateCountersAndCreateChart() {
-        GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters);
+        GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters, globalSession.getColorMap());
         mcChartContainer.removeAllViews();
         mcChartContainer.addView(chartView);
         totalComplaints = 0L;
@@ -415,6 +427,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
     public void markComplaintClosed(Long id) {
         ComplaintDto complaintDtoToMove = openListAdapter.removeComplaint(id);
         openListAdapter.notifyDataSetChanged();
+        complaintDtoToMove.setStatus("Done");
         closeListAdapter.addComplaint(complaintDtoToMove);
         closeListAdapter.notifyDataSetChanged();
     }
@@ -447,11 +460,11 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
             if(complaintDataAvailable && !dataAlreadySet) {
                 setComplaintData();
             }
-            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), complaintCounters);
+            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), complaintCounters, globalSession.getColorMap());
             mcAmenityList.setAdapter(amenityListAdapter);
         }
         else {
-            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), null);
+            AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), null, globalSession.getColorMap());
             mcAmenityList.setAdapter(amenityListAdapter);
             Toast.makeText(getActivity(), "Could not fetch constituency complaint counters. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
@@ -468,6 +481,36 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch header image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onEventMainThread(GetLocationEvent event) {
+        if(event.getSuccess()) {
+            locationDto = event.getLocationDto();
+            middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, 50);
+            middlewareService.loadLocationComplaintCounters(getActivity(), locationDto);
+            middlewareService.loadHeaderImage(getActivity(), locationDto.getMobileHeaderImageUrl(), locationDto.getId(), false);
+
+            mcName.setText(locationDto.getName());
+
+            //Info data
+            if (locationDto.getTotalNumberOfHouses() != null) {
+                cTotalHouses.setText(locationDto.getTotalNumberOfHouses().toString());
+                cTotalPopulation.setText(locationDto.getTotalPopulation().toString());
+                cTotalMalePopulation.setText(locationDto.getTotalMalePopulation().toString());
+                cTotalFemalePopulation.setText(locationDto.getTotalFemalePopulation().toString());
+                cTotalLiteratePopulation.setText(locationDto.getTotalLiteratePopulation().toString());
+                cTotalMaleLiteratePopulation.setText(locationDto.getTotalMaleLiteratePopulation().toString());
+                cTotalFemaleLiteratePopulation.setText(locationDto.getTotalFemaleLiteratePopulation().toString());
+                cTotalWorkingPopulation.setText(locationDto.getTotalWorkingPopulation().toString());
+                cTotalMaleWorkingPopulation.setText(locationDto.getTotalMaleWorkingPopulation().toString());
+                cTotalFemaleWorkingPopulation.setText(locationDto.getTotalFemaleWorkingPopulation().toString());
+                cArea.setText(locationDto.getArea().toString());
+                cPerimeter.setText(locationDto.getPerimeter().toString());
+            }
+        }
+        else {
+            Toast.makeText(getActivity(), "Could not fetch constituency details. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
     }
 }

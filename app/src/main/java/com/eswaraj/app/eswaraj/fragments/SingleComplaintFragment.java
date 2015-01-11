@@ -153,7 +153,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
                 scSubCategory.setText(category.getName());
             }
         }
-        if(!userSession.getUser().getPerson().getExternalId().equals(complaintDto.getCreatedBy().get(0).getExternalId()) || complaintDto.getStatus().equals("Closed")) {
+        if(!userSession.getUser().getPerson().getExternalId().equals(complaintDto.getCreatedBy().get(0).getExternalId()) || complaintDto.getStatus().equals("Done")) {
             scClose.setVisibility(View.INVISIBLE);
         }
         if(complaintDto.getImages() != null) {

@@ -27,4 +27,5 @@ public interface MiddlewareGetService {
     public void loadLocationComplaintCounters(Context context, LocationDto locationDto);
     public void loadSingleComplaint(Context context, Long id);
     public void loadLeaders(Context context);
+    public void loadLocation(Context context, Long id);
 }

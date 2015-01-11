@@ -9,6 +9,7 @@ import android.widget.PopupMenu;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.activities.MyProfileActivity;
+import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.application.EswarajApplication;
 import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
 
@@ -67,12 +68,16 @@ public class BaseActivity extends FragmentActivity {
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                Intent i;
                 switch (item.getItemId()){
                     case R.id.menu_profile:
-                        Intent i = new Intent(getBaseContext(), MyProfileActivity.class);
+                        i = new Intent(getBaseContext(), MyProfileActivity.class);
                         startActivity(i);
                         return true;
                     case R.id.menu_splash:
+                        i = new Intent(getBaseContext(), SplashActivity.class);
+                        i.putExtra("MODE", true);
+                        startActivity(i);
                         return true;
                     default:
                         return false;

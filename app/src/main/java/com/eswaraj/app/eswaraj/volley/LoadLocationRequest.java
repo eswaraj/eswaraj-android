@@ -1,7 +1,6 @@
 package com.eswaraj.app.eswaraj.volley;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -9,10 +8,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.datastore.Cache;
-import com.eswaraj.app.eswaraj.events.GetLeadersEvent;
+import com.eswaraj.app.eswaraj.events.GetLocationEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
-import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
-import com.eswaraj.app.eswaraj.util.UserSessionUtil;
+import com.eswaraj.web.dto.LocationDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -22,18 +20,16 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.Date;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
 
-public class LoadLeadersRequest extends BaseClass {
+public class LoadLocationRequest extends BaseClass {
 
     @Inject
     EventBus eventBus;
@@ -41,20 +37,18 @@ public class LoadLeadersRequest extends BaseClass {
     Cache cache;
     @Inject
     NetworkAccessHelper networkAccessHelper;
-    @Inject
-    UserSessionUtil userSession;
 
-    public void processRequest(Context context) {
-        Log.e("LeadersURL", Constants.getLeadersUrl(userSession.getUser().getPerson().getPersonAddress().getLattitude(), userSession.getUser().getPerson().getPersonAddress().getLongitude()));
-        StringRequest request = new StringRequest(Constants.getLeadersUrl(userSession.getUser().getPerson().getPersonAddress().getLattitude(), userSession.getUser().getPerson().getPersonAddress().getLongitude()), createSuccessListener(context), createErrorListener(context));
-        this.networkAccessHelper.submitNetworkRequest("GetLeaders", request);
+
+    public void processRequest(Context context, Long id) {
+        StringRequest request = new StringRequest(Constants.GET_LOCATION_URL + "/" + id, createSuccessListener(context, id), createErrorListener(context, id));
+        this.networkAccessHelper.submitNetworkRequest("GetLocation", request);
     }
 
-    private Response.ErrorListener createErrorListener(final Context context) {
+    private Response.ErrorListener createErrorListener(final Context context, final Long id) {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                GetLeadersEvent event = new GetLeadersEvent();
+                GetLocationEvent event = new GetLocationEvent();
                 event.setSuccess(false);
                 event.setError(error.toString());
                 eventBus.post(event);
@@ -62,7 +56,7 @@ public class LoadLeadersRequest extends BaseClass {
         };
     }
 
-    private Response.Listener<String> createSuccessListener(final Context context) {
+    private Response.Listener<String> createSuccessListener(final Context context, final Long id) {
         return new Response.Listener<String>() {
             @Override
             public void onResponse(String json) {
@@ -81,16 +75,14 @@ public class LoadLeadersRequest extends BaseClass {
                 };
                 Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
                 try {
-                    List<PoliticalBodyAdminDto> politicalBodyAdminDtos;
-                    politicalBodyAdminDtos = gson.fromJson(json, new TypeToken<List<PoliticalBodyAdminDto>>(){}.getType());
-                    GetLeadersEvent event = new GetLeadersEvent();
+                    LocationDto locationDto = gson.fromJson(json, LocationDto.class);
+                    GetLocationEvent event = new GetLocationEvent();
                     event.setSuccess(true);
-                    event.setLoadProfilePhotos(false);
-                    event.setPoliticalBodyAdminDtos(politicalBodyAdminDtos);
+                    event.setLocationDto(locationDto);
                     eventBus.post(event);
-                    cache.updateLeaders(context, json);
+                    cache.updateLocation(context, id, json);
                 } catch (JsonParseException e) {
-                    GetLeadersEvent event = new GetLeadersEvent();
+                    GetLocationEvent event = new GetLocationEvent();
                     event.setSuccess(false);
                     event.setError("Invalid json");
                     eventBus.post(event);

@@ -28,6 +28,7 @@ public class Constants {
     public static final String LOCATION_COMPLAINTS_URL = BASE_URL + "/complaint/location";
     public static final String SAVE_GCM_ID_URL = BASE_URL + "/user/device/gcm";
     public static final String GET_SINGLE_COMPLAINT_URL = BASE_URL + "/complaint";
+    public static final String GET_LOCATION_URL = BASE_URL + "/location";
 
     //Google URLS
     public static final String GOOGLE_PLACES_AUTOCOMPLETE_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?key=" + GOOGLE_API_BROWSER_KEY + "&components=country:in&input=";

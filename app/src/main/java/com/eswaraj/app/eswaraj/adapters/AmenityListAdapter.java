@@ -15,9 +15,12 @@ import android.widget.TextView;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.models.ComplaintCounter;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.makeramen.RoundedImageView;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDto>{
 
@@ -26,13 +29,15 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
     private List<CategoryWithChildCategoryDto> categoryList;
     private List<ComplaintCounter> complaintCounterList;
     private Long totalComplaints;
+    private Map<Long, Integer> colorMap;
 
-    public AmenityListAdapter(Context context, int layoutResourceId, List<CategoryWithChildCategoryDto> categoryList, List<ComplaintCounter> complaintCounterList) {
+    public AmenityListAdapter(Context context, int layoutResourceId, List<CategoryWithChildCategoryDto> categoryList, List<ComplaintCounter> complaintCounterList, Map<Long, Integer> colorMap) {
         super(context, layoutResourceId, categoryList);
         this.context = context;
         this.layoutResourceId = layoutResourceId;
         this.categoryList = categoryList;
         this.complaintCounterList = complaintCounterList;
+        this.colorMap = colorMap;
 
         totalComplaints = 0L;
         if(complaintCounterList != null) {
@@ -53,9 +58,16 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new CategoryDtoHolder();
-            holder.saIcon = (ImageView)row.findViewById(R.id.saIcon);
+            holder.saIcon = (RoundedImageView)row.findViewById(R.id.saIcon);
             holder.saTitle = (TextView)row.findViewById(R.id.saTitle);
             holder.saStats = (TextView)row.findViewById(R.id.saStats);
+
+            if(colorMap != null) {
+                holder.saIcon.setBorderColor(colorMap.get(categoryList.get(position).getId()));
+            }
+            else {
+                holder.saIcon.setBorderWidth(0);
+            }
 
             row.setTag(holder);
         }
@@ -81,7 +93,7 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
 
     static class CategoryDtoHolder
     {
-        ImageView saIcon;
+        RoundedImageView saIcon;
         TextView saTitle;
         TextView saStats;
     }

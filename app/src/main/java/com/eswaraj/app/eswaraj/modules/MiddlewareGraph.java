@@ -69,6 +69,7 @@ import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
 import com.eswaraj.app.eswaraj.volley.LoadLeadersRequest;
+import com.eswaraj.app.eswaraj.volley.LoadLocationRequest;
 import com.eswaraj.app.eswaraj.volley.LoadProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.LocationComplaintCountersRequest;
 import com.eswaraj.app.eswaraj.volley.LocationComplaintsRequest;
@@ -152,7 +153,8 @@ import de.greenrobot.event.EventBus;
                 LeaderActivity.class,
                 LeaderFragment.class,
                 GoogleAnalyticsTracker.class,
-                GlobalSessionUtil.class
+                GlobalSessionUtil.class,
+                LoadLocationRequest.class
         },
         complete = false,
         library = true
@@ -369,5 +371,10 @@ public class MiddlewareGraph {
     @Provides @Singleton
     GlobalSessionUtil provideGlobalSessionUtil() {
         return new GlobalSessionUtil();
+    }
+
+    @Provides @Singleton
+    LoadLocationRequest provideLoadLocationRequest() {
+        return new LoadLocationRequest();
     }
 }

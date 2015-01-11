@@ -14,6 +14,7 @@ import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
 import com.eswaraj.app.eswaraj.volley.LoadLeadersRequest;
+import com.eswaraj.app.eswaraj.volley.LoadLocationRequest;
 import com.eswaraj.app.eswaraj.volley.LoadProfileUpdateRequest;
 import com.eswaraj.app.eswaraj.volley.LocationComplaintCountersRequest;
 import com.eswaraj.app.eswaraj.volley.LocationComplaintsRequest;
@@ -75,6 +76,8 @@ public class Server extends BaseClass implements ServerInterface {
     SingleComplaintRequest singleComplaintRequest;
     @Inject
     LoadLeadersRequest loadLeadersRequest;
+    @Inject
+    LoadLocationRequest loadLocationRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -171,5 +174,10 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void loadLeaders(Context context) {
         loadLeadersRequest.processRequest(context);
+    }
+
+    @Override
+    public void loadLocation(Context context, Long id) {
+        loadLocationRequest.processRequest(context, id);
     }
 }

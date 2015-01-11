@@ -53,7 +53,10 @@ public class CommentListAdapter extends ArrayAdapter<CommentDto> {
 
         CommentDto commentDto = commentDtoList.get(position);
 
-        holder.cName.setText(commentDto.getPostedBy().getName());
+        //TODO:Uncomment this line after API fix
+        if(commentDto.getPostedBy() != null) {
+            holder.cName.setText(commentDto.getPostedBy().getName());
+        }
         holder.cText.setText(commentDto.getText());
         holder.cTime.setText(new Date(commentDto.getCreationTime()).toString());
         return row;

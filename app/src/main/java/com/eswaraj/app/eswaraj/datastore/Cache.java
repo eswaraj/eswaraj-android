@@ -390,4 +390,19 @@ public class Cache extends BaseClass implements CacheInterface {
             eventBus.post(event);
         }
     }
+
+    @Override
+    public Boolean isLocationAvailable(Context context, Long id) {
+        return false;
+    }
+
+    @Override
+    public void updateLocation(Context context, Long id, String json) {
+        //No caching for now
+    }
+
+    @Override
+    public void loadLocation(Context context, Long id) {
+        assert false;
+    }
 }
