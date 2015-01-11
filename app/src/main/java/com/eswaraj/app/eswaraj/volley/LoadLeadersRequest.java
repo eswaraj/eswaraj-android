@@ -45,7 +45,6 @@ public class LoadLeadersRequest extends BaseClass {
     UserSessionUtil userSession;
 
     public void processRequest(Context context) {
-        Log.e("LeadersURL", Constants.getLeadersUrl(userSession.getUser().getPerson().getPersonAddress().getLattitude(), userSession.getUser().getPerson().getPersonAddress().getLongitude()));
         StringRequest request = new StringRequest(Constants.getLeadersUrl(userSession.getUser().getPerson().getPersonAddress().getLattitude(), userSession.getUser().getPerson().getPersonAddress().getLongitude()), createSuccessListener(context), createErrorListener(context));
         this.networkAccessHelper.submitNetworkRequest("GetLeaders", request);
     }

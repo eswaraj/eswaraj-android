@@ -109,6 +109,7 @@
         <activity
             android:name=".activities.MyComplaintsActivity"
             android:label="@string/title_activity_my_complaints"
+            android:parentActivityName=".activities.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="stateHidden" >
@@ -116,6 +117,7 @@
         <activity
             android:name=".activities.SingleComplaintActivity"
             android:label="@string/title_activity_single_complaint"
+            android:parentActivityName=".activities.MyComplaintsActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="stateHidden" >
@@ -180,11 +182,12 @@
 
         <receiver
             android:name=".broadcast_receivers.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.eswaraj.app.eswaraj" />
             </intent-filter>
         </receiver>
@@ -197,6 +200,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
         </activity>
+
+        <service
+            android:name=".services.GcmService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

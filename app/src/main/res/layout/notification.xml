@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="left">
+
+    <com.makeramen.RoundedImageView
+        android:id="@+id/nImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/profile_image"
+        android:padding="15dp"
+        android:scaleType="fitCenter"
+        app:riv_corner_radius="30dip"
+        app:riv_border_width="2dip"
+        app:riv_border_color="#333333"
+        app:riv_mutate_background="true"
+        app:riv_oval="true"/>
+
+    <TextView
+        android:id="@+id/nTitle"
+        android:text="eSwaraj: Your voice is heard"
+        android:layout_toRightOf="@+id/nImage"
+        android:paddingTop="12dp"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/nMessage"
+        android:layout_below="@+id/nTitle"
+        android:layout_toRightOf="@+id/nImage"
+        android:text="Your comaplaint viewed"
+        android:textSize="15dp"
+        android:paddingTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

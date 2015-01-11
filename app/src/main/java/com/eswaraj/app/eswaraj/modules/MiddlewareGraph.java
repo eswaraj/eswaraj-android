@@ -49,6 +49,7 @@ import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.helpers.StorageCacheClearingTask;
 import com.eswaraj.app.eswaraj.services.ComplaintPostService;
+import com.eswaraj.app.eswaraj.services.GcmService;
 import com.eswaraj.app.eswaraj.util.DeviceUtil;
 import com.eswaraj.app.eswaraj.util.FacebookSharingUtil;
 import com.eswaraj.app.eswaraj.util.GcmUtil;
@@ -154,7 +155,8 @@ import de.greenrobot.event.EventBus;
                 LeaderFragment.class,
                 GoogleAnalyticsTracker.class,
                 GlobalSessionUtil.class,
-                LoadLocationRequest.class
+                LoadLocationRequest.class,
+                GcmService.class
         },
         complete = false,
         library = true

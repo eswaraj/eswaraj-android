@@ -1,5 +1,6 @@
 package com.eswaraj.app.eswaraj.datastore;
 
+import android.app.Service;
 import android.content.Context;
 import android.util.Log;
 
@@ -75,16 +76,55 @@ public class Cache extends BaseClass implements CacheInterface {
             GetUserEvent event = new GetUserEvent();
             event.setSuccess(true);
             event.setUserDto(userDto);
-            event.setToken(session.getAccessToken());
+            if(session != null) {
+                event.setToken(session.getAccessToken());
+            }
             event.setDownloadProfilePhoto(false);
             event.setDataUpdateNeeded(true);
-            eventBus.postSticky(event);
+            eventBus.post(event);
         } catch (JsonParseException e) {
             //This should never happen since json would only be stored in server if de-serialization was successful in Server class
             GetUserEvent event = new GetUserEvent();
             event.setSuccess(false);
             event.setError("Invalid json");
-            eventBus.postSticky(event);
+            eventBus.post(event);
+        }
+    }
+
+    public void loadUserData(Service context, Session session) {
+        JsonDeserializer<Date> deser = new JsonDeserializer<Date>() {
+            @Override
+            public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                return json == null ? null : new Date(json.getAsLong());
+            }
+        };
+        JsonSerializer<Date> ser = new JsonSerializer<Date>() {
+
+            @Override
+            public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+                return src == null ? null : new JsonPrimitive(src.getTime());
+            }
+        };
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
+        String json = sharedPreferencesHelper.getString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_DATA, null);
+        try {
+            UserDto userDto = gson.fromJson(json, UserDto.class);
+            GetUserEvent event = new GetUserEvent();
+            event.setSuccess(true);
+            event.setUserDto(userDto);
+            if(session != null) {
+                event.setToken(session.getAccessToken());
+            }
+            event.setDownloadProfilePhoto(false);
+            event.setDataUpdateNeeded(true);
+            eventBus.post(event);
+            Log.e("Cache", "Successfully sent data");
+        } catch (JsonParseException e) {
+            //This should never happen since json would only be stored in server if de-serialization was successful in Server class
+            GetUserEvent event = new GetUserEvent();
+            event.setSuccess(false);
+            event.setError("Invalid json");
+            eventBus.post(event);
         }
     }
 
@@ -118,6 +158,24 @@ public class Cache extends BaseClass implements CacheInterface {
 
 
     public void loadCategoriesData(Context context) {
+        Gson gson = new Gson();
+        String json = sharedPreferencesHelper.getString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_DATA, null);
+        try {
+            List<CategoryWithChildCategoryDto> categoryDtoList;
+            GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
+            categoryDtoList = gson.fromJson(json, new TypeToken<ArrayList<CategoryWithChildCategoryDto>>(){}.getType());
+            getCategoriesDataEvent.setSuccess(true);
+            getCategoriesDataEvent.setCategoryList(categoryDtoList);
+            eventBus.post(getCategoriesDataEvent);
+        } catch (JsonParseException e) {
+            //This should never happen since json would only be stored in server if de-serialization was successful in Server class
+            GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
+            getCategoriesDataEvent.setError("Invalid json");
+            eventBus.post(getCategoriesDataEvent);
+        }
+    }
+
+    public void loadCategoriesData(Service context) {
         Gson gson = new Gson();
         String json = sharedPreferencesHelper.getString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_DATA, null);
         try {

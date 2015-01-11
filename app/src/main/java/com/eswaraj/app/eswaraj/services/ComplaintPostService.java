@@ -50,7 +50,7 @@ public class ComplaintPostService extends BaseService {
         if(event.getSuccess()) {
             if(event.getEnd()) {
                 if(count > 0) {
-                    notificationHelper.sendNotification(this, null, "eSwaraj: Posting complaints", "Offline complaints are sent to server", 9999);
+                    notificationHelper.sendNotification(this, null, "eSwaraj: Posting complaints", "Offline complaints are sent to server", null, 9999);
                 }
                 stopSelf();
             }

@@ -66,7 +66,7 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
                 holder.saIcon.setBorderColor(colorMap.get(categoryList.get(position).getId()));
             }
             else {
-                holder.saIcon.setBorderWidth(0);
+                holder.saIcon.setBorderWidth(0.0f);
             }
 
             row.setTag(holder);

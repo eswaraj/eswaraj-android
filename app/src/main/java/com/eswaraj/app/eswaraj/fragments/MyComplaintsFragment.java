@@ -81,6 +81,7 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
     private LinearLayout mcAnalyticsContainer;
     private TextView mcName;
     private ImageView mcPhoto;
+    private TextView mcUserDetails;
     private RelativeLayout mcDataView;
     private CustomScrollView mcScrollView;
 
@@ -143,12 +144,14 @@ public class MyComplaintsFragment extends BaseFragment implements OnMapReadyCall
         mcAnalyticsContainer = (LinearLayout) rootView.findViewById(R.id.mcAnalyticsContainer);
         mcName = (TextView) rootView.findViewById(R.id.mcName);
         mcPhoto = (ImageView) rootView.findViewById(R.id.mcPhoto);
+        mcUserDetails = (TextView) rootView.findViewById(R.id.mcUserDetails);
         mcDataView = (RelativeLayout) rootView.findViewById(R.id.mcDataView);
         mcScrollView = (CustomScrollView) rootView.findViewById(R.id.mcScrollView);
 
         setupMenu(rootView.findViewById(R.id.menu));
 
         mcAnalyticsContainer.setVisibility(View.INVISIBLE);
+        mcUserDetails.setText(GenericUtil.getAge(userSession.getUser().getPerson().getDob()) + " Years, " + userSession.getUser().getPerson().getGender());
         mcName.setText(userSession.getUser().getPerson().getName());
         if(photo != null) {
             mcPhoto.setImageBitmap(photo);
