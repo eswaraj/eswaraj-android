@@ -259,26 +259,27 @@ public class LoginFragment extends BaseFragment {
     public void onEventMainThread(GetUserEvent event) {
         if(event.getSuccess()) {
             Log.d("LoginFragment", "GetUserEvent:Success");
-            userSession.setUser(event.getUserDto());
-            userSession.setToken(event.getToken());
+            if(event.getUserDto() != null) {
+                userSession.setUser(event.getUserDto());
+                userSession.setToken(event.getToken());
 
-            //Set user ID for analytics tracking
-            googleAnalyticsTracker.setUserId(userSession.getUser().getId());
+                //Set user ID for analytics tracking
+                googleAnalyticsTracker.setUserId(userSession.getUser().getId());
 
-            //GCM ID registration, if pending
-            if(!gcmUtil.isSyncedWithServer(getActivity())) {
-                middlewareService.registerGcmId(getActivity());
-            }
+                //GCM ID registration, if pending
+                if (!gcmUtil.isSyncedWithServer(getActivity())) {
+                    middlewareService.registerGcmId(getActivity());
+                }
 
-            if(event.getDataUpdateNeeded() && internetServicesCheckUtil.isServiceAvailable(getActivity())) {
-                middlewareService.loadProfileUpdates(getActivity(), userSession.getToken());
-            }
-            else {
-                progressWheel.setVisibility(View.INVISIBLE);
-                LoginStatusEvent loginStatusEvent = new LoginStatusEvent();
-                loginStatusEvent.setSuccess(true);
-                loginStatusEvent.setLoggedIn(true);
-                eventBus.post(loginStatusEvent);
+                if (event.getDataUpdateNeeded() && internetServicesCheckUtil.isServiceAvailable(getActivity())) {
+                    middlewareService.loadProfileUpdates(getActivity(), userSession.getToken());
+                } else {
+                    progressWheel.setVisibility(View.INVISIBLE);
+                    LoginStatusEvent loginStatusEvent = new LoginStatusEvent();
+                    loginStatusEvent.setSuccess(true);
+                    loginStatusEvent.setLoggedIn(true);
+                    eventBus.post(loginStatusEvent);
+                }
             }
 
         }

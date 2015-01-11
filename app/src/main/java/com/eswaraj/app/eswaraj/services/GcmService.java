@@ -134,23 +134,32 @@ public class GcmService extends BaseService {
 
     public void onEventMainThread(GetCategoriesDataEvent event) {
         if(event.getSuccess()) {
-            //Launch image download now.
             globalSession.setCategoryDtoList(event.getCategoryList());
             middlewareService.loadProfileImage(this, gcmMessageDto.getViewedBy().getProfilePhoto(), gcmMessageDto.getViewedBy().getId(), false, false);
         }
         else {
-            Toast.makeText(this, "Could not fetch categories from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            GcmBroadcastReceiver.completeWakefulIntent(i);
+            stopSelf();
         }
     }
 
     public void onEventMainThread(GetUserEvent event) {
         if(event.getSuccess()) {
-            userSession.setUser(event.getUserDto());
-            userSession.setToken(event.getToken());
-            cache.loadCategoriesData(this);
+            if(event.getUserDto() != null) {
+                userSession.setUser(event.getUserDto());
+                userSession.setToken(event.getToken());
+                cache.loadCategoriesData(this);
+            }
+            else {
+                //User not logged in. No need to do anything
+                GcmBroadcastReceiver.completeWakefulIntent(i);
+                stopSelf();
+            }
         }
         else {
-            Toast.makeText(this, "Could not fetch user details from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            //User not logged in. No need to do anything
+            GcmBroadcastReceiver.completeWakefulIntent(i);
+            stopSelf();
         }
     }
 }

@@ -118,7 +118,6 @@ public class Cache extends BaseClass implements CacheInterface {
             event.setDownloadProfilePhoto(false);
             event.setDataUpdateNeeded(true);
             eventBus.post(event);
-            Log.e("Cache", "Successfully sent data");
         } catch (JsonParseException e) {
             //This should never happen since json would only be stored in server if de-serialization was successful in Server class
             GetUserEvent event = new GetUserEvent();
@@ -137,6 +136,7 @@ public class Cache extends BaseClass implements CacheInterface {
         }
         else {
             sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_DATA_AVAILABLE, false);
+            sharedPreferencesHelper.putString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_DATA, json);
         }
     }
 
