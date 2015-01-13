@@ -51,9 +51,11 @@ public class UserSessionUtil extends BaseClass {
 
     public Boolean isUserLocationKnown() {
         if(user != null) {
-            if (user.getPerson().getPersonAddress() != null) {
-                if (user.getPerson().getPersonAddress().getLongitude() != null) {
-                    return true;
+            if(user.getPerson() != null) {
+                if (user.getPerson().getPersonAddress() != null) {
+                    if (user.getPerson().getPersonAddress().getLongitude() != null) {
+                        return true;
+                    }
                 }
             }
         }

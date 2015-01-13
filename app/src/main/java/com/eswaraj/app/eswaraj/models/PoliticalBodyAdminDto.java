@@ -15,6 +15,9 @@ public class PoliticalBodyAdminDto extends BaseDto {
     private String name;
     private String gender;
     private String profilePhoto;
+    private String fbPage;
+    private String officeEmail;
+    private String biodata;
 
     public PoliticalBodyAdminDto() {
         party = new PartyDto();
@@ -94,18 +97,62 @@ public class PoliticalBodyAdminDto extends BaseDto {
         this.profilePhoto = profilePhoto;
     }
 
+    public String getFbPage() {
+        return fbPage;
+    }
+
+    public void setFbPage(String fbPage) {
+        this.fbPage = fbPage;
+    }
+
+    public String getOfficeEmail() {
+        return officeEmail;
+    }
+
+    public void setOfficeEmail(String officeEmail) {
+        this.officeEmail = officeEmail;
+    }
+
     @Override
     public String toString() {
         return "PoliticalBodyAdminDto{" +
-                "partyDto=" + party +
-                ", politicalAdminTypeDto=" + politicalAdminType +
+                "party=" + party +
+                ", politicalAdminType=" + politicalAdminType +
+                ", location=" + location +
                 ", startDate=" + startDate +
                 ", urlIdentifier='" + urlIdentifier + '\'' +
                 ", personExternalId='" + personExternalId + '\'' +
                 ", name='" + name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", profilePhoto='" + profilePhoto + '\'' +
+                ", fbPage='" + fbPage + '\'' +
+                ", officeEmail='" + officeEmail + '\'' +
+                ", biodata='" + biodata + '\'' +
                 '}';
+    }
+
+    public String getBiodata() {
+        return biodata;
+    }
+
+    public void setBiodata(String biodata) {
+        this.biodata = biodata;
+    }
+
+    public PartyDto getParty() {
+        return party;
+    }
+
+    public void setParty(PartyDto party) {
+        this.party = party;
+    }
+
+    public PoliticalAdminTypeDto getPoliticalAdminType() {
+        return politicalAdminType;
+    }
+
+    public void setPoliticalAdminType(PoliticalAdminTypeDto politicalAdminType) {
+        this.politicalAdminType = politicalAdminType;
     }
 
     public class PoliticalAdminTypeDto extends BaseDto {

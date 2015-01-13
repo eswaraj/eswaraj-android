@@ -73,7 +73,6 @@ public class LoginActivity extends BaseActivity {
             int screenWidth = (int) (metrics.widthPixels);
             int screenHeight = (int) (metrics.heightPixels * 0.50);
             getWindow().setLayout(screenWidth, screenHeight);
-
         }
         else {
             setTheme(android.R.style.Theme_Black_NoTitleBar_Fullscreen);

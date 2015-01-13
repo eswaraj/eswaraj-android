@@ -11,6 +11,8 @@ public interface CacheInterface extends MiddlewareGetService {
 
     public Boolean isUserDataAvailable(Context context);
     public void updateUserData(Context context, String json);
+    public void setUserDataStale(Context context);
+    public Boolean isUserDataStale(Context context);
 
     //Similar methods have to be defined for all methods in MiddlewareGetService interface
     public Boolean isCategoriesDataAvailable(Context context);

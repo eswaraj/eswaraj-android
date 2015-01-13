@@ -231,108 +231,117 @@ public class SharedPreferencesHelper {
     }
 
     public Map<String, ?> getAll(Context context, String fileName){
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         return prefs.getAll();
     }
 
     public Boolean getBoolean(Context context, String fileName, String key, Boolean defaultValue){
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         return prefs.getBoolean(key, defaultValue);
     }
 
     public float getFloat(Context context, String fileName, String key, float defaultValue){
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         return prefs.getFloat(key, defaultValue);
     }
 
     public int getInt(Context context, String fileName, String key, int defaultValue){
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         return prefs.getInt(key, defaultValue);
     }
 
     public long getLong(Context context, String fileName, String key, long defaultValue){
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         return prefs.getLong(key, defaultValue);
     }
 
     public String getString(Context context, String fileName, String key, String defaultValue){
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         return prefs.getString(key, defaultValue);
     }
 
     public Set<String> getStringSet(Context context, String fileName, String key, Set<String> defaultValue){
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         return prefs.getStringSet(key, defaultValue);
     }
 
     public Boolean contains(Context context, String fileName, String key) {
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         return prefs.contains(key);
     }
 
     public void registerOnChangeListener(Context context, String fileName, SharedPreferences.OnSharedPreferenceChangeListener listener) {
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         prefs.registerOnSharedPreferenceChangeListener(listener);
     }
 
     public void unregisterOnChangeListener(Context context, String fileName, SharedPreferences.OnSharedPreferenceChangeListener listener) {
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         prefs.unregisterOnSharedPreferenceChangeListener(listener);
     }
 
     public void putBoolean(Context context, String fileName, String key, Boolean value) {
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         editor = prefs.edit();
         editor.putBoolean(key, value);
         editor.commit();
     }
 
     public void putFloat(Context context, String fileName, String key, float value) {
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         editor = prefs.edit();
         editor.putFloat(key, value);
         editor.commit();
     }
 
     public void putInt(Context context, String fileName, String key, int value) {
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         editor = prefs.edit();
         editor.putInt(key, value);
         editor.commit();
     }
 
     public void putLong(Context context, String fileName, String key, long value) {
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         editor = prefs.edit();
         editor.putLong(key, value);
         editor.commit();
     }
 
     public void putString(Context context, String fileName, String key, String value) {
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         editor = prefs.edit();
         editor.putString(key, value);
         editor.commit();
     }
 
     public void putStringSet(Context context, String fileName, String key, Set<String> value) {
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         editor = prefs.edit();
         editor.putStringSet(key, value);
         editor.commit();
     }
 
     public void remove(Context context, String fileName, String key) {
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         editor = prefs.edit();
         editor.remove(key);
         editor.commit();
     }
 
     public void clear(Context context, String fileName) {
-        prefs = ((Activity) context).getSharedPreferences(fileName, 0);
+        prefs = getPrefs(context, fileName);
         editor = prefs.edit();
         editor.clear();
         editor.commit();
+    }
+
+    private SharedPreferences getPrefs(Context context, String fileName) {
+        if(context instanceof Activity) {
+            return ((Activity) context).getSharedPreferences(fileName, 0);
+        }
+        else {
+            return ((Service) context).getSharedPreferences(fileName, 0);
+        }
     }
 }

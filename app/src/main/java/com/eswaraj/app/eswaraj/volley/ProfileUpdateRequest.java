@@ -2,6 +2,7 @@ package com.eswaraj.app.eswaraj.volley;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -69,11 +70,19 @@ public class ProfileUpdateRequest extends BaseClass {
 
                 Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
                 UserDto userDto = gson.fromJson(response, UserDto.class);
-                ProfileUpdateEvent event = new ProfileUpdateEvent();
-                event.setSuccess(true);
-                event.setUserDto(userDto);
-                eventBus.post(event);
-                cache.updateUserData(context, response);
+                if(userDto != null) {
+                    ProfileUpdateEvent event = new ProfileUpdateEvent();
+                    event.setSuccess(true);
+                    event.setUserDto(userDto);
+                    eventBus.post(event);
+                    cache.updateUserData(context, response);
+                }
+                else {
+                    ProfileUpdateEvent event = new ProfileUpdateEvent();
+                    event.setSuccess(false);
+                    event.setError("Invalid json");
+                    eventBus.post(event);
+                }
             }
         };
     }

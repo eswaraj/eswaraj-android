@@ -15,7 +15,6 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        //Toast.makeText(context, "Got message from eSwaraj", Toast.LENGTH_LONG).show();
         ComponentName comp = new ComponentName(context.getPackageName(), GcmService.class.getName());
         startWakefulService(context, (intent.setComponent(comp)));
         setResultCode(Activity.RESULT_OK);

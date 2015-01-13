@@ -271,7 +271,7 @@ public class LoginFragment extends BaseFragment {
                     middlewareService.registerGcmId(getActivity());
                 }
 
-                if (event.getDataUpdateNeeded() && internetServicesCheckUtil.isServiceAvailable(getActivity())) {
+                if (middlewareService.isUserDataStale(getActivity()) && internetServicesCheckUtil.isServiceAvailable(getActivity())) {
                     middlewareService.loadProfileUpdates(getActivity(), userSession.getToken());
                 } else {
                     progressWheel.setVisibility(View.INVISIBLE);
@@ -291,6 +291,9 @@ public class LoginFragment extends BaseFragment {
 
     public void onEventMainThread(GetProfileEvent event) {
         progressWheel.setVisibility(View.INVISIBLE);
+        userSession.setUser(event.getUserDto());
+        userSession.setToken(event.getToken());
+
         LoginStatusEvent loginStatusEvent = new LoginStatusEvent();
         loginStatusEvent.setSuccess(true);
         loginStatusEvent.setLoggedIn(true);

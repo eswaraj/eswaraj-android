@@ -44,7 +44,7 @@ public class RegisterFacebookUserRequest extends BaseClass {
     NetworkAccessHelper networkAccessHelper;
 
     public void processRequest(Context context, Session session) {
-        String androidId = DeviceUtil.getDeviceid((Activity)context);
+        String androidId = DeviceUtil.getDeviceid(context);
         String deviceTypeRef = DeviceUtil.getDeviceTypeRef();
         final RegisterFacebookAccountRequest registerFacebookAccountRequest = new RegisterFacebookAccountRequest();
 
@@ -85,14 +85,23 @@ public class RegisterFacebookUserRequest extends BaseClass {
                 };
                 Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
                 UserDto userDto = gson.fromJson(response, UserDto.class);
-                GetUserEvent event = new GetUserEvent();
-                event.setSuccess(true);
-                event.setUserDto(userDto);
-                event.setToken(session.getAccessToken());
-                event.setDownloadProfilePhoto(true);
-                event.setDataUpdateNeeded(false);
-                eventBus.postSticky(event);
-                cache.updateUserData(context, response);
+                if(userDto != null) {
+                    GetUserEvent event = new GetUserEvent();
+                    event.setSuccess(true);
+                    event.setUserDto(userDto);
+                    event.setToken(session.getAccessToken());
+                    event.setDownloadProfilePhoto(true);
+                    event.setDataUpdateNeeded(false);
+                    eventBus.post(event);
+                    cache.updateUserData(context, response);
+                }
+                else {
+                    GetUserEvent event = new GetUserEvent();
+                    event.setSuccess(false);
+                    event.setError("Invalid json");
+                    eventBus.post(event);
+                    Log.e("RegisterFacebookUser:Error: json = ", response);
+                }
             }
         };
     }

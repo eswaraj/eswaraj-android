@@ -14,7 +14,9 @@ import com.eswaraj.app.eswaraj.base.BaseIntentService;
 import com.eswaraj.app.eswaraj.base.BaseService;
 import com.eswaraj.app.eswaraj.broadcast_receivers.GcmBroadcastReceiver;
 import com.eswaraj.app.eswaraj.datastore.Cache;
+import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
+import com.eswaraj.app.eswaraj.events.GetProfileEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.events.LoginStatusEvent;
@@ -27,6 +29,9 @@ import com.eswaraj.web.dto.device.NotificationMessage;
 import com.facebook.Session;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.inject.Inject;
 
@@ -43,6 +48,8 @@ public class GcmService extends BaseService {
     NotificationHelper notificationHelper;
     @Inject
     Cache cache;
+    @Inject
+    Server server;
     @Inject
     UserSessionUtil userSession;
     @Inject
@@ -99,12 +106,18 @@ public class GcmService extends BaseService {
                         stopSelf();
                     }
                 }
+                else if(appMessageType.equals("USER_UPDATED_ON_WEB")) {
+                    Session session = Session.getActiveSession();
+                    if (session != null && session.getAccessToken() != null) {
+                        server.loadProfileUpdates(this, session.getAccessToken());
+                    } else {
+                        cache.setUserDataStale(this);
+                    }
+                }
                 else {
                     GcmBroadcastReceiver.completeWakefulIntent(i);
                     stopSelf();
                 }
-
-                Log.i(TAG, "Received: " + extras.toString());
             }
         }
         else {
@@ -149,6 +162,7 @@ public class GcmService extends BaseService {
                 userSession.setUser(event.getUserDto());
                 userSession.setToken(event.getToken());
                 cache.loadCategoriesData(this);
+
             }
             else {
                 //User not logged in. No need to do anything
@@ -158,6 +172,20 @@ public class GcmService extends BaseService {
         }
         else {
             //User not logged in. No need to do anything
+            GcmBroadcastReceiver.completeWakefulIntent(i);
+            stopSelf();
+        }
+    }
+
+    public void onEventMainThread(GetProfileEvent event) {
+        if(event.getSuccess()) {
+            userSession.setUser(event.getUserDto());
+            userSession.setToken(event.getToken());
+            GcmBroadcastReceiver.completeWakefulIntent(i);
+            stopSelf();
+        }
+        else {
+            cache.setUserDataStale(this);
             GcmBroadcastReceiver.completeWakefulIntent(i);
             stopSelf();
         }

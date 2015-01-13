@@ -17,6 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -32,7 +34,12 @@ public class GooglePlacesUtil extends BaseClass {
 
 
     public void getPlacesList(String input) {
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Constants.GOOGLE_PLACES_AUTOCOMPLETE_URL + input, null, createPlacesListSuccessListener(), createPlacesListErrorListener());
+        JsonObjectRequest request = null;
+        try {
+            request = new JsonObjectRequest(Request.Method.GET, Constants.GOOGLE_PLACES_AUTOCOMPLETE_URL + URLEncoder.encode(input, "UTF-8"), null, createPlacesListSuccessListener(), createPlacesListErrorListener());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         networkAccessHelper.submitNetworkRequest("GetPlacesList", request);
     }
 

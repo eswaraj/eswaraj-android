@@ -1,6 +1,7 @@
 package com.eswaraj.app.eswaraj.volley;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -76,6 +77,7 @@ public class LoadLocationRequest extends BaseClass {
                 Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
                 try {
                     LocationDto locationDto = gson.fromJson(json, LocationDto.class);
+                    locationDto.setId(id);
                     GetLocationEvent event = new GetLocationEvent();
                     event.setSuccess(true);
                     event.setLocationDto(locationDto);

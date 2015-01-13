@@ -147,6 +147,14 @@ public class Cache extends BaseClass implements CacheInterface {
         return false;
     }
 
+    public void setUserDataStale(Context context) {
+        sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_DATA_UPDATE_NEEDED, true);
+    }
+
+    public Boolean isUserDataStale(Context context) {
+        return sharedPreferencesHelper.getBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_DATA_UPDATE_NEEDED, false);
+    }
+
     public Boolean isCategoriesDataAvailable(Context context) {
         if(sharedPreferencesHelper.getBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_DATA_AVAILABLE, false)) {
             if((new Date().getTime() - sharedPreferencesHelper.getLong(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_DATA_DOWNLOAD_TIME_IN_MS, 0L)) < Constants.SERVER_DATA_UPDATE_INTERVAL_IN_MS) {

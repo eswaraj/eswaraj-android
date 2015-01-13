@@ -130,6 +130,15 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
+    public void setUserDataStale(Context context) {
+        cache.setUserDataStale(context);
+    }
+
+    public Boolean isUserDataStale(Context context) {
+        return cache.isUserDataStale(context);
+    }
+
+    @Override
     public void loadUserComplaints(Context context, UserDto userDto, Boolean dontGetFromCache) {
         if(dontGetFromCache) {
             server.loadUserComplaints(context, userDto);

@@ -45,7 +45,7 @@ public class LoadProfileUpdateRequest extends BaseClass {
     NetworkAccessHelper networkAccessHelper;
 
     public void processRequest(Context context, String token) {
-        StringRequest request = new StringRequest(Constants.GET_PROFILE_URL + "/" +token, createSuccessListener(context), createErrorListener(context));
+        StringRequest request = new StringRequest(Constants.GET_PROFILE_URL + "/" +token, createSuccessListener(context, token), createErrorListener(context));
         this.networkAccessHelper.submitNetworkRequest("GetProfile", request);
     }
 
@@ -61,7 +61,7 @@ public class LoadProfileUpdateRequest extends BaseClass {
         };
     }
 
-    private Response.Listener<String> createSuccessListener(final Context context) {
+    private Response.Listener<String> createSuccessListener(final Context context, final String token) {
         return new Response.Listener<String>() {
             @Override
             public void onResponse(String json) {
@@ -84,6 +84,7 @@ public class LoadProfileUpdateRequest extends BaseClass {
                     GetProfileEvent event = new GetProfileEvent();
                     event.setSuccess(true);
                     event.setUserDto(userDto);
+                    event.setToken(token);
                     eventBus.post(event);
                     cache.updateUserData(context, json);
                 } catch (JsonParseException e) {

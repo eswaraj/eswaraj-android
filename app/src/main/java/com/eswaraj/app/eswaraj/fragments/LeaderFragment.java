@@ -1,13 +1,17 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -72,10 +76,13 @@ public class LeaderFragment extends BaseFragment {
         if(photoBitmap != null) {
             lPhoto.setImageBitmap(photoBitmap);
         }
+
         lName.setText(politicalBodyAdminDto.getName());
         lPost.setText(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
         lConstituency.setText("Go to " + politicalBodyAdminDto.getLocation().getName());
-        //TODO: Set the html for webview here
+        if(politicalBodyAdminDto.getBiodata() != null) {
+            lDetails.loadData(politicalBodyAdminDto.getBiodata(), "text/html", null);
+        }
         lConstituency.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,5 +103,17 @@ public class LeaderFragment extends BaseFragment {
                 photoBitmap = event.getBitmap();
             }
         }
+    }
+
+    public static Intent newFacebookIntent(PackageManager pm, String url) {
+        Uri uri;
+        try {
+            pm.getPackageInfo("com.facebook.katana", 0);
+            // http://stackoverflow.com/a/24547437/1048340
+            uri = Uri.parse("fb://facewebmodal/f?href=" + url);
+        } catch (PackageManager.NameNotFoundException e) {
+            uri = Uri.parse(url);
+        }
+        return new Intent(Intent.ACTION_VIEW, uri);
     }
 }
