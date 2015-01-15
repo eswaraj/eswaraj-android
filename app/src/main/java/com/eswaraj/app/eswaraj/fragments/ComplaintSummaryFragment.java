@@ -24,8 +24,10 @@ import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.ComplaintPostResponseDto;
 import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
 import com.eswaraj.app.eswaraj.util.FacebookSharingUtil;
+import com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.makeramen.RoundedImageView;
 
 import java.io.File;
 
@@ -50,7 +52,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     private ComplaintPostResponseDto complaintPostResponseDto;
 
     private TextView mlaName;
-    private ImageView mlaPhoto;
+    private RoundedImageView mlaPhoto;
     private TextView mlaLocation;
     private TextView rootCategory;
     private TextView subCategory;
@@ -74,7 +76,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         View rootView = inflater.inflate(R.layout.fragment_complaint_summary, container, false);
         mlaName = (TextView) rootView.findViewById(R.id.csMlaName);
         mlaLocation = (TextView) rootView.findViewById(R.id.csMlaLocation);
-        mlaPhoto = (ImageView) rootView.findViewById(R.id.csMlaPhoto);
+        mlaPhoto = (RoundedImageView) rootView.findViewById(R.id.csMlaPhoto);
         rootCategory = (TextView) rootView.findViewById(R.id.csRootCategory);
         subCategory = (TextView) rootView.findViewById(R.id.csSubCategory);
         address = (TextView) rootView.findViewById(R.id.csAddress);
@@ -114,9 +116,12 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
                 if(!politicalBodyAdminDto.getProfilePhoto().equals("")) {
                     id = politicalBodyAdminDto.getId();
                     middlewareService.loadProfileImage(getActivity(), politicalBodyAdminDto.getProfilePhoto().replace("http", "https"), politicalBodyAdminDto.getId(), false);
+                    //mlaPhoto.loadProfileImage(politicalBodyAdminDto.getProfilePhoto().replace("http", "https"), politicalBodyAdminDto.getId());
                 }
             }
         }
+
+
         if(mlaBitmap != null) {
             mlaPhoto.setImageBitmap(mlaBitmap);
         }
@@ -164,6 +169,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         googleMapFragment.updateMarkerLocation(complaintPostResponseDto.getComplaintDto().getLattitude(), complaintPostResponseDto.getComplaintDto().getLongitude());
     }
 
+
     public void onEventMainThread(GetProfileImageEvent event) {
         if(event.getSuccess()) {
             if(mlaPhoto != null) {
@@ -177,6 +183,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
             Toast.makeText(getActivity(), "Could not fetch MLA image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

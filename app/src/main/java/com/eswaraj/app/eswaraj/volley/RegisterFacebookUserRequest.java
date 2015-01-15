@@ -92,14 +92,14 @@ public class RegisterFacebookUserRequest extends BaseClass {
                     event.setToken(session.getAccessToken());
                     event.setDownloadProfilePhoto(true);
                     event.setDataUpdateNeeded(false);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                     cache.updateUserData(context, response);
                 }
                 else {
                     GetUserEvent event = new GetUserEvent();
                     event.setSuccess(false);
                     event.setError("Invalid json");
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                     Log.e("RegisterFacebookUser:Error: json = ", response);
                 }
             }

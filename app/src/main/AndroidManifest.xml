@@ -187,6 +187,7 @@
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.eswaraj.app.eswaraj" />
             </intent-filter>
         </receiver>
@@ -194,6 +195,8 @@
         <activity
             android:name=".activities.LeaderActivity"
             android:label="@string/title_activity_leader"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:parentActivityName=".activities.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -204,6 +207,17 @@
             android:name=".services.GcmService"
             android:exported="false" >
         </service>
+
+        <activity
+            android:name=".activities.ContentActivity"
+            android:label="@string/title_activity_content"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:parentActivityName=".activities.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>

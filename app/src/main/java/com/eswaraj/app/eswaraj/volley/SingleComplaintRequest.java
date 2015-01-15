@@ -45,7 +45,7 @@ public class SingleComplaintRequest extends BaseClass {
             public void onErrorResponse(VolleyError error) {
                 GetSingleComplaintEvent event = new GetSingleComplaintEvent();
                 event.setError(error.toString());
-                eventBus.post(event);
+                eventBus.postSticky(event);
             }
         };
     }
@@ -61,13 +61,13 @@ public class SingleComplaintRequest extends BaseClass {
                     complaintDto = gson.fromJson(json, ComplaintDto.class);
                     event.setSuccess(true);
                     event.setComplaintDto(complaintDto);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                     //Update the cache
                     cache.updateUserComplaints(context, json);
                 } catch (JsonParseException e) {
                     GetSingleComplaintEvent event = new GetSingleComplaintEvent();
                     event.setError("Invalid json");
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                 }
             }
         };

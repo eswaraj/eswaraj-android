@@ -56,7 +56,7 @@ public class LoadProfileUpdateRequest extends BaseClass {
                 GetProfileEvent event = new GetProfileEvent();
                 event.setSuccess(false);
                 event.setError(error.toString());
-                eventBus.post(event);
+                eventBus.postSticky(event);
             }
         };
     }
@@ -85,7 +85,7 @@ public class LoadProfileUpdateRequest extends BaseClass {
                     event.setSuccess(true);
                     event.setUserDto(userDto);
                     event.setToken(token);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                     cache.updateUserData(context, json);
                 } catch (JsonParseException e) {
                     GetProfileEvent event = new GetProfileEvent();

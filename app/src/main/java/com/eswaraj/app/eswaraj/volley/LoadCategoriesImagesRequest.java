@@ -77,7 +77,7 @@ public class LoadCategoriesImagesRequest extends BaseClass {
                     GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
                     getCategoriesImagesEvent.setSuccess(successImages);
                     getCategoriesImagesEvent.setError(errorImages);
-                    eventBus.post(getCategoriesImagesEvent);
+                    eventBus.postSticky(getCategoriesImagesEvent);
                     cache.updateCategoriesImages(context, true, successImages);
                 }
             }
@@ -93,7 +93,7 @@ public class LoadCategoriesImagesRequest extends BaseClass {
                 if(imageResCount.get() == imageReqCount) {
                     GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
                     getCategoriesImagesEvent.setSuccess(successImages);
-                    eventBus.post(getCategoriesImagesEvent);
+                    eventBus.postSticky(getCategoriesImagesEvent);
                     cache.updateCategoriesImages(context, true, successImages);
                 }
             }

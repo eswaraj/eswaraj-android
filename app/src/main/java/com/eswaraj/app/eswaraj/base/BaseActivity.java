@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.PopupMenu;
 
 import com.eswaraj.app.eswaraj.R;
+import com.eswaraj.app.eswaraj.activities.ContentActivity;
 import com.eswaraj.app.eswaraj.activities.MyProfileActivity;
 import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.application.EswarajApplication;
@@ -77,6 +78,10 @@ public class BaseActivity extends FragmentActivity {
                     case R.id.menu_splash:
                         i = new Intent(getBaseContext(), SplashActivity.class);
                         i.putExtra("MODE", true);
+                        startActivity(i);
+                        return true;
+                    case R.id.menu_content:
+                        i = new Intent(getBaseContext(), ContentActivity.class);
                         startActivity(i);
                         return true;
                     default:

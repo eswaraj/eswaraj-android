@@ -90,18 +90,26 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cameraHelper.setFragment(this);
+        eventBus.registerSticky(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        eventBus.unregister(this);
+        super.onDestroy();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        eventBus.registerSticky(this);
         locationUtil.subscribe(applicationContext, false);
+        if(pDialog != null && pDialog.isShowing()) {
+            pDialog.dismiss();
+        }
     }
 
     @Override
     public void onStop() {
-        eventBus.unregister(this);
         locationUtil.unsubscribe();
         super.onStop();
     }
@@ -177,6 +185,7 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
                             googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ONLINE, "Post Complaint: Online");
                             middlewareService.postComplaint(userSession.getUser(), amenity, template, location, description.getText().toString(), cameraHelper.getImageFile(), anonCheckbox.isChecked(), userSession.getUserRevGeocodedLocation());
                             pDialog = new CustomProgressDialog(getActivity(), false, true, "Posting your complaint ...");
+                            pDialog.setCancelable(false);
                             pDialog.show();
                         }
                         else {
@@ -224,11 +233,9 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
 
     private void resetIssueImageView() {
         if(TextUtils.isEmpty(cameraHelper.getImageName())) {
-            Log.e("AddDetails", "resetIssueImageView1");
             takePhotoContainer.setVisibility(View.VISIBLE);
             photoTakenContainer.setVisibility(View.GONE);
         } else {
-            Log.e("AddDetails", "resetIssueImageView2");
             takePhotoContainer.setVisibility(View.GONE);
             photoTakenContainer.setVisibility(View.VISIBLE);
         }

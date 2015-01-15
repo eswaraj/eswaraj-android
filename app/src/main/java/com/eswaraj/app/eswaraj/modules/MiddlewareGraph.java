@@ -7,6 +7,7 @@ import com.android.volley.toolbox.Volley;
 import com.eswaraj.app.eswaraj.activities.AddDetailsActivity;
 import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
 import com.eswaraj.app.eswaraj.activities.ConstituencyActivity;
+import com.eswaraj.app.eswaraj.activities.ContentActivity;
 import com.eswaraj.app.eswaraj.activities.HomeActivity;
 import com.eswaraj.app.eswaraj.activities.LeaderActivity;
 import com.eswaraj.app.eswaraj.activities.LoginActivity;
@@ -27,6 +28,7 @@ import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.fragments.AddDetailsFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryOfflineFragment;
 import com.eswaraj.app.eswaraj.fragments.ConstituencyFragment;
+import com.eswaraj.app.eswaraj.fragments.ContentFragment;
 import com.eswaraj.app.eswaraj.fragments.LeaderFragment;
 import com.eswaraj.app.eswaraj.fragments.MyProfileFragment;
 import com.eswaraj.app.eswaraj.fragments.SelectAmenityFragment;
@@ -80,6 +82,7 @@ import com.eswaraj.app.eswaraj.volley.RegisterGcmIdRequest;
 import com.eswaraj.app.eswaraj.volley.RegisterUserAndDeviceRequest;
 import com.eswaraj.app.eswaraj.volley.SingleComplaintRequest;
 import com.eswaraj.app.eswaraj.volley.UserComplaintsRequest;
+import com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView;
 
 import javax.inject.Singleton;
 
@@ -156,7 +159,10 @@ import de.greenrobot.event.EventBus;
                 GoogleAnalyticsTracker.class,
                 GlobalSessionUtil.class,
                 LoadLocationRequest.class,
-                GcmService.class
+                GcmService.class,
+                CustomNetworkImageView.class,
+                ContentActivity.class,
+                ContentFragment.class
         },
         complete = false,
         library = true

@@ -41,7 +41,7 @@ public class LoadImageRequest extends BaseClass {
     public void processRequest(Context context, String url, Long id, ImageType type, Boolean keep) {
         if(url != null) {
             if (!url.equals("")) {
-                ImageRequest request = new ImageRequest(url, createSuccessListener(context, id, type, keep), 0, 0, null, createErrorListener(context, id, type, keep));
+                ImageRequest request = new ImageRequest(url + "?type=normal", createSuccessListener(context, id, type, keep), 0, 0, null, createErrorListener(context, id, type, keep));
                 request.setShouldCache(false);
                 this.networkAccessHelper.submitNetworkRequest("GetImage" + type + "_" + id, request);
             }
@@ -57,21 +57,21 @@ public class LoadImageRequest extends BaseClass {
                     event.setSuccess(false);
                     event.setError(error.toString());
                     event.setId(id);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                 }
                 else if(type == ImageType.PROFILE) {
                     GetProfileImageEvent event = new GetProfileImageEvent();
                     event.setSuccess(false);
                     event.setError(error.toString());
                     event.setId(id);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                 }
                 else if(type == ImageType.HEADER) {
                     GetHeaderImageEvent event = new GetHeaderImageEvent();
                     event.setSuccess(false);
                     event.setError(error.toString());
                     event.setId(id);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                 }
             }
         };
@@ -87,7 +87,7 @@ public class LoadImageRequest extends BaseClass {
                     event.setSuccess(true);
                     event.setBitmap(bitmap);
                     event.setId(id);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                     cache.updateComplaintImage(context);
                 }
                 else if(type == ImageType.PROFILE) {
@@ -95,7 +95,7 @@ public class LoadImageRequest extends BaseClass {
                     event.setSuccess(true);
                     event.setBitmap(bitmap);
                     event.setId(id);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                     cache.updateProfileImage(context);
                 }
                 else if(type == ImageType.HEADER) {
@@ -103,7 +103,7 @@ public class LoadImageRequest extends BaseClass {
                     event.setSuccess(true);
                     event.setBitmap(bitmap);
                     event.setId(id);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                     cache.updateProfileImage(context);
                 }
             }

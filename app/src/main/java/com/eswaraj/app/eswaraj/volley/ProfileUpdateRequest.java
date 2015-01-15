@@ -74,14 +74,14 @@ public class ProfileUpdateRequest extends BaseClass {
                     ProfileUpdateEvent event = new ProfileUpdateEvent();
                     event.setSuccess(true);
                     event.setUserDto(userDto);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                     cache.updateUserData(context, response);
                 }
                 else {
                     ProfileUpdateEvent event = new ProfileUpdateEvent();
                     event.setSuccess(false);
                     event.setError("Invalid json");
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                 }
             }
         };
@@ -95,7 +95,7 @@ public class ProfileUpdateRequest extends BaseClass {
                 ProfileUpdateEvent event = new ProfileUpdateEvent();
                 event.setSuccess(false);
                 event.setError(error.toString());
-                eventBus.post(event);
+                eventBus.postSticky(event);
             }
         };
     }

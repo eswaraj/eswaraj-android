@@ -67,6 +67,8 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         dialogMode = getIntent().getBooleanExtra("MODE", false);
 
+        eventBus.register(this);
+
         if(dialogMode) {
             setContentView(R.layout.activity_login);
             DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -83,8 +85,6 @@ public class LoginActivity extends BaseActivity {
         loginFragment = new LoginFragment();
         loginFragment.setMode(dialogMode);
         getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, loginFragment).commit();
-
-        eventBus.register(this);
 
         //Set up initial state
         redirectDone = false;

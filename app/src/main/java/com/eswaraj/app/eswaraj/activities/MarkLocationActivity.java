@@ -62,6 +62,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     private EditText mlSearchText;
     private Button mlSearchButton;
     private CustomProgressDialog pDialog;
+    private CustomProgressDialog pDialogSave;
     private Boolean mapDisplayed;
     private GooglePlace googlePlace;
     private Boolean dialogMode;
@@ -85,6 +86,9 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
             mapDisplayed = true;
         }
 
+        pDialog = new CustomProgressDialog(this, false, true, "Getting your location...");
+        pDialog.show();
+
         //Initialization
         googleMapFragment.setContext(this);
         mlSaveLocation = (Button) findViewById(R.id.mlSaveLocation);
@@ -99,9 +103,9 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
             @Override
             public void onClick(View view) {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MarkLocation: Save Location");
-                double lat = googleMapFragment.getMarkerLatitude();
-                double lng = googleMapFragment.getMarkerLongitude();
-                middlewareService.updateProfile(view.getContext(), userSession.getToken(), userSession.getUser().getPerson().getName(), lat, lng);
+                pDialogSave = new CustomProgressDialog(view.getContext(), false, true, "Saving your location...");
+                pDialogSave.show();
+                middlewareService.updateProfile(view.getContext(), userSession.getToken(), userSession.getUser().getPerson().getName(), googleMapFragment.getMarkerLatitude(), googleMapFragment.getMarkerLongitude());
             }
         });
 
@@ -173,9 +177,9 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     protected void onStart() {
         super.onStart();
         locationUtil.subscribe(applicationContext, true);
-
-        pDialog = new CustomProgressDialog(this, false, true, "Getting your location...");
-        pDialog.show();
+        if(pDialogSave != null && pDialogSave.isShowing()) {
+            pDialogSave.dismiss();
+        }
     }
 
     @Override
@@ -225,6 +229,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     }
 
     public void onEventMainThread(ProfileUpdateEvent event) {
+        pDialogSave.dismiss();
         if(event.getSuccess()) {
             userSession.setUser(event.getUserDto());
             if (dialogMode) {

@@ -52,7 +52,7 @@ public class LoadLocationRequest extends BaseClass {
                 GetLocationEvent event = new GetLocationEvent();
                 event.setSuccess(false);
                 event.setError(error.toString());
-                eventBus.post(event);
+                eventBus.postSticky(event);
             }
         };
     }
@@ -81,13 +81,13 @@ public class LoadLocationRequest extends BaseClass {
                     GetLocationEvent event = new GetLocationEvent();
                     event.setSuccess(true);
                     event.setLocationDto(locationDto);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                     cache.updateLocation(context, id, json);
                 } catch (JsonParseException e) {
                     GetLocationEvent event = new GetLocationEvent();
                     event.setSuccess(false);
                     event.setError("Invalid json");
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                 }
             }
         };

@@ -46,7 +46,7 @@ public class LocationComplaintsRequest extends BaseClass {
             public void onErrorResponse(VolleyError error) {
                 GetLocationComplaintsEvent event = new GetLocationComplaintsEvent();
                 event.setError(error.toString());
-                eventBus.post(event);
+                eventBus.postSticky(event);
             }
         };
     }
@@ -63,13 +63,13 @@ public class LocationComplaintsRequest extends BaseClass {
                     complaintDtoList = gson.fromJson(json, new TypeToken<List<ComplaintDto>>(){}.getType());
                     event.setSuccess(true);
                     event.setComplaintDtoList(complaintDtoList);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                     //Update the cache
                     cache.updateLocationComplaints(context, locationDto, start, count, json);
                 } catch (JsonParseException e) {
                     GetLocationComplaintsEvent event = new GetLocationComplaintsEvent();
                     event.setError("Invalid json");
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                 }
             }
         };

@@ -56,7 +56,7 @@ public class LoadLeadersRequest extends BaseClass {
                 GetLeadersEvent event = new GetLeadersEvent();
                 event.setSuccess(false);
                 event.setError(error.toString());
-                eventBus.post(event);
+                eventBus.postSticky(event);
             }
         };
     }
@@ -86,13 +86,13 @@ public class LoadLeadersRequest extends BaseClass {
                     event.setSuccess(true);
                     event.setLoadProfilePhotos(false);
                     event.setPoliticalBodyAdminDtos(politicalBodyAdminDtos);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                     cache.updateLeaders(context, json);
                 } catch (JsonParseException e) {
                     GetLeadersEvent event = new GetLeadersEvent();
                     event.setSuccess(false);
                     event.setError("Invalid json");
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                 }
             }
         };

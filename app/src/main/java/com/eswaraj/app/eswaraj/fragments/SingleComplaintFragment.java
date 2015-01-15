@@ -63,6 +63,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     private GoogleMapFragment googleMapFragment;
     private ComplaintDto complaintDto;
     private CustomProgressDialog pDialog;
+    private CustomProgressDialog pDialogSave;
 
     private Button scClose;
     private TextView scComplaintId;
@@ -91,6 +92,14 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     public void onDestroy() {
         eventBus.unregister(this);
         super.onDestroy();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(pDialogSave != null && pDialogSave.isShowing()) {
+            pDialogSave.dismiss();
+        }
     }
 
     @Override
@@ -132,8 +141,8 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
             @Override
             public void onClick(View v) {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "SingleComplaint: Close");
-                pDialog = new CustomProgressDialog(getActivity(), false, true, "Closing your complaint ...");
-                pDialog.show();
+                pDialogSave = new CustomProgressDialog(getActivity(), false, true, "Closing your complaint ...");
+                pDialogSave.show();
                 middlewareService.closeComplaint(complaintDto);
             }
         });
@@ -201,7 +210,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         else {
             Toast.makeText(getActivity(),"Failed to close complaint. Please try again. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
-        pDialog.dismiss();
+        pDialogSave.dismiss();
     }
 
     public void onEventMainThread(GetComplaintImageEvent event) {

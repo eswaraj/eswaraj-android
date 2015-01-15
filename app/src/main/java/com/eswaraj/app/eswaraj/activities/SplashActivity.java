@@ -52,7 +52,6 @@ public class SplashActivity extends BaseActivity {
     private StorageCacheClearingTask storageCacheClearingTask;
     private Boolean serverDataDownloadDone;
     private Boolean cacheCleared;
-    private Boolean exitOnCacheCleared;
     private Boolean dontShowContinueButton;
     private Boolean startedFromMenu;
 
@@ -81,7 +80,6 @@ public class SplashActivity extends BaseActivity {
 
         cacheCleared = false;
         serverDataDownloadDone = false;
-        exitOnCacheCleared = false;
         dontShowContinueButton = false;
 
         storageCacheClearingTask = new StorageCacheClearingTask(this);
@@ -89,12 +87,8 @@ public class SplashActivity extends BaseActivity {
         if(!startedFromMenu) {
             storageCacheClearingTask.execute();
             gcmUtil.registerWithGcmServerIfNeeded(this);
-            if (middlewareService.isCategoriesDataAvailable(this) && middlewareService.isCategoriesImagesAvailable(this)) {
-                exitOnCacheCleared = true;
-            } else {
-                middlewareService.loadCategoriesData(this);
-                dontShowContinueButton = middlewareService.wasImageDownloadLaunchedBefore(this);
-            }
+            dontShowContinueButton = middlewareService.wasImageDownloadLaunchedBefore(this);
+            middlewareService.loadCategoriesData(this);
         }
 
         setUpListener();
@@ -233,11 +227,6 @@ public class SplashActivity extends BaseActivity {
 
     public void onEventMainThread(CacheClearedEvent event) {
         cacheCleared = true;
-        if(exitOnCacheCleared) {
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-            finish();
-        }
         if(serverDataDownloadDone) {
             readyToProceed();
         }

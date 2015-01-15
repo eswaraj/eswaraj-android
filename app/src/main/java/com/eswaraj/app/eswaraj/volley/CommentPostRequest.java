@@ -53,7 +53,7 @@ public class CommentPostRequest extends BaseClass {
                 SavedCommentEvent event = new SavedCommentEvent();
                 event.setSuccess(true);
                 event.setCommentDto(commentDto);
-                eventBus.post(event);
+                eventBus.postSticky(event);
             }
         };
     }
@@ -66,7 +66,7 @@ public class CommentPostRequest extends BaseClass {
                 SavedCommentEvent event = new SavedCommentEvent();
                 event.setSuccess(false);
                 event.setError(error.toString());
-                eventBus.post(event);
+                eventBus.postSticky(event);
             }
         };
     }

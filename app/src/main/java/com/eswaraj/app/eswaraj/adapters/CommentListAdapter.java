@@ -3,6 +3,7 @@ package com.eswaraj.app.eswaraj.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,7 @@ public class CommentListAdapter extends ArrayAdapter<CommentDto> {
             holder.cName.setText(commentDto.getPostedBy().getName());
         }
         holder.cText.setText(commentDto.getText());
-        holder.cTime.setText(new Date(commentDto.getCreationTime()).toString());
+        holder.cTime.setText(DateUtils.getRelativeTimeSpanString(commentDto.getCreationTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
         return row;
     }
 

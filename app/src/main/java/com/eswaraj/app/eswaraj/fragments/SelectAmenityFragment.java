@@ -28,6 +28,7 @@ import com.eswaraj.app.eswaraj.util.GenericUtil;
 import com.eswaraj.app.eswaraj.util.GlobalSessionUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
+import com.eswaraj.app.eswaraj.widgets.ProgressTextView;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -60,7 +61,7 @@ public class SelectAmenityFragment extends BaseFragment implements OnMapReadyCal
     private ReverseGeocodingTask reverseGeocodingTask;
     private Boolean mapReady;
     private Boolean retryRevGeocoding = false;
-    private TextView asRevGeocode;
+    private ProgressTextView asRevGeocode;
 
 
     public static SelectAmenityFragment newInstance() {
@@ -105,11 +106,12 @@ public class SelectAmenityFragment extends BaseFragment implements OnMapReadyCal
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_amenities, container, false);
-        asRevGeocode = (TextView) rootView.findViewById(R.id.asRevGeocode);
-        asRevGeocode = (TextView) rootView.findViewById(R.id.asRevGeocode);
+        asRevGeocode = (ProgressTextView) rootView.findViewById(R.id.asRevGeocode);
         gvAmenityList = (GridView) rootView.findViewById(R.id.gvAmenityList);
 
         setupMenu(rootView.findViewById(R.id.menu));
+
+        asRevGeocode.setTextColor(Color.parseColor("#929292"));
 
         AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), null, null);
         gvAmenityList.setAdapter(amenityListAdapter);
@@ -163,8 +165,7 @@ public class SelectAmenityFragment extends BaseFragment implements OnMapReadyCal
 
     public void onEventMainThread(RevGeocodeEvent event) {
         if(event.getSuccess()) {
-            asRevGeocode.setText(event.getRevGeocodedLocation());
-            asRevGeocode.setTextColor(Color.parseColor("#929292"));
+            asRevGeocode.setActualText(event.getRevGeocodedLocation());
             userSession.setUserRevGeocodedLocation(event.getRevGeocodedFullData());
             retryRevGeocoding = false;
         }

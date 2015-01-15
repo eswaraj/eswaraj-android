@@ -40,6 +40,7 @@ import com.eswaraj.app.eswaraj.util.InternetServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationServicesCheckUtil;
 import com.eswaraj.app.eswaraj.util.LocationUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
+import com.eswaraj.app.eswaraj.widgets.ProgressTextView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.pnikosis.materialishprogress.ProgressWheel;
@@ -80,7 +81,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     private ImageView leaders;
     private ImageView constituency;
     private ImageView profile;
-    private TextView hRevGeocode;
+    private ProgressTextView hRevGeocode;
     private Button hCreate;
     private LinearLayout sError;
     private Button sClose;
@@ -113,11 +114,12 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         leaders = (ImageView) findViewById(R.id.hLeaders);
         constituency = (ImageView) findViewById(R.id.hConstituency);
         profile = (ImageView) findViewById(R.id.hProfile);
-        hRevGeocode = (TextView) findViewById(R.id.hRevGeocode);
+        hRevGeocode = (ProgressTextView) findViewById(R.id.hRevGeocode);
         hCreate = (Button) findViewById(R.id.hCreate);
 
         setupMenu(findViewById(R.id.menu));
 
+        hRevGeocode.setTextColor(Color.parseColor("#929292"));
 
         complaints.setImageDrawable(getResources().getDrawable(R.drawable.complaint));
         leaders.setImageDrawable(getResources().getDrawable(R.drawable.leader));
@@ -459,8 +461,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
 
     public void onEventMainThread(RevGeocodeEvent event) {
         if(event.getSuccess()) {
-            hRevGeocode.setText(event.getRevGeocodedLocation());
-            hRevGeocode.setTextColor(Color.parseColor("#929292"));
+            //hRevGeocode.setActualText(event.getRevGeocodedLocation());
             userSession.setUserRevGeocodedLocation(event.getRevGeocodedFullData());
             retryRevGeocoding = false;
         }

@@ -44,7 +44,7 @@ public class CommentsRequest extends BaseClass {
             public void onErrorResponse(VolleyError error) {
                 GetCommentsEvent event = new GetCommentsEvent();
                 event.setError(error.toString());
-                eventBus.post(event);
+                eventBus.postSticky(event);
             }
         };
     }
@@ -60,13 +60,13 @@ public class CommentsRequest extends BaseClass {
                     commentDtos = gson.fromJson(json, new TypeToken<List<CommentDto>>(){}.getType());
                     event.setSuccess(true);
                     event.setCommentDtos(commentDtos);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                     //Update the cache
                     cache.updateComments(context, json, complaintDto, start, count);
                 } catch (JsonParseException e) {
                     GetCommentsEvent event = new GetCommentsEvent();
                     event.setError("Invalid json");
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                 }
             }
         };

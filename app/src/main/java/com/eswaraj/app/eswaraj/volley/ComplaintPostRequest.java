@@ -4,6 +4,7 @@ package com.eswaraj.app.eswaraj.volley;
 
 import android.location.Address;
 import android.location.Location;
+import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
@@ -75,7 +76,7 @@ public class ComplaintPostRequest extends BaseClass {
                 ComplaintReportedEvent event = new ComplaintReportedEvent();
                 event.setSuccess(true);
                 event.setComplaintPostResponseDto(complaintPostResponseDto);
-                eventBus.post(event);
+                eventBus.postSticky(event);
             }
         };
     }
@@ -88,7 +89,7 @@ public class ComplaintPostRequest extends BaseClass {
                 ComplaintReportedEvent event = new ComplaintReportedEvent();
                 event.setSuccess(false);
                 event.setError(error.toString());
-                eventBus.post(event);
+                eventBus.postSticky(event);
             }
         };
     }

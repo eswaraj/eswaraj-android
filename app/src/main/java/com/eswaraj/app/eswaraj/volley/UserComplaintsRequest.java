@@ -45,7 +45,7 @@ public class UserComplaintsRequest extends BaseClass {
             public void onErrorResponse(VolleyError error) {
                 GetUserComplaintsEvent event = new GetUserComplaintsEvent();
                 event.setError(error.toString());
-                eventBus.post(event);
+                eventBus.postSticky(event);
             }
         };
     }
@@ -62,13 +62,13 @@ public class UserComplaintsRequest extends BaseClass {
                     complaintDtoList = gson.fromJson(json, new TypeToken<List<ComplaintDto>>(){}.getType());
                     event.setSuccess(true);
                     event.setComplaintDtoList(complaintDtoList);
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                     //Update the cache
                     cache.updateUserComplaints(context, json);
                 } catch (JsonParseException e) {
                     GetUserComplaintsEvent event = new GetUserComplaintsEvent();
                     event.setError("Invalid json");
-                    eventBus.post(event);
+                    eventBus.postSticky(event);
                 }
             }
         };

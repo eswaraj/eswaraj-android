@@ -40,7 +40,7 @@ public class ComplaintCloseRequest extends BaseClass {
                 ComplaintClosedEvent event = new ComplaintClosedEvent();
                 event.setComplaintDto(complaintDto);
                 event.setSuccess(true);
-                eventBus.post(event);
+                eventBus.postSticky(event);
             }
         };
     }
@@ -53,7 +53,7 @@ public class ComplaintCloseRequest extends BaseClass {
                 ComplaintClosedEvent event = new ComplaintClosedEvent();
                 event.setSuccess(false);
                 event.setError(error.toString());
-                eventBus.post(event);
+                eventBus.postSticky(event);
             }
         };
     }
