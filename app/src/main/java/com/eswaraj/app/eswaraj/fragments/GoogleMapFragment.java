@@ -1,9 +1,18 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
+import android.view.ViewGroup;
 
+import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.application.EswarajApplication;
 import com.eswaraj.app.eswaraj.events.MarkerClickEvent;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
@@ -15,6 +24,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -22,13 +33,19 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
+import com.google.maps.android.clustering.view.ClusterRenderer;
+import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
+import com.google.maps.android.ui.IconGenerator;
+import com.google.maps.android.ui.SquareTextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -244,6 +261,7 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         ClusterManager<GoogleMapCluster> mClusterManager;
         mClusterManager = new ClusterManager<GoogleMapCluster>(getActivity(), googleMap);
+        mClusterManager.setRenderer(new CustomClusterRenderer(getActivity(), googleMap, mClusterManager));
         googleMap.setOnCameraChangeListener(mClusterManager);
         googleMap.setOnMarkerClickListener(mClusterManager);
         for(ComplaintDto complaintDto : complaintDtos) {
@@ -286,6 +304,67 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
         }
         else if(heatmapDisplayed) {
             removeHeatMap();
+        }
+    }
+
+    private class CustomClusterRenderer extends DefaultClusterRenderer {
+
+        private SparseArray<BitmapDescriptor> mIcons = new SparseArray<BitmapDescriptor>();
+        private final IconGenerator mIconGenerator;
+        private final float mDensity;
+        private ShapeDrawable mColoredCircleBackground;
+
+        public CustomClusterRenderer(Context context, GoogleMap map, ClusterManager clusterManager) {
+            super(context, map, clusterManager);
+            mDensity = context.getResources().getDisplayMetrics().density;
+            mIconGenerator = new IconGenerator(context);
+            mIconGenerator.setContentView(makeSquareTextView(context));
+            mIconGenerator.setTextAppearance(com.google.maps.android.R.style.ClusterIcon_TextAppearance);
+            mIconGenerator.setBackground(makeClusterBackground());
+        }
+
+        @Override
+        protected void onBeforeClusterRendered(Cluster cluster, MarkerOptions markerOptions) {
+            super.onBeforeClusterRendered(cluster, markerOptions);
+            int bucket = getBucket(cluster);
+            BitmapDescriptor descriptor = mIcons.get(bucket);
+            if (descriptor == null) {
+                mColoredCircleBackground.getPaint().setColor(getColor(bucket));
+                descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(Integer.toString(cluster.getSize())));
+                mIcons.put(bucket, descriptor);
+            }
+            // TODO: consider adding anchor(.5, .5) (Individual markers will overlap more often)
+            markerOptions.icon(descriptor);
+        }
+
+        private LayerDrawable makeClusterBackground() {
+            mColoredCircleBackground = new ShapeDrawable(new OvalShape());
+            ShapeDrawable outline = new ShapeDrawable(new OvalShape());
+            outline.getPaint().setColor(0x80ffffff); // Transparent white.
+            LayerDrawable background = new LayerDrawable(new Drawable[]{outline, mColoredCircleBackground});
+            int strokeWidth = (int) (mDensity * 3);
+            background.setLayerInset(1, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
+            return background;
+        }
+
+        private SquareTextView makeSquareTextView(Context context) {
+            SquareTextView squareTextView = new SquareTextView(context);
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            squareTextView.setLayoutParams(layoutParams);
+            squareTextView.setId(R.id.text);
+            int twelveDpi = (int) (12 * mDensity);
+            squareTextView.setPadding(twelveDpi, twelveDpi, twelveDpi, twelveDpi);
+            return squareTextView;
+        }
+
+        private int getColor(int clusterSize) {
+            final float hueRange = 220;
+            final float sizeRange = 300;
+            final float size = Math.min(clusterSize, sizeRange);
+            final float hue = (sizeRange - size) * (sizeRange - size) / (sizeRange * sizeRange) * hueRange;
+            return Color.HSVToColor(new float[]{
+                    hue, 1f, .6f
+            });
         }
     }
 }

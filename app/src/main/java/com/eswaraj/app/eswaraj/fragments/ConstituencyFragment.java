@@ -376,7 +376,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         final List<ComplaintDto> openComplaints = new ArrayList<ComplaintDto>();
 
         for(ComplaintDto complaintDto : complaintDtoList) {
-            if(complaintDto.getStatus().equals("Closed")) {
+            if(complaintDto.getStatus().equals("Done")) {
                 closedComplaints.add(complaintDto);
             }
             else {

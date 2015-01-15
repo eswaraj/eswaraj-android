@@ -64,6 +64,8 @@ public class CommentsFragment extends BaseFragment {
         cOldComments = (ListView) rootView.findViewById(R.id.cOldComments);
         cShowMore = (Button) rootView.findViewById(R.id.cShowMore);
 
+        cShowMore.setVisibility(View.INVISIBLE);
+
         cOldComments.setDividerHeight(0);
 
         cSend.setOnClickListener(new Button.OnClickListener() {
@@ -118,8 +120,8 @@ public class CommentsFragment extends BaseFragment {
                     }
                 });
             }
-            if(commentListAdapter.getCount() < 5) {
-                cShowMore.setVisibility(View.INVISIBLE);
+            if(commentListAdapter.getCount() >= 5) {
+                cShowMore.setVisibility(View.VISIBLE);
             }
         }
         else {

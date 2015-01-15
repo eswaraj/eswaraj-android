@@ -57,7 +57,6 @@ public class ContentFragment extends BaseFragment {
             videoContentItem.setName(categoryDto.getName());
             videoContentItem.setLink(extractVideoId(categoryDto.getVideoUrl()));
             videoContentItems.add(videoContentItem);
-            Log.d("ContentFragment", videoContentItem.toString());
         }
 
         VideoContentListAdapter videoContentListAdapter = new VideoContentListAdapter(getActivity(), R.layout.item_video_content_list, videoContentItems);
