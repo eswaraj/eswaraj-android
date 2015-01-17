@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -82,7 +83,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     private ImageView constituency;
     private ImageView profile;
     private ProgressTextView hRevGeocode;
-    private Button hCreate;
+    private ImageView hCreate;
     private LinearLayout sError;
     private Button sClose;
 
@@ -115,16 +116,101 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         constituency = (ImageView) findViewById(R.id.hConstituency);
         profile = (ImageView) findViewById(R.id.hProfile);
         hRevGeocode = (ProgressTextView) findViewById(R.id.hRevGeocode);
-        hCreate = (Button) findViewById(R.id.hCreate);
+        hCreate = (ImageView) findViewById(R.id.hCreate);
 
         setupMenu(findViewById(R.id.menu));
 
         hRevGeocode.setTextColor(Color.parseColor("#929292"));
 
-        complaints.setImageDrawable(getResources().getDrawable(R.drawable.complaint));
-        leaders.setImageDrawable(getResources().getDrawable(R.drawable.leader));
-        constituency.setImageDrawable(getResources().getDrawable(R.drawable.constituency));
-        profile.setImageDrawable(getResources().getDrawable(R.drawable.profile));
+        //complaints.setImageDrawable(getResources().getDrawable(R.drawable.complaint));
+        //leaders.setImageDrawable(getResources().getDrawable(R.drawable.leader));
+        //constituency.setImageDrawable(getResources().getDrawable(R.drawable.constituency));
+        //profile.setImageDrawable(getResources().getDrawable(R.drawable.profile));
+
+        hCreate.setOnTouchListener(new View.OnTouchListener(){
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN :
+                        hCreate.setImageResource(R.drawable.raise_complaint_ontouch);
+                        break;
+                    case MotionEvent.ACTION_UP :
+                        hCreate.setImageResource(R.drawable.raise_complaint);
+                        break;
+                }
+                return false;
+            }
+
+        });
+
+        complaints.setOnTouchListener(new View.OnTouchListener(){
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN :
+                        complaints.setImageResource(R.drawable.my_complaints_ontouch);
+                        break;
+                    case MotionEvent.ACTION_UP :
+                        complaints.setImageResource(R.drawable.my_complaints);
+                        break;
+                }
+                return false;
+            }
+
+        });
+
+        constituency.setOnTouchListener(new View.OnTouchListener(){
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN :
+                        constituency.setImageResource(R.drawable.my_constituency_ontouch);
+                        break;
+                    case MotionEvent.ACTION_UP :
+                        constituency.setImageResource(R.drawable.my_constituency);
+                        break;
+                }
+                return false;
+            }
+
+        });
+
+        leaders.setOnTouchListener(new View.OnTouchListener(){
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN :
+                        leaders.setImageResource(R.drawable.my_leader_ontouch);
+                        break;
+                    case MotionEvent.ACTION_UP :
+                        leaders.setImageResource(R.drawable.my_leader);
+                        break;
+                }
+                return false;
+            }
+
+        });
+
+        profile.setOnTouchListener(new View.OnTouchListener(){
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN :
+                        profile.setImageResource(R.drawable.my_profile_ontouch);
+                        break;
+                    case MotionEvent.ACTION_UP :
+                        profile.setImageResource(R.drawable.my_profile);
+                        break;
+                }
+                return false;
+            }
+
+        });
 
         googleMapFragment = (GoogleMapFragment) getSupportFragmentManager().findFragmentById(R.id.hMap);
         googleMapFragment.setContext(this);
