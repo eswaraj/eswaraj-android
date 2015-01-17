@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
@@ -25,6 +27,7 @@ public class SplashFragment extends Fragment {
     private Button mButtonContinue;
     private Button mButtonRetry;
     private ProgressWheel progressWheel;
+    private RadioGroup radioGroup;
     private View root;
 
     private SplashScreenItem splashScreenItem;
@@ -34,6 +37,10 @@ public class SplashFragment extends Fragment {
     private Boolean showSpinner = false;
     private Boolean showContinueButton = false;
     private Boolean showRetryButton = false;
+    private Boolean showRadioGroup = true;
+
+    private Integer count;
+    private Integer active;
 
 
     public void setOnClickListenerContinue(Button.OnClickListener onClickListener) {
@@ -67,22 +74,43 @@ public class SplashFragment extends Fragment {
         mButtonContinue = (Button) rootView.findViewById(R.id.splash_pager_button_continue);
         mButtonRetry = (Button) rootView.findViewById(R.id.splash_pager_button_retry);
         progressWheel = (ProgressWheel) rootView.findViewById(R.id.splashProgressWheel);
+        radioGroup = (RadioGroup) rootView.findViewById(R.id.splashRadioGroup);
         mText.setTypeface(custom_font);
 
         if(showSpinner) {
             mButtonRetry.setVisibility(View.INVISIBLE);
             mButtonContinue.setVisibility(View.INVISIBLE);
+            radioGroup.setVisibility(View.INVISIBLE);
             progressWheel.setVisibility(View.VISIBLE);
         }
         if(showContinueButton) {
             progressWheel.setVisibility(View.INVISIBLE);
             mButtonRetry.setVisibility(View.INVISIBLE);
+            radioGroup.setVisibility(View.INVISIBLE);
             mButtonContinue.setVisibility(View.VISIBLE);
         }
         if(showRetryButton) {
             progressWheel.setVisibility(View.INVISIBLE);
             mButtonContinue.setVisibility(View.INVISIBLE);
+            radioGroup.setVisibility(View.INVISIBLE);
             mButtonRetry.setVisibility(View.VISIBLE);
+        }
+        if(showRadioGroup) {
+            progressWheel.setVisibility(View.INVISIBLE);
+            mButtonContinue.setVisibility(View.INVISIBLE);
+            mButtonRetry.setVisibility(View.INVISIBLE);
+            radioGroup.setVisibility(View.VISIBLE);
+        }
+
+        if(count != null) {
+            for(int i = 0; i < count; i++) {
+                RadioButton radioButton = new RadioButton(getActivity());
+                radioButton.setId(i);
+                radioButton.setEnabled(false);
+                radioGroup.addView(radioButton);
+            }
+            radioGroup.check(active);
+            radioGroup.setEnabled(false);
         }
         progressWheel.spin();
         mButtonContinue.setOnClickListener(onClickListenerContinue);
@@ -115,12 +143,14 @@ public class SplashFragment extends Fragment {
         if(mButtonContinue != null) {
             progressWheel.setVisibility(View.INVISIBLE);
             mButtonRetry.setVisibility(View.INVISIBLE);
+            radioGroup.setVisibility(View.INVISIBLE);
             mButtonContinue.setVisibility(View.VISIBLE);
         }
         else {
             showContinueButton = true;
             showSpinner = false;
             showRetryButton = false;
+            showRadioGroup = false;
         }
     }
 
@@ -128,12 +158,14 @@ public class SplashFragment extends Fragment {
         if(mButtonRetry != null) {
             progressWheel.setVisibility(View.INVISIBLE);
             mButtonContinue.setVisibility(View.INVISIBLE);
+            radioGroup.setVisibility(View.INVISIBLE);
             mButtonRetry.setVisibility(View.VISIBLE);
         }
         else {
             showRetryButton = true;
             showContinueButton = false;
             showSpinner = false;
+            showRadioGroup = false;
         }
     }
 
@@ -141,12 +173,33 @@ public class SplashFragment extends Fragment {
         if(progressWheel != null) {
             mButtonRetry.setVisibility(View.INVISIBLE);
             mButtonContinue.setVisibility(View.INVISIBLE);
+            radioGroup.setVisibility(View.INVISIBLE);
             progressWheel.setVisibility(View.VISIBLE);
         }
         else {
             showSpinner = true;
             showContinueButton = false;
             showRetryButton = false;
+            showRadioGroup = false;
         }
+    }
+
+    public void addRadioButtonsAndSetActive(int count, int active) {
+        if(count < 2) {
+            return;
+        }
+        if(radioGroup == null) {
+            this.count = count;
+            this.active = active;
+            return;
+        }
+        for(int i = 0; i < count; i++) {
+            RadioButton radioButton = new RadioButton(getActivity());
+            radioButton.setId(i);
+            radioButton.setEnabled(false);
+            radioGroup.addView(radioButton);
+        }
+        radioGroup.check(active);
+        radioGroup.setEnabled(false);
     }
 }

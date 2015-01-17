@@ -261,7 +261,6 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         ClusterManager<GoogleMapCluster> mClusterManager;
         mClusterManager = new ClusterManager<GoogleMapCluster>(getActivity(), googleMap);
-        mClusterManager.setRenderer(new CustomClusterRenderer(getActivity(), googleMap, mClusterManager));
         googleMap.setOnCameraChangeListener(mClusterManager);
         googleMap.setOnMarkerClickListener(mClusterManager);
         for(ComplaintDto complaintDto : complaintDtos) {
@@ -307,64 +306,4 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
         }
     }
 
-    private class CustomClusterRenderer extends DefaultClusterRenderer {
-
-        private SparseArray<BitmapDescriptor> mIcons = new SparseArray<BitmapDescriptor>();
-        private final IconGenerator mIconGenerator;
-        private final float mDensity;
-        private ShapeDrawable mColoredCircleBackground;
-
-        public CustomClusterRenderer(Context context, GoogleMap map, ClusterManager clusterManager) {
-            super(context, map, clusterManager);
-            mDensity = context.getResources().getDisplayMetrics().density;
-            mIconGenerator = new IconGenerator(context);
-            mIconGenerator.setContentView(makeSquareTextView(context));
-            mIconGenerator.setTextAppearance(com.google.maps.android.R.style.ClusterIcon_TextAppearance);
-            mIconGenerator.setBackground(makeClusterBackground());
-        }
-
-        @Override
-        protected void onBeforeClusterRendered(Cluster cluster, MarkerOptions markerOptions) {
-            super.onBeforeClusterRendered(cluster, markerOptions);
-            int bucket = getBucket(cluster);
-            BitmapDescriptor descriptor = mIcons.get(bucket);
-            if (descriptor == null) {
-                mColoredCircleBackground.getPaint().setColor(getColor(bucket));
-                descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(Integer.toString(cluster.getSize())));
-                mIcons.put(bucket, descriptor);
-            }
-            // TODO: consider adding anchor(.5, .5) (Individual markers will overlap more often)
-            markerOptions.icon(descriptor);
-        }
-
-        private LayerDrawable makeClusterBackground() {
-            mColoredCircleBackground = new ShapeDrawable(new OvalShape());
-            ShapeDrawable outline = new ShapeDrawable(new OvalShape());
-            outline.getPaint().setColor(0x80ffffff); // Transparent white.
-            LayerDrawable background = new LayerDrawable(new Drawable[]{outline, mColoredCircleBackground});
-            int strokeWidth = (int) (mDensity * 3);
-            background.setLayerInset(1, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
-            return background;
-        }
-
-        private SquareTextView makeSquareTextView(Context context) {
-            SquareTextView squareTextView = new SquareTextView(context);
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            squareTextView.setLayoutParams(layoutParams);
-            squareTextView.setId(R.id.text);
-            int twelveDpi = (int) (12 * mDensity);
-            squareTextView.setPadding(twelveDpi, twelveDpi, twelveDpi, twelveDpi);
-            return squareTextView;
-        }
-
-        private int getColor(int clusterSize) {
-            final float hueRange = 220;
-            final float sizeRange = 300;
-            final float size = Math.min(clusterSize, sizeRange);
-            final float hue = (sizeRange - size) * (sizeRange - size) / (sizeRange * sizeRange) * hueRange;
-            return Color.HSVToColor(new float[]{
-                    hue, 1f, .6f
-            });
-        }
-    }
 }

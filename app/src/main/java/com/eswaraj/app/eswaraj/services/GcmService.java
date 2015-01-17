@@ -112,10 +112,8 @@ public class GcmService extends BaseService {
                         session = Session.openActiveSessionFromCache(this);
                     }
                     if (session != null && session.getAccessToken() != null) {
-                        Toast.makeText(this, "Server", Toast.LENGTH_LONG).show();
                         server.loadProfileUpdates(this, session.getAccessToken());
                     } else {
-                        Toast.makeText(this, "Cache", Toast.LENGTH_LONG).show();
                         cache.setUserDataStale(this);
                     }
                 }

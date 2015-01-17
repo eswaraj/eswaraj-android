@@ -3,7 +3,6 @@ package com.eswaraj.app.eswaraj.fragments;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +22,6 @@ import com.eswaraj.app.eswaraj.adapters.AmenityListAdapter;
 import com.eswaraj.app.eswaraj.adapters.ComplaintListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.ComplaintSelectedEvent;
-import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
-import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.events.GetHeaderImageEvent;
 import com.eswaraj.app.eswaraj.events.GetLocationComplaintCountersEvent;
 import com.eswaraj.app.eswaraj.events.GetLocationComplaintsEvent;
@@ -40,8 +34,6 @@ import com.eswaraj.app.eswaraj.util.GlobalSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.app.eswaraj.widgets.CustomScrollView;
 import com.eswaraj.app.eswaraj.widgets.PieChartView;
-import com.eswaraj.web.dto.CategoryDto;
-import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -215,22 +207,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
 
         if(locationDto != null) {
             mcName.setText(locationDto.getName());
-
-            //Info data
-            if (locationDto.getTotalNumberOfHouses() != null) {
-                cTotalHouses.setText(locationDto.getTotalNumberOfHouses().toString());
-                cTotalPopulation.setText(locationDto.getTotalPopulation().toString());
-                cTotalMalePopulation.setText(locationDto.getTotalMalePopulation().toString());
-                cTotalFemalePopulation.setText(locationDto.getTotalFemalePopulation().toString());
-                cTotalLiteratePopulation.setText(locationDto.getTotalLiteratePopulation().toString());
-                cTotalMaleLiteratePopulation.setText(locationDto.getTotalMaleLiteratePopulation().toString());
-                cTotalFemaleLiteratePopulation.setText(locationDto.getTotalFemaleLiteratePopulation().toString());
-                cTotalWorkingPopulation.setText(locationDto.getTotalWorkingPopulation().toString());
-                cTotalMaleWorkingPopulation.setText(locationDto.getTotalMaleWorkingPopulation().toString());
-                cTotalFemaleWorkingPopulation.setText(locationDto.getTotalFemaleWorkingPopulation().toString());
-                cArea.setText(locationDto.getArea().toString());
-                cPerimeter.setText(locationDto.getPerimeter().toString());
-            }
+            setInfoData();
         }
 
         mcListOpen.setOnItemClickListener(new ListView.OnItemClickListener() {
@@ -493,24 +470,49 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
 
             mcName.setText(locationDto.getName());
 
-            //Info data
-            if (locationDto.getTotalNumberOfHouses() != null) {
-                cTotalHouses.setText(locationDto.getTotalNumberOfHouses().toString());
-                cTotalPopulation.setText(locationDto.getTotalPopulation().toString());
-                cTotalMalePopulation.setText(locationDto.getTotalMalePopulation().toString());
-                cTotalFemalePopulation.setText(locationDto.getTotalFemalePopulation().toString());
-                cTotalLiteratePopulation.setText(locationDto.getTotalLiteratePopulation().toString());
-                cTotalMaleLiteratePopulation.setText(locationDto.getTotalMaleLiteratePopulation().toString());
-                cTotalFemaleLiteratePopulation.setText(locationDto.getTotalFemaleLiteratePopulation().toString());
-                cTotalWorkingPopulation.setText(locationDto.getTotalWorkingPopulation().toString());
-                cTotalMaleWorkingPopulation.setText(locationDto.getTotalMaleWorkingPopulation().toString());
-                cTotalFemaleWorkingPopulation.setText(locationDto.getTotalFemaleWorkingPopulation().toString());
-                cArea.setText(locationDto.getArea().toString());
-                cPerimeter.setText(locationDto.getPerimeter().toString());
-            }
+            setInfoData();
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch constituency details. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void setInfoData() {
+        if (locationDto.getTotalNumberOfHouses() != null) {
+            cTotalHouses.setText(locationDto.getTotalNumberOfHouses().toString());
+        }
+        if(locationDto.getTotalPopulation() != null) {
+            cTotalPopulation.setText(locationDto.getTotalPopulation().toString());
+        }
+        if(locationDto.getTotalMalePopulation() != null) {
+            cTotalMalePopulation.setText(locationDto.getTotalMalePopulation().toString());
+        }
+        if(locationDto.getTotalFemalePopulation() != null) {
+            cTotalFemalePopulation.setText(locationDto.getTotalFemalePopulation().toString());
+        }
+        if(locationDto.getTotalLiteratePopulation() != null) {
+            cTotalLiteratePopulation.setText(locationDto.getTotalLiteratePopulation().toString());
+        }
+        if(locationDto.getTotalMaleLiteratePopulation() != null) {
+            cTotalMaleLiteratePopulation.setText(locationDto.getTotalMaleLiteratePopulation().toString());
+        }
+        if(locationDto.getTotalFemaleLiteratePopulation() != null) {
+            cTotalFemaleLiteratePopulation.setText(locationDto.getTotalFemaleLiteratePopulation().toString());
+        }
+        if(locationDto.getTotalWorkingPopulation() != null) {
+            cTotalWorkingPopulation.setText(locationDto.getTotalWorkingPopulation().toString());
+        }
+        if(locationDto.getTotalMaleWorkingPopulation() != null) {
+            cTotalMaleWorkingPopulation.setText(locationDto.getTotalMaleWorkingPopulation().toString());
+        }
+        if(locationDto.getTotalFemaleWorkingPopulation() != null) {
+            cTotalFemaleWorkingPopulation.setText(locationDto.getTotalFemaleWorkingPopulation().toString());
+        }
+        if(locationDto.getArea() != null) {
+            cArea.setText(locationDto.getArea().toString());
+        }
+        if(locationDto.getPerimeter() != null) {
+            cPerimeter.setText(locationDto.getPerimeter().toString());
         }
     }
 }

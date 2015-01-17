@@ -41,6 +41,7 @@ public class TextPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         SplashFragment fragment = new SplashFragment();
         fragment.setSplashScreenItem(splashScreenItems.get(position));
+        fragment.addRadioButtonsAndSetActive(splashScreenItems.size(), position);
         if(position == splashScreenItems.size() - 1) {
             lastFragment = fragment;
             lastFragment.showSpinner();
