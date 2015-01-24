@@ -38,7 +38,8 @@
                 android:layout_weight="0.5"
                 android:textColor="#929292" />
         </LinearLayout>
-        <com.makeramen.RoundedImageView
+
+        <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
             android:id="@+id/mcPhoto"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

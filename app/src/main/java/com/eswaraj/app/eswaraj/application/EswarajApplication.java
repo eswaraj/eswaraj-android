@@ -1,7 +1,10 @@
 package com.eswaraj.app.eswaraj.application;
 
 import android.app.Application;
+import android.os.StrictMode;
+import android.util.Log;
 
+import com.eswaraj.app.eswaraj.BuildConfig;
 import com.eswaraj.app.eswaraj.modules.LocalServiceGraph;
 import com.eswaraj.app.eswaraj.modules.MiddlewareGraph;
 
@@ -15,6 +18,22 @@ public class EswarajApplication extends Application {
 
     @Override
     public void onCreate() {
+        if (BuildConfig.DEBUG) {
+            Log.d("EswarajApplication", "Debug mode enabled");
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()   // or .detectAll() for all detectable problems
+                    .penaltyLog()
+                    .penaltyDialog()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build());
+        }
         super.onCreate();
         instance = this;
         objectGraph = ObjectGraph.create(getModules());

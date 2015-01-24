@@ -180,7 +180,11 @@ public class GenericUtil {
         gridView.setLayoutParams(params);
     }
 
-    public static int getAge(Date dateOfBirth) {
+    public static Integer getAge(Date dateOfBirth) {
+
+        if(dateOfBirth == null) {
+            return null;
+        }
 
         Calendar today = Calendar.getInstance();
         Calendar birthDate = Calendar.getInstance();

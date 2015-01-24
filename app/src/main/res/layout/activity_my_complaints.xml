@@ -7,7 +7,7 @@
 
 
     <fragment
-        class="com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment"
+        class="com.eswaraj.app.eswaraj.fragments.ComplaintsFragment"
         android:id="@+id/mcFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -101,7 +101,9 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
 
         mpName.setText(userSession.getUser().getPerson().getName());
         mpInputName.setText(userSession.getUser().getPerson().getName());
-        mpUserDetails.setText(GenericUtil.getAge(userSession.getUser().getPerson().getDob()) + " Years, " + userSession.getUser().getPerson().getGender());
+        if(userSession.getUser().getPerson().getDob() != null) {
+            mpUserDetails.setText(GenericUtil.getAge(userSession.getUser().getPerson().getDob()) + " Years, " + userSession.getUser().getPerson().getGender());
+        }
         if(profilePhoto != null) {
             mpPhoto.setImageBitmap(profilePhoto);
         }

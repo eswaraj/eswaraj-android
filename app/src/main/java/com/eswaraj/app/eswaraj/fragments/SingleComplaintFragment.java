@@ -1,40 +1,29 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
-import com.eswaraj.app.eswaraj.config.ImageType;
-import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.events.ComplaintClosedEvent;
-import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
-import com.eswaraj.app.eswaraj.events.GetComplaintImageEvent;
-import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.GetSingleComplaintEvent;
 import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.util.VolleyUtil;
+import com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.eswaraj.web.dto.CategoryDto;
-import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -54,10 +43,9 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     @Inject
     GoogleAnalyticsTracker googleAnalyticsTracker;
 
-
     private CommentsFragment commentsFragment;
-    private ImageView complaintImage;
-    private ImageView submitterImage;
+    private CustomNetworkImageView complaintImage;
+    private CustomNetworkImageView submitterImage;
     private TextView submitterName;
     private TextView submitterDetails;
     private GoogleMapFragment googleMapFragment;
@@ -72,10 +60,6 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     private TextView scSubCategory;
     private TextView scDescription;
 
-    private Long complaintId;
-    private Long personId;
-    private Bitmap submitterBitmap;
-    private Bitmap complaintBitmap;
     private Bundle savedInstanceState;
 
     public SingleComplaintFragment() {
@@ -111,9 +95,9 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         scCategory = (TextView) rootView.findViewById(R.id.scCategory);
         scSubCategory = (TextView) rootView.findViewById(R.id.scSubCategory);
         scDescription = (TextView) rootView.findViewById(R.id.scDescription);
-        complaintImage = (ImageView) rootView.findViewById(R.id.scComplaintPhoto);
+        complaintImage = (CustomNetworkImageView) rootView.findViewById(R.id.scComplaintPhoto);
         submitterName = (TextView) rootView.findViewById(R.id.scSubmitterName);
-        submitterImage = (ImageView) rootView.findViewById(R.id.scSubmitterImage);
+        submitterImage = (CustomNetworkImageView) rootView.findViewById(R.id.scSubmitterImage);
         submitterDetails = (TextView) rootView.findViewById(R.id.scSubmitterDetails);
         scStatus = (TextView) rootView.findViewById(R.id.scStatus);
         scComplaintId = (TextView) rootView.findViewById(R.id.scComplaintId);
@@ -166,23 +150,13 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
             scClose.setVisibility(View.INVISIBLE);
         }
         if(complaintDto.getImages() != null) {
-            complaintId = complaintDto.getId();
-            middlewareService.loadComplaintImage(getActivity(), complaintDto.getImages().get(0).getOrgUrl(), complaintId, false);
-        }
-        if(complaintBitmap != null) {
-            complaintImage.setImageBitmap(complaintBitmap);
+            complaintImage.loadComplaintImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
         }
 
         //Submitter details
         submitterName.setText(complaintDto.getCreatedBy().get(0).getName());
         if(!complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
-            //PersonId is null. Using complaintId for caching
-            personId = complaintDto.getCreatedBy().get(0).getId();
-            middlewareService.loadProfileImage(getActivity(), complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getId(), false);
-            //submitterImage.setImageUrl(complaintDto.getCreatedBy().get(0).getProfilePhoto(), volleyUtil.getImageLoader());
-        }
-        if(submitterBitmap != null) {
-            submitterImage.setImageBitmap(submitterBitmap);
+            submitterImage.loadProfileImage(complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getCreatedBy().get(0).getId());
         }
 
         //Set up fragments
@@ -211,35 +185,6 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
             Toast.makeText(getActivity(),"Failed to close complaint. Please try again. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
         pDialogSave.dismiss();
-    }
-
-    public void onEventMainThread(GetComplaintImageEvent event) {
-        if(event.getSuccess()) {
-            if(complaintImage != null) {
-                complaintImage.setImageBitmap(event.getBitmap());
-            }
-            else {
-                complaintBitmap = event.getBitmap();
-            }
-        }
-        else {
-            Toast.makeText(getActivity(), "Could not fetch complaint image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void onEventMainThread(GetProfileImageEvent event) {
-        if(event.getSuccess()) {
-            if(event.getId().equals(complaintDto.getId())) {
-                if (submitterImage != null) {
-                    submitterImage.setImageBitmap(event.getBitmap());
-                } else {
-                    submitterBitmap = event.getBitmap();
-                }
-            }
-        }
-        else {
-            Toast.makeText(getActivity(), "Could not fetch submitter image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-        }
     }
 
     public void onEventMainThread(GetSingleComplaintEvent event) {

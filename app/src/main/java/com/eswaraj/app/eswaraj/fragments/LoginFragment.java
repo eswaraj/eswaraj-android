@@ -63,7 +63,7 @@ public class LoginFragment extends BaseFragment {
     private Boolean showInstruction;
     private Boolean dialogMode;
     private Session session;
-    private Boolean wasUserAlreadyLoggedIn;
+    private Boolean wasUserAlreadyLoggedIn = false;
 
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();

@@ -46,7 +46,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp">
 
-                        <com.makeramen.RoundedImageView
+                        <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
                             android:id="@+id/scSubmitterImage"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
@@ -232,7 +232,7 @@
                         android:layout_weight="0.5"
                         android:padding="10dp"/>
 
-                    <ImageView
+                    <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
                         android:id="@+id/scComplaintPhoto"
                         android:src="@drawable/no_image_placeholder"
                         android:layout_width="fill_parent"

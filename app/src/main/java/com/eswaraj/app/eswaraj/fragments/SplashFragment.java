@@ -103,15 +103,9 @@ public class SplashFragment extends Fragment {
         }
 
         if(count != null) {
-            for(int i = 0; i < count; i++) {
-                RadioButton radioButton = new RadioButton(getActivity());
-                radioButton.setId(i);
-                radioButton.setEnabled(false);
-                radioGroup.addView(radioButton);
-            }
-            radioGroup.check(active);
-            radioGroup.setEnabled(false);
+            addRadioButtonsAndSetActive(count, active);
         }
+
         progressWheel.spin();
         mButtonContinue.setOnClickListener(onClickListenerContinue);
         mButtonRetry.setOnClickListener(onClickListenerRetry);
@@ -127,16 +121,16 @@ public class SplashFragment extends Fragment {
         root.setBackground(splashScreenItem.getBgImage());
 
         mText.setText(splashScreenItem.getText());
-        mText.setTextSize(18);
-        mText.setTextColor(Color.parseColor("#e47979"));
+        //mText.setTextSize(18);
+        //mText.setTextColor(Color.parseColor("#e47979"));
 
         mHeading.setText(splashScreenItem.getHeading());
-        mHeading.setTextSize(40);
-        mHeading.setPadding(0,30,0,0);
-        mHeading.setTextColor(Color.parseColor("#ea5c5c"));
+        //mHeading.setTextSize(40);
+        //mHeading.setPadding(0,30,0,0);
+        //mHeading.setTextColor(Color.parseColor("#ea5c5c"));
 
         mImage.setImageDrawable(splashScreenItem.getImage());
-        mImage.setPadding(0, 10,0,0 );
+        //mImage.setPadding(0, 10,0,0 );
     }
 
     public void showContinueButton() {
@@ -193,8 +187,10 @@ public class SplashFragment extends Fragment {
             this.active = active;
             return;
         }
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
         for(int i = 0; i < count; i++) {
-            RadioButton radioButton = new RadioButton(getActivity());
+            RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.splash_radio_button, null);
             radioButton.setId(i);
             radioButton.setEnabled(false);
             radioGroup.addView(radioButton);

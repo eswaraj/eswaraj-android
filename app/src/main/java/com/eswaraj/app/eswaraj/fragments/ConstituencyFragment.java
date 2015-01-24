@@ -143,7 +143,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
         pDialog.show();
 
         if(locationDtoAvailable) {
-            middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, 50);
+            middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, 20);
             middlewareService.loadLocationComplaintCounters(getActivity(), locationDto);
             middlewareService.loadHeaderImage(getActivity(), locationDto.getMobileHeaderImageUrl(), locationDto.getId(), false);
         }
@@ -294,7 +294,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
             @Override
             public void onClick(View v) {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show More");
-                middlewareService.loadLocationComplaints(getActivity(), locationDto, complaintDtoList.size(), 50);
+                middlewareService.loadLocationComplaints(getActivity(), locationDto, complaintDtoList.size(), 20);
                 markersAdded = false;
                 dataAlreadySet = false;
                 pDialog = new CustomProgressDialog(getActivity(), false, true, "Fetching more complaints ...");
@@ -464,7 +464,7 @@ public class ConstituencyFragment extends BaseFragment implements OnMapReadyCall
     public void onEventMainThread(GetLocationEvent event) {
         if(event.getSuccess()) {
             locationDto = event.getLocationDto();
-            middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, 50);
+            middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, 20);
             middlewareService.loadLocationComplaintCounters(getActivity(), locationDto);
             middlewareService.loadHeaderImage(getActivity(), locationDto.getMobileHeaderImageUrl(), locationDto.getId(), false);
 

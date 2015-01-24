@@ -1,6 +1,7 @@
 package com.eswaraj.app.eswaraj.widgets;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.widget.Toast;
 
@@ -24,6 +25,8 @@ public class CustomNetworkImageView extends RoundedImageView {
     EventBus eventBus;
 
     private Long id;
+    private Boolean registered = false;
+    private Bitmap bitmap;
 
     public CustomNetworkImageView(Context context) {
         super(context);
@@ -47,15 +50,24 @@ public class CustomNetworkImageView extends RoundedImageView {
     }
 
     public void loadProfileImage(String url, Long id) {
-        eventBus.register(this);
-        this.id = id;
-        middlewareService.loadProfileImage(getContext(), url, id, false);
+        if(!registered) {
+            eventBus.register(this);
+            this.id = id;
+            middlewareService.loadProfileImage(getContext(), url, id, false);
+            registered = true;
+        }
+        else {
+            if(bitmap != null) {
+                setImageBitmap(bitmap);
+            }
+        }
     }
 
     public void onEventMainThread(GetProfileImageEvent event) {
         if(event.getId().equals(id)) {
             if (event.getSuccess()) {
                 setImageBitmap(event.getBitmap());
+                bitmap = event.getBitmap();
             } else {
                 Toast.makeText(getContext(), "Failed to load image", Toast.LENGTH_SHORT);
             }
@@ -64,15 +76,24 @@ public class CustomNetworkImageView extends RoundedImageView {
     }
 
     public void loadComplaintImage(String url, Long id) {
-        eventBus.register(this);
-        this.id = id;
-        middlewareService.loadComplaintImage(getContext(), url, id, false);
+        if(!registered) {
+            eventBus.register(this);
+            this.id = id;
+            middlewareService.loadComplaintImage(getContext(), url, id, false);
+            registered = true;
+        }
+        else {
+            if(bitmap != null) {
+                setImageBitmap(bitmap);
+            }
+        }
     }
 
     public void onEventMainThread(GetComplaintImageEvent event) {
         if(event.getId().equals(id)) {
             if (event.getSuccess()) {
                 setImageBitmap(event.getBitmap());
+                bitmap = event.getBitmap();
             } else {
                 Toast.makeText(getContext(), "Failed to load image", Toast.LENGTH_SHORT);
             }
@@ -81,15 +102,24 @@ public class CustomNetworkImageView extends RoundedImageView {
     }
 
     public void loadHeaderImage(String url, Long id) {
-        eventBus.register(this);
-        this.id = id;
-        middlewareService.loadHeaderImage(getContext(), url, id, false);
+        if(!registered) {
+            eventBus.register(this);
+            this.id = id;
+            middlewareService.loadHeaderImage(getContext(), url, id, false);
+            registered = true;
+        }
+        else {
+            if(bitmap != null) {
+                setImageBitmap(bitmap);
+            }
+        }
     }
 
     public void onEventMainThread(GetHeaderImageEvent event) {
         if(event.getId().equals(id)) {
             if (event.getSuccess()) {
                 setImageBitmap(event.getBitmap());
+                bitmap = event.getBitmap();
             } else {
                 Toast.makeText(getContext(), "Failed to load image", Toast.LENGTH_SHORT);
             }

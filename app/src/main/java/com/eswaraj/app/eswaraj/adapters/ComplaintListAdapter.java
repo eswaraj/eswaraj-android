@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
+import com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView;
 import com.eswaraj.web.dto.UserDto;
 import com.eswaraj.web.dto.CategoryDto;
 
@@ -50,7 +51,9 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
             holder.mcCategory = (TextView)row.findViewById(R.id.mcCategory);
             holder.mcDate = (TextView)row.findViewById(R.id.mcDate);
             holder.mcStatus = (TextView)row.findViewById(R.id.mcStatus);
-            holder.mcIcon = (ImageView)row.findViewById(R.id.mcIcon);
+            holder.mcIcon = (CustomNetworkImageView)row.findViewById(R.id.mcIcon);
+            holder.mcImage = (CustomNetworkImageView)row.findViewById(R.id.mcImage);
+            holder.mcProfilePhoto = (CustomNetworkImageView)row.findViewById(R.id.mcProfilePhoto);
 
             row.setTag(holder);
         }
@@ -68,12 +71,22 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         }
 
         holder.mcId.setText(complaintDto.getId().toString());
-        //holder.mcDate.setText(new Date(complaintDto.getComplaintTime()).toString());
         holder.mcDate.setText(DateUtils.getRelativeTimeSpanString(complaintDto.getComplaintTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
         holder.mcStatus.setText(complaintDto.getStatus());
+        if(complaintDto.getCreatedBy().get(0).getProfilePhoto() != null && !complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
+            holder.mcProfilePhoto.loadProfileImage(complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getCreatedBy().get(0).getId());
+        }
+        if(complaintDto.getImages() != null && complaintDto.getImages().get(0) != null && complaintDto.getImages().get(0).getOrgUrl() != null && !complaintDto.getImages().get(0).getOrgUrl().equals("")) {
+            holder.mcImage.loadComplaintImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
+            holder.mcImage.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.mcImage.setVisibility(View.GONE);
+        }
         if(getRootCategoryId(complaintDto) != null) {
             holder.mcIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(getRootCategoryId(complaintDto)) + ".png"));
         }
+
         return row;
     }
 
@@ -112,6 +125,8 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         TextView mcCategory;
         TextView mcDate;
         TextView mcStatus;
-        ImageView mcIcon;
+        CustomNetworkImageView mcIcon;
+        CustomNetworkImageView mcProfilePhoto;
+        CustomNetworkImageView mcImage;
     }
 }

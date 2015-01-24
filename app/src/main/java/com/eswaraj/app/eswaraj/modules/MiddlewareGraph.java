@@ -26,7 +26,10 @@ import com.eswaraj.app.eswaraj.datastore.LruBitmapCache;
 import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.datastore.StorageCache;
 import com.eswaraj.app.eswaraj.fragments.AddDetailsFragment;
+import com.eswaraj.app.eswaraj.fragments.AnalyticsFragment;
+import com.eswaraj.app.eswaraj.fragments.ComplaintListFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryOfflineFragment;
+import com.eswaraj.app.eswaraj.fragments.ComplaintsFragment;
 import com.eswaraj.app.eswaraj.fragments.ConstituencyFragment;
 import com.eswaraj.app.eswaraj.fragments.ContentFragment;
 import com.eswaraj.app.eswaraj.fragments.LeaderFragment;
@@ -162,7 +165,10 @@ import de.greenrobot.event.EventBus;
                 GcmService.class,
                 CustomNetworkImageView.class,
                 ContentActivity.class,
-                ContentFragment.class
+                ContentFragment.class,
+                AnalyticsFragment.class,
+                ComplaintsFragment.class,
+                ComplaintListFragment.class
         },
         complete = false,
         library = true

@@ -20,6 +20,8 @@
     <color name="magenta">#FF00FF</color>
     <color name="bright_pink">#FF007F</color>
 
+    <color name="transparent">#00000000</color>
+
     <array name="rainbow">
         <item>@color/red</item>
         <item>@color/orange</item>

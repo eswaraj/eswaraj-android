@@ -461,7 +461,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
 
     public void onEventMainThread(RevGeocodeEvent event) {
         if(event.getSuccess()) {
-            //hRevGeocode.setActualText(event.getRevGeocodedLocation());
+            hRevGeocode.setActualText(event.getRevGeocodedLocation());
             userSession.setUserRevGeocodedLocation(event.getRevGeocodedFullData());
             retryRevGeocoding = false;
         }

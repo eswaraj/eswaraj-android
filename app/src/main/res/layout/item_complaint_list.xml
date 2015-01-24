@@ -2,16 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="fill_parent"
-    android:layout_height="80dp"
+    android:layout_height="fill_parent"
     android:weightSum="1"
     android:background="@drawable/issue_detail_button">
 
-    <ImageView
+    <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
         android:id="@+id/mcIcon"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:src="@drawable/warning_circle"
-        android:layout_weight="0.8"
+        android:layout_weight="0.4"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
+
+    <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+        android:id="@+id/mcProfilePhoto"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/warning_circle"
+        android:layout_weight="0.4"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="5dp"
@@ -27,7 +38,7 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="0dp"
             android:weightSum="1"
             android:orientation="horizontal"
             android:layout_weight="0.65"
@@ -39,7 +50,6 @@
                 android:id="@+id/mcID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="84289"
                 android:layout_weight="0.36"
                 android:textColor="#fff15d37" />
 
@@ -47,14 +57,12 @@
                 android:id="@+id/mcStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pending"
                 android:layout_weight="0.34" />
 
             <TextView
                 android:id="@+id/mcDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="15 Nov 2014"
                 android:layout_weight="0.3"
                 android:textColor="#fff1b136" />
 
@@ -62,7 +70,7 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="0dp"
             android:weightSum="1"
             android:orientation="horizontal"
             android:layout_weight="0.35"
@@ -71,16 +79,25 @@
             <TextView
                 android:id="@+id/mcCategory"
                 android:layout_width="fill_parent"
-                android:layout_height="39dp"
+                android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:paddingTop="0dp"
                 android:textColor="#333"
                 android:gravity="top"
                 android:layout_gravity="top"
-                android:layout_weight="0.8"
+                android:layout_weight="1"
                 android:paddingRight="25dp" />
 
         </LinearLayout>
+
+        <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+            android:id="@+id/mcImage"
+            android:src="@drawable/no_image_placeholder"
+            android:visibility="gone"
+            android:layout_width="200dp"
+            android:layout_height="140dp"
+            android:paddingBottom="10dp"/>
+
     </LinearLayout>
 
 
