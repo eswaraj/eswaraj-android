@@ -2,7 +2,6 @@ package com.eswaraj.app.eswaraj.fragments;
 
 
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -124,7 +123,7 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
         View rootView = inflater.inflate(R.layout.fragment_complaints, container, false);
         headerContainer = (FrameLayout) rootView.findViewById(R.id.mcHeaderContainer);
         fragmentContainer = (FrameLayout) rootView.findViewById(R.id.mcFragmentContainer);
-        mcScrollView = (CustomScrollView) rootView.findViewById(R.id.mcScrollView);
+        //mcScrollView = (CustomScrollView) rootView.findViewById(R.id.mcScrollView);
         headerView = getActivity().getLayoutInflater().inflate(R.layout.my_complaints_header, null);
 
 
@@ -146,7 +145,7 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
 
         headerContainer.setVisibility(View.GONE);
         complaintListFragment.setHeader(headerView);
-        setFragmentContainerSize(null);
+        //setFragmentContainerSize(null);
 
         googleMapFragment.setContext(this);
         setupMenu(rootView.findViewById(R.id.menu));
@@ -168,15 +167,15 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
             public void onClick(View v) {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints: Show List");
                 headerContainer.setVisibility(View.GONE);
-                setFragmentContainerSize(600);
+                //setFragmentContainerSize(600);
                 getChildFragmentManager().beginTransaction().show(complaintListFragment).commit();
                 getChildFragmentManager().beginTransaction().hide(analyticsFragment).commit();
                 getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
                 getChildFragmentManager().executePendingTransactions();
-                mcScrollView.removeInterceptScrollView(googleMapFragment.getView());
-                mcScrollView.addInterceptScrollView(complaintListFragment.getView());
+                //mcScrollView.removeInterceptScrollView(googleMapFragment.getView());
+                //mcScrollView.addInterceptScrollView(complaintListFragment.getView());
                 mapDisplayed = false;
-                mcScrollView.smoothScrollTo(0, 0);
+                //mcScrollView.smoothScrollTo(0, 0);
 
             }
         };
@@ -186,13 +185,13 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
             public void onClick(View v) {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints: Show Map");
                 headerContainer.setVisibility(View.VISIBLE);
-                setFragmentContainerSize(350);
+                //setFragmentContainerSize(350);
                 getChildFragmentManager().beginTransaction().hide(complaintListFragment).commit();
                 getChildFragmentManager().beginTransaction().hide(analyticsFragment).commit();
                 getChildFragmentManager().beginTransaction().show(googleMapFragment).commit();
                 getChildFragmentManager().executePendingTransactions();
-                mcScrollView.removeInterceptScrollView(complaintListFragment.getView());
-                mcScrollView.addInterceptScrollView(googleMapFragment.getView());
+                //mcScrollView.removeInterceptScrollView(complaintListFragment.getView());
+                //mcScrollView.addInterceptScrollView(googleMapFragment.getView());
                 mapDisplayed = true;
 
                 //Post it on UI thread so that it gets en-queued behind fragment transactions and gets executed only after layout has happened for map
@@ -205,7 +204,7 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
                         }
                     }
                 });
-                mcScrollView.smoothScrollTo(0, 0);
+                //mcScrollView.smoothScrollTo(0, 0);
             }
 
         };
@@ -215,15 +214,15 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
             public void onClick(View v) {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints: Show Analytics");
                 headerContainer.setVisibility(View.VISIBLE);
-                setFragmentContainerSize(null);
+                //setFragmentContainerSize(null);
                 getChildFragmentManager().beginTransaction().hide(complaintListFragment).commit();
                 getChildFragmentManager().beginTransaction().show(analyticsFragment).commit();
                 getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
                 getChildFragmentManager().executePendingTransactions();
-                mcScrollView.removeInterceptScrollView(googleMapFragment.getView());
-                mcScrollView.removeInterceptScrollView(complaintListFragment.getView());
+                //mcScrollView.removeInterceptScrollView(googleMapFragment.getView());
+                //mcScrollView.removeInterceptScrollView(complaintListFragment.getView());
                 mapDisplayed = false;
-                mcScrollView.smoothScrollTo(0, 0);
+                //mcScrollView.smoothScrollTo(0, 0);
             }
         };
 
@@ -245,7 +244,7 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
             googleMapFragment.addMarkers(complaintDtoList);
             markersAdded = true;
         }
-        mcScrollView.smoothScrollTo(0, 0);
+        //mcScrollView.smoothScrollTo(0, 0);
     }
 
     private void setFragmentContainerSize(Integer height) {
@@ -256,6 +255,10 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
         }
         int heightPixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, getResources().getDisplayMetrics());
         params.height = heightPixels;
+    }
+
+    public void markComplaintClosed(Long id) {
+        complaintListFragment.markComplaintClosed(id);
     }
 
 

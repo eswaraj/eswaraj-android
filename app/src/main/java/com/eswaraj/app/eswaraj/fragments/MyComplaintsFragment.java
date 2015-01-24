@@ -66,7 +66,6 @@
         GoogleAnalyticsTracker googleAnalyticsTracker;
 
         private GoogleMapFragment googleMapFragment;
-        private AnalyticsFragment analyticsFragment;
         private List<ComplaintDto> complaintDtoList;
         ArrayList<ComplaintCounter> complaintCounters;
 
@@ -80,8 +79,7 @@
         private FrameLayout mcChartContainer;
         private ViewGroup mcListContainer;
         private GridView mcAmenityList;
-        //private LinearLayout mcAnalyticsContainer;
-        private FrameLayout mcAnalyticsContainer;
+        private LinearLayout mcAnalyticsContainer;
         private TextView mcName;
         private ImageView mcPhoto;
         private TextView mcUserDetails;
@@ -112,10 +110,8 @@
 
             if(savedInstanceState == null) {
                 getChildFragmentManager().beginTransaction().add(R.id.mcMapContainer, googleMapFragment).commit();
-                getChildFragmentManager().beginTransaction().add(R.id.mcAnalyticsContainer, analyticsFragment).commit();
             }
             getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
-            getChildFragmentManager().beginTransaction().hide(analyticsFragment).commit();
             getChildFragmentManager().executePendingTransactions();
             mapDisplayed = false;
 
@@ -146,7 +142,7 @@
             mcListContainer = (ViewGroup) rootView.findViewById(R.id.mcListContainer);
             mcChartContainer = (FrameLayout) rootView.findViewById(R.id.mcChartContainer);
             mcAmenityList = (GridView) rootView.findViewById(R.id.mcAmenityList);
-            mcAnalyticsContainer = (FrameLayout) rootView.findViewById(R.id.mcAnalyticsContainer);
+            mcAnalyticsContainer = (LinearLayout) rootView.findViewById(R.id.mcAnalyticsContainer);
             mcName = (TextView) rootView.findViewById(R.id.mcName);
             mcPhoto = (ImageView) rootView.findViewById(R.id.mcPhoto);
             mcUserDetails = (TextView) rootView.findViewById(R.id.mcUserDetails);

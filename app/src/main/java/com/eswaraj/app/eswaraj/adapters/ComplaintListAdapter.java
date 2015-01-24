@@ -18,6 +18,7 @@ import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView;
 import com.eswaraj.web.dto.UserDto;
 import com.eswaraj.web.dto.CategoryDto;
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 import java.util.List;
@@ -74,10 +75,12 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         holder.mcDate.setText(DateUtils.getRelativeTimeSpanString(complaintDto.getComplaintTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
         holder.mcStatus.setText(complaintDto.getStatus());
         if(complaintDto.getCreatedBy().get(0).getProfilePhoto() != null && !complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
-            holder.mcProfilePhoto.loadProfileImage(complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getCreatedBy().get(0).getId());
+            //holder.mcProfilePhoto.loadProfileImage(complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getCreatedBy().get(0).getId());
+            Picasso.with(context).load(complaintDto.getCreatedBy().get(0).getProfilePhoto().replace("http", "https")).into(holder.mcProfilePhoto);
         }
         if(complaintDto.getImages() != null && complaintDto.getImages().get(0) != null && complaintDto.getImages().get(0).getOrgUrl() != null && !complaintDto.getImages().get(0).getOrgUrl().equals("")) {
-            holder.mcImage.loadComplaintImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
+            //holder.mcImage.loadComplaintImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
+            Picasso.with(context).load(complaintDto.getImages().get(0).getOrgUrl()).into(holder.mcImage);
             holder.mcImage.setVisibility(View.VISIBLE);
         }
         else {
@@ -113,6 +116,14 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
             }
         }
         return null;
+    }
+
+    public void markComplaintClosed(Long id) {
+        for(ComplaintDto complaintDto : complaintDtoList) {
+            if(complaintDto.getId().equals(id)) {
+                complaintDto.setStatus("Done");
+            }
+        }
     }
 
     public void clearComplaints() {

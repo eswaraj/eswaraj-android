@@ -8,6 +8,7 @@ import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.ComplaintSelectedEvent;
 import com.eswaraj.app.eswaraj.events.MarkerClickEvent;
+import com.eswaraj.app.eswaraj.fragments.ComplaintsFragment;
 import com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment;
 
 
@@ -24,6 +25,7 @@ public class MyComplaintsActivity extends BaseActivity {
     EventBus eventBus;
 
     //private MyComplaintsFragment myComplaintsFragment;
+    private ComplaintsFragment complaintsFragment;
     private final int OPEN_COMPLAINT_REQUEST = 99;
 
     @Override
@@ -32,6 +34,7 @@ public class MyComplaintsActivity extends BaseActivity {
         setContentView(R.layout.activity_my_complaints);
 
         //myComplaintsFragment = (MyComplaintsFragment) getSupportFragmentManager().findFragmentById(R.id.mcFragment);
+        complaintsFragment = (ComplaintsFragment) getSupportFragmentManager().findFragmentById(R.id.mcFragment);
     }
 
     @Override
@@ -66,6 +69,7 @@ public class MyComplaintsActivity extends BaseActivity {
         if(requestCode == OPEN_COMPLAINT_REQUEST && resultCode == RESULT_OK) {
             if(data != null) {
                 //myComplaintsFragment.markComplaintClosed(data.getLongExtra("ID", -1));
+                complaintsFragment.markComplaintClosed(data.getLongExtra("ID", -1));
             }
         }
     }

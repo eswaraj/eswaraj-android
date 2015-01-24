@@ -12,11 +12,6 @@
         android:layout_height="wrap_content"
         layout="@layout/screen_header" />
 
-    <com.eswaraj.app.eswaraj.widgets.CustomScrollView
-        android:id="@+id/mcScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -45,7 +40,5 @@
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
-
-    </com.eswaraj.app.eswaraj.widgets.CustomScrollView>
 
 </LinearLayout>

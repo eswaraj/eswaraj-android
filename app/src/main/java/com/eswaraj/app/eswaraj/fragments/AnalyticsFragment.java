@@ -73,4 +73,5 @@ public class AnalyticsFragment extends BaseFragment {
         AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), complaintCounters, globalSession.getColorMap());
         mcAmenityList.setAdapter(amenityListAdapter);
     }
+
 }

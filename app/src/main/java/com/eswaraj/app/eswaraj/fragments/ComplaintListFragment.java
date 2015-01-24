@@ -67,6 +67,11 @@ public class ComplaintListFragment extends BaseFragment {
         mcList.setDividerHeight(0);
     }
 
+    public void markComplaintClosed(Long id) {
+        complaintsAdapter.markComplaintClosed(id);
+        complaintsAdapter.notifyDataSetChanged();
+    }
+
     public void setHeader(View view) {
         if(mcList != null) {
             mcList.addHeaderView(view);

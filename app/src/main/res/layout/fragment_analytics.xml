@@ -3,11 +3,15 @@
     android:layout_height="match_parent"
     tools:context="com.eswaraj.app.eswaraj.fragments.AnalyticsFragment">
 
+    <com.eswaraj.app.eswaraj.widgets.CustomScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
     <LinearLayout
         android:id="@+id/mcAnalyticsContainer"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <FrameLayout
             android:id="@+id/mcChartContainer"
@@ -17,11 +21,12 @@
 
         <com.eswaraj.app.eswaraj.widgets.NonScrollableGridView
             android:id="@+id/mcAmenityList"
-            android:layout_height="0dp"
-            android:layout_weight="7"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:numColumns="3"/>
 
     </LinearLayout>
+
+    </com.eswaraj.app.eswaraj.widgets.CustomScrollView>
 
 </FrameLayout>

@@ -159,12 +159,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="500dp"/>
 
-                <FrameLayout
-                    android:id="@+id/mcAnalyticsContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
-                <!--
                 <LinearLayout
                     android:id="@+id/mcAnalyticsContainer"
                     android:orientation="vertical"
@@ -185,7 +179,6 @@
                         android:numColumns="3"/>
 
                 </LinearLayout>
-                -->
 
                 <LinearLayout
                     android:id="@+id/mcListContainer"

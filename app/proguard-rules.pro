@@ -22,3 +22,4 @@
 
 -keep class com.facebook.** { *; }
 -keepattributes Signature
+-dontwarn com.squareup.okhttp.**
