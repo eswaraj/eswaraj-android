@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.eswaraj.app.eswaraj.activities.ComplaintFilterActivity">
+
+    <TextView android:text="Filter by Citizen Service"
+        android:textSize="26sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <GridView
+        android:id="@+id/cfCategoryList"
+        android:numColumns="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView android:text="Filter by Complaint Status"
+        android:textSize="26sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <GridView
+        android:id="@+id/cfStatusList"
+        android:numColumns="2"
+        android:layout_width="match_parent"
+        android:layout_height="370dp"/>
+
+</LinearLayout>

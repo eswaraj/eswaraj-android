@@ -195,9 +195,9 @@
         <activity
             android:name=".activities.LeaderActivity"
             android:label="@string/title_activity_leader"
+            android:parentActivityName=".activities.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
-            android:parentActivityName=".activities.HomeActivity" >
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
@@ -211,12 +211,22 @@
         <activity
             android:name=".activities.ContentActivity"
             android:label="@string/title_activity_content"
+            android:parentActivityName=".activities.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
-            android:parentActivityName=".activities.HomeActivity" >
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".activities.ComplaintFilterActivity"
+            android:label="@string/title_activity_complaint_filter"
+            android:parentActivityName=".activities.MyComplaintsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Dialog">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.eswaraj.app.eswaraj.activities.MyComplaintsActivity" />
         </activity>
     </application>
 

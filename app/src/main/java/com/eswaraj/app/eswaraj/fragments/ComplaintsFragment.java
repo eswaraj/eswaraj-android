@@ -14,10 +14,13 @@ import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
+import com.eswaraj.app.eswaraj.events.FilterClickEvent;
 import com.eswaraj.app.eswaraj.events.GetUserComplaintsEvent;
+import com.eswaraj.app.eswaraj.helpers.ComplaintFilterHelper;
 import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
+import com.eswaraj.app.eswaraj.models.ComplaintFilter;
 import com.eswaraj.app.eswaraj.util.GenericUtil;
 import com.eswaraj.app.eswaraj.util.GlobalSessionUtil;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
@@ -61,6 +64,8 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
     private TextView mcName2;
     private CustomNetworkImageView mcPhoto2;
     private TextView mcUserDetails2;
+    private Button mcFilter;
+    private Button mcFilter2;
     private FrameLayout headerContainer;
     private FrameLayout fragmentContainer;
     private CustomScrollView mcScrollView;
@@ -72,9 +77,12 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
     private View.OnClickListener listClickListener;
     private View.OnClickListener mapClickListener;
     private View.OnClickListener analyticsClickListener;
+    private View.OnClickListener filterClickListener;
 
     private CustomProgressDialog pDialog;
     private List<ComplaintDto> complaintDtoList;
+    private List<ComplaintDto> currentComplaintDtoList;
+    private ComplaintFilter complaintFilter;
 
     private Boolean mapReady = false;
     private Boolean mapDisplayed = false;
@@ -143,6 +151,9 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
         mcPhoto2 = (CustomNetworkImageView) rootView.findViewById(R.id.mcPhoto);
         mcUserDetails2 = (TextView) rootView.findViewById(R.id.mcUserDetails);
 
+        mcFilter = (Button) headerView.findViewById(R.id.mcFilter);
+        mcFilter2 = (Button) rootView.findViewById(R.id.mcFilter);
+
         headerContainer.setVisibility(View.GONE);
         complaintListFragment.setHeader(headerView);
         //setFragmentContainerSize(null);
@@ -199,7 +210,7 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
                     @Override
                     public void run() {
                         if(!markersAdded) {
-                            googleMapFragment.addMarkers(complaintDtoList);
+                            googleMapFragment.addMarkers(currentComplaintDtoList);
                             markersAdded = true;
                         }
                     }
@@ -226,6 +237,15 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
             }
         };
 
+        filterClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FilterClickEvent event = new FilterClickEvent();
+                event.setSuccess(true);
+                eventBus.post(event);
+            }
+        };
+
         listButton.setOnClickListener(listClickListener);
         mapButton.setOnClickListener(mapClickListener);
         analyticsButton.setOnClickListener(analyticsClickListener);
@@ -234,16 +254,21 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
         mapButton2.setOnClickListener(mapClickListener);
         analyticsButton2.setOnClickListener(analyticsClickListener);
 
+        mcFilter.setOnClickListener(filterClickListener);
+        mcFilter2.setOnClickListener(filterClickListener);
+
         return rootView;
     }
 
-    private void setComplaintData() {
-        complaintListFragment.setData(complaintDtoList);
-        analyticsFragment.populateCountersAndCreateChart(complaintDtoList);
+    private void setComplaintData(List<ComplaintDto> complaintDtos) {
+        currentComplaintDtoList = complaintDtos;
+        complaintListFragment.setData(complaintDtos);
+        analyticsFragment.populateCountersAndCreateChart(complaintDtos);
         if (mapReady && mapDisplayed) {
-            googleMapFragment.addMarkers(complaintDtoList);
+            googleMapFragment.addMarkers(complaintDtos);
             markersAdded = true;
         }
+        markersAdded = false;
         //mcScrollView.smoothScrollTo(0, 0);
     }
 
@@ -261,12 +286,17 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
         complaintListFragment.markComplaintClosed(id);
     }
 
+    public void setFilter(ComplaintFilter filter) {
+        complaintFilter = filter;
+        setComplaintData(ComplaintFilterHelper.filter(complaintDtoList, filter));
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mapReady = true;
-        if(complaintDtoList != null) {
-            googleMapFragment.addMarkers(complaintDtoList);
+        if(currentComplaintDtoList != null) {
+            googleMapFragment.addMarkers(currentComplaintDtoList);
             markersAdded = true;
         }
     }
@@ -274,7 +304,7 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
     public void onEventMainThread(GetUserComplaintsEvent event) {
         if(event.getSuccess()) {
             complaintDtoList = event.getComplaintDtoList();
-            setComplaintData();
+            setComplaintData(complaintDtoList);
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch user complaints. Error = " + event.getError(), Toast.LENGTH_LONG).show();

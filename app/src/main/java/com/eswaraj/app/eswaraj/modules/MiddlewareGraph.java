@@ -5,6 +5,7 @@ import android.content.Context;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.eswaraj.app.eswaraj.activities.AddDetailsActivity;
+import com.eswaraj.app.eswaraj.activities.ComplaintFilterActivity;
 import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
 import com.eswaraj.app.eswaraj.activities.ConstituencyActivity;
 import com.eswaraj.app.eswaraj.activities.ContentActivity;
@@ -168,7 +169,8 @@ import de.greenrobot.event.EventBus;
                 ContentFragment.class,
                 AnalyticsFragment.class,
                 ComplaintsFragment.class,
-                ComplaintListFragment.class
+                ComplaintListFragment.class,
+                ComplaintFilterActivity.class
         },
         complete = false,
         library = true

@@ -25,6 +25,12 @@
                 android:weightSum="9"
                 android:layout_weight="0.55">
 
+                <Button
+                    android:id="@+id/mcFilter"
+                    android:text="Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
