@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.adapters.FilterListAdapter;
@@ -28,6 +29,7 @@ public class ComplaintFilterActivity extends BaseActivity {
 
     private GridView categoryList;
     private GridView statusList;
+    private TextView none;
 
     private ArrayList<ComplaintFilter> categoryFilterItems = new ArrayList<ComplaintFilter>();
     private ArrayList<ComplaintFilter> statusFilterItems = new ArrayList<ComplaintFilter>();
@@ -42,6 +44,7 @@ public class ComplaintFilterActivity extends BaseActivity {
 
         categoryList = (GridView) findViewById(R.id.cfCategoryList);
         statusList = (GridView) findViewById(R.id.cfStatusList);
+        none = (TextView) findViewById(R.id.cfNone);
 
         ComplaintFilter filter = new ComplaintFilter();
         filter.setComplaintFilterType(ComplaintFilter.ComplaintFilterType.STATUS);
@@ -88,6 +91,22 @@ public class ComplaintFilterActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent data = new Intent();
                 data.putExtra("FILTER", statusAdapter.getItem(position));
+                if (getParent() == null) {
+                    setResult(Activity.RESULT_OK, data);
+                } else {
+                    getParent().setResult(Activity.RESULT_OK, data);
+                }
+                finish();
+            }
+        });
+
+        none.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ComplaintFilter complaintFilter = new ComplaintFilter();
+                complaintFilter.setComplaintFilterType(ComplaintFilter.ComplaintFilterType.NONE);
+                Intent data = new Intent();
+                data.putExtra("FILTER", complaintFilter);
                 if (getParent() == null) {
                     setResult(Activity.RESULT_OK, data);
                 } else {

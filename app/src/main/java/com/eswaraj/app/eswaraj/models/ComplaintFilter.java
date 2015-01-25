@@ -55,6 +55,7 @@ public class ComplaintFilter implements Serializable {
 
     public enum ComplaintFilterType {
         CATEGORY,
-        STATUS
+        STATUS,
+        NONE
     }
 }

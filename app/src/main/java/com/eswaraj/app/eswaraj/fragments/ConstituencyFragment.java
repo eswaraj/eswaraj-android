@@ -72,6 +72,7 @@ public class ConstituencyFragment extends BaseFragment {
     private FrameLayout fragmentContainer;
     private CustomScrollView mcScrollView;
     private TextView mcIssueCount;
+    private Button mcShowMore;
 
     private ComplaintListFragment complaintListFragment;
     private AnalyticsFragment analyticsFragment;
@@ -176,6 +177,10 @@ public class ConstituencyFragment extends BaseFragment {
         headerContainer.setVisibility(View.GONE);
         complaintListFragment.setHeader(headerView);
 
+        mcShowMore = new Button(getActivity());
+        mcShowMore.setText("Show more");
+        complaintListFragment.setFooter(mcShowMore);
+
         setupMenu(rootView.findViewById(R.id.menu));
 
         if(locationDto != null) {
@@ -189,7 +194,7 @@ public class ConstituencyFragment extends BaseFragment {
         listClickListener = new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints: Show List");
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show List");
                 headerContainer.setVisibility(View.GONE);
                 //setFragmentContainerSize(600);
                 complaintsMapFragment.setMapDisplayed(false);
@@ -209,7 +214,7 @@ public class ConstituencyFragment extends BaseFragment {
         mapClickListener = new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints: Show Map");
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show Map");
                 headerContainer.setVisibility(View.VISIBLE);
                 complaintsMapFragment.setMapDisplayed(true);
                 //setFragmentContainerSize(350);
@@ -239,7 +244,7 @@ public class ConstituencyFragment extends BaseFragment {
         analyticsClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints: Show Analytics");
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show Analytics");
                 headerContainer.setVisibility(View.VISIBLE);
                 //setFragmentContainerSize(null);
                 complaintsMapFragment.setMapDisplayed(false);
@@ -258,7 +263,7 @@ public class ConstituencyFragment extends BaseFragment {
         infoClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints: Show Info");
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show Info");
                 headerContainer.setVisibility(View.VISIBLE);
                 //setFragmentContainerSize(null);
                 complaintsMapFragment.setMapDisplayed(false);
@@ -282,6 +287,16 @@ public class ConstituencyFragment extends BaseFragment {
                 eventBus.post(event);
             }
         };
+
+        mcShowMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show More");
+                middlewareService.loadLocationComplaints(getActivity(), locationDto, complaintDtoList.size(), 20);
+                pDialog = new CustomProgressDialog(getActivity(), false, true, "Fetching more complaints ...");
+                pDialog.show();
+            }
+        });
 
         listButton.setOnClickListener(listClickListener);
         mapButton.setOnClickListener(mapClickListener);
@@ -341,7 +356,8 @@ public class ConstituencyFragment extends BaseFragment {
                     complaintDtoList.add(complaintDto);
                 }
             }
-            setComplaintData(complaintDtoList);
+            //setComplaintData(complaintDtoList);
+            setFilter(complaintFilter);
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch constituency complaints. Error = " + event.getError(), Toast.LENGTH_LONG).show();

@@ -23,6 +23,9 @@ public class ComplaintFilterHelper {
         if(filter.getComplaintFilterType() == ComplaintFilter.ComplaintFilterType.STATUS) {
             return filterByStatus(complaintDtoList, filter.getStatus());
         }
+        if(filter.getComplaintFilterType() == ComplaintFilter.ComplaintFilterType.NONE) {
+            return complaintDtoList;
+        }
         return null;
     }
 

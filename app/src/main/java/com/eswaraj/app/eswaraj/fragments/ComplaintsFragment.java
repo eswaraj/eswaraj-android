@@ -291,7 +291,8 @@ public class ComplaintsFragment extends BaseFragment {
     public void onEventMainThread(GetUserComplaintsEvent event) {
         if(event.getSuccess()) {
             complaintDtoList = event.getComplaintDtoList();
-            setComplaintData(complaintDtoList);
+            //setComplaintData(complaintDtoList);
+            setFilter(complaintFilter);
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch user complaints. Error = " + event.getError(), Toast.LENGTH_LONG).show();
