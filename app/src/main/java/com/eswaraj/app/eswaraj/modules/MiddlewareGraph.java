@@ -32,6 +32,9 @@ import com.eswaraj.app.eswaraj.fragments.ComplaintListFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryOfflineFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintsFragment;
 import com.eswaraj.app.eswaraj.fragments.ConstituencyFragment;
+import com.eswaraj.app.eswaraj.fragments.ComplaintsMapFragment;
+import com.eswaraj.app.eswaraj.fragments.MyConstituencyFragment;
+import com.eswaraj.app.eswaraj.fragments.ConstituencyInfoFragment;
 import com.eswaraj.app.eswaraj.fragments.ContentFragment;
 import com.eswaraj.app.eswaraj.fragments.LeaderFragment;
 import com.eswaraj.app.eswaraj.fragments.MyProfileFragment;
@@ -146,7 +149,7 @@ import de.greenrobot.event.EventBus;
                 MyProfileActivity.class,
                 MyProfileFragment.class,
                 ConstituencyActivity.class,
-                ConstituencyFragment.class,
+                MyConstituencyFragment.class,
                 LocationComplaintsRequest.class,
                 LocationComplaintCountersRequest.class,
                 VolleyUtil.class,
@@ -170,7 +173,10 @@ import de.greenrobot.event.EventBus;
                 AnalyticsFragment.class,
                 ComplaintsFragment.class,
                 ComplaintListFragment.class,
-                ComplaintFilterActivity.class
+                ComplaintFilterActivity.class,
+                ConstituencyInfoFragment.class,
+                ConstituencyFragment.class,
+                ComplaintsMapFragment.class
         },
         complete = false,
         library = true

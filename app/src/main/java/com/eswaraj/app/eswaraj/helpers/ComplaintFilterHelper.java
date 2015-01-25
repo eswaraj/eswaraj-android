@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.app.eswaraj.models.ComplaintFilter;
+import com.eswaraj.app.eswaraj.models.ComplaintStatusCounters;
 import com.eswaraj.web.dto.CategoryDto;
 
 import java.util.ArrayList;
@@ -46,4 +47,19 @@ public class ComplaintFilterHelper {
         }
         return filteredList;
     }
+
+    public static ComplaintStatusCounters getStatusCounters(List<ComplaintDto> complaintDtoList) {
+        ComplaintStatusCounters counters = new ComplaintStatusCounters();
+        for(ComplaintDto complaintDto : complaintDtoList) {
+            if(complaintDto.getStatus().equals("Done")) {
+                counters.setClosed(counters.getClosed() + 1);
+            }
+            else {
+                counters.setOpen(counters.getOpen() + 1);
+            }
+        }
+        counters.setTotal(complaintDtoList.size());
+        return counters;
+    }
+
 }

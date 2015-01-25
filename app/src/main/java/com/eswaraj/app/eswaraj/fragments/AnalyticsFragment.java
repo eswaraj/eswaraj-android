@@ -9,16 +9,20 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.adapters.AmenityListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
+import com.eswaraj.app.eswaraj.events.GetLocationComplaintCountersEvent;
+import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.ComplaintCounter;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.app.eswaraj.util.GlobalSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.PieChartView;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.eswaraj.web.dto.LocationDto;
 
 import org.achartengine.GraphicalView;
 
@@ -27,11 +31,17 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import de.greenrobot.event.EventBus;
+
 
 public class AnalyticsFragment extends BaseFragment {
 
     @Inject
     GlobalSessionUtil globalSession;
+    @Inject
+    EventBus eventBus;
+    @Inject
+    MiddlewareServiceImpl middlewareService;
 
     private FrameLayout mcChartContainer;
     private GridView mcAmenityList;
@@ -40,6 +50,17 @@ public class AnalyticsFragment extends BaseFragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        eventBus.register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        eventBus.unregister(this);
+        super.onDestroy();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,6 +88,10 @@ public class AnalyticsFragment extends BaseFragment {
                 }
             }
         }
+        createChart(complaintCounters);
+    }
+
+    public void createChart(List<ComplaintCounter> complaintCounters) {
         GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters, globalSession.getColorMap());
         mcChartContainer.removeAllViews();
         mcChartContainer.addView(chartView);
@@ -74,4 +99,17 @@ public class AnalyticsFragment extends BaseFragment {
         mcAmenityList.setAdapter(amenityListAdapter);
     }
 
+    public void loadCountersForLocation(LocationDto locationDto) {
+        middlewareService.loadLocationComplaintCounters(getActivity(), locationDto);
+    }
+
+    public void onEventMainThread(GetLocationComplaintCountersEvent event) {
+        if(event.getSuccess()) {
+            List<ComplaintCounter> complaintCounters = event.getComplaintCounters();
+            createChart(complaintCounters);
+        }
+        else {
+            Toast.makeText(getActivity(), "Could not fetch constituency complaint counters. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
 }

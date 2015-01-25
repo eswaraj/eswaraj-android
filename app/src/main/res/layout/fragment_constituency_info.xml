@@ -1,0 +1,200 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.eswaraj.app.eswaraj.fragments.ConstituencyInfoFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TextView
+                    android:text="Total Houses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/cTotalHouses"
+                    android:text="Unknown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TextView
+                    android:text="Total Population"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/cTotalPopulation"
+                    android:text="Unknown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TextView
+                    android:text="Total Male Population"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/cTotalMalePopulation"
+                    android:text="Unknown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TextView
+                    android:text="Total Female Population"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/cTotalFemalePopulation"
+                    android:text="Unknown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TextView
+                    android:text="Total Literate Population"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/cTotalLiteratePopulation"
+                    android:text="Unknown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TextView
+                    android:text="Total Male Literate Population"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/cTotalMaleLiteratePopulation"
+                    android:text="Unknown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TextView
+                    android:text="Total Female Literate Population"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/cTotalFemaleLiteratePopulation"
+                    android:text="Unknown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TextView
+                    android:text="Total Working Population"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/cTotalWorkingPopulation"
+                    android:text="Unknown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TextView
+                    android:text="Total Male Working Population"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/cTotalMaleWorkingPopulation"
+                    android:text="Unknown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TextView
+                    android:text="Total Female Working Population"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/cTotalFemaleWorkingPopulation"
+                    android:text="Unknown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TextView
+                    android:text="Area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/cArea"
+                    android:text="Unknown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TextView
+                    android:text="Perimeter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/cPerimeter"
+                    android:text="Unknown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp" />
+            </TableRow>
+
+        </TableLayout>
+
+    </ScrollView>
+
+</LinearLayout>

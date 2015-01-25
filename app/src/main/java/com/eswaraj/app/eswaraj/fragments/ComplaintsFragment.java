@@ -37,7 +37,7 @@ import javax.inject.Inject;
 import de.greenrobot.event.EventBus;
 
 
-public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallback {
+public class ComplaintsFragment extends BaseFragment {
 
     @Inject
     EventBus eventBus;
@@ -72,7 +72,7 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
 
     private ComplaintListFragment complaintListFragment;
     private AnalyticsFragment analyticsFragment;
-    private GoogleMapFragment googleMapFragment;
+    private ComplaintsMapFragment complaintsMapFragment;
 
     private View.OnClickListener listClickListener;
     private View.OnClickListener mapClickListener;
@@ -98,16 +98,16 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
 
         complaintListFragment = new ComplaintListFragment();
         analyticsFragment = new AnalyticsFragment();
-        googleMapFragment = new GoogleMapFragment();
+        complaintsMapFragment = new ComplaintsMapFragment();
 
         if(savedInstanceState == null) {
             getChildFragmentManager().beginTransaction().add(R.id.mcFragmentContainer, complaintListFragment).commit();
             getChildFragmentManager().beginTransaction().add(R.id.mcFragmentContainer, analyticsFragment).commit();
-            getChildFragmentManager().beginTransaction().add(R.id.mcFragmentContainer, googleMapFragment).commit();
+            getChildFragmentManager().beginTransaction().add(R.id.mcFragmentContainer, complaintsMapFragment).commit();
         }
 
         getChildFragmentManager().beginTransaction().hide(analyticsFragment).commit();
-        getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
+        getChildFragmentManager().beginTransaction().hide(complaintsMapFragment).commit();
         getChildFragmentManager().executePendingTransactions();
 
         mapDisplayed = false;
@@ -158,7 +158,6 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
         complaintListFragment.setHeader(headerView);
         //setFragmentContainerSize(null);
 
-        googleMapFragment.setContext(this);
         setupMenu(rootView.findViewById(R.id.menu));
 
         if(userSession.getUser().getPerson().getDob() != null) {
@@ -179,9 +178,10 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints: Show List");
                 headerContainer.setVisibility(View.GONE);
                 //setFragmentContainerSize(600);
+                complaintsMapFragment.setMapDisplayed(false);
                 getChildFragmentManager().beginTransaction().show(complaintListFragment).commit();
                 getChildFragmentManager().beginTransaction().hide(analyticsFragment).commit();
-                getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
+                getChildFragmentManager().beginTransaction().hide(complaintsMapFragment).commit();
                 getChildFragmentManager().executePendingTransactions();
                 //mcScrollView.removeInterceptScrollView(googleMapFragment.getView());
                 //mcScrollView.addInterceptScrollView(complaintListFragment.getView());
@@ -197,9 +197,10 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints: Show Map");
                 headerContainer.setVisibility(View.VISIBLE);
                 //setFragmentContainerSize(350);
+                complaintsMapFragment.setMapDisplayed(true);
                 getChildFragmentManager().beginTransaction().hide(complaintListFragment).commit();
                 getChildFragmentManager().beginTransaction().hide(analyticsFragment).commit();
-                getChildFragmentManager().beginTransaction().show(googleMapFragment).commit();
+                getChildFragmentManager().beginTransaction().show(complaintsMapFragment).commit();
                 getChildFragmentManager().executePendingTransactions();
                 //mcScrollView.removeInterceptScrollView(complaintListFragment.getView());
                 //mcScrollView.addInterceptScrollView(googleMapFragment.getView());
@@ -210,8 +211,7 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
                     @Override
                     public void run() {
                         if(!markersAdded) {
-                            googleMapFragment.addMarkers(currentComplaintDtoList);
-                            markersAdded = true;
+                            markersAdded = complaintsMapFragment.setComplaintsData(currentComplaintDtoList);
                         }
                     }
                 });
@@ -226,9 +226,10 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints: Show Analytics");
                 headerContainer.setVisibility(View.VISIBLE);
                 //setFragmentContainerSize(null);
+                complaintsMapFragment.setMapDisplayed(false);
                 getChildFragmentManager().beginTransaction().hide(complaintListFragment).commit();
                 getChildFragmentManager().beginTransaction().show(analyticsFragment).commit();
-                getChildFragmentManager().beginTransaction().hide(googleMapFragment).commit();
+                getChildFragmentManager().beginTransaction().hide(complaintsMapFragment).commit();
                 getChildFragmentManager().executePendingTransactions();
                 //mcScrollView.removeInterceptScrollView(googleMapFragment.getView());
                 //mcScrollView.removeInterceptScrollView(complaintListFragment.getView());
@@ -262,13 +263,9 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
 
     private void setComplaintData(List<ComplaintDto> complaintDtos) {
         currentComplaintDtoList = complaintDtos;
-        complaintListFragment.setData(complaintDtos);
-        analyticsFragment.populateCountersAndCreateChart(complaintDtos);
-        if (mapReady && mapDisplayed) {
-            googleMapFragment.addMarkers(complaintDtos);
-            markersAdded = true;
-        }
-        markersAdded = false;
+        complaintListFragment.setData(currentComplaintDtoList);
+        analyticsFragment.populateCountersAndCreateChart(currentComplaintDtoList);
+        markersAdded = complaintsMapFragment.setComplaintsData(currentComplaintDtoList);
         //mcScrollView.smoothScrollTo(0, 0);
     }
 
@@ -289,16 +286,6 @@ public class ComplaintsFragment extends BaseFragment implements OnMapReadyCallba
     public void setFilter(ComplaintFilter filter) {
         complaintFilter = filter;
         setComplaintData(ComplaintFilterHelper.filter(complaintDtoList, filter));
-    }
-
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mapReady = true;
-        if(currentComplaintDtoList != null) {
-            googleMapFragment.addMarkers(currentComplaintDtoList);
-            markersAdded = true;
-        }
     }
 
     public void onEventMainThread(GetUserComplaintsEvent event) {
