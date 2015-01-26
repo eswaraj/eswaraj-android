@@ -7,8 +7,9 @@ import com.android.volley.toolbox.Volley;
 import com.eswaraj.app.eswaraj.activities.AddDetailsActivity;
 import com.eswaraj.app.eswaraj.activities.ComplaintFilterActivity;
 import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
-import com.eswaraj.app.eswaraj.activities.ComplaintsActivity;
-import com.eswaraj.app.eswaraj.activities.ConstituencyActivity;
+import com.eswaraj.app.eswaraj.activities.ConstituencyComplaintsActivity;
+import com.eswaraj.app.eswaraj.activities.ConstituencySnapshotActivity;
+import com.eswaraj.app.eswaraj.activities.UserComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.ContentActivity;
 import com.eswaraj.app.eswaraj.activities.HomeActivity;
 import com.eswaraj.app.eswaraj.activities.LeaderActivity;
@@ -32,10 +33,11 @@ import com.eswaraj.app.eswaraj.fragments.AnalyticsFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintListFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryOfflineFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintsFragment;
-import com.eswaraj.app.eswaraj.fragments.ComplaintsPagerFragment;
+import com.eswaraj.app.eswaraj.fragments.ConstituencyComplaintsFragment;
+import com.eswaraj.app.eswaraj.fragments.ConstituencySnapshotFragment;
+import com.eswaraj.app.eswaraj.fragments.UserComplaintsFragment;
 import com.eswaraj.app.eswaraj.fragments.ConstituencyFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintsMapFragment;
-import com.eswaraj.app.eswaraj.fragments.ConstituencyPagerFragment;
 import com.eswaraj.app.eswaraj.fragments.MyConstituencyFragment;
 import com.eswaraj.app.eswaraj.fragments.ConstituencyInfoFragment;
 import com.eswaraj.app.eswaraj.fragments.ContentFragment;
@@ -130,7 +132,7 @@ import de.greenrobot.event.EventBus;
                 MarkLocationActivity.class,
                 ComplaintSummaryFragment.class,
                 ComplaintSummaryActivity.class,
-                ComplaintsActivity.class,
+                UserComplaintsActivity.class,
                 MyComplaintsFragment.class,
                 UserComplaintsRequest.class,
                 SingleComplaintActivity.class,
@@ -151,7 +153,7 @@ import de.greenrobot.event.EventBus;
                 LoadProfileUpdateRequest.class,
                 MyProfileActivity.class,
                 MyProfileFragment.class,
-                ConstituencyActivity.class,
+                ConstituencyComplaintsActivity.class,
                 MyConstituencyFragment.class,
                 LocationComplaintsRequest.class,
                 LocationComplaintCountersRequest.class,
@@ -181,8 +183,10 @@ import de.greenrobot.event.EventBus;
                 ConstituencyFragment.class,
                 ComplaintsMapFragment.class,
                 BaseActivity.class,
-                ComplaintsPagerFragment.class,
-                ConstituencyPagerFragment.class
+                UserComplaintsFragment.class,
+                ConstituencyComplaintsFragment.class,
+                ConstituencySnapshotActivity.class,
+                ConstituencySnapshotFragment.class
         },
         complete = false,
         library = true

@@ -37,5 +37,6 @@
     <string name="title_activity_leader">LeaderActivity</string>
     <string name="title_activity_content">ContentActivity</string>
     <string name="title_activity_complaint_filter">ComplaintFilterActivity</string>
+    <string name="title_activity_constituency_snapshot">ConstituencySnapshotActivity</string>
 
 </resources>

@@ -1,10 +1,7 @@
 package com.eswaraj.app.eswaraj.activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
@@ -38,7 +35,7 @@ public class LeaderActivity extends BaseActivity {
     }
 
     public void onEventMainThread(StartAnotherActivityEvent event) {
-        Intent i = new Intent(this, ConstituencyActivity.class);
+        Intent i = new Intent(this, ConstituencyComplaintsActivity.class);
         i.putExtra("ID", event.getId());
         startActivity(i);
     }

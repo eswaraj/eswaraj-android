@@ -35,7 +35,7 @@ import javax.inject.Inject;
 import de.greenrobot.event.EventBus;
 
 
-public class ConstituencyPagerFragment extends BaseFragment {
+public class ConstituencyComplaintsFragment extends BaseFragment {
 
     @Inject
     EventBus eventBus;
@@ -61,8 +61,9 @@ public class ConstituencyPagerFragment extends BaseFragment {
     private ConstituencyPagerAdapter constituencyPagerAdapter;
 
     private Boolean locationDtoAvailable = true;
+    private Integer requestCount = 20;
 
-    public ConstituencyPagerFragment() {
+    public ConstituencyComplaintsFragment() {
         // Required empty public constructor
     }
 
@@ -86,7 +87,7 @@ public class ConstituencyPagerFragment extends BaseFragment {
         pDialog.show();
 
         if(locationDtoAvailable) {
-            middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, 20);
+            middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, requestCount);
             middlewareService.loadLocationComplaintCounters(getActivity(), locationDto);
         }
     }
@@ -101,6 +102,11 @@ public class ConstituencyPagerFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_constituency_pager, container, false);
 
+        complaintListFragment = new ComplaintListFragment();
+        analyticsFragment = new AnalyticsFragment();
+        complaintsMapFragment = new ComplaintsMapFragment();
+        constituencyInfoFragment = new ConstituencyInfoFragment();
+
         mcShowMore = new Button(getActivity());
         mcShowMore.setText("Show more");
         complaintListFragment.setFooter(mcShowMore);
@@ -108,16 +114,11 @@ public class ConstituencyPagerFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show More");
-                middlewareService.loadLocationComplaints(getActivity(), locationDto, complaintDtoList.size(), 20);
+                middlewareService.loadLocationComplaints(getActivity(), locationDto, complaintDtoList.size(), requestCount);
                 pDialog = new CustomProgressDialog(getActivity(), false, true, "Fetching more complaints ...");
                 pDialog.show();
             }
         });
-
-        complaintListFragment = new ComplaintListFragment();
-        analyticsFragment = new AnalyticsFragment();
-        complaintsMapFragment = new ComplaintsMapFragment();
-        constituencyInfoFragment = new ConstituencyInfoFragment();
 
         ViewPager pager = (ViewPager) rootView.findViewById(R.id.viewPager);
         constituencyPagerAdapter = new ConstituencyPagerAdapter(getChildFragmentManager(), complaintListFragment, analyticsFragment, complaintsMapFragment, constituencyInfoFragment);
@@ -170,7 +171,7 @@ public class ConstituencyPagerFragment extends BaseFragment {
     public void onEventMainThread(GetLocationEvent event) {
         if(event.getSuccess()) {
             locationDto = event.getLocationDto();
-            middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, 20);
+            middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, requestCount);
             middlewareService.loadLocationComplaintCounters(getActivity(), locationDto);
         }
         else {
@@ -189,6 +190,9 @@ public class ConstituencyPagerFragment extends BaseFragment {
                 }
             }
             setFilter(complaintFilter);
+            if(complaintDtoList.size() < requestCount) {
+                mcShowMore.setVisibility(View.GONE);
+            }
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch constituency complaints. Error = " + event.getError(), Toast.LENGTH_LONG).show();

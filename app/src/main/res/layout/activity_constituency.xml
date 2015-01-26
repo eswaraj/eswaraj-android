@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.eswaraj.app.eswaraj.activities.ConstituencyActivity">
+    tools:context="com.eswaraj.app.eswaraj.activities.ConstituencyComplaintsActivity">
 
     <fragment
-        class="com.eswaraj.app.eswaraj.fragments.ConstituencyPagerFragment"
+        class="com.eswaraj.app.eswaraj.fragments.ConstituencyComplaintsFragment"
         android:id="@+id/constituencyFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

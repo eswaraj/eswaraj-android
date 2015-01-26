@@ -23,6 +23,7 @@ import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.GetLeadersEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.RevGeocodeEvent;
+import com.eswaraj.app.eswaraj.fragments.ConstituencySnapshotFragment;
 import com.eswaraj.app.eswaraj.fragments.GoogleMapFragment;
 import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.helpers.ReverseGeocodingTask;
@@ -153,7 +154,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints");
                 if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     if (userSession.isUserLoggedIn(v.getContext())) {
-                        Intent i = new Intent(v.getContext(), ComplaintsActivity.class);
+                        Intent i = new Intent(v.getContext(), UserComplaintsActivity.class);
                         startActivity(i);
                     } else {
                         googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Complaints: Not Logged-in");
@@ -277,7 +278,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                             state.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
                             state.setId(userSession.getUser().getPerson().getPersonAddress().getState().getId());
                             state.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getState());
-                            state.setTarget(ConstituencyActivity.class);
+                            //state.setTarget(ConstituencyComplaintsActivity.class);
+                            state.setTarget(ConstituencySnapshotActivity.class);
                             constituencyDialogItems.add(state);
                         }
 
@@ -288,7 +290,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                             pc.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
                             pc.setId(userSession.getUser().getPerson().getPersonAddress().getPc().getId());
                             pc.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getPc());
-                            pc.setTarget(ConstituencyActivity.class);
+                            //state.setTarget(ConstituencyComplaintsActivity.class);
+                            pc.setTarget(ConstituencySnapshotActivity.class);
                             constituencyDialogItems.add(pc);
                         }
 
@@ -299,7 +302,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                             ac.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
                             ac.setId(userSession.getUser().getPerson().getPersonAddress().getAc().getId());
                             ac.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getAc());
-                            ac.setTarget(ConstituencyActivity.class);
+                            //state.setTarget(ConstituencyComplaintsActivity.class);
+                            ac.setTarget(ConstituencySnapshotActivity.class);
                             constituencyDialogItems.add(ac);
                         }
 

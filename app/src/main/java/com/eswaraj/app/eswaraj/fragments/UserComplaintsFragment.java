@@ -30,7 +30,7 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class ComplaintsPagerFragment extends BaseFragment {
+public class UserComplaintsFragment extends BaseFragment {
 
     @Inject
     EventBus eventBus;
@@ -51,7 +51,7 @@ public class ComplaintsPagerFragment extends BaseFragment {
     private ComplaintFilter complaintFilter;
     private ComplaintsPagerAdapter complaintsPagerAdapter;
 
-    public ComplaintsPagerFragment() {
+    public UserComplaintsFragment() {
         // Required empty public constructor
     }
 
