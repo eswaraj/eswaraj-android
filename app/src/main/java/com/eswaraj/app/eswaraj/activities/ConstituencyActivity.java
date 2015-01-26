@@ -9,6 +9,7 @@ import com.eswaraj.app.eswaraj.events.ComplaintSelectedEvent;
 import com.eswaraj.app.eswaraj.events.FilterClickEvent;
 import com.eswaraj.app.eswaraj.events.MarkerClickEvent;
 import com.eswaraj.app.eswaraj.fragments.ConstituencyFragment;
+import com.eswaraj.app.eswaraj.fragments.ConstituencyPagerFragment;
 import com.eswaraj.app.eswaraj.fragments.MyConstituencyFragment;
 import com.eswaraj.app.eswaraj.models.ComplaintFilter;
 
@@ -23,7 +24,7 @@ public class ConstituencyActivity extends BaseActivity {
     @Inject
     EventBus eventBus;
 
-    private ConstituencyFragment myConstituencyFragment;
+    private ConstituencyPagerFragment myConstituencyFragment;
     private final int OPEN_COMPLAINT_REQUEST = 99;
     private final int SHOW_FILTER_REQUEST = 9999;
 
@@ -33,7 +34,7 @@ public class ConstituencyActivity extends BaseActivity {
         showFilter = true;
         setContentView(R.layout.activity_constituency);
 
-        myConstituencyFragment = (ConstituencyFragment) getSupportFragmentManager().findFragmentById(R.id.constituencyFragment);
+        myConstituencyFragment = (ConstituencyPagerFragment) getSupportFragmentManager().findFragmentById(R.id.constituencyFragment);
     }
 
     @Override

@@ -35,6 +35,7 @@ import com.eswaraj.app.eswaraj.fragments.ComplaintsFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintsPagerFragment;
 import com.eswaraj.app.eswaraj.fragments.ConstituencyFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintsMapFragment;
+import com.eswaraj.app.eswaraj.fragments.ConstituencyPagerFragment;
 import com.eswaraj.app.eswaraj.fragments.MyConstituencyFragment;
 import com.eswaraj.app.eswaraj.fragments.ConstituencyInfoFragment;
 import com.eswaraj.app.eswaraj.fragments.ContentFragment;
@@ -180,7 +181,8 @@ import de.greenrobot.event.EventBus;
                 ConstituencyFragment.class,
                 ComplaintsMapFragment.class,
                 BaseActivity.class,
-                ComplaintsPagerFragment.class
+                ComplaintsPagerFragment.class,
+                ConstituencyPagerFragment.class
         },
         complete = false,
         library = true

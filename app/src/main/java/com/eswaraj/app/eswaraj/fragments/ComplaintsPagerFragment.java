@@ -49,7 +49,7 @@ public class ComplaintsPagerFragment extends BaseFragment {
     private List<ComplaintDto> complaintDtoList;
     private List<ComplaintDto> currentComplaintDtoList;
     private ComplaintFilter complaintFilter;
-    private MyPagerAdapter myPagerAdapter;
+    private ComplaintsPagerAdapter complaintsPagerAdapter;
 
     public ComplaintsPagerFragment() {
         // Required empty public constructor
@@ -81,8 +81,8 @@ public class ComplaintsPagerFragment extends BaseFragment {
         complaintsMapFragment = new ComplaintsMapFragment();
 
         ViewPager pager = (ViewPager) rootView.findViewById(R.id.viewPager);
-        myPagerAdapter = new MyPagerAdapter(getChildFragmentManager(), complaintListFragment, analyticsFragment, complaintsMapFragment);
-        pager.setAdapter(myPagerAdapter);
+        complaintsPagerAdapter = new ComplaintsPagerAdapter(getChildFragmentManager(), complaintListFragment, analyticsFragment, complaintsMapFragment);
+        pager.setAdapter(complaintsPagerAdapter);
         pager.setOffscreenPageLimit(3);
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) rootView.findViewById(R.id.tabs);
@@ -103,7 +103,7 @@ public class ComplaintsPagerFragment extends BaseFragment {
                 else {
                     complaintsMapFragment.setMapDisplayed(true);
                 }
-                myPagerAdapter.setData(currentComplaintDtoList);
+                complaintsPagerAdapter.setData(currentComplaintDtoList);
             }
 
             @Override
@@ -117,10 +117,7 @@ public class ComplaintsPagerFragment extends BaseFragment {
 
     private void setComplaintData(List<ComplaintDto> complaintDtos) {
         currentComplaintDtoList = complaintDtos;
-        //complaintListFragment.setData(currentComplaintDtoList);
-        //analyticsFragment.populateCountersAndCreateChart(currentComplaintDtoList);
-        //markersAdded = complaintsMapFragment.setComplaintsData(currentComplaintDtoList);
-        myPagerAdapter.setData(complaintDtos);
+        complaintsPagerAdapter.setData(complaintDtos);
     }
 
     public void markComplaintClosed(Long id) {
@@ -147,7 +144,7 @@ public class ComplaintsPagerFragment extends BaseFragment {
 
 
 
-    private class MyPagerAdapter extends FragmentPagerAdapter {
+    private class ComplaintsPagerAdapter extends FragmentPagerAdapter {
 
         private ComplaintListFragment complaintListFragment;
         private AnalyticsFragment analyticsFragment;
@@ -157,7 +154,7 @@ public class ComplaintsPagerFragment extends BaseFragment {
         private Boolean analyticsAdded = false;
         private Boolean mapAdded = false;
 
-        public MyPagerAdapter(FragmentManager fm, ComplaintListFragment complaintListFragment, AnalyticsFragment analyticsFragment, ComplaintsMapFragment complaintsMapFragment) {
+        public ComplaintsPagerAdapter(FragmentManager fm, ComplaintListFragment complaintListFragment, AnalyticsFragment analyticsFragment, ComplaintsMapFragment complaintsMapFragment) {
             super(fm);
             this.complaintListFragment = complaintListFragment;
             this.analyticsFragment = analyticsFragment;
