@@ -8,12 +8,6 @@
     tools:context="com.eswaraj.app.eswaraj.activities.HomeActivity"
     android:background="#F2F2F2">
 
-    <include
-        android:id="@+id/logo_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/screen_header" />
-
     <fragment
         class="com.eswaraj.app.eswaraj.fragments.GoogleMapFragment"
         android:id="@+id/hMap"

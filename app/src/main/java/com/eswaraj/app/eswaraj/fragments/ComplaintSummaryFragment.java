@@ -86,7 +86,6 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         another = (Button) rootView.findViewById(R.id.csAnother);
         facebook = (ImageView) rootView.findViewById(R.id.csFacebook);
 
-        setupMenu(rootView.findViewById(R.id.menu));
         description.setMovementMethod(new ScrollingMovementMethod());
 
         googleMapFragment = new GoogleMapFragment();

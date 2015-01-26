@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/menu_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Search"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/menu_filter"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Filter"
+        app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_profile"
-        android:title="Profile"/>
+        android:id="@+id/menu_user"
+        android:title=""
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_splash"
-        android:title="Welcome Screen"/>
+        android:title="Welcome Screen"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_content"
-        android:title="Content" />
+        android:title="Content"
+        app:showAsAction="never" />
 </menu>

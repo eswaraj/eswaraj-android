@@ -7,19 +7,20 @@ import com.android.volley.toolbox.Volley;
 import com.eswaraj.app.eswaraj.activities.AddDetailsActivity;
 import com.eswaraj.app.eswaraj.activities.ComplaintFilterActivity;
 import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
+import com.eswaraj.app.eswaraj.activities.ComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.ConstituencyActivity;
 import com.eswaraj.app.eswaraj.activities.ContentActivity;
 import com.eswaraj.app.eswaraj.activities.HomeActivity;
 import com.eswaraj.app.eswaraj.activities.LeaderActivity;
 import com.eswaraj.app.eswaraj.activities.LoginActivity;
 import com.eswaraj.app.eswaraj.activities.MarkLocationActivity;
-import com.eswaraj.app.eswaraj.activities.MyComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.MyProfileActivity;
 import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
 import com.eswaraj.app.eswaraj.activities.SelectTemplateActivity;
 import com.eswaraj.app.eswaraj.activities.SingleComplaintActivity;
 import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.activities.YoutubeActivity;
+import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.datastore.CacheInterface;
 import com.eswaraj.app.eswaraj.datastore.Database;
@@ -31,6 +32,7 @@ import com.eswaraj.app.eswaraj.fragments.AnalyticsFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintListFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintSummaryOfflineFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintsFragment;
+import com.eswaraj.app.eswaraj.fragments.ComplaintsPagerFragment;
 import com.eswaraj.app.eswaraj.fragments.ConstituencyFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintsMapFragment;
 import com.eswaraj.app.eswaraj.fragments.MyConstituencyFragment;
@@ -127,7 +129,7 @@ import de.greenrobot.event.EventBus;
                 MarkLocationActivity.class,
                 ComplaintSummaryFragment.class,
                 ComplaintSummaryActivity.class,
-                MyComplaintsActivity.class,
+                ComplaintsActivity.class,
                 MyComplaintsFragment.class,
                 UserComplaintsRequest.class,
                 SingleComplaintActivity.class,
@@ -176,7 +178,9 @@ import de.greenrobot.event.EventBus;
                 ComplaintFilterActivity.class,
                 ConstituencyInfoFragment.class,
                 ConstituencyFragment.class,
-                ComplaintsMapFragment.class
+                ComplaintsMapFragment.class,
+                BaseActivity.class,
+                ComplaintsPagerFragment.class
         },
         complete = false,
         library = true
@@ -228,7 +232,7 @@ public class MiddlewareGraph {
 
     @Provides @Singleton
     EventBus provideEventBus() {
-        return EventBus.getDefault();
+        return EventBus.builder().logNoSubscriberMessages(false).sendNoSubscriberEvent(false).build();
     }
 
     @Provides @Singleton

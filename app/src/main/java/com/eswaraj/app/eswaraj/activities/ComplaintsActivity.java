@@ -10,6 +10,7 @@ import com.eswaraj.app.eswaraj.events.ComplaintSelectedEvent;
 import com.eswaraj.app.eswaraj.events.FilterClickEvent;
 import com.eswaraj.app.eswaraj.events.MarkerClickEvent;
 import com.eswaraj.app.eswaraj.fragments.ComplaintsFragment;
+import com.eswaraj.app.eswaraj.fragments.ComplaintsPagerFragment;
 import com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment;
 import com.eswaraj.app.eswaraj.models.ComplaintFilter;
 
@@ -21,23 +22,26 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class MyComplaintsActivity extends BaseActivity {
+public class ComplaintsActivity extends BaseActivity {
 
     @Inject
     EventBus eventBus;
 
     //private MyComplaintsFragment myComplaintsFragment;
-    private ComplaintsFragment complaintsFragment;
+    //private ComplaintsFragment complaintsFragment;
+    private ComplaintsPagerFragment complaintsFragment;
     private final int OPEN_COMPLAINT_REQUEST = 99;
     private final int SHOW_FILTER_REQUEST = 9999;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        showFilter = true;
         setContentView(R.layout.activity_my_complaints);
 
         //myComplaintsFragment = (MyComplaintsFragment) getSupportFragmentManager().findFragmentById(R.id.mcFragment);
-        complaintsFragment = (ComplaintsFragment) getSupportFragmentManager().findFragmentById(R.id.mcFragment);
+        //complaintsFragment = (ComplaintsFragment) getSupportFragmentManager().findFragmentById(R.id.mcFragment);
+        complaintsFragment = (ComplaintsPagerFragment) getSupportFragmentManager().findFragmentById(R.id.mcFragment);
     }
 
     @Override
@@ -64,11 +68,6 @@ public class MyComplaintsActivity extends BaseActivity {
         i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
         i.putExtra("DATA_PRESENT", true);
         startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
-    }
-
-    public void onEventMainThread(FilterClickEvent event) {
-        Intent i = new Intent(this, ComplaintFilterActivity.class);
-        startActivityForResult(i, SHOW_FILTER_REQUEST);
     }
 
     @Override

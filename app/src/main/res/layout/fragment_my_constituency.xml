@@ -6,12 +6,6 @@
     tools:context="com.eswaraj.app.eswaraj.fragments.MyConstituencyFragment"
     android:background="#ffffff">
 
-    <include
-        android:id="@+id/logo_header"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/screen_header" />
-
     <com.eswaraj.app.eswaraj.widgets.CustomScrollView
         android:id="@+id/cScrollView"
         android:layout_width="wrap_content"

@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.eswaraj.app.eswaraj.datastore.CacheInterface;
 import com.eswaraj.app.eswaraj.datastore.DatabaseInterface;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.LocationDto;
@@ -28,6 +29,6 @@ public interface MiddlewareService extends MiddlewareGetService, MiddlewarePostS
     public void loadLocationComplaints(Context context, LocationDto locationDto, int start, int count, Boolean dontGetFromCache);
     public void loadLocationComplaintCounters(Context context, LocationDto locationDto, Boolean dontGetFromCache);
     public void loadSingleComplaint(Context context, Long id, Boolean dontGetFromCache);
-    public void loadLeaders(Context context, Boolean dontGetFromCache);
+    public void loadLeaders(Context context, UserSessionUtil userSession, Boolean dontGetFromCache);
     public void loadLocation(Context context, Long id, Boolean dontGetFromCache);
 }

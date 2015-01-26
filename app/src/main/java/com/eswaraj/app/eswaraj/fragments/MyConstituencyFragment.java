@@ -197,8 +197,6 @@ public class MyConstituencyFragment extends BaseFragment implements OnMapReadyCa
         cArea = (TextView)rootView.findViewById( R.id.cArea );
         cPerimeter = (TextView)rootView.findViewById( R.id.cPerimeter );
 
-        setupMenu(rootView.findViewById(R.id.menu));
-
         mcAnalyticsContainer.setVisibility(View.INVISIBLE);
         mcMapButtons.setVisibility(View.INVISIBLE);
         mcInfoContainer.setVisibility(View.INVISIBLE);

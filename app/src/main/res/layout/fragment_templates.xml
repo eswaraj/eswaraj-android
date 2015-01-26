@@ -10,12 +10,6 @@
     android:background="#ffffffff"
     android:padding="0dp">
 
-    <include
-        android:id="@+id/logo_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/screen_header" />
-
     <FrameLayout
         android:id="@+id/stBanner"
         android:layout_width="fill_parent"

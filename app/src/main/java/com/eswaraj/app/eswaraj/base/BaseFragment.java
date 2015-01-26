@@ -13,8 +13,4 @@ public class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ((EswarajApplication)getActivity().getApplication()).inject(this);
     }
-
-    public void setupMenu(View menu) {
-        ((BaseActivity)getActivity()).setupMenu(menu);
-    }
 }

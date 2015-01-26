@@ -262,13 +262,14 @@ public class LoginFragment extends BaseFragment {
             if(event.getUserDto() != null) {
                 userSession.setUser(event.getUserDto());
                 userSession.setToken(event.getToken());
+                userSession.loadUserProfilePhoto(getActivity());
 
                 //Set user ID for analytics tracking
                 googleAnalyticsTracker.setUserId(userSession.getUser().getId());
 
                 //GCM ID registration, if pending
                 if (!gcmUtil.isSyncedWithServer(getActivity())) {
-                    middlewareService.registerGcmId(getActivity());
+                    middlewareService.registerGcmId(getActivity(), userSession);
                 }
 
                 if (middlewareService.isUserDataStale(getActivity()) && internetServicesCheckUtil.isServiceAvailable(getActivity())) {
@@ -281,7 +282,6 @@ public class LoginFragment extends BaseFragment {
                     eventBus.post(loginStatusEvent);
                 }
             }
-
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch user details from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
@@ -293,6 +293,7 @@ public class LoginFragment extends BaseFragment {
         progressWheel.setVisibility(View.INVISIBLE);
         userSession.setUser(event.getUserDto());
         userSession.setToken(event.getToken());
+        userSession.loadUserProfilePhoto(getActivity());
 
         LoginStatusEvent loginStatusEvent = new LoginStatusEvent();
         loginStatusEvent.setSuccess(true);

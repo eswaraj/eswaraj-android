@@ -30,6 +30,7 @@ public class ConstituencyActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        showFilter = true;
         setContentView(R.layout.activity_constituency);
 
         myConstituencyFragment = (ConstituencyFragment) getSupportFragmentManager().findFragmentById(R.id.constituencyFragment);
@@ -61,11 +62,6 @@ public class ConstituencyActivity extends BaseActivity {
         i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
         i.putExtra("DATA_PRESENT", true);
         startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
-    }
-
-    public void onEventMainThread(FilterClickEvent event) {
-        Intent i = new Intent(this, ComplaintFilterActivity.class);
-        startActivityForResult(i, SHOW_FILTER_REQUEST);
     }
 
     @Override

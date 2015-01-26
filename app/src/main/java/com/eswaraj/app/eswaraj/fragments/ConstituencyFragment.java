@@ -44,10 +44,6 @@ public class ConstituencyFragment extends BaseFragment {
     @Inject
     MiddlewareServiceImpl middlewareService;
     @Inject
-    UserSessionUtil userSession;
-    @Inject
-    GlobalSessionUtil globalSession;
-    @Inject
     GoogleAnalyticsTracker googleAnalyticsTracker;
 
     private View headerView;
@@ -62,12 +58,8 @@ public class ConstituencyFragment extends BaseFragment {
     private ImageView infoButton2;
     private TextView mcName;
     private CustomNetworkImageView mcPhoto;
-    private TextView mcUserDetails;
     private TextView mcName2;
     private CustomNetworkImageView mcPhoto2;
-    private TextView mcUserDetails2;
-    private Button mcFilter;
-    private Button mcFilter2;
     private FrameLayout headerContainer;
     private FrameLayout fragmentContainer;
     private CustomScrollView mcScrollView;
@@ -83,7 +75,6 @@ public class ConstituencyFragment extends BaseFragment {
     private View.OnClickListener mapClickListener;
     private View.OnClickListener analyticsClickListener;
     private View.OnClickListener infoClickListener;
-    private View.OnClickListener filterClickListener;
 
     private CustomProgressDialog pDialog;
     private List<ComplaintDto> currentComplaintDtoList;
@@ -169,9 +160,6 @@ public class ConstituencyFragment extends BaseFragment {
         mcName2 = (TextView) rootView.findViewById(R.id.cName);
         mcPhoto2 = (CustomNetworkImageView) rootView.findViewById(R.id.cPhoto);
 
-        mcFilter = (Button) headerView.findViewById(R.id.cFilter);
-        mcFilter2 = (Button) rootView.findViewById(R.id.cFilter);
-
         mcIssueCount = (TextView) rootView.findViewById(R.id.issue_issues);
 
         headerContainer.setVisibility(View.GONE);
@@ -180,8 +168,6 @@ public class ConstituencyFragment extends BaseFragment {
         mcShowMore = new Button(getActivity());
         mcShowMore.setText("Show more");
         complaintListFragment.setFooter(mcShowMore);
-
-        setupMenu(rootView.findViewById(R.id.menu));
 
         if(locationDto != null) {
             mcName.setText(locationDto.getName());
@@ -279,15 +265,6 @@ public class ConstituencyFragment extends BaseFragment {
             }
         };
 
-        filterClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FilterClickEvent event = new FilterClickEvent();
-                event.setSuccess(true);
-                eventBus.post(event);
-            }
-        };
-
         mcShowMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -308,8 +285,6 @@ public class ConstituencyFragment extends BaseFragment {
         analyticsButton2.setOnClickListener(analyticsClickListener);
         infoButton2.setOnClickListener(infoClickListener);
 
-        mcFilter.setOnClickListener(filterClickListener);
-        mcFilter2.setOnClickListener(filterClickListener);
         return rootView;
     }
 

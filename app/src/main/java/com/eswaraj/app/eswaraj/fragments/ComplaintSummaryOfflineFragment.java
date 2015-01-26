@@ -70,7 +70,6 @@ public class ComplaintSummaryOfflineFragment extends BaseFragment {
         done = (Button) rootView.findViewById(R.id.csDone);
         another = (Button) rootView.findViewById(R.id.csAnother);
 
-        setupMenu(rootView.findViewById(R.id.menu));
         description.setMovementMethod(new ScrollingMovementMethod());
 
         imageFile = (File) getActivity().getIntent().getSerializableExtra("IMAGE");

@@ -109,8 +109,6 @@ public class SelectAmenityFragment extends BaseFragment implements OnMapReadyCal
         asRevGeocode = (ProgressTextView) rootView.findViewById(R.id.asRevGeocode);
         gvAmenityList = (GridView) rootView.findViewById(R.id.gvAmenityList);
 
-        setupMenu(rootView.findViewById(R.id.menu));
-
         asRevGeocode.setTextColor(Color.parseColor("#929292"));
 
         AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), null, null);

@@ -31,7 +31,6 @@ public class EswarajApplication extends Application {
                     .detectLeakedSqlLiteObjects()
                     .detectLeakedClosableObjects()
                     .penaltyLog()
-                    .penaltyDeath()
                     .build());
         }
         super.onCreate();

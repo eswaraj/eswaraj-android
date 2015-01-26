@@ -6,12 +6,6 @@
     android:background="#ffffff"
     tools:context="com.eswaraj.app.eswaraj.fragments.ComplaintsFragment">
 
-    <include
-        android:id="@+id/logo_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/screen_header" />
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"

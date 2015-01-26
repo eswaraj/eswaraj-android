@@ -64,12 +64,6 @@
         android:weightSum="12"
         android:layout_weight="0.7">
 
-        <Button
-            android:id="@+id/cFilter"
-            android:text="Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

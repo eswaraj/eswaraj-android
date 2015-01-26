@@ -57,8 +57,6 @@ public class SelectTemplateFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_templates, container, false);
         listView = (ListView) rootView.findViewById(R.id.stList);
 
-        setupMenu(rootView.findViewById(R.id.menu));
-
         TemplateListAdapter templateListAdapter = new TemplateListAdapter(getActivity(), R.layout.item_subcategory_list, amenity.getChildCategories());
         listView.setAdapter(templateListAdapter);
         listView.setDividerHeight(0);

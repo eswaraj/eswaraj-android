@@ -149,7 +149,6 @@
             mcDataView = (RelativeLayout) rootView.findViewById(R.id.mcDataView);
             mcScrollView = (CustomScrollView) rootView.findViewById(R.id.mcScrollView);
 
-            setupMenu(rootView.findViewById(R.id.menu));
             mcListOpen.setScrollingCacheEnabled(false);
             mcListClosed.setScrollingCacheEnabled(false);
 

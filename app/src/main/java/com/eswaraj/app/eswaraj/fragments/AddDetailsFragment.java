@@ -134,7 +134,6 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
 
         //Init
         locationUtil.setup(getActivity());
-        setupMenu(rootView.findViewById(R.id.menu));
 
         //Get the data from intent and display
         template = (CategoryWithChildCategoryDto) getActivity().getIntent().getSerializableExtra("TEMPLATE");

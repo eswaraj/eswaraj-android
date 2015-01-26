@@ -20,6 +20,7 @@ import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.UserDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
@@ -424,7 +425,7 @@ public class Cache extends BaseClass implements CacheInterface {
     }
 
     @Override
-    public void loadLeaders(Context context) {
+    public void loadLeaders(Context context, UserSessionUtil userSession) {
         JsonDeserializer<Date> deser = new JsonDeserializer<Date>() {
             @Override
             public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

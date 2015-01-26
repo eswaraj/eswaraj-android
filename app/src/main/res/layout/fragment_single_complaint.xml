@@ -7,12 +7,6 @@
     tools:context="com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment"
     android:background="#ffffff">
 
-    <include
-        android:id="@+id/logo_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/screen_header" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

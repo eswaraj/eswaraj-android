@@ -22,11 +22,9 @@ public class RegisterGcmIdRequest extends BaseClass {
     @Inject
     NetworkAccessHelper networkAccessHelper;
     @Inject
-    UserSessionUtil userSession;
-    @Inject
     GcmUtil gcmUtil;
 
-    public void processRequest(Context context)
+    public void processRequest(Context context, UserSessionUtil userSession)
     {
         RegisterGcmDeviceId registerGcmDeviceId = new RegisterGcmDeviceId();
         registerGcmDeviceId.setDeviceId(DeviceUtil.getDeviceid(context));

@@ -14,6 +14,7 @@ import com.eswaraj.app.eswaraj.datastore.Server;
 import com.eswaraj.app.eswaraj.datastore.ServerInterface;
 import com.eswaraj.app.eswaraj.helpers.DatabaseHelper;
 import com.eswaraj.app.eswaraj.models.ComplaintRequestDBItem;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.LocationDto;
@@ -406,8 +407,8 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void registerGcmId(Context context) {
-        server.registerGcmId(context);
+    public void registerGcmId(Context context, UserSessionUtil userSession) {
+        server.registerGcmId(context, userSession);
     }
 
     @Override
@@ -441,12 +442,12 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void loadLeaders(Context context, Boolean dontGetFromCache) {
+    public void loadLeaders(Context context, UserSessionUtil userSession, Boolean dontGetFromCache) {
         if(dontGetFromCache) {
-            server.loadLeaders(context);
+            server.loadLeaders(context, userSession);
         }
         else {
-            loadLeaders(context);
+            loadLeaders(context, userSession);
         }
     }
 
@@ -461,12 +462,12 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void loadLeaders(Context context) {
+    public void loadLeaders(Context context, UserSessionUtil userSession) {
         if(cache.isLeadersAvailable(context)) {
-            cache.loadLeaders(context);
+            cache.loadLeaders(context, userSession);
         }
         else {
-            server.loadLeaders(context);
+            server.loadLeaders(context, userSession);
         }
     }
 

@@ -64,8 +64,6 @@ public class ComplaintsFragment extends BaseFragment {
     private TextView mcName2;
     private CustomNetworkImageView mcPhoto2;
     private TextView mcUserDetails2;
-    private Button mcFilter;
-    private Button mcFilter2;
     private FrameLayout headerContainer;
     private FrameLayout fragmentContainer;
     private CustomScrollView mcScrollView;
@@ -151,14 +149,9 @@ public class ComplaintsFragment extends BaseFragment {
         mcPhoto2 = (CustomNetworkImageView) rootView.findViewById(R.id.mcPhoto);
         mcUserDetails2 = (TextView) rootView.findViewById(R.id.mcUserDetails);
 
-        mcFilter = (Button) headerView.findViewById(R.id.mcFilter);
-        mcFilter2 = (Button) rootView.findViewById(R.id.mcFilter);
-
         headerContainer.setVisibility(View.GONE);
         complaintListFragment.setHeader(headerView);
         //setFragmentContainerSize(null);
-
-        setupMenu(rootView.findViewById(R.id.menu));
 
         if(userSession.getUser().getPerson().getDob() != null) {
             mcUserDetails.setText(GenericUtil.getAge(userSession.getUser().getPerson().getDob()) + " Years, " + userSession.getUser().getPerson().getGender());
@@ -238,15 +231,6 @@ public class ComplaintsFragment extends BaseFragment {
             }
         };
 
-        filterClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FilterClickEvent event = new FilterClickEvent();
-                event.setSuccess(true);
-                eventBus.post(event);
-            }
-        };
-
         listButton.setOnClickListener(listClickListener);
         mapButton.setOnClickListener(mapClickListener);
         analyticsButton.setOnClickListener(analyticsClickListener);
@@ -254,9 +238,6 @@ public class ComplaintsFragment extends BaseFragment {
         listButton2.setOnClickListener(listClickListener);
         mapButton2.setOnClickListener(mapClickListener);
         analyticsButton2.setOnClickListener(analyticsClickListener);
-
-        mcFilter.setOnClickListener(filterClickListener);
-        mcFilter2.setOnClickListener(filterClickListener);
 
         return rootView;
     }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.adapters.FilterListAdapter;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
+import com.eswaraj.app.eswaraj.base.BaseFragmentActivity;
 import com.eswaraj.app.eswaraj.models.ComplaintFilter;
 import com.eswaraj.app.eswaraj.util.GlobalSessionUtil;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class ComplaintFilterActivity extends BaseActivity {
+public class ComplaintFilterActivity extends BaseFragmentActivity {
 
     @Inject
     GlobalSessionUtil globalSession;

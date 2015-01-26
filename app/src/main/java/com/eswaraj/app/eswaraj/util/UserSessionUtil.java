@@ -2,28 +2,38 @@ package com.eswaraj.app.eswaraj.util;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.PreferenceConstants;
 import com.eswaraj.app.eswaraj.datastore.Cache;
+import com.eswaraj.app.eswaraj.datastore.Server;
+import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.helpers.SharedPreferencesHelper;
+import com.eswaraj.app.eswaraj.middleware.MiddlewareService;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.web.dto.UserDto;
 import com.facebook.Session;
 
 import javax.inject.Inject;
 
+import de.greenrobot.event.EventBus;
+
 public class UserSessionUtil extends BaseClass {
 
     @Inject
-    Cache cache;
-    @Inject
     SharedPreferencesHelper sharedPreferencesHelper;
+    @Inject
+    MiddlewareServiceImpl middlewareService;
+    @Inject
+    EventBus eventBus;
 
     private UserDto user;
     private String userRevGeocodedLocation;
     private String token;
+    private Bitmap userProfilePhoto;
+    private Boolean loading = false;
 
     public String getUserRevGeocodedLocation() {
         return userRevGeocodedLocation;
@@ -68,7 +78,7 @@ public class UserSessionUtil extends BaseClass {
 
     public void logoutUser(Context context) {
         //Update the cache with null to indicate that user has logged out and user object in cache is not valid anymore
-        cache.updateUserData(context, null);
+        middlewareService.updateUserData(context, null);
         setUserSkipMarkLocation(context, false);
         Session session = Session.getActiveSession();
         if (session != null) {
@@ -77,6 +87,10 @@ public class UserSessionUtil extends BaseClass {
             }
         }
         user = null;
+    }
+
+    public Bitmap getUserProfilePhoto() {
+        return userProfilePhoto;
     }
 
     public String getProfilePhoto() {
@@ -90,4 +104,25 @@ public class UserSessionUtil extends BaseClass {
     public void setUserSkipMarkLocation(Context context, Boolean skip) {
         sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_USER_PREFS, PreferenceConstants.MARK_LOCATION_SKIPPED, skip);
     }
+
+    public void loadUserProfilePhoto(Context context) {
+        if(user != null && getProfilePhoto() != null && !getProfilePhoto().equals("")) {
+            if(!loading) {
+                eventBus.register(this);
+            }
+            loading = true;
+            middlewareService.loadProfileImage(context, getProfilePhoto(), user.getPerson().getId(), false);
+        }
+    }
+
+    public void onEventMainThread(GetProfileImageEvent event) {
+        if(event.getId().equals(user.getPerson().getId())) {
+            if(event.getSuccess()) {
+                userProfilePhoto = event.getBitmap();
+            }
+            eventBus.unregister(this);
+            loading = false;
+        }
+    }
+
 }

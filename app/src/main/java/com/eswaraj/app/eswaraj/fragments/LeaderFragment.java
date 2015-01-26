@@ -50,8 +50,6 @@ public class LeaderFragment extends BaseFragment {
         lDetails = (WebView) rootView.findViewById(R.id.lDetails);
         lConstituency = (Button) rootView.findViewById(R.id.lConstituency);
 
-        setupMenu(rootView.findViewById(R.id.menu));
-
         politicalBodyAdminDto = (PoliticalBodyAdminDto) getActivity().getIntent().getSerializableExtra("LEADER");
 
         lPhoto.loadProfileImage(politicalBodyAdminDto.getProfilePhoto(), politicalBodyAdminDto.getId());

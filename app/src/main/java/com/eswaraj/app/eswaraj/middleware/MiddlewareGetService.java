@@ -4,6 +4,7 @@ package com.eswaraj.app.eswaraj.middleware;
 import android.content.Context;
 
 import com.eswaraj.app.eswaraj.models.ComplaintRequestDBItem;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.LocationDto;
@@ -26,6 +27,6 @@ public interface MiddlewareGetService {
     public void loadLocationComplaints(Context context, LocationDto locationDto, int start, int count);
     public void loadLocationComplaintCounters(Context context, LocationDto locationDto);
     public void loadSingleComplaint(Context context, Long id);
-    public void loadLeaders(Context context);
+    public void loadLeaders(Context context, UserSessionUtil userSession);
     public void loadLocation(Context context, Long id);
 }

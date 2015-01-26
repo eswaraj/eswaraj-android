@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
+import com.eswaraj.app.eswaraj.base.BaseFragmentActivity;
 import com.eswaraj.app.eswaraj.events.LoginStatusEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
 import com.eswaraj.app.eswaraj.fragments.LoginFragment;
@@ -22,7 +25,7 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseFragmentActivity {
 
     private LoginFragment loginFragment;
 
@@ -77,8 +80,14 @@ public class LoginActivity extends BaseActivity {
             getWindow().setLayout(screenWidth, screenHeight);
         }
         else {
-            setTheme(android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+            //setTheme(android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+            setTheme(android.R.style.Theme_Holo_Light_NoActionBar_Fullscreen);
+            //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            //getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            //requestWindowFeature(Window.FEATURE_NO_TITLE);
+
             setContentView(R.layout.activity_login);
+            //getActionBar().hide();
         }
 
         //loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.loginFragment);

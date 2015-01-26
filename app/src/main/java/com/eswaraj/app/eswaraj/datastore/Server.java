@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.config.ImageType;
+import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.volley.CommentPostRequest;
 import com.eswaraj.app.eswaraj.volley.CommentsRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintCloseRequest;
@@ -162,8 +163,8 @@ public class Server extends BaseClass implements ServerInterface {
     }
 
     @Override
-    public void registerGcmId(Context context) {
-        registerGcmIdRequest.processRequest(context);
+    public void registerGcmId(Context context, UserSessionUtil userSession) {
+        registerGcmIdRequest.processRequest(context, userSession);
     }
 
     @Override
@@ -172,8 +173,8 @@ public class Server extends BaseClass implements ServerInterface {
     }
 
     @Override
-    public void loadLeaders(Context context) {
-        loadLeadersRequest.processRequest(context);
+    public void loadLeaders(Context context, UserSessionUtil userSession) {
+        loadLeadersRequest.processRequest(context, userSession);
     }
 
     @Override

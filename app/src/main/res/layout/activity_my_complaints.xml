@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.eswaraj.app.eswaraj.activities.MyComplaintsActivity">
+    tools:context="com.eswaraj.app.eswaraj.activities.ComplaintsActivity">
 
 
     <fragment
-        class="com.eswaraj.app.eswaraj.fragments.ComplaintsFragment"
+        class="com.eswaraj.app.eswaraj.fragments.ComplaintsPagerFragment"
         android:id="@+id/mcFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"

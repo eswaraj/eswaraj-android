@@ -19,6 +19,7 @@
         android:name=".application.EswarajApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
+        android:logo="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
@@ -38,20 +39,18 @@
             android:name=".activities.LoginActivity"
             android:label="Login to Continue"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.Dialog"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.SelectAmenityActivity"
             android:label="@string/title_activity_select_amenity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.YoutubeActivity"
             android:label="@string/title_activity_youtube"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
@@ -67,7 +66,6 @@
             android:label="@string/title_activity_select_template"
             android:parentActivityName=".activities.SelectAmenityActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -78,7 +76,6 @@
             android:label="@string/title_activity_add_details"
             android:parentActivityName=".activities.SelectTemplateActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="adjustPan|stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -89,7 +86,6 @@
             android:label="@string/title_activity_mark_location"
             android:parentActivityName=".activities.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -100,39 +96,35 @@
             android:label="@string/title_activity_complaint_summary"
             android:parentActivityName=".activities.AddDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.AddDetailsActivity" />
         </activity>
         <activity
-            android:name=".activities.MyComplaintsActivity"
+            android:name=".activities.ComplaintsActivity"
             android:label="@string/title_activity_my_complaints"
             android:parentActivityName=".activities.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.SingleComplaintActivity"
             android:label="@string/title_activity_single_complaint"
-            android:parentActivityName=".activities.MyComplaintsActivity"
+            android:parentActivityName=".activities.ComplaintsActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.HomeActivity"
             android:label="@string/title_activity_home"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.SplashActivity"
             android:label="@string/title_activity_splash"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -143,8 +135,7 @@
             android:name=".activities.MyProfileActivity"
             android:label="@string/title_activity_my_profile"
             android:parentActivityName=".activities.HomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
@@ -153,8 +144,7 @@
             android:name=".activities.ConstituencyActivity"
             android:label="@string/title_activity_constituency"
             android:parentActivityName=".activities.HomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
@@ -196,8 +186,7 @@
             android:name=".activities.LeaderActivity"
             android:label="@string/title_activity_leader"
             android:parentActivityName=".activities.HomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
@@ -212,8 +201,7 @@
             android:name=".activities.ContentActivity"
             android:label="@string/title_activity_content"
             android:parentActivityName=".activities.HomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
@@ -221,12 +209,12 @@
         <activity
             android:name=".activities.ComplaintFilterActivity"
             android:label="@string/title_activity_complaint_filter"
-            android:parentActivityName=".activities.MyComplaintsActivity"
+            android:parentActivityName=".activities.ComplaintsActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Dialog">
+            android:theme="@style/Theme.AppCompat.Light.Dialog">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.eswaraj.app.eswaraj.activities.MyComplaintsActivity" />
+                android:value=".activities.ComplaintsActivity" />
         </activity>
     </application>
 

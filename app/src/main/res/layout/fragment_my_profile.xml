@@ -10,12 +10,6 @@
     android:layout_margin="0dp"
     >
 
-    <include
-        android:id="@+id/logo_header"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/screen_header" />
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
