@@ -154,7 +154,8 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints");
                 if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     if (userSession.isUserLoggedIn(v.getContext())) {
-                        Intent i = new Intent(v.getContext(), UserComplaintsActivity.class);
+                        //Intent i = new Intent(v.getContext(), UserComplaintsActivity.class);
+                        Intent i = new Intent(v.getContext(), UserSnapshotActivity.class);
                         startActivity(i);
                     } else {
                         googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Complaints: Not Logged-in");

@@ -20,6 +20,7 @@ import com.eswaraj.app.eswaraj.activities.SelectAmenityActivity;
 import com.eswaraj.app.eswaraj.activities.SelectTemplateActivity;
 import com.eswaraj.app.eswaraj.activities.SingleComplaintActivity;
 import com.eswaraj.app.eswaraj.activities.SplashActivity;
+import com.eswaraj.app.eswaraj.activities.UserSnapshotActivity;
 import com.eswaraj.app.eswaraj.activities.YoutubeActivity;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.datastore.Cache;
@@ -54,6 +55,7 @@ import com.eswaraj.app.eswaraj.fragments.MyComplaintsFragment;
 import com.eswaraj.app.eswaraj.fragments.SelectTemplateFragment;
 import com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment;
 import com.eswaraj.app.eswaraj.fragments.LoginFragment;
+import com.eswaraj.app.eswaraj.fragments.UserSnapshotFragment;
 import com.eswaraj.app.eswaraj.helpers.CameraHelper;
 import com.eswaraj.app.eswaraj.helpers.DatabaseHelper;
 import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
@@ -186,7 +188,9 @@ import de.greenrobot.event.EventBus;
                 UserComplaintsFragment.class,
                 ConstituencyComplaintsFragment.class,
                 ConstituencySnapshotActivity.class,
-                ConstituencySnapshotFragment.class
+                ConstituencySnapshotFragment.class,
+                UserSnapshotActivity.class,
+                UserSnapshotFragment.class
         },
         complete = false,
         library = true

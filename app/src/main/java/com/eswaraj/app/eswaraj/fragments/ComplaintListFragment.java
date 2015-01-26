@@ -16,6 +16,7 @@ import com.eswaraj.app.eswaraj.base.BaseFragment;
 import com.eswaraj.app.eswaraj.events.ComplaintSelectedEvent;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -32,6 +33,7 @@ public class ComplaintListFragment extends BaseFragment {
     private ComplaintListAdapter complaintsAdapter;
     private View header;
     private View footer;
+    private Integer showCount;
 
     public ComplaintListFragment() {
         // Required empty public constructor
@@ -63,7 +65,16 @@ public class ComplaintListFragment extends BaseFragment {
     }
 
     public void setData(List<ComplaintDto> complaintDtoList) {
-        complaintsAdapter = new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, complaintDtoList);
+        if(showCount == null) {
+            complaintsAdapter = new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, complaintDtoList);
+        }
+        else {
+            List<ComplaintDto> complaintDtoListShort = new ArrayList<>();
+            for(int i = 0; i < showCount; i++) {
+                complaintDtoListShort.add(complaintDtoList.get(i));
+            }
+            complaintsAdapter = new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, complaintDtoListShort);
+        }
         mcList.setAdapter(complaintsAdapter);
         mcList.setDividerHeight(0);
     }
@@ -97,5 +108,9 @@ public class ComplaintListFragment extends BaseFragment {
 
     public void removeFooter(View view) {
         mcList.removeFooterView(view);
+    }
+
+    public void showLimited(Integer showCount) {
+        this.showCount = showCount;
     }
 }

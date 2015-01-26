@@ -9,9 +9,11 @@ import android.view.MenuItem;
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.ComplaintSelectedEvent;
-import com.eswaraj.app.eswaraj.events.MarkerClickEvent;
 import com.eswaraj.app.eswaraj.events.ShowConstituencyComplaintsEvent;
-import com.eswaraj.app.eswaraj.fragments.ConstituencySnapshotFragment;
+import com.eswaraj.app.eswaraj.events.ShowProfileEvent;
+import com.eswaraj.app.eswaraj.events.ShowSelectAmenityEvent;
+import com.eswaraj.app.eswaraj.events.ShowUserComplaintsEvent;
+import com.eswaraj.app.eswaraj.fragments.UserSnapshotFragment;
 import com.eswaraj.app.eswaraj.models.ComplaintFilter;
 
 import java.io.Serializable;
@@ -20,7 +22,9 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class ConstituencySnapshotActivity extends BaseActivity {
+public class UserSnapshotActivity extends BaseActivity {
+
+    private UserSnapshotFragment userSnapshotFragment;
 
     @Inject
     EventBus eventBus;
@@ -28,17 +32,14 @@ public class ConstituencySnapshotActivity extends BaseActivity {
     private final int OPEN_COMPLAINT_REQUEST = 99;
     private final int SHOW_FILTER_REQUEST = 9999;
 
-    ConstituencySnapshotFragment constituencySnapshotFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        eventBus.register(this);
         showFilter = true;
-        setContentView(R.layout.activity_constituency_snapshot);
-        constituencySnapshotFragment = (ConstituencySnapshotFragment) getSupportFragmentManager().findFragmentById(R.id.csFragment);
+        eventBus.register(this);
+        setContentView(R.layout.activity_user_snapshot);
+        userSnapshotFragment = (UserSnapshotFragment) getSupportFragmentManager().findFragmentById(R.id.usFragment);
     }
-
 
     @Override
     protected void onDestroy() {
@@ -53,10 +54,18 @@ public class ConstituencySnapshotActivity extends BaseActivity {
         startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
     }
 
-    public void onEventMainThread(ShowConstituencyComplaintsEvent event) {
-        Intent i = new Intent(this, ConstituencyComplaintsActivity.class);
-        i.putExtra("LOCATION", (Serializable) event.getLocationDto());
-        i.putExtra("DATA_PRESENT", true);
+    public void onEventMainThread(ShowUserComplaintsEvent event) {
+        Intent i = new Intent(this, UserComplaintsActivity.class);
+        startActivity(i);
+    }
+
+    public void onEventMainThread(ShowProfileEvent event) {
+        Intent i = new Intent(this, MyProfileActivity.class);
+        startActivity(i);
+    }
+
+    public void onEventMainThread(ShowSelectAmenityEvent event) {
+        Intent i = new Intent(this, SelectAmenityActivity.class);
         startActivity(i);
     }
 
@@ -65,11 +74,11 @@ public class ConstituencySnapshotActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == OPEN_COMPLAINT_REQUEST && resultCode == RESULT_OK) {
             if(data != null) {
-                constituencySnapshotFragment.markComplaintClosed(data.getLongExtra("ID", -1));
+                userSnapshotFragment.markComplaintClosed(data.getLongExtra("ID", -1));
             }
         }
         if(requestCode == SHOW_FILTER_REQUEST && resultCode == RESULT_OK) {
-            constituencySnapshotFragment.setFilter((ComplaintFilter) data.getSerializableExtra("FILTER"));
+            userSnapshotFragment.setFilter((ComplaintFilter) data.getSerializableExtra("FILTER"));
         }
     }
 
