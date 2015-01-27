@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class ComplaintListFragment extends BaseFragment {
     private View header;
     private View footer;
     private Integer showCount;
+    private ListView.OnScrollListener onScrollListener;
 
     public ComplaintListFragment() {
         // Required empty public constructor
@@ -60,6 +62,10 @@ public class ComplaintListFragment extends BaseFragment {
                 eventBus.post(event);
             }
         });
+
+        if(onScrollListener != null) {
+            mcList.setOnScrollListener(onScrollListener);
+        }
 
         return rootView;
     }
@@ -112,5 +118,18 @@ public class ComplaintListFragment extends BaseFragment {
 
     public void showLimited(Integer showCount) {
         this.showCount = showCount;
+    }
+
+    public void setOnScrollListener(ListView.OnScrollListener onScrollListener) {
+        if(mcList != null) {
+            mcList.setOnScrollListener(onScrollListener);
+        }
+        else {
+            this.onScrollListener = onScrollListener;
+        }
+    }
+
+    public void scrollTo(int position) {
+        mcList.setSelection(position);
     }
 }

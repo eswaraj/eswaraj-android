@@ -9,7 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -62,6 +64,11 @@ public class ConstituencyComplaintsFragment extends BaseFragment {
 
     private Boolean locationDtoAvailable = true;
     private Integer requestCount = 20;
+
+    private int visibleThreshold = 5;
+    private int previousTotal = 0;
+    private boolean loading = true;
+    private ListView.OnScrollListener infiniteScrollListener;
 
     public ConstituencyComplaintsFragment() {
         // Required empty public constructor
@@ -119,6 +126,28 @@ public class ConstituencyComplaintsFragment extends BaseFragment {
                 pDialog.show();
             }
         });
+        infiniteScrollListener = new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (loading) {
+                    if (totalItemCount > previousTotal) {
+                        loading = false;
+                        previousTotal = totalItemCount;
+                    }
+                }
+                if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                    googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Constituency: Show More");
+                    middlewareService.loadLocationComplaints(getActivity(), locationDto, complaintDtoList.size(), requestCount);
+                    loading = true;
+                }
+            }
+        };
+        //complaintListFragment.setOnScrollListener(infiniteScrollListener);
 
         ViewPager pager = (ViewPager) rootView.findViewById(R.id.viewPager);
         constituencyPagerAdapter = new ConstituencyPagerAdapter(getChildFragmentManager(), complaintListFragment, analyticsFragment, complaintsMapFragment, constituencyInfoFragment);
@@ -181,6 +210,12 @@ public class ConstituencyComplaintsFragment extends BaseFragment {
 
     public void onEventMainThread(GetLocationComplaintsEvent event) {
         if(event.getSuccess()) {
+            /*
+            int old = 0;
+            if(currentComplaintDtoList != null) {
+                old = currentComplaintDtoList.size();
+            }
+            */
             if(complaintDtoList == null) {
                 complaintDtoList = event.getComplaintDtoList();
             }
@@ -189,7 +224,13 @@ public class ConstituencyComplaintsFragment extends BaseFragment {
                     complaintDtoList.add(complaintDto);
                 }
             }
-            setFilter(complaintFilter);
+            //setFilter(complaintFilter);
+            setComplaintData(ComplaintFilterHelper.filter(complaintDtoList, complaintFilter));
+            /*
+            if(old != 0) {
+                complaintListFragment.scrollTo(old);
+            }
+            */
             if(complaintDtoList.size() < requestCount) {
                 mcShowMore.setVisibility(View.GONE);
             }
