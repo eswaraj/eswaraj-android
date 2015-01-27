@@ -487,4 +487,19 @@ public class Cache extends BaseClass implements CacheInterface {
     public void globalSearch(Context context, String query) {
         assert false;
     }
+
+    @Override
+    public Boolean isLeaderAvailable(Context context, Long id) {
+        return false;
+    }
+
+    @Override
+    public void updateLeader(Context context, Long id, String json) {
+        //Nothing to do here
+    }
+
+    @Override
+    public void loadLeaderById(Context context, Long id) {
+        assert false;
+    }
 }

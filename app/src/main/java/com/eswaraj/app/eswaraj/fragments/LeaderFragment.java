@@ -8,13 +8,17 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
+import com.eswaraj.app.eswaraj.events.GetLeaderEvent;
 import com.eswaraj.app.eswaraj.events.StartAnotherActivityEvent;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
 import com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView;
+import com.google.android.gms.games.GamesMetadata;
+import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
@@ -40,6 +44,17 @@ public class LeaderFragment extends BaseFragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        eventBus.register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        eventBus.unregister(this);
+        super.onDestroy();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,13 +67,11 @@ public class LeaderFragment extends BaseFragment {
 
         politicalBodyAdminDto = (PoliticalBodyAdminDto) getActivity().getIntent().getSerializableExtra("LEADER");
 
-        lPhoto.loadProfileImage(politicalBodyAdminDto.getProfilePhoto(), politicalBodyAdminDto.getId());
-
-        lName.setText(politicalBodyAdminDto.getName());
-        lPost.setText(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
-        lConstituency.setText("Go to " + politicalBodyAdminDto.getLocation().getName());
-        if(politicalBodyAdminDto.getBiodata() != null) {
-            lDetails.loadData(politicalBodyAdminDto.getBiodata(), "text/html", null);
+        if(politicalBodyAdminDto == null) {
+            middlewareService.loadLeaderById(getActivity(), getActivity().getIntent().getLongExtra("ID", 0));
+        }
+        else {
+            setFields();
         }
         lConstituency.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,4 +84,24 @@ public class LeaderFragment extends BaseFragment {
         return rootView;
     }
 
+    private void setFields() {
+        Picasso.with(getActivity()).load(politicalBodyAdminDto.getProfilePhoto()).into(lPhoto);
+        //lPhoto.loadProfileImage(politicalBodyAdminDto.getProfilePhoto(), politicalBodyAdminDto.getId());
+        lName.setText(politicalBodyAdminDto.getName());
+        lPost.setText(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
+        lConstituency.setText("Go to " + politicalBodyAdminDto.getLocation().getName());
+        if (politicalBodyAdminDto.getBiodata() != null) {
+            lDetails.loadData(politicalBodyAdminDto.getBiodata(), "text/html", null);
+        }
+    }
+
+    public void onEventMainThread(GetLeaderEvent event) {
+        if(event.getSuccess()) {
+            politicalBodyAdminDto = event.getPoliticalBodyAdminDto();
+            setFields();
+        }
+        else {
+            Toast.makeText(getActivity(), "Could not fetch leader details. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
 }

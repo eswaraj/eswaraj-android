@@ -30,4 +30,5 @@ public interface MiddlewareGetService {
     public void loadLeaders(Context context, UserSessionUtil userSession);
     public void loadLocation(Context context, Long id);
     public void globalSearch(Context context, String query);
+    public void loadLeaderById(Context context, Long id);
 }

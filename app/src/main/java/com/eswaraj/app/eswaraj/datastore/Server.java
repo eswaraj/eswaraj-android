@@ -15,6 +15,7 @@ import com.eswaraj.app.eswaraj.volley.LoadImageRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesImagesRequest;
+import com.eswaraj.app.eswaraj.volley.LoadLeaderByIdRequest;
 import com.eswaraj.app.eswaraj.volley.LoadLeadersRequest;
 import com.eswaraj.app.eswaraj.volley.LoadLocationRequest;
 import com.eswaraj.app.eswaraj.volley.LoadProfileUpdateRequest;
@@ -82,6 +83,8 @@ public class Server extends BaseClass implements ServerInterface {
     LoadLocationRequest loadLocationRequest;
     @Inject
     GlobalSearchRequest globalSearchRequest;
+    @Inject
+    LoadLeaderByIdRequest loadLeaderByIdRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -188,5 +191,10 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void globalSearch(Context context, String query) {
         globalSearchRequest.processRequest(context, query);
+    }
+
+    @Override
+    public void loadLeaderById(Context context, Long id) {
+        loadLeaderByIdRequest.processRequest(context, id);
     }
 }
