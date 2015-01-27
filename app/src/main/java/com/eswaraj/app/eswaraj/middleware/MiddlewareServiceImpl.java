@@ -501,7 +501,39 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
         }
     }
 
-    //Database
+    @Override
+    public void globalSearch(Context context, String query, Boolean dontGetFromCache) {
+        if(dontGetFromCache) {
+            server.globalSearch(context, query);
+        }
+        else {
+            globalSearch(context, query);
+        }
+    }
+
+    @Override
+    public Boolean isGlobalSearchAvailable(Context context, String query) {
+        return cache.isGlobalSearchAvailable(context, query);
+    }
+
+    @Override
+    public void updateGlobalSearch(Context context, String query, String json) {
+        cache.updateGlobalSearch(context, query, json);
+    }
+
+    @Override
+    public void globalSearch(Context context, String query) {
+        if(cache.isGlobalSearchAvailable(context, query)) {
+            cache.globalSearch(context, query);
+        }
+        else {
+            server.globalSearch(context, query);
+        }
+    }
+
+
+
+//Database
 
     @Override
     public void postOneComplaint() {

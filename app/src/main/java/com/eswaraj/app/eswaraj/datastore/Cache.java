@@ -472,4 +472,19 @@ public class Cache extends BaseClass implements CacheInterface {
     public void loadLocation(Context context, Long id) {
         assert false;
     }
+
+    @Override
+    public Boolean isGlobalSearchAvailable(Context context, String query) {
+        return false;
+    }
+
+    @Override
+    public void updateGlobalSearch(Context context, String query, String json) {
+        //Nothing to do here
+    }
+
+    @Override
+    public void globalSearch(Context context, String query) {
+        assert false;
+    }
 }

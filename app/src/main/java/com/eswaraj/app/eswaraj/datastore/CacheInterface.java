@@ -54,4 +54,7 @@ public interface CacheInterface extends MiddlewareGetService {
 
     public Boolean isLocationAvailable(Context context, Long id);
     public void updateLocation(Context context, Long id, String json);
+
+    public Boolean isGlobalSearchAvailable(Context context, String query);
+    public void updateGlobalSearch(Context context, String query, String json);
 }

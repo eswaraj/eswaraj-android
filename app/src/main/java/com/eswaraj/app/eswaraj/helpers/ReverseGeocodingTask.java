@@ -37,19 +37,19 @@ public class ReverseGeocodingTask extends AsyncTask<Void, Void, Void>{
         Geocoder geoCoder = new Geocoder(context.getApplicationContext());
         List<Address> matches = null;
         if(isCancelled()) {
-            //Log.e("Address", "Cancelled");
             return null;
         }
         try {
         	matches = geoCoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
         	Address bestMatch = (matches.isEmpty() ? null : matches.get(0));
-        	String userLocationString = bestMatch.getAddressLine(1) + ", " + bestMatch.getAddressLine(2);
-        	//Log.e("Address", userLocationString);
-            RevGeocodeEvent event = new RevGeocodeEvent();
-            event.setRevGeocodedLocation(userLocationString);
-            event.setRevGeocodedFullData(new Gson().toJson(bestMatch));
-            event.setSuccess(true);
-            eventBus.post(event);
+            if(bestMatch != null) {
+                String userLocationString = bestMatch.getAddressLine(1) + ", " + bestMatch.getAddressLine(2);
+                RevGeocodeEvent event = new RevGeocodeEvent();
+                event.setRevGeocodedLocation(userLocationString);
+                event.setRevGeocodedFullData(new Gson().toJson(bestMatch));
+                event.setSuccess(true);
+                eventBus.post(event);
+            }
         } catch (IOException e) {
         	e.printStackTrace();
         }

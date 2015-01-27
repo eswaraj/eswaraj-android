@@ -9,6 +9,7 @@ import com.eswaraj.app.eswaraj.activities.ComplaintFilterActivity;
 import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
 import com.eswaraj.app.eswaraj.activities.ConstituencyComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.ConstituencySnapshotActivity;
+import com.eswaraj.app.eswaraj.activities.SearchableActivity;
 import com.eswaraj.app.eswaraj.activities.UserComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.ContentActivity;
 import com.eswaraj.app.eswaraj.activities.HomeActivity;
@@ -81,6 +82,7 @@ import com.eswaraj.app.eswaraj.util.VolleyUtil;
 import com.eswaraj.app.eswaraj.volley.CommentPostRequest;
 import com.eswaraj.app.eswaraj.volley.CommentsRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintCloseRequest;
+import com.eswaraj.app.eswaraj.volley.GlobalSearchRequest;
 import com.eswaraj.app.eswaraj.volley.LoadImageRequest;
 import com.eswaraj.app.eswaraj.volley.ComplaintPostRequest;
 import com.eswaraj.app.eswaraj.volley.LoadCategoriesDataRequest;
@@ -190,7 +192,9 @@ import de.greenrobot.event.EventBus;
                 ConstituencySnapshotActivity.class,
                 ConstituencySnapshotFragment.class,
                 UserSnapshotActivity.class,
-                UserSnapshotFragment.class
+                UserSnapshotFragment.class,
+                GlobalSearchRequest.class,
+                SearchableActivity.class
         },
         complete = false,
         library = true
@@ -412,5 +416,10 @@ public class MiddlewareGraph {
     @Provides @Singleton
     LoadLocationRequest provideLoadLocationRequest() {
         return new LoadLocationRequest();
+    }
+
+    @Provides @Singleton
+    GlobalSearchRequest provideGlobalSearchRequest() {
+        return new GlobalSearchRequest();
     }
 }

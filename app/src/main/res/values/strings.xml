@@ -23,6 +23,7 @@
     <string name="title_activity_launch">LaunchActivity</string>
     <string name="title_activity_my_complaints">MyComplaintsActivity</string>
     <string name="title_activity_single_complaint">SingleComplaintActivity</string>
+    <string name="search_hint">Location/Leader</string>
 
     <string-array name="splash_text">
         <item>Select an issue in your locality that\'s bugging you for a while</item>
@@ -39,5 +40,6 @@
     <string name="title_activity_complaint_filter">ComplaintFilterActivity</string>
     <string name="title_activity_constituency_snapshot">ConstituencySnapshotActivity</string>
     <string name="title_activity_user_snapshot">UserSnapshotActivity</string>
+    <string name="title_activity_searchable">SearchableActivity</string>
 
 </resources>

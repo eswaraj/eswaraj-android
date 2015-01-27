@@ -31,4 +31,5 @@ public interface MiddlewareService extends MiddlewareGetService, MiddlewarePostS
     public void loadSingleComplaint(Context context, Long id, Boolean dontGetFromCache);
     public void loadLeaders(Context context, UserSessionUtil userSession, Boolean dontGetFromCache);
     public void loadLocation(Context context, Long id, Boolean dontGetFromCache);
+    public void globalSearch(Context context, String query, Boolean dontGetFromCache);
 }

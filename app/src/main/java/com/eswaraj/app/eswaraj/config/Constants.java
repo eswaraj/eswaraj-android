@@ -49,4 +49,8 @@ public class Constants {
     public static String getLeadersUrl(Double lat, Double lng) {
         return BASE_URL + "/leaders?lat=" + lat + "&long=" + lng;
     }
+
+    public static String getGlobalSearchUrl(String query) {
+        return BASE_URL + "/search?q=" + query;
+    }
 }
