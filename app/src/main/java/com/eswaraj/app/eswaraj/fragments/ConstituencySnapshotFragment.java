@@ -186,6 +186,10 @@ public class ConstituencySnapshotFragment extends BaseFragment {
 
     public void onEventMainThread(GetLocationComplaintsEvent event) {
         if(event.getSuccess()) {
+            int old = 0;
+            if(currentComplaintDtoList != null) {
+                old = currentComplaintDtoList.size();
+            }
             if(complaintDtoList == null) {
                 complaintDtoList = event.getComplaintDtoList();
             }
@@ -194,7 +198,10 @@ public class ConstituencySnapshotFragment extends BaseFragment {
                     complaintDtoList.add(complaintDto);
                 }
             }
-            setFilter(complaintFilter);
+            setComplaintData(ComplaintFilterHelper.filter(complaintDtoList, complaintFilter));
+            if(old != 0) {
+                complaintListFragment.scrollTo(old - 1);
+            }
             if(complaintDtoList.size() < requestCount) {
                 mcShowMore.setVisibility(View.GONE);
             }
