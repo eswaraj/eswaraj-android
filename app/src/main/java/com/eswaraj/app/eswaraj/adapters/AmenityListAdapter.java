@@ -58,16 +58,15 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new CategoryDtoHolder();
-            holder.saIcon = (RoundedImageView)row.findViewById(R.id.saIcon);
+            holder.saIcon = (ImageView)row.findViewById(R.id.saIcon);
             holder.saTitle = (TextView)row.findViewById(R.id.saTitle);
             holder.saStats = (TextView)row.findViewById(R.id.saStats);
 
-            if(colorMap != null) {
-                holder.saIcon.setBorderColor(colorMap.get(categoryList.get(position).getId()));
-            }
-            else {
-                holder.saIcon.setBorderWidth(0.0f);
-            }
+            //if(colorMap != null)
+            //    holder.saIcon.setBorderColor(colorMap.get(categoryList.get(position).getId()));
+            //else {
+            //   holder.saIcon.setBorderWidth(0.0f);
+            //}
 
             row.setTag(holder);
         }
@@ -93,7 +92,7 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
 
     static class CategoryDtoHolder
     {
-        RoundedImageView saIcon;
+        ImageView saIcon;
         TextView saTitle;
         TextView saStats;
     }

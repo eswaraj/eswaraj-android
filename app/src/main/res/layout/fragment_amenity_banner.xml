@@ -18,19 +18,18 @@
             android:scaleType="fitXY"/>
 
 
-        <TextView
-            android:id="@+id/issue_issues"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="16dp"
-            android:drawableLeft="@drawable/ic_issue_issues"
-            android:drawablePadding="12dp"
-            android:text="%d issues"
-            android:textColor="@android:color/primary_text_dark"
-            android:visibility="visible" />
+        <ImageView
+            android:id="@+id/video_click_link"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            android:src="@drawable/video_preview_fg"
+            android:padding="12dp"
+            android:layout_alignParentRight="false"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/linearLayout2" />
 
         <!--
                 <TextView
@@ -47,39 +46,60 @@
                     android:text="%d complaints"
                     android:textColor="@android:color/primary_text_dark" />
                     -->
-
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:layout_alignTop="@+id/issue_issues"
+            android:layout_marginTop="-25dp"
+            android:layout_marginLeft="15dp"
+            android:id="@+id/linearLayout2">
+        <TextView
+            android:id="@+id/select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select"
+            android:textColor="@android:color/primary_text_dark"
+            android:textSize="15sp"
+            android:layout_marginRight="5dp"/>
         <TextView
             android:id="@+id/issue_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/issue_bullet"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="-12dp"
-            android:layout_toRightOf="@+id/issue_bullet"
             android:text="Amenity_Name"
             android:textColor="@android:color/primary_text_dark"
-            android:textSize="20sp" />
+            android:textSize="15sp"
+            android:layout_marginRight="5dp"/>
+        <TextView
+            android:id="@+id/issue_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="related issue"
+            android:textColor="@android:color/primary_text_dark"
+            android:textSize="15sp"
+            android:layout_marginRight="5dp"/>
+        </LinearLayout>
 
-        <View
+        <TextView
+            android:id="@+id/issue_issues"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="15dp"
+            android:text="%d   issues"
+            android:textColor="@android:color/primary_text_dark"
+            android:visibility="visible" />
+
+        <!--View
             android:id="@+id/issue_bullet"
             android:layout_width="16dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="52dp"
             android:layout_marginTop="48dp"
             android:background="@drawable/ic_issue_bullet" >
-        </View>
-
-        <ImageView
-            android:id="@+id/video_click_link"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:clickable="true"
-            android:contentDescription="@string/app_name"
-            android:scaleType="fitEnd"
-            android:src="@drawable/video_preview_fg" />
+        </View-->
 
     </RelativeLayout>
 
