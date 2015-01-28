@@ -53,6 +53,7 @@ public class SplashActivity extends BaseActivity {
     private Boolean dontShowContinueButton;
     private Boolean startedFromMenu;
     private Boolean criticalDataLoadFailed = false;
+    private Boolean nextActivityLaunched = false;
     private int currentPage = 0;
 
     private Long startTime;
@@ -94,19 +95,24 @@ public class SplashActivity extends BaseActivity {
 
         storageCacheClearingTask = new StorageCacheClearingTask(this);
 
+        setUpListener();
+        if(!startedFromMenu) {
+            setUpPagerData(middlewareService.wasImageDownloadLaunchedBefore(this));
+        }
+        else {
+            setUpPagerData(false);
+        }
+        setUpPager();
+
+        cont.setOnClickListener(onClickListenerContinue);
+        retry.setOnClickListener(onClickListenerRetry);
+
         if(!startedFromMenu) {
             storageCacheClearingTask.execute();
             gcmUtil.registerWithGcmServerIfNeeded(this);
             dontShowContinueButton = middlewareService.wasImageDownloadLaunchedBefore(this);
             middlewareService.loadCategoriesData(this);
         }
-
-        setUpListener();
-        setUpPagerData(dontShowContinueButton);
-        setUpPager();
-
-        cont.setOnClickListener(onClickListenerContinue);
-        retry.setOnClickListener(onClickListenerRetry);
 
     }
 
@@ -230,11 +236,14 @@ public class SplashActivity extends BaseActivity {
         }
     }
 
-    public void readyToProceed() {
-        Intent i = new Intent(this, LoginActivity.class);
-        i.putExtra("MODE", false);
-        startActivity(i);
-        finish();
+    public synchronized void readyToProceed() {
+        if(!nextActivityLaunched) {
+            nextActivityLaunched = true;
+            Intent i = new Intent(this, LoginActivity.class);
+            i.putExtra("MODE", false);
+            startActivity(i);
+            finish();
+        }
     }
 
     private boolean checkPlayServices() {
