@@ -33,7 +33,11 @@
         android:layout_height="0dp"
         android:layout_weight="7"
         android:layout_width="match_parent"
-        android:numColumns="2">
+        android:numColumns="2"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:layout_margin="10dp"
+        >
     </GridView>
 
 </LinearLayout>
