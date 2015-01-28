@@ -77,7 +77,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     private ImageView constituency;
     private ImageView profile;
     private ProgressTextView hRevGeocode;
-    private Button hCreate;
+    private ImageView hCreate;
     private LinearLayout sError;
     private Button sClose;
 
@@ -110,7 +110,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         constituency = (ImageView) findViewById(R.id.hConstituency);
         profile = (ImageView) findViewById(R.id.hProfile);
         hRevGeocode = (ProgressTextView) findViewById(R.id.hRevGeocode);
-        hCreate = (Button) findViewById(R.id.hCreate);
+        hCreate = (ImageView) findViewById(R.id.hCreate);
 
         hRevGeocode.setTextColor(Color.parseColor("#929292"));
 

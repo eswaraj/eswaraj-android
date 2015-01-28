@@ -4,7 +4,9 @@ package com.eswaraj.app.eswaraj.models;
 import com.eswaraj.web.dto.BaseDto;
 import com.eswaraj.web.dto.PartyDto;
 
-public class PoliticalBodyAdminDto extends BaseDto {
+import java.io.Serializable;
+
+public class PoliticalBodyAdminDto extends BaseDto implements Serializable {
 
     private PartyDto party;
     private PoliticalAdminTypeDto politicalAdminType;
@@ -113,24 +115,6 @@ public class PoliticalBodyAdminDto extends BaseDto {
         this.officeEmail = officeEmail;
     }
 
-    @Override
-    public String toString() {
-        return "PoliticalBodyAdminDto{" +
-                "party=" + party +
-                ", politicalAdminType=" + politicalAdminType +
-                ", location=" + location +
-                ", startDate=" + startDate +
-                ", urlIdentifier='" + urlIdentifier + '\'' +
-                ", personExternalId='" + personExternalId + '\'' +
-                ", name='" + name + '\'' +
-                ", gender='" + gender + '\'' +
-                ", profilePhoto='" + profilePhoto + '\'' +
-                ", fbPage='" + fbPage + '\'' +
-                ", officeEmail='" + officeEmail + '\'' +
-                ", biodata='" + biodata + '\'' +
-                '}';
-    }
-
     public String getBiodata() {
         return biodata;
     }
@@ -153,6 +137,24 @@ public class PoliticalBodyAdminDto extends BaseDto {
 
     public void setPoliticalAdminType(PoliticalAdminTypeDto politicalAdminType) {
         this.politicalAdminType = politicalAdminType;
+    }
+
+    @Override
+    public String toString() {
+        return "PoliticalBodyAdminDto{" +
+                "party=" + party +
+                ", politicalAdminType=" + politicalAdminType +
+                ", location=" + location +
+                ", startDate=" + startDate +
+                ", urlIdentifier='" + urlIdentifier + '\'' +
+                ", personExternalId='" + personExternalId + '\'' +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", profilePhoto='" + profilePhoto + '\'' +
+                ", fbPage='" + fbPage + '\'' +
+                ", officeEmail='" + officeEmail + '\'' +
+                ", biodata='" + biodata + '\'' +
+                '}';
     }
 
     public class PoliticalAdminTypeDto extends BaseDto {

@@ -3,8 +3,12 @@ package com.eswaraj.app.eswaraj.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,24 +16,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
-import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.events.UserContinueEvent;
 import com.eswaraj.app.eswaraj.helpers.BitmapWorkerTask;
 import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
-import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.ComplaintPostResponseDto;
 import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
 import com.eswaraj.app.eswaraj.util.FacebookSharingUtil;
-import com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.makeramen.RoundedImageView;
 
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -41,8 +41,6 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     @Inject
     EventBus eventBus;
     @Inject
-    MiddlewareServiceImpl middlewareService;
-    @Inject
     FacebookSharingUtil facebookSharingUtil;
     @Inject
     GoogleAnalyticsTracker googleAnalyticsTracker;
@@ -51,9 +49,6 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     private File imageFile;
     private ComplaintPostResponseDto complaintPostResponseDto;
 
-    private TextView mlaName;
-    private RoundedImageView mlaPhoto;
-    private TextView mlaLocation;
     private TextView rootCategory;
     private TextView subCategory;
     private ImageView complaintPhoto;
@@ -62,9 +57,10 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     private Button done;
     private Button another;
     private ImageView facebook;
-
-    private Long id;
-    private Bitmap mlaBitmap;
+    private ViewPager pager;
+    private PagerAdapter pagerAdapter;
+    private ImageView back;
+    private ImageView forward;
 
     public ComplaintSummaryFragment() {
         // Required empty public constructor
@@ -74,9 +70,9 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_complaint_summary, container, false);
-        mlaName = (TextView) rootView.findViewById(R.id.csMlaName);
-        mlaLocation = (TextView) rootView.findViewById(R.id.csMlaLocation);
-        mlaPhoto = (RoundedImageView) rootView.findViewById(R.id.csMlaPhoto);
+        pager = (ViewPager) rootView.findViewById(R.id.csPager);
+        forward = (ImageView) rootView.findViewById(R.id.csForward);
+        back = (ImageView) rootView.findViewById(R.id.csBack);
         rootCategory = (TextView) rootView.findViewById(R.id.csRootCategory);
         subCategory = (TextView) rootView.findViewById(R.id.csSubCategory);
         address = (TextView) rootView.findViewById(R.id.csAddress);
@@ -106,25 +102,8 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         rootCategory.setText(complaintPostResponseDto.getAmenity().getName());
         subCategory.setText(complaintPostResponseDto.getTemplate().getName());
 
-
-        //Fill all admin related details
-        for(PoliticalBodyAdminDto politicalBodyAdminDto : complaintPostResponseDto.getPoliticalBodyAdminDtoList()) {
-            if(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName().equals("CM")) {
-                mlaName.setText(politicalBodyAdminDto.getName());
-                mlaLocation.setText(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
-                if(!politicalBodyAdminDto.getProfilePhoto().equals("")) {
-                    id = politicalBodyAdminDto.getId();
-                    middlewareService.loadProfileImage(getActivity(), politicalBodyAdminDto.getProfilePhoto().replace("http", "https"), politicalBodyAdminDto.getId(), false);
-                    //mlaPhoto.loadProfileImage(politicalBodyAdminDto.getProfilePhoto().replace("http", "https"), politicalBodyAdminDto.getId());
-                }
-            }
-        }
-
-
-        if(mlaBitmap != null) {
-            mlaPhoto.setImageBitmap(mlaBitmap);
-        }
-
+        pagerAdapter = new LeaderSlidePagerAdapter(getChildFragmentManager(), complaintPostResponseDto.getPoliticalBodyAdminDtoList());
+        pager.setAdapter(pagerAdapter);
 
         done.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -159,6 +138,20 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
                 }
             }
         });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pager.setCurrentItem(pager.getCurrentItem() - 1, true);
+            }
+        });
+
+        forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pager.setCurrentItem(pager.getCurrentItem() + 1, true);
+            }
+        });
         return rootView;
     }
 
@@ -169,25 +162,9 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     }
 
 
-    public void onEventMainThread(GetProfileImageEvent event) {
-        if(event.getSuccess()) {
-            if(mlaPhoto != null) {
-                mlaPhoto.setImageBitmap(event.getBitmap());
-            }
-            else {
-                mlaBitmap = event.getBitmap();
-            }
-        }
-        else {
-            Toast.makeText(getActivity(), "Could not fetch MLA image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-        }
-    }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        eventBus.register(this);
         facebookSharingUtil.onCreate(getActivity(), savedInstanceState);
     }
 
@@ -205,7 +182,6 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
 
     @Override
     public void onDestroy() {
-        eventBus.unregister(this);
         super.onDestroy();
         facebookSharingUtil.onDestroy();
     }
@@ -220,5 +196,28 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         facebookSharingUtil.onSaveInstanceState(outState);
+    }
+
+
+    private class LeaderSlidePagerAdapter extends FragmentStatePagerAdapter {
+
+        private List<PoliticalBodyAdminDto> politicalBodyAdminDtoList;
+
+        public LeaderSlidePagerAdapter(FragmentManager fm, List<PoliticalBodyAdminDto> politicalBodyAdminDtoList) {
+            super(fm);
+            this.politicalBodyAdminDtoList = politicalBodyAdminDtoList;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            LeaderForComplaintFragment leaderForComplaintFragment = new LeaderForComplaintFragment();
+            leaderForComplaintFragment.setPoliticalBodyAdminDto(politicalBodyAdminDtoList.get(position));
+            return leaderForComplaintFragment;
+        }
+
+        @Override
+        public int getCount() {
+            return politicalBodyAdminDtoList.size();
+        }
     }
 }

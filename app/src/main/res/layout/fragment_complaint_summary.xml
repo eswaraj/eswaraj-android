@@ -6,12 +6,6 @@
     tools:context="com.eswaraj.app.eswaraj.fragments.ComplaintSummaryFragment"
     android:background="#FFFFFF">
 
-    <include
-        android:id="@+id/logo_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/screen_header" />
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -42,108 +36,101 @@
 
     </LinearLayout>
 
-        <TextView
-            android:id="@+id/thankyou_note"
-            android:layout_width="fill_parent"
-            android:layout_height="33dp"
-            android:text="Thank you for using eSwaraj. Together we will deliver better support to the government"
-            android:textSize="9dp"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="10dp"
-            android:textColor="#525252"
-            android:background="#f2f2f2"
-            android:layout_marginTop="-4dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+
+    <android.support.v4.view.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/csPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/csBack"
+            android:src="@drawable/backward"
+            android:layout_centerVertical="true"
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+
+        <ImageView
+            android:id="@+id/csForward"
+            android:src="@drawable/forward"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
+        android:layout_height="130dp"
         android:orientation="horizontal"
-        android:layout_weight="1"
-        android:background="#f2f2f2">
+        android:layout_marginTop="5dp">
 
-        <include
-            android:id="@+id/cs_mla1"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            layout="@layout/leader_details"
-            android:layout_weight="0.5" />
-        <!--include
-            android:id="@+id/cs_ward1"
-            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="0.5"
+            android:weightSum="1"
+            >
+
+            <TextView
+                android:id="@+id/csCategory_label"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:text="Citizen Service"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:textColor="#828282" />
+
+            <TextView
+                android:id="@+id/csRootCategory"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:text="Water"
+                android:paddingLeft="15dp"
+                android:textStyle="bold"
+                android:textColor="#ff32acf1" />
+
+            <TextView
+                android:id="@+id/csSubCategory_label"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:text="Issue Name"
+                android:paddingLeft="15dp"
+                android:textColor="#828282" />
+
+            <TextView
+                android:id="@+id/csSubCategory"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:text="Leaking Water Pipes"
+                android:paddingLeft="15dp"
+                android:textStyle="bold"
+                android:textColor="#ff32acf1" />
+
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/csComplaintPhoto"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            layout="@layout/leader_details"
-            android:layout_weight="0.5" /-->
+            android:layout_weight="0.5"
+            android:src="@drawable/no_image_placeholder"
+            android:padding="5dp" />
+
     </LinearLayout>
-
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="140dp"
-    android:orientation="horizontal"
-    android:layout_marginTop="5dp">
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:layout_weight="0.5"
-        android:weightSum="1"
-        >
-
-    <TextView
-        android:id="@+id/csCategory_label"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.25"
-        android:text="Citizen Service"
-        android:gravity="center_vertical"
-        android:paddingLeft="15dp"
-        android:textColor="#828282" />
-
-    <TextView
-        android:id="@+id/csRootCategory"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.25"
-        android:text="Water"
-        android:paddingLeft="15dp"
-        android:textStyle="bold"
-        android:textColor="#ff32acf1" />
-
-    <TextView
-        android:id="@+id/csSubCategory_label"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.25"
-        android:text="Issue Name"
-        android:paddingLeft="15dp"
-        android:textColor="#828282" />
-
-    <TextView
-        android:id="@+id/csSubCategory"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.25"
-        android:text="Leaking Water Pipes"
-        android:paddingLeft="15dp"
-        android:textStyle="bold"
-        android:textColor="#ff32acf1" />
-
-    </LinearLayout>
-    <ImageView
-        android:id="@+id/csComplaintPhoto"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.5"
-        android:src="@drawable/no_image_placeholder"
-        android:padding="5dp" />
-
-</LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="140dp"
+        android:layout_height="130dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -222,25 +209,25 @@
             android:layout_marginLeft="4dp" />
 
         <Button
-        android:id="@+id/csAnother"
-        android:text="New Complaint"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:layout_marginRight="2dp"
-        android:textColor="#333"
-        android:textSize="12dp"
+            android:id="@+id/csAnother"
+            android:text="New Complaint"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="2dp"
+            android:textColor="#333"
+            android:textSize="12dp"
             android:layout_marginLeft="2dp" />
 
-    <Button
-        android:id="@+id/csDone"
-        android:text="Done"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:textColor="#333"
-        android:textSize="12dp"
-        android:layout_marginRight="2dp" />
+        <Button
+            android:id="@+id/csDone"
+            android:text="Done"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:textColor="#333"
+            android:textSize="12dp"
+            android:layout_marginRight="2dp" />
 
     </LinearLayout>
 
