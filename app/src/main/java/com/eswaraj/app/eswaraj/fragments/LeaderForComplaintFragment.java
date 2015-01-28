@@ -50,7 +50,10 @@ public class LeaderForComplaintFragment extends BaseFragment {
             name.setText(politicalBodyAdminDto.getName());
             details.setText(politicalBodyAdminDto.getPoliticalAdminType().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
             message.setText("Thank you for using eSwaraj. Together we will offer better support to Government");
-            Picasso.with(getActivity()).load(politicalBodyAdminDto.getProfilePhoto().replace("http", "https") + "?type=large").into(photo);
+            if(politicalBodyAdminDto.getProfilePhoto() != null && !politicalBodyAdminDto.getProfilePhoto().equals("")) {
+                Picasso.with(getActivity()).load(politicalBodyAdminDto.getProfilePhoto().replace("http", "https") + "?type=large").into(photo);
+            }
         }
     }
 }
+

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.base.BaseFragment;
@@ -29,6 +30,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -102,7 +104,24 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         rootCategory.setText(complaintPostResponseDto.getAmenity().getName());
         subCategory.setText(complaintPostResponseDto.getTemplate().getName());
 
-        pagerAdapter = new LeaderSlidePagerAdapter(getChildFragmentManager(), complaintPostResponseDto.getPoliticalBodyAdminDtoList());
+        if(complaintPostResponseDto.getPoliticalBodyAdminDtoList().size() > 0) {
+            pagerAdapter = new LeaderSlidePagerAdapter(getChildFragmentManager(), complaintPostResponseDto.getPoliticalBodyAdminDtoList());
+        }
+        else {
+            List<PoliticalBodyAdminDto> politicalBodyAdminDtoListDummy = new ArrayList<>();
+            PoliticalBodyAdminDto leaderDummy = new PoliticalBodyAdminDto();
+            leaderDummy.setName("Neta ji");
+            leaderDummy.getPoliticalAdminType().setShortName("Elected Leader");
+            leaderDummy.getLocation().setName("Your Constituency");
+            leaderDummy.setProfilePhoto("");
+            politicalBodyAdminDtoListDummy.add(leaderDummy);
+            pagerAdapter = new LeaderSlidePagerAdapter(getChildFragmentManager(), politicalBodyAdminDtoListDummy);
+            Toast.makeText(getActivity(), "Service not available in this location yet. Coming soon...", Toast.LENGTH_LONG).show();
+        }
+        if(complaintPostResponseDto.getPoliticalBodyAdminDtoList().size() < 2) {
+            forward.setVisibility(View.GONE);
+            back.setVisibility(View.GONE);
+        }
         pager.setAdapter(pagerAdapter);
 
         done.setOnClickListener(new Button.OnClickListener() {
