@@ -1,33 +1,31 @@
 package com.eswaraj.app.eswaraj.activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
-import com.eswaraj.app.eswaraj.adapters.TextPagerAdapter;
+import com.eswaraj.app.eswaraj.adapters.SplashPagerAdapter;
 import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.CacheClearedEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
-import com.eswaraj.app.eswaraj.events.UserReadyEvent;
-import com.eswaraj.app.eswaraj.fragments.LoginFragment;
 import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.helpers.StorageCacheClearingTask;
-import com.eswaraj.app.eswaraj.middleware.MiddlewareService;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.SplashScreenItem;
 import com.eswaraj.app.eswaraj.util.GcmUtil;
 import com.eswaraj.app.eswaraj.util.GlobalSessionUtil;
-import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomViewPager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,15 +52,23 @@ public class SplashActivity extends BaseActivity {
     private Boolean cacheCleared;
     private Boolean dontShowContinueButton;
     private Boolean startedFromMenu;
+    private Boolean criticalDataLoadFailed = false;
+    private int currentPage = 0;
 
     private Long startTime;
     private Long endTime;
 
     private CustomViewPager pager;
-    private TextPagerAdapter adapter;
+    private SplashPagerAdapter adapter;
+    private RadioGroup radioGroup;
+    private Button cont;
+    private Button retry;
+    private ProgressWheel progressWheel;
+
     private ArrayList<SplashScreenItem> splashScreenItems;
     private View.OnClickListener onClickListenerContinue;
     private View.OnClickListener onClickListenerRetry;
+    private ViewPager.OnPageChangeListener onPageChangeListener;
 
     static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
 
@@ -77,6 +83,10 @@ public class SplashActivity extends BaseActivity {
         startTime = new Date().getTime();
 
         pager = (CustomViewPager) findViewById(R.id.viewPager);
+        radioGroup = (RadioGroup) findViewById(R.id.sRadioGroup);
+        cont = (Button) findViewById(R.id.sContinue);
+        retry = (Button) findViewById(R.id.sRetry);
+        progressWheel = (ProgressWheel) findViewById(R.id.sProgressWheel);
 
         cacheCleared = false;
         serverDataDownloadDone = false;
@@ -95,9 +105,9 @@ public class SplashActivity extends BaseActivity {
         setUpPagerData(dontShowContinueButton);
         setUpPager();
 
-        if(startedFromMenu) {
-            readyToProceed();
-        }
+        cont.setOnClickListener(onClickListenerContinue);
+        retry.setOnClickListener(onClickListenerRetry);
+
     }
 
     @Override
@@ -115,13 +125,12 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void setUpPager() {
-        pager.setScrollDurationFactor(2);
-        adapter = new TextPagerAdapter(getSupportFragmentManager(), splashScreenItems);
-        adapter.setOnClickListenerContinue(onClickListenerContinue);
-        adapter.setOnClickListenerRetry(onClickListenerRetry);
+        adapter = new SplashPagerAdapter(getSupportFragmentManager(), splashScreenItems);
         pager.setAdapter(adapter);
+        pager.setScrollDurationFactor(2);
         pager.setOffscreenPageLimit(2);
         pager.setCurrentItem(0);
+        pager.setOnPageChangeListener(onPageChangeListener);
     }
 
     private void setUpPagerData(Boolean onlyOne) {
@@ -139,36 +148,93 @@ public class SplashActivity extends BaseActivity {
             splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj04), getResources().getDrawable(R.drawable.splash_home_bg), "Analytics and More", "Visual analytics offering deeper insights to improve governance Per constituency/colony based map view to locate problems"));
             splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswaraj04), getResources().getDrawable(R.drawable.splash_home_bg), "Offline Mode", "You can use eSwaraj when you are not connected to internet. All the complaints will be saved on your device and will be sent to server automatically the next time when you are connected to internet"));
         }
+
+        if(splashScreenItems.size() < 2) {
+            radioGroup.setVisibility(View.GONE);
+        }
+        for (int i = 0; i < splashScreenItems.size(); i++) {
+            RadioButton radioButton = (RadioButton) getLayoutInflater().inflate(R.layout.splash_radio_button, null);
+            radioButton.setId(i);
+            radioButton.setEnabled(false);
+            radioGroup.addView(radioButton);
+        }
+        radioGroup.check(0);
+        radioGroup.setEnabled(false);
     }
 
     private void setUpListener() {
         onClickListenerContinue = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserReadyEvent event = new UserReadyEvent();
-                event.setSuccess(true);
-                eventBus.post(event);
+                if(startedFromMenu) {
+                    finish();
+                }
+                else {
+                    readyToProceed();
+                }
             }
         };
         onClickListenerRetry = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 middlewareService.loadCategoriesData(v.getContext());
-                adapter.showSpinner();
+                criticalDataLoadFailed = false;
+                serverDataDownloadDone = false;
+                updateUi();
+            }
+        };
+        onPageChangeListener = new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                currentPage = position;
+                radioGroup.check(position);
+                updateUi();
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         };
     }
 
-    public void readyToProceed() {
-        if(dontShowContinueButton) {
-            Intent i = new Intent(this, LoginActivity.class);
-            i.putExtra("MODE", false);
-            startActivity(i);
-            finish();
+    private void updateUi() {
+        if(currentPage == splashScreenItems.size() - 1) {
+            radioGroup.setVisibility(View.INVISIBLE);
+            if(startedFromMenu) {
+                cont.setVisibility(View.VISIBLE);
+            }
+            if(criticalDataLoadFailed) {
+                retry.setVisibility(View.VISIBLE);
+            }
+            if((!cacheCleared || !serverDataDownloadDone) && !startedFromMenu) {
+                progressWheel.setVisibility(View.VISIBLE);
+            }
+            if((cacheCleared && serverDataDownloadDone) && !startedFromMenu && !dontShowContinueButton) {
+                cont.setVisibility(View.VISIBLE);
+            }
+            if((cacheCleared && serverDataDownloadDone) && !startedFromMenu && dontShowContinueButton) {
+                readyToProceed();
+            }
         }
         else {
-            adapter.showContinueButton();
+            radioGroup.setVisibility(View.VISIBLE);
+            cont.setVisibility(View.INVISIBLE);
+            retry.setVisibility(View.INVISIBLE);
+            progressWheel.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public void readyToProceed() {
+        Intent i = new Intent(this, LoginActivity.class);
+        i.putExtra("MODE", false);
+        startActivity(i);
+        finish();
     }
 
     private boolean checkPlayServices() {
@@ -186,19 +252,6 @@ public class SplashActivity extends BaseActivity {
         return true;
     }
 
-
-    public void onEventMainThread(UserReadyEvent event) {
-        if(startedFromMenu) {
-            finish();
-        }
-        else {
-            Intent i = new Intent(this, LoginActivity.class);
-            i.putExtra("MODE", false);
-            startActivity(i);
-            finish();
-        }
-    }
-
     public void onEventMainThread(GetCategoriesDataEvent event) {
         if(event.getSuccess()) {
             //Launch image download now.
@@ -207,7 +260,8 @@ public class SplashActivity extends BaseActivity {
         }
         else {
             Toast.makeText(this, "Could not fetch categories from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-            adapter.showRetryButton();
+            criticalDataLoadFailed = true;
+            updateUi();
         }
     }
 
@@ -217,19 +271,14 @@ public class SplashActivity extends BaseActivity {
         }
         else {
             Toast.makeText(this, "Could not fetch all categories images from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-            //Show retry button which will re-trigger the request.
         }
         serverDataDownloadDone = true;
-        if (cacheCleared) {
-            readyToProceed();
-        }
+        updateUi();
     }
 
     public void onEventMainThread(CacheClearedEvent event) {
         cacheCleared = true;
-        if(serverDataDownloadDone) {
-            readyToProceed();
-        }
+        updateUi();
     }
 
     @Override
