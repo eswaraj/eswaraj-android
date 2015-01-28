@@ -5,6 +5,7 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.eswaraj.app.eswaraj.BuildConfig;
+import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.modules.LocalServiceGraph;
 import com.eswaraj.app.eswaraj.modules.MiddlewareGraph;
 
@@ -20,6 +21,7 @@ public class EswarajApplication extends Application {
     public void onCreate() {
         if (BuildConfig.DEBUG) {
             Log.d("EswarajApplication", "Debug mode enabled");
+            Constants.setDevMode();
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
                     .detectDiskWrites()

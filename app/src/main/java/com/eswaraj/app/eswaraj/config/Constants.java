@@ -13,27 +13,49 @@ public class Constants {
     public static final String GOOGLE_ANALYTICS_KEY = "UA-58373525-1";
 
     //eSwaraj URLS
-    public static final String BASE_URL = "http://dev.api.eswaraj.com/api/v0";
-    public static final String BASE_URL_2 = "http://dev.api.eswaraj.com";
-    public static final String GET_CATEGORIES_URL = BASE_URL + "/categories";
-    public static final String SAVE_FACEBOOK_USER_URL = BASE_URL + "/user/facebook";
-    public static final String SAVE_DEVICE_ANONYMOUS_USER_URL = BASE_URL + "/user/device";
-    public static final String POST_COMPLAINT_URL = BASE_URL + "/complaint";
-    public static final String USER_COMPLAINTS_URL = BASE_URL + "/user/complaints";
-    public static final String COMMENT_POST_URL = BASE_URL + "/complaint/user/comment";
-    public static final String COMPLAINT_CLOSE_URL = BASE_URL + "/complaint/user/status";
-    public static final String UPDATE_PROFILE_URL = BASE_URL + "/mobile/user/profile";
-    public static final String GET_PROFILE_URL = BASE_URL + "/mobile/user/profile";
-    public static final String LOCATION_COUNTERS_URL = BASE_URL_2 + "/stats/counter/location";
-    public static final String LOCATION_COMPLAINTS_URL = BASE_URL + "/complaint/location";
-    public static final String SAVE_GCM_ID_URL = BASE_URL + "/user/device/gcm";
-    public static final String GET_SINGLE_COMPLAINT_URL = BASE_URL + "/complaint";
-    public static final String GET_LOCATION_URL = BASE_URL + "/location";
-    public static final String GET_LEADER_URL = BASE_URL + "/leader";
+    public static String BASE_URL = "http://api.eswaraj.com/api/v0";
+    public static String BASE_URL_2 = "http://api.eswaraj.com";
+
+    public static String GET_CATEGORIES_URL = BASE_URL + "/categories";
+    public static String SAVE_FACEBOOK_USER_URL = BASE_URL + "/user/facebook";
+    public static String SAVE_DEVICE_ANONYMOUS_USER_URL = BASE_URL + "/user/device";
+    public static String POST_COMPLAINT_URL = BASE_URL + "/complaint";
+    public static String USER_COMPLAINTS_URL = BASE_URL + "/user/complaints";
+    public static String COMMENT_POST_URL = BASE_URL + "/complaint/user/comment";
+    public static String COMPLAINT_CLOSE_URL = BASE_URL + "/complaint/user/status";
+    public static String UPDATE_PROFILE_URL = BASE_URL + "/mobile/user/profile";
+    public static String GET_PROFILE_URL = BASE_URL + "/mobile/user/profile";
+    public static String LOCATION_COUNTERS_URL = BASE_URL_2 + "/stats/counter/location";
+    public static String LOCATION_COMPLAINTS_URL = BASE_URL + "/complaint/location";
+    public static String SAVE_GCM_ID_URL = BASE_URL + "/user/device/gcm";
+    public static String GET_SINGLE_COMPLAINT_URL = BASE_URL + "/complaint";
+    public static String GET_LOCATION_URL = BASE_URL + "/location";
+    public static String GET_LEADER_URL = BASE_URL + "/leader";
 
     //Google URLS
     public static final String GOOGLE_PLACES_AUTOCOMPLETE_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?key=" + GOOGLE_API_BROWSER_KEY + "&components=country:in&input=";
     public static final String GOOGLE_PLACES_DETAILS_URL= "https://maps.googleapis.com/maps/api/place/details/json?key=" + GOOGLE_API_BROWSER_KEY + "&placeid=";
+
+    public static void setDevMode() {
+        BASE_URL = "http://dev.api.eswaraj.com/api/v0";
+        BASE_URL_2 = "http://dev.api.eswaraj.com";
+
+        GET_CATEGORIES_URL = BASE_URL + "/categories";
+        SAVE_FACEBOOK_USER_URL = BASE_URL + "/user/facebook";
+        SAVE_DEVICE_ANONYMOUS_USER_URL = BASE_URL + "/user/device";
+        POST_COMPLAINT_URL = BASE_URL + "/complaint";
+        USER_COMPLAINTS_URL = BASE_URL + "/user/complaints";
+        COMMENT_POST_URL = BASE_URL + "/complaint/user/comment";
+        COMPLAINT_CLOSE_URL = BASE_URL + "/complaint/user/status";
+        UPDATE_PROFILE_URL = BASE_URL + "/mobile/user/profile";
+        GET_PROFILE_URL = BASE_URL + "/mobile/user/profile";
+        LOCATION_COUNTERS_URL = BASE_URL_2 + "/stats/counter/location";
+        LOCATION_COMPLAINTS_URL = BASE_URL + "/complaint/location";
+        SAVE_GCM_ID_URL = BASE_URL + "/user/device/gcm";
+        GET_SINGLE_COMPLAINT_URL = BASE_URL + "/complaint";
+        GET_LOCATION_URL = BASE_URL + "/location";
+        GET_LEADER_URL = BASE_URL + "/leader";
+    }
 
     public static String getCommentsUrl(Long complaintId, int start, int count) {
         return BASE_URL + "/complaint/" + complaintId + "/comments?count=" + count + "&start=" + start + "&order=DESC";
