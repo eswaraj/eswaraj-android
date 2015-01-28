@@ -21,8 +21,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="-15dp"
+        android:layout_marginTop="-8dp"
         android:textColor="#929292"
+        android:textStyle="bold"
+        android:maxLines="1"
         android:gravity="center_vertical|center_horizontal" />
 
     <LinearLayout
@@ -36,7 +38,7 @@
             android:id="@+id/hCreate"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:src="@drawable/raise_complaint"
+            android:src="@drawable/raise_complaint_imageview"
             android:layout_weight="1"
             android:layout_marginBottom="-10dp" />
 
@@ -62,7 +64,7 @@
                 android:id="@+id/hComplaints"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:src="@drawable/my_complaints"
+                android:src="@drawable/my_complaints_imageview"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -79,7 +81,7 @@
                 android:id="@+id/hConstituency"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:src="@drawable/my_constituency"
+                android:src="@drawable/my_constituency_imageview"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
@@ -108,7 +110,7 @@
                 android:id="@+id/hLeaders"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:src="@drawable/my_leader"
+                android:src="@drawable/my_leader_imageview"
                 android:layout_weight="0.7"
                 android:paddingBottom="10dp" />
 
@@ -124,7 +126,7 @@
                     android:id="@+id/hProfile"
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
-                    android:src="@drawable/my_profile"
+                    android:src="@drawable/my_profile_imageview"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"

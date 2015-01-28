@@ -114,10 +114,10 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
 
         hRevGeocode.setTextColor(Color.parseColor("#929292"));
 
-        complaints.setImageDrawable(getResources().getDrawable(R.drawable.complaint));
-        leaders.setImageDrawable(getResources().getDrawable(R.drawable.leader));
-        constituency.setImageDrawable(getResources().getDrawable(R.drawable.constituency));
-        profile.setImageDrawable(getResources().getDrawable(R.drawable.profile));
+        //complaints.setImageDrawable(getResources().getDrawable(R.drawable.complaint));
+        //leaders.setImageDrawable(getResources().getDrawable(R.drawable.leader));
+        //constituency.setImageDrawable(getResources().getDrawable(R.drawable.constituency));
+        //profile.setImageDrawable(getResources().getDrawable(R.drawable.profile));
 
         googleMapFragment = (GoogleMapFragment) getSupportFragmentManager().findFragmentById(R.id.hMap);
         googleMapFragment.setContext(this);
