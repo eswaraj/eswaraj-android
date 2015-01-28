@@ -2,36 +2,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:weightSum="10"
+    android:padding="0dp"
     android:background="#ffffffff"
-    android:padding="0dp">
+    >
 
     <FrameLayout
         android:id="@+id/asMapContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_weight="3"
+        android:layout_marginBottom="16dp"
+        >
     </FrameLayout>
 
     <com.eswaraj.app.eswaraj.widgets.ProgressTextView
         android:id="@+id/asRevGeocode"
         android:layout_width="fill_parent"
-        android:layout_height="5dp"
-        android:layout_weight="0.5"
-        android:background="#ffffffff"
-        android:gravity="center_vertical|center_horizontal"
-        android:textColor="#929292" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="-8dp"
+        android:textColor="#929292"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:gravity="center_vertical|center_horizontal" />
 
     <GridView
         android:id="@+id/gvAmenityList"
         android:layout_height="0dp"
         android:layout_weight="7"
         android:layout_width="match_parent"
-        android:numColumns="3">
+        android:numColumns="2">
     </GridView>
 
 </LinearLayout>
