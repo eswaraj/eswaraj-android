@@ -4,53 +4,70 @@
     android:layout_height="match_parent"
     tools:context="com.eswaraj.app.eswaraj.fragments.LeaderForComplaintFragment">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/lfcPhoto"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ravi"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_alignBottom="@+id/lfcPhoto"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_marginTop="100dp">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" >
+            <ImageView
+                android:id="@+id/lfcPhoto"
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:src="@drawable/ravi"
+                android:layout_weight="0.4"
+                android:layout_gravity="center|right"
+                android:cropToPadding="true"
+                android:layout_marginLeft="140dp" />
 
-            <TextView
-                android:id="@+id/lfcName"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ravi Sharma"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="0.6"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:weightSum="1">
 
-            <TextView
-                android:id="@+id/lfcDetails"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="PM, India"/>
+                    <TextView
+                        android:id="@+id/lfcName"
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:text="Ravi Sharma"
+                        android:textColor="#FFFFFF"
+                        android:layout_gravity="bottom"
+                        android:gravity="bottom"
+                        android:paddingLeft="10dp" />
 
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/lfcDetails"
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:text="PM, India"
+                        android:textColor="#FFFFFF"
+                        android:layout_gravity="top"
+                        android:gravity="top"
+                        android:paddingLeft="10dp" />
 
-            <TextView
-                android:id="@+id/lfcMessage"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Thank you for using eSwaraj"/>
+            </LinearLayout>
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/lfcMessage"
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Thank you for using eSwaraj"
+        android:textColor="#FFFFFF"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
 
+</LinearLayout>
 </FrameLayout>
