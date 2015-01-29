@@ -15,7 +15,7 @@
         android:drawableBottom="@drawable/issue_details_take"
         android:drawablePadding="8dp"
         android:text="Take Photo"
-        android:textColor="#ff1c33b0"
+        android:textColor="#0099cc"
         android:textSize="17sp" />
 
     <TextView
@@ -23,7 +23,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Or"
-        android:textColor="#ff1c33b0" />
+        android:textColor="#0099cc"
+        android:layout_marginTop="15dp" />
 
     <Button
         android:id="@+id/adAttachPhoto"
@@ -33,7 +34,7 @@
         android:drawableBottom="@drawable/issue_details_attach"
         android:drawablePadding="8dp"
         android:text="Attach Photo"
-        android:textColor="#ff1c33b0"
+        android:textColor="#0099cc"
         android:textSize="17sp" />
 
 </LinearLayout>

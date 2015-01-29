@@ -4,10 +4,15 @@
     android:layout_height="match_parent"
     tools:context="com.eswaraj.app.eswaraj.activities.AddDetailsActivity">
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
     <fragment
         class="com.eswaraj.app.eswaraj.fragments.AddDetailsFragment"
         android:id="@+id/adFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    </ScrollView>
 
 </RelativeLayout>
