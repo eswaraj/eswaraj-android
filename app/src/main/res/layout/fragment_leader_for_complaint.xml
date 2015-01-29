@@ -10,9 +10,9 @@
 
         <ImageView
             android:id="@+id/lfcPhoto"
-            android:src="@drawable/profile_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ravi"/>
 
         <LinearLayout
             android:layout_alignBottom="@+id/lfcPhoto"
@@ -30,13 +30,15 @@
                 android:id="@+id/lfcName"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="Ravi Sharma"/>
 
             <TextView
                 android:id="@+id/lfcDetails"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="PM, India"/>
 
         </LinearLayout>
 
@@ -44,7 +46,8 @@
                 android:id="@+id/lfcMessage"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="Thank you for using eSwaraj"/>
 
         </LinearLayout>
 

@@ -100,7 +100,7 @@
         android:text="Issue Details"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_weight="0.4"
+        android:layout_weight="0.5"
         android:longClickable="false"
         android:gravity="center_vertical"
         android:textSize="25dp"
@@ -113,13 +113,13 @@
     <ImageView
         android:id="@+id/csFacebook"
         android:src="@drawable/facebook_share_button"
-        android:layout_weight="0.6"
+        android:layout_weight="0.5"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginLeft="10dp"
         android:paddingLeft="5dp"
         android:paddingRight="2.5dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="2dp" />
 
     </LinearLayout>
 
