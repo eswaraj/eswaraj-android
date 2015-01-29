@@ -8,65 +8,68 @@
     android:minHeight="120dp"
     android:padding="15dp">
 
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <FrameLayout
-        android:id="@+id/chosen_pic_container"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@drawable/issue_details_image_container"
-        android:layout_centerVertical="true"
-        android:layout_weight="0.5">
-
-        <ImageView
-            android:id="@+id/adPhotoDisplay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:cropToPadding="true"
-            android:scaleType="fitXY" />
-
-    </FrameLayout>
-
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:layout_weight="0.5"
-        android:layout_marginLeft="5dp">
-    <Button
-        android:id="@+id/adDeletePhoto"
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/issue_detail_button"
-        android:drawableLeft="@drawable/ic_delete"
-        android:drawablePadding="2dp"
-        android:text="Remove Photo"
-        android:textColor="#0099cc"
-        android:textSize="14sp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:layout_gravity="top"
-        android:layout_marginBottom="5dp" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <FrameLayout
+            android:id="@+id/chosen_pic_container"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/issue_details_image_container"
+            android:layout_centerVertical="true"
+            android:layout_weight="0.5">
 
-    <Button
-        android:id="@+id/adRetakePhoto"
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/issue_detail_button"
-        android:drawableLeft="@drawable/ic_retake"
-        android:drawablePadding="2dp"
-        android:text="Retake Photo"
-        android:textColor="#0099cc"
-        android:textSize="14sp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="5dp" />
+            <ImageView
+                android:id="@+id/adPhotoDisplay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cropToPadding="true"
+                android:scaleType="fitXY" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_weight="0.5"
+            android:layout_marginLeft="5dp">
+
+            <Button
+                android:id="@+id/adDeletePhoto"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/issue_detail_button"
+                android:drawableLeft="@drawable/ic_delete"
+                android:drawablePadding="2dp"
+                android:text="Remove Photo"
+                android:textColor="#0099cc"
+                android:textSize="14sp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:layout_gravity="top"
+                android:layout_marginBottom="5dp" />
+
+            <Button
+                android:id="@+id/adRetakePhoto"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/issue_detail_button"
+                android:drawableLeft="@drawable/ic_retake"
+                android:drawablePadding="2dp"
+                android:text="Retake Photo"
+                android:textColor="#0099cc"
+                android:textSize="14sp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="5dp" />
+        </LinearLayout>
+
     </LinearLayout>
-</LinearLayout>
+
 </RelativeLayout>

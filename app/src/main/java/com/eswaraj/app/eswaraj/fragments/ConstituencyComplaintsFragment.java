@@ -155,9 +155,9 @@ public class ConstituencyComplaintsFragment extends BaseFragment {
         pager.setOffscreenPageLimit(3);
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) rootView.findViewById(R.id.tabs);
-        tabs.setViewPager(pager);
         tabs.setShouldExpand(true);
-        tabs.setTabPaddingLeftRight(100);
+        //tabs.setTabPaddingLeftRight(100);
+        tabs.setViewPager(pager);
         tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
