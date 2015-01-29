@@ -5,11 +5,14 @@
     android:layout_height="match_parent"
     tools:context="com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity">
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
     <FrameLayout
         android:id="@+id/csFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="9"/>
 
-
+    </ScrollView>
 </LinearLayout>
