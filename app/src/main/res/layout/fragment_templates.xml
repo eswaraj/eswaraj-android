@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f2f2f2"
+    android:background="#dbdbdb"
     android:padding="0dp">
 
     <FrameLayout
@@ -19,8 +19,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="6"
-        android:layout_marginTop="-12.5dp">
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dip"
+        android:cacheColorHint="@android:color/transparent"
+        android:drawSelectorOnTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="-10dp"
+        >
     </ListView>
-
 
 </LinearLayout>

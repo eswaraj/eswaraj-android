@@ -59,7 +59,6 @@ public class SelectTemplateFragment extends BaseFragment {
 
         TemplateListAdapter templateListAdapter = new TemplateListAdapter(getActivity(), R.layout.item_subcategory_list, amenity.getChildCategories());
         listView.setAdapter(templateListAdapter);
-        listView.setDividerHeight(0);
 
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
