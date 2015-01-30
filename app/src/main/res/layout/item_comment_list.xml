@@ -3,28 +3,44 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/issue_detail_button"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
-    android:paddingRight="10dp"
-    android:paddingLeft="10dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp">
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp">
+
+        <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+            android:id="@+id/scSubmitterImage"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:src="@drawable/ravi"
+            android:layout_weight="0.8"
+            android:gravity="top"
+            android:paddingLeft="10dp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_weight="0.2"
+        android:padding="5dp">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="5dp">
     <TextView
         android:id="@+id/cName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Anonymous"
         android:layout_weight="0.5"
-        android:textStyle="bold"
-        android:textColor="#fff15605"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/cTime"
@@ -33,7 +49,7 @@
         android:text="Tue Dec 30 03:36:48 GMT +5:30 2014"
         android:layout_weight="0.5"
         android:gravity="right"
-        android:textColor="#fff1a03a"/>
+        android:textColor="#808080"/>
     </LinearLayout>
     <TextView
         android:id="@+id/cText"
@@ -42,6 +58,9 @@
         android:text="13453657767ufhhggguy9786ydfcvi78fghgjhgjghgjhkghjgjg687ghj"
         android:gravity="left"
         android:textColor="#333"
-        android:layout_marginTop="5dp" />
+        android:paddingLeft="5dp" />
+    </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
