@@ -4,98 +4,193 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:weightSum="1"
-    android:background="@drawable/issue_detail_button">
-
-    <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
-        android:id="@+id/mcIcon"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:src="@drawable/warning_circle"
-        android:layout_weight="0.4"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp" />
-
-    <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
-        android:id="@+id/mcProfilePhoto"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:src="@drawable/warning_circle"
-        android:layout_weight="0.4"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp" />
+    android:background="#FFFFFF"
+    android:layout_margin="10dp"
+    >
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:weightSum="1"
-        android:layout_weight="0.2"
-        android:layout_marginTop="5dp">
+        android:background="#FFFFFF"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp">
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:weightSum="1"
-            android:orientation="horizontal"
-            android:layout_weight="0.65"
+            android:layout_weight="0.8">
+
+            <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+            android:id="@+id/mcProfilePhoto"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:src="@drawable/warning_circle"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:paddingLeft="5dp"
-            android:paddingTop="6dp"
-            android:layout_gravity="bottom">
+            android:paddingRight="5dp"
+            android:layout_weight="0.5" />
 
-            <TextView
-                android:id="@+id/mcID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.36"
-                android:textColor="#fff15d37" />
+            <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+                android:id="@+id/mcIcon"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:src="@drawable/warning_circle"
+                android:layout_weight="0.5"
+                android:paddingBottom="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_gravity="top" />
 
-            <TextView
-                android:id="@+id/mcStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.34" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/mcDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:textColor="#fff1b136" />
-
-        </LinearLayout>
-
-        <LinearLayout
+            <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:weightSum="1"
-            android:orientation="horizontal"
-            android:layout_weight="0.35"
-            android:gravity="center_vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="left"
+            android:layout_weight="0.2"
+            android:layout_margin="5dp">
 
-            <TextView
-                android:id="@+id/mcCategory"
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:paddingTop="0dp"
-                android:textColor="#333"
-                android:gravity="top"
-                android:layout_gravity="top"
-                android:layout_weight="1"
-                android:paddingRight="25dp" />
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:weightSum="1"
+                    android:layout_weight="0.5">
+
+                    <TextView
+                        android:id="@+id/mcSubmitterName"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="Aam Aadmi"
+                        android:gravity="left|bottom"
+                        android:textStyle="bold"
+                        android:textColor="#0099cc" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/mcAmenityName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Water"
+                    android:textStyle="bold"
+                    android:textColor="#0099cc"
+                    android:gravity="right"
+                    android:layout_marginRight="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:id="@+id/mcID"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
+                        android:text="84801"
+                        android:textStyle="bold"
+                        android:textColor="#ADADAD" />
+
+                    <TextView
+                        android:id="@+id/mcDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:textColor="#ADADAD"
+                        android:text="3 hours ago"
+                        android:gravity="right"
+                        android:layout_marginRight="10dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/mcCategory"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Leaking Water Pipes"
+                    android:textStyle="bold"
+                    android:textColor="#0099cc"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" />
+
+                <TextView
+                    android:id="@+id/mcDescription"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Too much problem"
+                    android:textStyle="bold"
+                    android:textColor="#ADADAD"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginBottom="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#FFFFFF"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:id="@+id/mcCompaddress"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:text="Govind Vihar, Delhi"
+                    android:textStyle="bold"
+                    android:textColor="#ADADAD"
+                    android:gravity="left" />
+
+                <TextView
+                    android:id="@+id/mcStatus"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:text="Pending"
+                    android:textStyle="bold"
+                    android:textColor="#ADADAD"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:paddingRight="10dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
-            android:id="@+id/mcImage"
-            android:visibility="gone"
-            android:layout_width="200dp"
-            android:layout_height="140dp"
-            android:paddingBottom="10dp"/>
 
     </LinearLayout>
 

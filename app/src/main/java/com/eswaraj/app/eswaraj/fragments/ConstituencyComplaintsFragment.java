@@ -1,6 +1,7 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -116,6 +117,8 @@ public class ConstituencyComplaintsFragment extends BaseFragment {
 
         mcShowMore = new Button(getActivity());
         mcShowMore.setText("Show more");
+        mcShowMore.setBackgroundColor(Color.parseColor("#0099cc"));
+        mcShowMore.setTextColor(Color.parseColor("#FFFFFF"));
         complaintListFragment.setFooter(mcShowMore);
         mcShowMore.setOnClickListener(new View.OnClickListener() {
             @Override
