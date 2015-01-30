@@ -30,6 +30,8 @@ public class ConstituencySnapshotActivity extends BaseActivity {
 
     ConstituencySnapshotFragment constituencySnapshotFragment;
 
+    private Boolean isStopped;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,18 +41,31 @@ public class ConstituencySnapshotActivity extends BaseActivity {
         constituencySnapshotFragment = (ConstituencySnapshotFragment) getSupportFragmentManager().findFragmentById(R.id.csFragment);
     }
 
-
     @Override
     protected void onDestroy() {
         eventBus.unregister(this);
         super.onStop();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isStopped = false;
+    }
+
+    @Override
+    protected void onStop() {
+        isStopped = true;
+        super.onStop();
+    }
+
     public void onEventMainThread(ComplaintSelectedEvent event) {
-        Intent i = new Intent(this, SingleComplaintActivity.class);
-        i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
-        i.putExtra("DATA_PRESENT", true);
-        startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+        if(!isStopped) {
+            Intent i = new Intent(this, SingleComplaintActivity.class);
+            i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
+            i.putExtra("DATA_PRESENT", true);
+            startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+        }
     }
 
     public void onEventMainThread(ShowConstituencyComplaintsEvent event) {

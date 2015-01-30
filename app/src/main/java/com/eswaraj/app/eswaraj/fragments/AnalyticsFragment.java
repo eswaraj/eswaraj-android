@@ -92,7 +92,7 @@ public class AnalyticsFragment extends BaseFragment {
     }
 
     public void createChart(List<ComplaintCounter> complaintCounters) {
-        GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters, globalSession.getColorMap());
+        GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters, globalSession.getCategoryDtoList());
         mcChartContainer.removeAllViews();
         mcChartContainer.addView(chartView);
         AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), complaintCounters, globalSession.getColorMap());

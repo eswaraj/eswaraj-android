@@ -8,10 +8,12 @@ import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.MotionEvent;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.models.ComplaintCounter;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
 import java.util.List;
 import java.util.Map;
@@ -22,17 +24,22 @@ public class PieChartView extends GraphicalView {
 		super(context, arg1);
 	}
 
-	public static GraphicalView getNewInstance(Context context, List<ComplaintCounter> complaintCounters, Map<Long, Integer> colorMap) {
-		GraphicalView pieChartView = ChartFactory.getPieChartView(context, getDataSet(context, complaintCounters, colorMap), getRenderer(context, complaintCounters, colorMap));
+	public static GraphicalView getNewInstance(Context context, List<ComplaintCounter> complaintCounters, List<CategoryWithChildCategoryDto> categoryDtoList) {
+		GraphicalView pieChartView = ChartFactory.getPieChartView(context, getDataSet(context, complaintCounters, categoryDtoList), getRenderer(context, complaintCounters, categoryDtoList));
 		pieChartView.zoomIn();
 		return pieChartView;
 	}
 
-	private static DefaultRenderer getRenderer(Context context, List<ComplaintCounter> complaintCounters, Map<Long, Integer> colorMap) {
+	private static DefaultRenderer getRenderer(Context context, List<ComplaintCounter> complaintCounters, List<CategoryWithChildCategoryDto> categoryDtoList) {
 
 		DefaultRenderer defaultRenderer = new DefaultRenderer();
         for(int i = 0; i < complaintCounters.size(); i++) {
-            int color = colorMap.get(complaintCounters.get(i).getId());
+            int color = 0;
+            for(CategoryWithChildCategoryDto categoryDto : categoryDtoList) {
+                if(categoryDto.getId().equals(complaintCounters.get(i).getId())) {
+                    color = Color.parseColor("#" + categoryDto.getColor());
+                }
+            }
 			SimpleSeriesRenderer simpleRenderer = new SimpleSeriesRenderer();
 			simpleRenderer.setColor(color);
 			defaultRenderer.addSeriesRenderer(simpleRenderer);
@@ -48,7 +55,7 @@ public class PieChartView extends GraphicalView {
 		return defaultRenderer;
 	}
 
-	private static CategorySeries getDataSet(Context context, List<ComplaintCounter> complaintCounters, Map<Long, Integer> colorMap) {
+	private static CategorySeries getDataSet(Context context, List<ComplaintCounter> complaintCounters, List<CategoryWithChildCategoryDto> categoryDtoList) {
 		CategorySeries series = new CategorySeries("Chart");
 		for (ComplaintCounter complaintCounter : complaintCounters) {
 			series.add(complaintCounter.getCount());

@@ -26,6 +26,8 @@ public class UserSnapshotActivity extends BaseActivity {
 
     private UserSnapshotFragment userSnapshotFragment;
 
+    private Boolean isStopped;
+
     @Inject
     EventBus eventBus;
 
@@ -47,11 +49,25 @@ public class UserSnapshotActivity extends BaseActivity {
         super.onStop();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isStopped = false;
+    }
+
+    @Override
+    protected void onStop() {
+        isStopped = true;
+        super.onStop();
+    }
+
     public void onEventMainThread(ComplaintSelectedEvent event) {
-        Intent i = new Intent(this, SingleComplaintActivity.class);
-        i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
-        i.putExtra("DATA_PRESENT", true);
-        startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+        if(!isStopped) {
+            Intent i = new Intent(this, SingleComplaintActivity.class);
+            i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
+            i.putExtra("DATA_PRESENT", true);
+            startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+        }
     }
 
     public void onEventMainThread(ShowUserComplaintsEvent event) {

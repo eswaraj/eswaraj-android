@@ -81,7 +81,12 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
         if(complaintCounterList != null) {
             for(ComplaintCounter complaintCounter : complaintCounterList) {
                 if(complaintCounter.getId().equals(categoryDto.getId())) {
-                    holder.saStats.setText(new DecimalFormat("#.##").format(complaintCounter.getCount().doubleValue()*100/totalComplaints) + "%");
+                    if(totalComplaints > 0) {
+                        holder.saStats.setText(new DecimalFormat("#.##").format(complaintCounter.getCount().doubleValue() * 100 / totalComplaints) + "%");
+                    }
+                    else {
+                        holder.saStats.setText(new DecimalFormat("#.##").format(0) + "%");
+                    }
                     holder.saStats.setVisibility(View.VISIBLE);
                 }
             }

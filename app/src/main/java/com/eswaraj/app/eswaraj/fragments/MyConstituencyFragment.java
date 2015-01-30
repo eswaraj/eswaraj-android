@@ -390,7 +390,7 @@ public class MyConstituencyFragment extends BaseFragment implements OnMapReadyCa
     }
 
     public void populateCountersAndCreateChart() {
-        GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters, globalSession.getColorMap());
+        GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters, globalSession.getCategoryDtoList());
         mcChartContainer.removeAllViews();
         mcChartContainer.addView(chartView);
         totalComplaints = 0L;
