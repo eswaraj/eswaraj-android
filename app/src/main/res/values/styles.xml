@@ -8,8 +8,8 @@
 
     <style name="MyActionBar"
         parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/blue</item>
-        <item name="background">@color/blue</item>
+        <item name="android:background">@color/navy_blue_background</item>
+        <item name="background">@color/navy_blue_background</item>
     </style>
 
     <style name="CustomTheme.ButtonTextAppearance" parent="@style/Base.TextAppearance.AppCompat.Button">

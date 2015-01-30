@@ -4,30 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.eswaraj.app.eswaraj.fragments.ComplaintSummaryOffileFragment"
-    android:background="#FFFFFF">
+    android:background="#DBDBDB">
 
-    <include
-        android:id="@+id/logo_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/screen_header" />
+   <LinearLayout
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_margin="10dp">
 
-    <LinearLayout
+       <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="10"
-        android:background="#f2f2f2"
-        android:paddingTop="10dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:id="@+id/imageView"
-            android:src="@drawable/complaint_success"
-            android:paddingTop="5dp"
-            android:layout_weight="8"
-            android:paddingBottom="5dp" />
+        android:background="#FFFFFF">
 
         <TextView
             android:text="Complaint Successful"
@@ -38,7 +28,18 @@
             android:longClickable="false"
             android:gravity="center_vertical"
             android:textSize="25dp"
-            android:textColor="#fff16661" />
+            android:textColor="#0099cc" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/imageView"
+            android:src="@drawable/complaint_success"
+            android:paddingTop="5dp"
+            android:layout_weight="8"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
 
     </LinearLayout>
 
@@ -48,179 +49,183 @@
         android:layout_height="33dp"
         android:text="Thank you for using eSwaraj. Together we will deliver better support to the government"
         android:textSize="9dp"
-        android:paddingLeft="20dp"
+        android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:paddingRight="10dp"
         android:textColor="#525252"
-        android:background="#f2f2f2"
+        android:background="#FFFFFF"
         android:layout_marginTop="-4dp" />
+
+   </LinearLayout>
+
+        <TextView
+            android:text="\nYour complaint is saved.\nNext time when you are connected to internet,\nit will be sent to server."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f2f2f2"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="20dp" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1"
         android:orientation="horizontal"
-        android:layout_weight="1"
-        android:background="#f2f2f2">
-
-        <TextView
-            android:text="\nYour complaint is saved.\n\nNext time when you are connected to internet, it will be sent to server."
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"/>
-
-    </LinearLayout>
+        android:weightSum="1"
+        android:background="#FFFFFF"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="140dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="0.5">
+        <TextView
+            android:text="Issue Details"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:textSize="25dp"
+            android:textColor="#0099cc"
+            android:layout_alignTop="@+id/csissuedetails"
+            android:background="#FFFFFF"
+            android:paddingLeft="10dp"
+            />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:layout_weight="0.5"
-            android:weightSum="1"
-            >
-
-            <TextView
+        <TextView
                 android:id="@+id/csCategory_label"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
                 android:text="Citizen Service"
                 android:gravity="center_vertical"
-                android:paddingLeft="15dp"
+                android:paddingLeft="10dp"
                 android:textColor="#828282" />
 
             <TextView
                 android:id="@+id/csRootCategory"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
                 android:text="Water"
-                android:paddingLeft="15dp"
+                android:paddingLeft="10dp"
                 android:textStyle="bold"
-                android:textColor="#ff32acf1" />
+                android:textColor="#0099cc" />
 
             <TextView
                 android:id="@+id/csSubCategory_label"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
                 android:text="Issue Name"
-                android:paddingLeft="15dp"
+                android:paddingLeft="10dp"
                 android:textColor="#828282" />
 
             <TextView
                 android:id="@+id/csSubCategory"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
                 android:text="Leaking Water Pipes"
-                android:paddingLeft="15dp"
+                android:paddingLeft="10dp"
                 android:textStyle="bold"
-                android:textColor="#ff32acf1" />
-
-        </LinearLayout>
-        <ImageView
-            android:id="@+id/csComplaintPhoto"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.5"
-            android:src="@drawable/no_image_placeholder"
-            android:padding="5dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="140dp"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:layout_weight="0.5"
-            android:weightSum="1"
-            >
+                android:textColor="#0099cc" />
 
             <TextView
                 android:id="@+id/cs_address_label"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
                 android:text="Issue Reported From"
                 android:gravity="center_vertical"
-                android:paddingLeft="15dp"
+                android:paddingLeft="10dp"
                 android:textColor="#828282" />
 
             <TextView
                 android:id="@+id/csAddress"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
                 android:text="Govind Vihar, Delhi"
-                android:paddingLeft="15dp"
+                android:paddingLeft="10dp"
                 android:textStyle="bold"
-                android:textColor="#ff32acf1" />
+                android:textColor="#0099cc" />
 
             <TextView
                 android:id="@+id/cs_issue_desc_label"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
                 android:text="Issue Description"
                 android:gravity="center_vertical"
-                android:paddingLeft="15dp"
+                android:paddingLeft="10dp"
                 android:textColor="#828282" />
 
             <TextView
                 android:id="@+id/csDescription"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
                 android:text="Too much problem"
-                android:paddingLeft="15dp"
+                android:paddingLeft="10dp"
                 android:maxLines="2"
                 android:scrollbars="vertical"
                 android:textStyle="bold"
-                android:textColor="#ff32acf1" />
-
-        </LinearLayout>
+                android:textColor="#0099cc"
+                android:layout_marginBottom="10dp" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="0.5">
+
+        <ImageView
+            android:id="@+id/csComplaintPhoto"
+            android:layout_width="fill_parent"
+            android:layout_height="130dp"
+            android:src="@drawable/no_image_placeholder"
+            android:padding="8dp"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
+</LinearLayout>
+
+<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp">
 
         <Button
             android:id="@+id/csAnother"
             android:text="New Complaint"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:layout_marginRight="2dp"
-            android:textColor="#333"
+            android:layout_marginRight="5dp"
+            android:textColor="#FFFFFF"
             android:textSize="12dp"
-            android:layout_marginLeft="2dp" />
+            android:layout_marginLeft="15dp"
+            android:background="#0099cc"
+            android:layout_gravity="center"
+            android:paddingLeft="2.5dp"
+            android:paddingRight="2.5dp" />
 
         <Button
             android:id="@+id/csDone"
             android:text="Done"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:textColor="#333"
+            android:textColor="#FFFFFF"
             android:textSize="12dp"
-            android:layout_marginRight="2dp" />
+            android:layout_marginRight="15dp"
+            android:background="#92B06A"
+            android:layout_gravity="center"
+            android:paddingLeft="2.5dp"
+            android:paddingRight="5dp"
+            android:layout_marginLeft="5dp" />
 
     </LinearLayout>
 
