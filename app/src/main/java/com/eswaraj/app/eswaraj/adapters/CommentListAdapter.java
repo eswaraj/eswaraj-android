@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
 import com.eswaraj.app.eswaraj.models.CommentDto;
+import com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 import java.util.List;
@@ -44,6 +46,7 @@ public class CommentListAdapter extends ArrayAdapter<CommentDto> {
             holder.cName = (TextView)row.findViewById(R.id.cName);
             holder.cText = (TextView)row.findViewById(R.id.cText);
             holder.cTime = (TextView)row.findViewById(R.id.cTime);
+            holder.cImage = (CustomNetworkImageView)row.findViewById(R.id.cImage);
 
             row.setTag(holder);
         }
@@ -56,6 +59,7 @@ public class CommentListAdapter extends ArrayAdapter<CommentDto> {
 
         if(commentDto.getPostedBy() != null) {
             holder.cName.setText(commentDto.getPostedBy().getName());
+            Picasso.with(context).load(commentDto.getPostedBy().getProfilePhoto().replace("http", "https")).into(holder.cImage);
         }
         holder.cText.setText(commentDto.getText());
         holder.cTime.setText(DateUtils.getRelativeTimeSpanString(commentDto.getCreationTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
@@ -80,5 +84,6 @@ public class CommentListAdapter extends ArrayAdapter<CommentDto> {
         TextView cName;
         TextView cText;
         TextView cTime;
+        CustomNetworkImageView cImage;
     }
 }

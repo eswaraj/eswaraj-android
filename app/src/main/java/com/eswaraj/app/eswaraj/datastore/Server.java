@@ -124,8 +124,8 @@ public class Server extends BaseClass implements ServerInterface {
     }
 
     @Override
-    public void updateProfile(Context context, String token, String name, Double lat, Double lng) {
-        profileUpdateRequest.processRequest(context, token, name, lat, lng);
+    public void updateProfile(Context context, String token, String name, String voterId, Double lat, Double lng) {
+        profileUpdateRequest.processRequest(context, token, name, voterId, lat, lng);
     }
 
     @Override

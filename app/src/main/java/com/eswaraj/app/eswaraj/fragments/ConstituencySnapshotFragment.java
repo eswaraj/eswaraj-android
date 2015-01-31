@@ -124,7 +124,7 @@ public class ConstituencySnapshotFragment extends BaseFragment {
                 header.setImageDrawable(getResources().getDrawable(R.drawable.constituency_default_header));
             }
         }
-        count.setText(complaintCount.toString());
+        count.setText(complaintCount.toString() + "issues");
 
         mcShowMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,7 +221,7 @@ public class ConstituencySnapshotFragment extends BaseFragment {
             for(ComplaintCounter complaintCounter : complaintCounters) {
                 complaintCount += complaintCounter.getCount();
             }
-            count.setText(complaintCount.toString());
+            count.setText(complaintCount.toString() + "issues");
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch constituency complaint counters. Error = " + event.getError(), Toast.LENGTH_LONG).show();

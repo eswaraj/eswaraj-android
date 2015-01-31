@@ -36,6 +36,7 @@ import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 
@@ -57,7 +58,15 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
 
     private ImageView mpPhoto;
     private TextView mpName;
-    //private TextView mpInputName;
+    private EditText mpNameInput;
+    private TextView mpEditName;
+    private TextView mpVoterId;
+    private EditText mpVoterIdInput;
+    private TextView mpEditVoterId;
+    private TextView mpLocation;
+    private TextView mpAc;
+    private TextView mpPc;
+    private TextView mpWard;
     private TextView mpMarkLocationButton;
     private Button mpSave;
     private Button mpCancel;
@@ -90,7 +99,15 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
         View rootView = inflater.inflate(R.layout.fragment_my_profile, container, false);
         mpPhoto = (ImageView) rootView.findViewById(R.id.mpPhoto);
         mpName = (TextView) rootView.findViewById(R.id.mpName);
-        //mpInputName = (TextView) rootView.findViewById(R.id.mpName);
+        mpNameInput = (EditText) rootView.findViewById(R.id.mpNameInput);
+        mpEditName = (TextView) rootView.findViewById(R.id.mpEditName);
+        mpVoterId = (TextView) rootView.findViewById(R.id.mpVoterId);
+        mpVoterIdInput = (EditText) rootView.findViewById(R.id.mpVoterIdInput);
+        mpEditVoterId = (TextView) rootView.findViewById(R.id.mpEditVoterId);
+        mpLocation = (TextView) rootView.findViewById(R.id.mpLocation);
+        mpAc = (TextView) rootView.findViewById(R.id.mpAc);
+        mpPc = (TextView) rootView.findViewById(R.id.mpPc);
+        mpWard = (TextView) rootView.findViewById(R.id.mpWard);
         mpMarkLocationButton = (TextView) rootView.findViewById(R.id.mpMarkLocation);
         mpSave = (Button) rootView.findViewById(R.id.mpSave);
         mpCancel = (Button) rootView.findViewById(R.id.mpCancel);
@@ -98,19 +115,70 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
         //mpUserDetails = (TextView) rootView.findViewById(R.id.mcUserDetails);
 
         mpName.setText(userSession.getUser().getPerson().getName());
+        mpNameInput.setText(userSession.getUser().getPerson().getName());
+        mpVoterId.setText(userSession.getUser().getPerson().getVoterId());
+        mpVoterIdInput.setText(userSession.getUser().getPerson().getVoterId());
+        Picasso.with(getActivity()).load(userSession.getProfilePhoto().replace("http", "https")).into(mpPhoto);
+        if(userSession.isUserLocationKnown()) {
+            if(userSession.getUser().getPerson().getPersonAddress().getAc() != null && userSession.getUser().getPerson().getPersonAddress().getState() != null) {
+                mpLocation.setText(userSession.getUser().getPerson().getPersonAddress().getAc().getName() + ", " + userSession.getUser().getPerson().getPersonAddress().getState().getName());
+            }
+            else {
+                mpLocation.setText("");
+            }
+            if(userSession.getUser().getPerson().getPersonAddress().getAc() != null) {
+                mpAc.setText(userSession.getUser().getPerson().getPersonAddress().getAc().getName());
+            }
+            else {
+                mpAc.setText("");
+            }
+            if(userSession.getUser().getPerson().getPersonAddress().getPc() != null) {
+                mpPc.setText(userSession.getUser().getPerson().getPersonAddress().getPc().getName());
+            }
+            else {
+                mpPc.setText("");
+            }
+            if(userSession.getUser().getPerson().getPersonAddress().getWard() != null) {
+                mpWard.setText(userSession.getUser().getPerson().getPersonAddress().getWard().getName());
+            }
+            else {
+                mpWard.setText("");
+            }
+        }
+        else {
+            mpLocation.setText("");
+            mpAc.setText("");
+            mpPc.setText("");
+            mpWard.setText("");
+        }
         //mpInputName.setText(userSession.getUser().getPerson().getName());
         //if(userSession.getUser().getPerson().getDob() != null) {
         //    mpUserDetails.setText(GenericUtil.getAge(userSession.getUser().getPerson().getDob()) + " Years, " + userSession.getUser().getPerson().getGender());
         //}
-        if(profilePhoto != null) {
-            mpPhoto.setImageBitmap(profilePhoto);
-        }
 
         if(savedInstanceState == null) {
             googleMapFragment = new GoogleMapFragment();
             googleMapFragment.setContext(this);
             getChildFragmentManager().beginTransaction().add(R.id.mpMap, googleMapFragment).commit();
         }
+
+        mpEditName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mpName.setVisibility(View.GONE);
+                mpNameInput.setVisibility(View.VISIBLE);
+                mpNameInput.requestFocus();
+            }
+        });
+
+        mpEditVoterId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mpVoterId.setVisibility(View.GONE);
+                mpVoterIdInput.setVisibility(View.VISIBLE);
+                mpVoterIdInput.requestFocus();
+            }
+        });
 
         mpMarkLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +194,7 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MyProfile: Save Profile");
-                //middlewareService.updateProfile(getActivity(), userSession.getToken(), mpInputName.getText().toString(), null, null);
+                middlewareService.updateProfile(getActivity(), userSession.getToken(), mpNameInput.getText().toString(), mpVoterIdInput.getText().toString(), null, null);
                 pDialog = new CustomProgressDialog(getActivity(), false, true, "Saving changes...");
                 pDialog.show();
             }
@@ -140,6 +208,7 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
                 eventBus.post(event);
             }
         });
+
         mpLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,6 +240,7 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
 
             }
         });
+
         return rootView;
     }
 
@@ -192,6 +262,13 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
     public void onEventMainThread(ProfileUpdateEvent event) {
         if(event.getSuccess()) {
             userSession.setUser(event.getUserDto());
+            mpName.setText(userSession.getUser().getPerson().getName());
+            mpName.setVisibility(View.VISIBLE);
+            mpNameInput.setVisibility(View.GONE);
+
+            mpVoterId.setText(userSession.getUser().getPerson().getVoterId());
+            mpVoterId.setVisibility(View.VISIBLE);
+            mpVoterIdInput.setVisibility(View.GONE);
             pDialog.dismiss();
         }
         else {
@@ -213,6 +290,38 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
             if (userSession.getUser().getPerson().getPersonAddress().getLattitude() != null) {
                 googleMapFragment.updateMarkerLocation(userSession.getUser().getPerson().getPersonAddress().getLattitude(), userSession.getUser().getPerson().getPersonAddress().getLongitude());
             }
+        }
+        if(userSession.isUserLocationKnown()) {
+            if(userSession.getUser().getPerson().getPersonAddress().getAc() != null && userSession.getUser().getPerson().getPersonAddress().getState() != null) {
+                mpLocation.setText(userSession.getUser().getPerson().getPersonAddress().getAc().getName() + ", " + userSession.getUser().getPerson().getPersonAddress().getState().getName());
+            }
+            else {
+                mpLocation.setText("");
+            }
+            if(userSession.getUser().getPerson().getPersonAddress().getAc() != null) {
+                mpAc.setText(userSession.getUser().getPerson().getPersonAddress().getAc().getName());
+            }
+            else {
+                mpAc.setText("");
+            }
+            if(userSession.getUser().getPerson().getPersonAddress().getPc() != null) {
+                mpPc.setText(userSession.getUser().getPerson().getPersonAddress().getPc().getName());
+            }
+            else {
+                mpPc.setText("");
+            }
+            if(userSession.getUser().getPerson().getPersonAddress().getWard() != null) {
+                mpWard.setText(userSession.getUser().getPerson().getPersonAddress().getWard().getName());
+            }
+            else {
+                mpWard.setText("");
+            }
+        }
+        else {
+            mpLocation.setText("");
+            mpAc.setText("");
+            mpPc.setText("");
+            mpWard.setText("");
         }
     }
 }

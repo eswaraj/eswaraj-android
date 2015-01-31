@@ -78,7 +78,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         googleMapFragment = new GoogleMapFragment();
         googlePlacesListFragment = new GooglePlacesListFragment();
 
-        eventBus.registerSticky(this);
+        eventBus.register(this);
 
         //Add all fragments
         if (savedInstanceState == null) {
@@ -105,7 +105,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MarkLocation: Save Location");
                 pDialogSave = new CustomProgressDialog(view.getContext(), false, true, "Saving your location...");
                 pDialogSave.show();
-                middlewareService.updateProfile(view.getContext(), userSession.getToken(), userSession.getUser().getPerson().getName(), googleMapFragment.getMarkerLatitude(), googleMapFragment.getMarkerLongitude());
+                middlewareService.updateProfile(view.getContext(), userSession.getToken(), userSession.getUser().getPerson().getName(), userSession.getUser().getPerson().getVoterId(), googleMapFragment.getMarkerLatitude(), googleMapFragment.getMarkerLongitude());
             }
         });
 

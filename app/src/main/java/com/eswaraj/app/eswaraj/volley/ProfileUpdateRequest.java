@@ -38,13 +38,14 @@ public class ProfileUpdateRequest extends BaseClass {
     @Inject
     Cache cache;
 
-    public void processRequest(Context context, String token, String name, Double latitude, Double longitude)
+    public void processRequest(Context context, String token, String name, String voterId, Double latitude, Double longitude)
     {
         UpdateMobileUserRequestDto updateMobileUserRequestDto = new UpdateMobileUserRequestDto();
         updateMobileUserRequestDto.setToken(token);
         updateMobileUserRequestDto.setName(name);
         updateMobileUserRequestDto.setLattitude(latitude);
         updateMobileUserRequestDto.setLongitude(longitude);
+        updateMobileUserRequestDto.setVoterId(voterId);
 
         GenericPostVolleyRequest request = new GenericPostVolleyRequest(Constants.UPDATE_PROFILE_URL, createErrorListener(), createSuccessListener(context), updateMobileUserRequestDto);
         networkAccessHelper.submitNetworkRequest("UpdateProfile", request);

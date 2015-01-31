@@ -211,8 +211,8 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void updateProfile(Context context, String token, String name, Double lat, Double lng) {
-        server.updateProfile(context, token, name, lat, lng);
+    public void updateProfile(Context context, String token, String name, String voterId, Double lat, Double lng) {
+        server.updateProfile(context, token, name, voterId, lat, lng);
     }
 
     @Override

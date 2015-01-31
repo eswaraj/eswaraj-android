@@ -1,7 +1,9 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
+import android.location.Address;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +25,10 @@ import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.gson.Gson;
 
+
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -38,8 +43,6 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     UserSessionUtil userSession;
     @Inject
     MiddlewareServiceImpl middlewareService;
-    @Inject
-    VolleyUtil volleyUtil;
     @Inject
     GoogleAnalyticsTracker googleAnalyticsTracker;
 
@@ -59,6 +62,8 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     private TextView scCategory;
     private TextView scSubCategory;
     private TextView scDescription;
+    private TextView scAddress;
+    private TextView scDate;
 
     private Bundle savedInstanceState;
 
@@ -101,6 +106,8 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         //submitterDetails = (TextView) rootView.findViewById(R.id.scSubmitterDetails);
         scStatus = (TextView) rootView.findViewById(R.id.scStatus);
         scComplaintId = (TextView) rootView.findViewById(R.id.scComplaintId);
+        scAddress = (TextView) rootView.findViewById(R.id.scAddress);
+        scDate = (TextView) rootView.findViewById(R.id.scDate);
 
         //Create fragments
         commentsFragment = new CommentsFragment();
@@ -132,12 +139,29 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     }
 
     private void showData() {
-        scDescription.setText(complaintDto.getDescription());
         if(complaintDto.getDescription() == null) {
             scDescription.setVisibility(View.GONE);
         }
+        else {
+            scDescription.setText(complaintDto.getDescription());
+        }
         scComplaintId.setText(complaintDto.getId().toString());
         scStatus.setText(complaintDto.getStatus());
+        scDate.setText(DateUtils.getRelativeTimeSpanString(complaintDto.getComplaintTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
+        if(complaintDto.getLocationString() != null) {
+            Address bestMatch = new Gson().fromJson(complaintDto.getLocationString(), Address.class);
+            String complaintLocationString = null;
+            if(bestMatch != null) {
+                complaintLocationString = bestMatch.getAddressLine(1) + ", " + bestMatch.getAddressLine(2);
+                scAddress.setText(complaintLocationString);
+            }
+            else {
+                scAddress.setText("");
+            }
+        }
+        else {
+            scAddress.setText("");
+        }
 
         for(CategoryDto category : complaintDto.getCategories()) {
             if(category.isRoot()) {
@@ -152,6 +176,9 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         }
         if(complaintDto.getImages() != null) {
             complaintImage.loadComplaintImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
+        }
+        else {
+            complaintImage.setVisibility(View.GONE);
         }
 
         //Submitter details

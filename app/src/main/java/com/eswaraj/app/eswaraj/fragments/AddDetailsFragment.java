@@ -69,6 +69,7 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
     private Button descriptionBtn;
     private EditText description;
     private TextView selected;
+    private TextView adAmenity;
     private ImageView photoDisplay;
     private CheckBox anonCheckbox;
     private ViewGroup takePhotoContainer;
@@ -127,6 +128,7 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
         descriptionBtn = (Button) rootView.findViewById(R.id.adDescriptionbtn);
         description = (EditText) rootView.findViewById(R.id.adDescription);
         selected = (TextView) rootView.findViewById(R.id.adSelected);
+        adAmenity = (TextView) rootView.findViewById(R.id.adAmenity);
         photoDisplay = (ImageView) rootView.findViewById(R.id.adPhotoDisplay);
         anonCheckbox = (CheckBox) rootView.findViewById(R.id.adAnonCheckbox);
         takePhotoContainer = (ViewGroup) rootView.findViewById(R.id.take_photo_container_ref);
@@ -139,6 +141,7 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
         template = (CategoryWithChildCategoryDto) getActivity().getIntent().getSerializableExtra("TEMPLATE");
         amenity = (CategoryWithChildCategoryDto) getActivity().getIntent().getSerializableExtra("AMENITY");
         selected.setText(template.getName());
+        adAmenity.setText(amenity.getName());
 
         //Initial state
         descriptionBtn.setVisibility(View.VISIBLE);

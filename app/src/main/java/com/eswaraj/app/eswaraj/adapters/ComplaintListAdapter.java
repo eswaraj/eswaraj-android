@@ -3,6 +3,7 @@ package com.eswaraj.app.eswaraj.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.Address;
 import android.net.Uri;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.eswaraj.app.eswaraj.models.ComplaintDto;
 import com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView;
 import com.eswaraj.web.dto.UserDto;
 import com.eswaraj.web.dto.CategoryDto;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.Date;
@@ -53,8 +55,12 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
             holder.mcDate = (TextView)row.findViewById(R.id.mcDate);
             holder.mcStatus = (TextView)row.findViewById(R.id.mcStatus);
             holder.mcIcon = (CustomNetworkImageView)row.findViewById(R.id.mcIcon);
-            //holder.mcImage = (CustomNetworkImageView)row.findViewById(R.id.mcImage);
+            holder.mcImage = (CustomNetworkImageView)row.findViewById(R.id.mcImage);
             holder.mcProfilePhoto = (CustomNetworkImageView)row.findViewById(R.id.mcProfilePhoto);
+            holder.mcName = (TextView) row.findViewById(R.id.mcSubmitterName);
+            holder.mcDescription = (TextView) row.findViewById(R.id.mcDescription);
+            holder.mcAddress = (TextView) row.findViewById(R.id.mcAddress);
+            holder.mcAmenity = (TextView) row.findViewById(R.id.mcAmenityName);
 
             row.setTag(holder);
         }
@@ -69,25 +75,49 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
             if(!categoryDto.isRoot()) {
                 holder.mcCategory.setText(categoryDto.getName());
             }
+            else {
+                holder.mcAmenity.setText(categoryDto.getName());
+            }
         }
 
         holder.mcId.setText(complaintDto.getId().toString());
         holder.mcDate.setText(DateUtils.getRelativeTimeSpanString(complaintDto.getComplaintTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
         holder.mcStatus.setText(complaintDto.getStatus());
+        holder.mcName.setText(complaintDto.getCreatedBy().get(0).getName());
+        if(complaintDto.getDescription() != null) {
+            holder.mcDescription.setText(complaintDto.getDescription());
+        }
+        else {
+            holder.mcDescription.setVisibility(View.GONE);
+        }
         if(complaintDto.getCreatedBy().get(0).getProfilePhoto() != null && !complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
             //holder.mcProfilePhoto.loadProfileImage(complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getCreatedBy().get(0).getId());
             Picasso.with(context).load(complaintDto.getCreatedBy().get(0).getProfilePhoto().replace("http", "https")).into(holder.mcProfilePhoto);
         }
         if(complaintDto.getImages() != null && complaintDto.getImages().get(0) != null && complaintDto.getImages().get(0).getOrgUrl() != null && !complaintDto.getImages().get(0).getOrgUrl().equals("")) {
             //holder.mcImage.loadComplaintImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
-            //Picasso.with(context).load(complaintDto.getImages().get(0).getOrgUrl()).into(holder.mcImage);
-            //holder.mcImage.setVisibility(View.VISIBLE);
+            Picasso.with(context).load(complaintDto.getImages().get(0).getOrgUrl()).into(holder.mcImage);
+            holder.mcImage.setVisibility(View.VISIBLE);
         }
         else {
-            //holder.mcImage.setVisibility(View.GONE);
+            holder.mcImage.setVisibility(View.GONE);
         }
         if(getRootCategoryId(complaintDto) != null) {
             holder.mcIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(getRootCategoryId(complaintDto)) + ".png"));
+        }
+        if(complaintDto.getLocationString() != null) {
+            Address bestMatch = new Gson().fromJson(complaintDto.getLocationString(), Address.class);
+            String complaintLocationString = null;
+            if(bestMatch != null) {
+                complaintLocationString = bestMatch.getAddressLine(1) + ", " + bestMatch.getAddressLine(2);
+                holder.mcAddress.setText(complaintLocationString);
+            }
+            else {
+                holder.mcAddress.setText("");
+            }
+        }
+        else {
+            holder.mcAddress.setText("");
         }
 
         return row;
@@ -138,6 +168,10 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         TextView mcStatus;
         CustomNetworkImageView mcIcon;
         CustomNetworkImageView mcProfilePhoto;
-        //CustomNetworkImageView mcImage;
+        CustomNetworkImageView mcImage;
+        TextView mcName;
+        TextView mcDescription;
+        TextView mcAddress;
+        TextView mcAmenity;
     }
 }

@@ -220,7 +220,8 @@
         <activity
             android:name=".activities.ConstituencySnapshotActivity"
             android:label="@string/title_activity_constituency_snapshot"
-            android:parentActivityName=".activities.HomeActivity" >
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
@@ -228,14 +229,16 @@
         <activity
             android:name=".activities.UserSnapshotActivity"
             android:label="@string/title_activity_user_snapshot"
-            android:parentActivityName=".activities.HomeActivity" >
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
         </activity>
         <activity
             android:name=".activities.SearchableActivity"
-            android:label="@string/title_activity_searchable">
+            android:label="@string/title_activity_searchable"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
