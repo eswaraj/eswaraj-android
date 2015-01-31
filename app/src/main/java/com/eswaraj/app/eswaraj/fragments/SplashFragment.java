@@ -66,7 +66,10 @@ public class SplashFragment extends Fragment {
         //mHeading.setPadding(0,30,0,0);
         //mHeading.setTextColor(Color.parseColor("#ea5c5c"));
 
-        mImage.setImageDrawable(splashScreenItem.getImage());
+        if(splashScreenItem.getImage() != null) {
+            mImage.setImageDrawable(splashScreenItem.getImage());
+            mImage.setVisibility(View.VISIBLE);
+        }
         //mImage.setPadding(0, 10,0,0 );
     }
 
