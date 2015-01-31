@@ -60,4 +60,7 @@ public interface CacheInterface extends MiddlewareGetService {
 
     public Boolean isLeaderAvailable(Context context, Long id);
     public void updateLeader(Context context, Long id, String json);
+
+    public Boolean isLeadersForLocationAvailable(Context context, LocationDto locationDto);
+    public void updateLeadersForLocation(Context context, LocationDto locationDto, String json);
 }

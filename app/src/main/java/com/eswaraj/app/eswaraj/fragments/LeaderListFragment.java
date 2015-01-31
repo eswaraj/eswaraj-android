@@ -23,6 +23,7 @@ import com.eswaraj.app.eswaraj.models.GlobalSearchResponseDto;
 import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.eswaraj.app.eswaraj.widgets.CustomProgressDialog;
+import com.eswaraj.web.dto.LocationDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class LeaderListFragment extends BaseFragment {
     private TextView llEmpty;
     private CustomProgressDialog pDialog;
 
-    private Long id;
+    private LocationDto locationDto;
     private List<GlobalSearchResponseDto> globalSearchResponseDtoList;
     private GlobalSearchAdapter globalSearchAdapter;
 
@@ -59,9 +60,12 @@ public class LeaderListFragment extends BaseFragment {
         eventBus.register(this);
         pDialog = new CustomProgressDialog(getActivity(), false, true, "Fetching leaders...");
         pDialog.show();
-        id = getActivity().getIntent().getLongExtra("ID", 0);
-        if(id == 0) {
+        locationDto = (LocationDto) getActivity().getIntent().getSerializableExtra("LOCATION");
+        if(locationDto == null) {
             middlewareService.loadLeaders(getActivity(), userSession, true);
+        }
+        else {
+            middlewareService.loadLeadersForLocation(getActivity(), locationDto);
         }
     }
 

@@ -31,6 +31,7 @@ public class Constants {
     public static String GET_SINGLE_COMPLAINT_URL = BASE_URL + "/complaint";
     public static String GET_LOCATION_URL = BASE_URL + "/location";
     public static String GET_LEADER_URL = BASE_URL + "/leader";
+    public static String GET_LEADERS_FOR_LOCATION = BASE_URL + "/leaders/location";
 
     //Google URLS
     public static final String GOOGLE_PLACES_AUTOCOMPLETE_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?key=" + GOOGLE_API_BROWSER_KEY + "&components=country:in&input=";
@@ -55,6 +56,7 @@ public class Constants {
         GET_SINGLE_COMPLAINT_URL = BASE_URL + "/complaint";
         GET_LOCATION_URL = BASE_URL + "/location";
         GET_LEADER_URL = BASE_URL + "/leader";
+        GET_LEADERS_FOR_LOCATION = BASE_URL + "/leaders/location";
     }
 
     public static String getCommentsUrl(Long complaintId, int start, int count) {

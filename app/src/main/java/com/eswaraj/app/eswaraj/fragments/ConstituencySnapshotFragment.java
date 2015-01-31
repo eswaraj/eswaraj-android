@@ -17,6 +17,7 @@ import com.eswaraj.app.eswaraj.events.GetLocationComplaintCountersEvent;
 import com.eswaraj.app.eswaraj.events.GetLocationComplaintsEvent;
 import com.eswaraj.app.eswaraj.events.GetLocationEvent;
 import com.eswaraj.app.eswaraj.events.ShowConstituencyComplaintsEvent;
+import com.eswaraj.app.eswaraj.events.ShowLeadersForLocationEvent;
 import com.eswaraj.app.eswaraj.helpers.ComplaintFilterHelper;
 import com.eswaraj.app.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
@@ -139,7 +140,9 @@ public class ConstituencySnapshotFragment extends BaseFragment {
         leader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO:Launch event which will take user to leader screen
+                ShowLeadersForLocationEvent event = new ShowLeadersForLocationEvent();
+                event.setLocationDto(locationDto);
+                eventBus.post(event);
             }
         });
         smart.setOnClickListener(new View.OnClickListener() {

@@ -11,6 +11,7 @@ import com.eswaraj.app.eswaraj.base.BaseActivity;
 import com.eswaraj.app.eswaraj.events.ComplaintSelectedEvent;
 import com.eswaraj.app.eswaraj.events.MarkerClickEvent;
 import com.eswaraj.app.eswaraj.events.ShowConstituencyComplaintsEvent;
+import com.eswaraj.app.eswaraj.events.ShowLeadersForLocationEvent;
 import com.eswaraj.app.eswaraj.fragments.ConstituencySnapshotFragment;
 import com.eswaraj.app.eswaraj.models.ComplaintFilter;
 
@@ -72,6 +73,12 @@ public class ConstituencySnapshotActivity extends BaseActivity {
         Intent i = new Intent(this, ConstituencyComplaintsActivity.class);
         i.putExtra("LOCATION", (Serializable) event.getLocationDto());
         i.putExtra("DATA_PRESENT", true);
+        startActivity(i);
+    }
+
+    public void onEventMainThread(ShowLeadersForLocationEvent event) {
+        Intent i = new Intent(this, LeaderListActivity.class);
+        i.putExtra("LOCATION", (Serializable) event.getLocationDto());
         startActivity(i);
     }
 

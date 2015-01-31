@@ -561,6 +561,37 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
         }
     }
 
+    @Override
+    public void loadLeadersForLocation(Context context, LocationDto locationDto, Boolean dontGetFromCache) {
+        if(dontGetFromCache) {
+            server.loadLeadersForLocation(context, locationDto);
+        }
+        else {
+            loadLeadersForLocation(context, locationDto);
+        }
+    }
+
+    @Override
+    public Boolean isLeadersForLocationAvailable(Context context, LocationDto locationDto) {
+        return cache.isLeadersForLocationAvailable(context, locationDto);
+    }
+
+    @Override
+    public void updateLeadersForLocation(Context context, LocationDto locationDto, String json) {
+        cache.updateLeadersForLocation(context, locationDto, json);
+    }
+
+    @Override
+    public void loadLeadersForLocation(Context context, LocationDto locationDto) {
+        if(cache.isLeadersForLocationAvailable(context, locationDto)) {
+            cache.loadLeadersForLocation(context, locationDto);
+        }
+        else {
+            server.loadLeadersForLocation(context, locationDto);
+        }
+    }
+
+
 //Database
 
     @Override

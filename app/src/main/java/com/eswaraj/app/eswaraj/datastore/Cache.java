@@ -502,4 +502,19 @@ public class Cache extends BaseClass implements CacheInterface {
     public void loadLeaderById(Context context, Long id) {
         assert false;
     }
+
+    @Override
+    public Boolean isLeadersForLocationAvailable(Context context, LocationDto locationDto) {
+        return false;
+    }
+
+    @Override
+    public void updateLeadersForLocation(Context context, LocationDto locationDto, String json) {
+        //Nothing to do here
+    }
+
+    @Override
+    public void loadLeadersForLocation(Context context, LocationDto locationDto) {
+        assert false;
+    }
 }
