@@ -4,11 +4,17 @@
     android:layout_height="match_parent"
     tools:context="com.eswaraj.app.eswaraj.activities.LeaderActivity">
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
     <fragment
         class="com.eswaraj.app.eswaraj.fragments.LeaderFragment"
         android:id="@+id/leaderFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_leader" />
+
+    </ScrollView>
 
 </RelativeLayout>
