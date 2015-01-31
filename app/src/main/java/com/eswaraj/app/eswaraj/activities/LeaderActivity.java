@@ -35,7 +35,7 @@ public class LeaderActivity extends BaseActivity {
     }
 
     public void onEventMainThread(StartAnotherActivityEvent event) {
-        Intent i = new Intent(this, ConstituencyComplaintsActivity.class);
+        Intent i = new Intent(this, ConstituencySnapshotActivity.class);
         i.putExtra("ID", event.getId());
         startActivity(i);
     }

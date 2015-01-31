@@ -17,7 +17,7 @@
         android:id="@+id/lPhoto"
         android:layout_width="fill_parent"
         android:layout_height="300dp"
-        android:background="@drawable/ravi"
+        android:src="@drawable/ravi"
         android:cropToPadding="true"
         android:scaleType="centerCrop" />
 
@@ -55,7 +55,7 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="#FFFFFF"
             android:layout_marginLeft="15dp"
@@ -67,10 +67,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="1">
 
                 <TextView
-                    android:id="@+id/lage"
+                    android:id="@+id/lAge_label"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Age:"
@@ -81,7 +82,7 @@
                     android:layout_weight="0.5"/>
 
                 <TextView
-                    android:id="@+id/lage_val"
+                    android:id="@+id/lAge"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="45 Years"
@@ -110,7 +111,7 @@
                     android:layout_weight="0.5" />
 
                 <TextView
-                    android:id="@+id/lPoliticalParty_val"
+                    android:id="@+id/lParty"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Aam Aadmi Party"
@@ -125,10 +126,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="1">
 
                 <TextView
-                    android:id="@+id/lEducation"
+                    android:id="@+id/lEducation_label"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Education:"
@@ -139,7 +141,7 @@
                     android:layout_weight="0.5" />
 
                 <TextView
-                    android:id="@+id/lEducation_val"
+                    android:id="@+id/lEducation"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Political Science, Oxford Univ."
@@ -154,10 +156,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="1">
 
                 <TextView
-                    android:id="@+id/lAddress"
+                    android:id="@+id/lAddress_label"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Address:"
@@ -168,7 +171,7 @@
                     android:layout_weight="0.5" />
 
                 <TextView
-                    android:id="@+id/lAddress_val"
+                    android:id="@+id/lAddress"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="12, Shastri Nagar, Delhi"

@@ -35,6 +35,10 @@ public class LeaderFragment extends BaseFragment {
     private CustomNetworkImageView lPhoto;
     private TextView lName;
     private TextView lPost;
+    private TextView lAge;
+    private TextView lAddress;
+    private TextView lParty;
+    private TextView lEducation;
     private WebView lDetails;
     private Button lConstituency;
 
@@ -63,6 +67,10 @@ public class LeaderFragment extends BaseFragment {
         lName = (TextView) rootView.findViewById(R.id.lName);
         lPost = (TextView) rootView.findViewById(R.id.lPost);
         lDetails = (WebView) rootView.findViewById(R.id.lDetails);
+        lAge = (TextView) rootView.findViewById(R.id.lAge);
+        lParty = (TextView) rootView.findViewById(R.id.lParty);
+        lAddress = (TextView) rootView.findViewById(R.id.lAddress);
+        lEducation = (TextView) rootView.findViewById(R.id.lEducation);
         lConstituency = (Button) rootView.findViewById(R.id.lConstituency);
 
         politicalBodyAdminDto = (PoliticalBodyAdminDto) getActivity().getIntent().getSerializableExtra("LEADER");
@@ -85,10 +93,14 @@ public class LeaderFragment extends BaseFragment {
     }
 
     private void setFields() {
-        Picasso.with(getActivity()).load(politicalBodyAdminDto.getProfilePhoto()).into(lPhoto);
+        Picasso.with(getActivity()).load(politicalBodyAdminDto.getProfilePhoto().replace("http", "https")).into(lPhoto);
         //lPhoto.loadProfileImage(politicalBodyAdminDto.getProfilePhoto(), politicalBodyAdminDto.getId());
         lName.setText(politicalBodyAdminDto.getName());
         lPost.setText(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
+        lParty.setText(politicalBodyAdminDto.getParty().getName());
+        lAddress.setText("");
+        lAge.setText("");
+        lEducation.setText("");
         lConstituency.setText("Go to " + politicalBodyAdminDto.getLocation().getName());
         if (politicalBodyAdminDto.getBiodata() != null) {
             lDetails.loadData(politicalBodyAdminDto.getBiodata(), "text/html", null);
