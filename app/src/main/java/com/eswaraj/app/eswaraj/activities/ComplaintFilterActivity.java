@@ -38,10 +38,14 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
     private FilterListAdapter categoryAdapter;
     private FilterListAdapter statusAdapter;
 
+    private ComplaintFilter selected;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complaint_filter);
+
+        selected = (ComplaintFilter) getIntent().getSerializableExtra("FILTER");
 
         categoryList = (GridView) findViewById(R.id.cfCategoryList);
         statusList = (GridView) findViewById(R.id.cfStatusList);
@@ -51,12 +55,24 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
         filter.setComplaintFilterType(ComplaintFilter.ComplaintFilterType.STATUS);
         filter.setStatus("Pending");
         filter.setDisplayText("Open");
+        if(selected != null && selected.getComplaintFilterType() == ComplaintFilter.ComplaintFilterType.STATUS && selected.getStatus().equals("Pending")) {
+            filter.setHighlight(true);
+        }
+        else {
+            filter.setHighlight(false);
+        }
         statusFilterItems.add(filter);
 
         filter = new ComplaintFilter();
         filter.setComplaintFilterType(ComplaintFilter.ComplaintFilterType.STATUS);
         filter.setStatus("Done");
         filter.setDisplayText("Closed");
+        if(selected != null && selected.getComplaintFilterType() == ComplaintFilter.ComplaintFilterType.STATUS && selected.getStatus().equals("Done")) {
+            filter.setHighlight(true);
+        }
+        else {
+            filter.setHighlight(false);
+        }
         statusFilterItems.add(filter);
 
         for(CategoryWithChildCategoryDto categoryDto : globalSession.getCategoryDtoList()) {
@@ -64,6 +80,12 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
             filter.setComplaintFilterType(ComplaintFilter.ComplaintFilterType.CATEGORY);
             filter.setCategoryId(categoryDto.getId());
             filter.setDisplayText(categoryDto.getName());
+            if(selected != null && selected.getComplaintFilterType() == ComplaintFilter.ComplaintFilterType.CATEGORY && selected.getCategoryId().equals(categoryDto.getId())) {
+                filter.setHighlight(true);
+            }
+            else {
+                filter.setHighlight(false);
+            }
             statusFilterItems.add(filter);
         }
 
@@ -117,5 +139,4 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
             }
         });
     }
-
 }

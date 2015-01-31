@@ -28,6 +28,7 @@ import com.eswaraj.app.eswaraj.activities.SplashActivity;
 import com.eswaraj.app.eswaraj.application.EswarajApplication;
 import com.eswaraj.app.eswaraj.helpers.WindowAnimationHelper;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.models.ComplaintFilter;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -46,6 +47,7 @@ public class BaseActivity extends ActionBarActivity {
     private final int SHOW_FILTER_REQUEST = 9999;
     protected Boolean dontUseAnimation = false;
     protected Boolean showFilter = false;
+    protected ComplaintFilter complaintFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +156,7 @@ public class BaseActivity extends ActionBarActivity {
                 return true;
             case R.id.menu_filter:
                 i = new Intent(getBaseContext(), ComplaintFilterActivity.class);
+                i.putExtra("FILTER", complaintFilter);
                 startActivityForResult(i, SHOW_FILTER_REQUEST);
                 return true;
         }

@@ -95,6 +95,7 @@ public class UserSnapshotActivity extends BaseActivity {
         }
         if(requestCode == SHOW_FILTER_REQUEST && resultCode == RESULT_OK) {
             userSnapshotFragment.setFilter((ComplaintFilter) data.getSerializableExtra("FILTER"));
+            complaintFilter = (ComplaintFilter) data.getSerializableExtra("FILTER");
         }
     }
 

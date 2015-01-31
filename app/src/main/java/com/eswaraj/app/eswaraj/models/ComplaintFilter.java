@@ -8,8 +8,16 @@ public class ComplaintFilter implements Serializable {
     private ComplaintFilterType complaintFilterType;
     private Long categoryId;
     private String status;
-
     private String displayText;
+    private Boolean highlight;
+
+    public Boolean getHighlight() {
+        return highlight;
+    }
+
+    public void setHighlight(Boolean highlight) {
+        this.highlight = highlight;
+    }
 
     public String getDisplayText() {
         return displayText;
@@ -50,6 +58,7 @@ public class ComplaintFilter implements Serializable {
                 ", categoryId=" + categoryId +
                 ", status='" + status + '\'' +
                 ", displayText='" + displayText + '\'' +
+                ", highlight=" + highlight +
                 '}';
     }
 

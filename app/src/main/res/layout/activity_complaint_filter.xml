@@ -7,7 +7,7 @@
 
     <TextView android:text="Sort by Citizen Services"
         android:textSize="20sp"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#0099cc"
         android:padding="15dp"
@@ -23,12 +23,12 @@
 
     <TextView android:text="Sort by Complaint Status"
         android:textSize="20sp"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:textColor="#0099cc"
         android:gravity="center_vertical|center_horizontal"
-        android:background="@drawable/full_border" />
+        android:background="@drawable/full_border"/>
 
     <GridView
         android:id="@+id/cfStatusList"
@@ -45,6 +45,8 @@
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:textColor="#0099cc"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:background="@drawable/full_border" />
 
 </LinearLayout>

@@ -78,6 +78,7 @@ public class UserComplaintsActivity extends BaseActivity {
 
         if(requestCode == SHOW_FILTER_REQUEST && resultCode == RESULT_OK) {
             complaintsFragment.setFilter((ComplaintFilter) data.getSerializableExtra("FILTER"));
+            complaintFilter = (ComplaintFilter) data.getSerializableExtra("FILTER");
         }
     }
 }

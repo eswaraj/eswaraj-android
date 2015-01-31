@@ -67,6 +67,7 @@ public class ConstituencyComplaintsActivity extends BaseActivity {
         }
         if(requestCode == SHOW_FILTER_REQUEST && resultCode == RESULT_OK) {
             myConstituencyFragment.setFilter((ComplaintFilter) data.getSerializableExtra("FILTER"));
+            complaintFilter = (ComplaintFilter) data.getSerializableExtra("FILTER");
         }
     }
 }

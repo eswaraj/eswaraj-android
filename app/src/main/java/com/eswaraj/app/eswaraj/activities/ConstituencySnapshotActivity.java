@@ -85,6 +85,7 @@ public class ConstituencySnapshotActivity extends BaseActivity {
         }
         if(requestCode == SHOW_FILTER_REQUEST && resultCode == RESULT_OK) {
             constituencySnapshotFragment.setFilter((ComplaintFilter) data.getSerializableExtra("FILTER"));
+            complaintFilter = (ComplaintFilter) data.getSerializableExtra("FILTER");
         }
     }
 
