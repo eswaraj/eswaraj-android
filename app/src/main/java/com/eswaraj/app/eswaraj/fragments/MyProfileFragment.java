@@ -75,7 +75,6 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
     //private TextView mpUserDetails;
 
     private CustomProgressDialog pDialog;
-    private Bitmap profilePhoto;
 
     public MyProfileFragment() {
         // Required empty public constructor
@@ -118,7 +117,7 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
         mpNameInput.setText(userSession.getUser().getPerson().getName());
         mpVoterId.setText(userSession.getUser().getPerson().getVoterId());
         mpVoterIdInput.setText(userSession.getUser().getPerson().getVoterId());
-        Picasso.with(getActivity()).load(userSession.getProfilePhoto().replace("http", "https")).into(mpPhoto);
+        Picasso.with(getActivity()).load(userSession.getProfilePhoto().replace("http", "https")).error(R.drawable.anon).placeholder(R.drawable.anon).into(mpPhoto);
         if(userSession.isUserLocationKnown()) {
             if(userSession.getUser().getPerson().getPersonAddress().getAc() != null && userSession.getUser().getPerson().getPersonAddress().getState() != null) {
                 mpLocation.setText(userSession.getUser().getPerson().getPersonAddress().getAc().getName() + ", " + userSession.getUser().getPerson().getPersonAddress().getState().getName());
@@ -242,21 +241,6 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
         });
 
         return rootView;
-    }
-
-    public void onEventMainThread(GetProfileImageEvent event) {
-        if(event.getSuccess()) {
-            if(event.getId().equals(userSession.getUser().getPerson().getId())) {
-                if (mpPhoto != null) {
-                    mpPhoto.setImageBitmap(event.getBitmap());
-                } else {
-                    profilePhoto = event.getBitmap();
-                }
-            }
-        }
-        else {
-            Toast.makeText(getActivity(), "Could not fetch your profile image. Error = " + event.getError(), Toast.LENGTH_LONG).show();
-        }
     }
 
     public void onEventMainThread(ProfileUpdateEvent event) {

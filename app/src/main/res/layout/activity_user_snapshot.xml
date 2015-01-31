@@ -4,14 +4,10 @@
     android:layout_height="match_parent"
     tools:context="com.eswaraj.app.eswaraj.activities.UserSnapshotActivity">
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
     <fragment
         class="com.eswaraj.app.eswaraj.fragments.UserSnapshotFragment"
         android:id="@+id/usFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-    </ScrollView>
 
 </RelativeLayout>

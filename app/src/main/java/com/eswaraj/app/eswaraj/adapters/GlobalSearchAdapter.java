@@ -54,7 +54,7 @@ public class GlobalSearchAdapter extends ArrayAdapter<GlobalSearchResponseDto> {
 
         holder.sName.setText(globalSearchResponseDto.getName());
         if(globalSearchResponseDto.getImage() != null && !globalSearchResponseDto.getImage().equals("")) {
-            Picasso.with(context).load(globalSearchResponseDto.getImage().replace("http", "https")).into(holder.sImage);
+            Picasso.with(context).load(globalSearchResponseDto.getImage().replace("http", "https")).error(R.drawable.anon).placeholder(R.drawable.anon).into(holder.sImage);
         }
         if(globalSearchResponseDto.getType().equals("Location")) {
             holder.sDetails.setText(globalSearchResponseDto.getSubType());

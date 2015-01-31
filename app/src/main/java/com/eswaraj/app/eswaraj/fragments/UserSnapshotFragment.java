@@ -111,7 +111,7 @@ public class UserSnapshotFragment extends BaseFragment {
         showAll = (Button) footerView.findViewById(R.id.usShowAll);
         create = (Button) footerView.findViewById(R.id.usCreate);
 
-        Picasso.with(getActivity()).load(userSession.getProfilePhoto()).into(photo);
+        Picasso.with(getActivity()).load(userSession.getProfilePhoto()).error(R.drawable.anon).placeholder(R.drawable.anon).into(photo);
         name.setText(userSession.getUser().getPerson().getName());
         if(userSession.getUser().getPerson().getDob() != null) {
             details.setText(GenericUtil.getAge(userSession.getUser().getPerson().getDob()) + " Years, " + userSession.getUser().getPerson().getGender());
@@ -174,7 +174,7 @@ public class UserSnapshotFragment extends BaseFragment {
     public void onEventMainThread(GetUserComplaintsEvent event) {
         if(event.getSuccess()) {
             complaintDtoList = event.getComplaintDtoList();
-            setFilter(complaintFilter);
+            setComplaintData(ComplaintFilterHelper.filter(complaintDtoList, complaintFilter));
             openCount = new Long(0);
             closeCount = new Long(0);
             for(ComplaintDto complaintDto : complaintDtoList) {

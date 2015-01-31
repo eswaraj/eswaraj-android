@@ -10,10 +10,10 @@
         parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/navy_blue_background</item>
         <item name="background">@color/navy_blue_background</item>
-        <item name="android:logo">@drawable/ic_launcher</item>
-        <item name="logo">@drawable/ic_launcher</item>
-        <item name="android:displayOptions">useLogo|showTitle|showHome</item>
-        <item name="displayOptions">useLogo|showTitle|showHome</item>
+        <item name="android:logo">@drawable/logo</item>
+        <item name="logo">@drawable/logo</item>
+        <item name="android:displayOptions">useLogo|showHome</item>
+        <item name="displayOptions">useLogo|showHome</item>
     </style>
 
     <style name="CustomTheme.ButtonTextAppearance" parent="@style/Base.TextAppearance.AppCompat.Button">

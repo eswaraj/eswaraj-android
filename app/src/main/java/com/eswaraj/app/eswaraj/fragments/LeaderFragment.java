@@ -93,7 +93,7 @@ public class LeaderFragment extends BaseFragment {
     }
 
     private void setFields() {
-        Picasso.with(getActivity()).load(politicalBodyAdminDto.getProfilePhoto().replace("http", "https")).into(lPhoto);
+        Picasso.with(getActivity()).load(politicalBodyAdminDto.getProfilePhoto().replace("http", "https")).error(R.drawable.anon).placeholder(R.drawable.anon).into(lPhoto);
         //lPhoto.loadProfileImage(politicalBodyAdminDto.getProfilePhoto(), politicalBodyAdminDto.getId());
         lName.setText(politicalBodyAdminDto.getName());
         lPost.setText(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());

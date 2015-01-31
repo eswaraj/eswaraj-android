@@ -59,7 +59,7 @@ public class CommentListAdapter extends ArrayAdapter<CommentDto> {
 
         if(commentDto.getPostedBy() != null) {
             holder.cName.setText(commentDto.getPostedBy().getName());
-            Picasso.with(context).load(commentDto.getPostedBy().getProfilePhoto().replace("http", "https")).into(holder.cImage);
+            Picasso.with(context).load(commentDto.getPostedBy().getProfilePhoto().replace("http", "https")).error(R.drawable.anon).placeholder(R.drawable.anon).into(holder.cImage);
         }
         holder.cText.setText(commentDto.getText());
         holder.cTime.setText(DateUtils.getRelativeTimeSpanString(commentDto.getCreationTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));

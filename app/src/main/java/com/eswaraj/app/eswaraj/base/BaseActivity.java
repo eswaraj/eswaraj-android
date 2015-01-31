@@ -56,7 +56,7 @@ public class BaseActivity extends ActionBarActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        setTitle("eSwaraj");
+        setTitle("");
     }
 
     @Override
