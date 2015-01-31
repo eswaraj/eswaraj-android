@@ -11,7 +11,7 @@
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_weight="0.3" >
+        android:layout_weight="0.3">
 
         <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
             android:id="@+id/cPhoto"
@@ -32,7 +32,9 @@
             android:drawablePadding="12dp"
             android:textColor="#ffffff"
             android:textStyle="bold"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:gravity="right"
+            android:text="122 issues" />
 
         <TextView
             android:id="@+id/cName"
@@ -40,7 +42,6 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/issue_bullet"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="-16dp"
             android:layout_toRightOf="@+id/issue_bullet"
             android:textSize="20sp"
             android:textColor="#ffffff"

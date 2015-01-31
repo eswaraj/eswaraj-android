@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
     android:weightSum="1"
     tools:context="com.eswaraj.app.eswaraj.activities.MarkLocationActivity"
@@ -17,16 +17,10 @@
         android:layout_weight="0.3"
         /-->
 
-    <include
-        android:id="@+id/logo_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/screen_header" />
-
 <RelativeLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/RelativeLayout01"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:weightSum="1"
     android:layout_gravity="bottom|center"
@@ -54,7 +48,7 @@
             android:id="@+id/mlSearchButton"
             android:text="Search"
             android:gravity="center"
-            android:background="@drawable/nice_button"
+            android:background="#92B06A"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:shadowRadius="1"
@@ -85,15 +79,12 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:weightSum="1"
-    android:orientation="horizontal"
-    android:layout_weight="1">
+    android:orientation="horizontal">
         <Button
             android:id="@+id/mlSaveLocation"
             android:text="Save Location"
-            android:layout_margin="0dp"
             android:layout_weight="0.5"
             android:gravity="center_vertical|center_horizontal"
-            android:background="@drawable/nice_button"
             android:textColor="@android:color/white"
             android:textSize="18dp"
             android:shadowRadius="1"
@@ -103,14 +94,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginRight="1dp" />
+            android:background="#0099cc" />
         <Button
             android:id="@+id/mlSkip"
             android:text="Skip"
-            android:layout_margin="0dp"
             android:layout_weight="0.5"
             android:gravity="center_vertical|center_horizontal"
-            android:background="@drawable/nice_button"
+            android:background="#DE593A"
             android:textColor="@android:color/white"
             android:textSize="18dp"
             android:shadowRadius="1"

@@ -57,13 +57,13 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
 
     private ImageView mpPhoto;
     private TextView mpName;
-    private EditText mpInputName;
+    //private TextView mpInputName;
     private TextView mpMarkLocationButton;
     private Button mpSave;
     private Button mpCancel;
     private Button mpLogout;
     private GoogleMapFragment googleMapFragment;
-    private TextView mpUserDetails;
+    //private TextView mpUserDetails;
 
     private CustomProgressDialog pDialog;
     private Bitmap profilePhoto;
@@ -88,20 +88,20 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_my_profile, container, false);
-        mpPhoto = (ImageView) rootView.findViewById(R.id.mcPhoto);
-        mpName = (TextView) rootView.findViewById(R.id.mcName);
-        mpInputName = (EditText) rootView.findViewById(R.id.mpInputName);
+        mpPhoto = (ImageView) rootView.findViewById(R.id.mpPhoto);
+        mpName = (TextView) rootView.findViewById(R.id.mpName);
+        //mpInputName = (TextView) rootView.findViewById(R.id.mpName);
         mpMarkLocationButton = (TextView) rootView.findViewById(R.id.mpMarkLocation);
         mpSave = (Button) rootView.findViewById(R.id.mpSave);
         mpCancel = (Button) rootView.findViewById(R.id.mpCancel);
         mpLogout = (Button) rootView.findViewById(R.id.mpLogout);
-        mpUserDetails = (TextView) rootView.findViewById(R.id.mcUserDetails);
+        //mpUserDetails = (TextView) rootView.findViewById(R.id.mcUserDetails);
 
         mpName.setText(userSession.getUser().getPerson().getName());
-        mpInputName.setText(userSession.getUser().getPerson().getName());
-        if(userSession.getUser().getPerson().getDob() != null) {
-            mpUserDetails.setText(GenericUtil.getAge(userSession.getUser().getPerson().getDob()) + " Years, " + userSession.getUser().getPerson().getGender());
-        }
+        //mpInputName.setText(userSession.getUser().getPerson().getName());
+        //if(userSession.getUser().getPerson().getDob() != null) {
+        //    mpUserDetails.setText(GenericUtil.getAge(userSession.getUser().getPerson().getDob()) + " Years, " + userSession.getUser().getPerson().getGender());
+        //}
         if(profilePhoto != null) {
             mpPhoto.setImageBitmap(profilePhoto);
         }
@@ -126,7 +126,7 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MyProfile: Save Profile");
-                middlewareService.updateProfile(getActivity(), userSession.getToken(), mpInputName.getText().toString(), null, null);
+                //middlewareService.updateProfile(getActivity(), userSession.getToken(), mpInputName.getText().toString(), null, null);
                 pDialog = new CustomProgressDialog(getActivity(), false, true, "Saving changes...");
                 pDialog.show();
             }

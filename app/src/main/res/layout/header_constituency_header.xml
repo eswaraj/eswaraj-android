@@ -35,12 +35,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/issue_bullet"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="-16dp"
+            android:layout_marginLeft="80dp"
             android:layout_toRightOf="@+id/issue_bullet"
             android:textSize="20sp"
             android:textColor="#ffffff"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="40dp" />
 
         <View
             android:id="@+id/cIcon"
@@ -63,14 +63,18 @@
             android:text="Leader"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="#0099cc"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/cSmart"
             android:text="Smart Data"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="#92B06A"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 

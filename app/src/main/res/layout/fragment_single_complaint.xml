@@ -1,60 +1,59 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
     tools:context="com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment"
-    android:background="#ffffff">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    android:background="#DBDBDB">
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="1"
-                android:layout_weight="0.3">
+                android:background="#FFFFFF"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp">
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    >
+
+                <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+                    android:id="@+id/scSubmitterImage"
+                    android:layout_width="fill_parent"
+                    android:layout_height="80dp"
+                    android:src="@drawable/profile_image"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:layout_weight="0.5"
+                    />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="5dp"
                     android:layout_gravity="left"
-                    android:layout_weight="0.5">
+                    android:layout_weight="0.2"
+                    android:layout_margin="5dp">
 
                     <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_weight="0.8"
                         android:weightSum="1"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
-
-                        <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
-                            android:id="@+id/scSubmitterImage"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:src="@drawable/profile_image"
-                            android:layout_weight="0.5"
-                            app:riv_corner_radius="30dip"
-                            app:riv_border_width="2dip"
-                            app:riv_border_color="#333333"
-                            app:riv_mutate_background="true"
-                            app:riv_oval="true"/>
+                        android:paddingLeft="10dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="10dp">
 
                         <LinearLayout
                             android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:weightSum="1"
                             android:layout_weight="0.5">
@@ -64,188 +63,162 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
                                 android:text="Aam Aadmi"
-                                android:layout_weight="0.5"
-                                android:gravity="left|bottom" />
+                                android:gravity="left|bottom"
+                                android:textStyle="bold"
+                                android:textColor="#0099cc" />
 
-                            <TextView
-                                android:id="@+id/scSubmitterDetails"
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:layout_weight="0.5"
-                                android:gravity="top|left"
-                                android:textColor="#929292" />
                         </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:orientation="vertical"
-                        android:weightSum="1"
-                        android:layout_weight="0.2">
-
-                        <TextView
-                            android:id="@+id/scStatusLabel"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.08"
-                            android:text="Issue Status"
-                            android:paddingLeft="15dp"
-                            android:textColor="#828282" />
-
-                        <TextView
-                            android:id="@+id/scStatus"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.08"
-                            android:text="Pending"
-                            android:textStyle="bold"
-                            android:paddingLeft="15dp"
-                            android:textColor="#ff32acf1" />
-
-                        <TextView
-                            android:id="@+id/scComplaintIdLabel"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.08"
-                            android:text="Issue Id"
-                            android:paddingLeft="15dp"
-                            android:textColor="#828282" />
-
-                        <TextView
-                            android:id="@+id/scComplaintId"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.08"
-                            android:text="84801"
-                            android:paddingLeft="15dp"
-                            android:textStyle="bold"
-                            android:textColor="#ff32acf1" />
-
-                        <TextView
-                            android:id="@+id/scCategory_label"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.08"
-                            android:text="Citizen Service"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="15dp"
-                            android:textColor="#828282" />
 
                         <TextView
                             android:id="@+id/scCategory"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.08"
+                            android:layout_weight="0.5"
                             android:text="Water"
-                            android:paddingLeft="15dp"
                             android:textStyle="bold"
-                            android:textColor="#ff32acf1" />
+                            android:textColor="#0099cc"
+                            android:gravity="right"
+                            android:layout_marginRight="10dp" />
 
-                        <TextView
-                            android:id="@+id/scSubCategory_label"
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:weightSum="1">
+
+                        <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.08"
-                            android:text="Issue Name"
-                            android:paddingLeft="15dp"
-                            android:textColor="#828282" />
+                            android:orientation="horizontal"
+                            android:weightSum="1"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp">
+
+                            <TextView
+                                android:id="@+id/scComplaintId"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.6"
+                                android:text="84801"
+                                android:textStyle="bold"
+                                android:textColor="#ADADAD" />
+
+                            <TextView
+                                android:id="@+id/mcDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.4"
+                                android:textColor="#ADADAD"
+                                android:text="3 hours ago"
+                                android:gravity="right"
+                                android:layout_marginRight="10dp" />
+
+                        </LinearLayout>
 
                         <TextView
                             android:id="@+id/scSubCategory"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.08"
                             android:text="Leaking Water Pipes"
-                            android:paddingLeft="15dp"
                             android:textStyle="bold"
-                            android:textColor="#ff32acf1" />
-
-                        <TextView
-                            android:id="@+id/cs_address_label"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.08"
-                            android:text="Issue Reported From"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="15dp"
-                            android:textColor="#828282" />
-
-                        <TextView
-                            android:id="@+id/cs_address"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.08"
-                            android:text="Govind Vihar, Delhi"
-                            android:paddingLeft="15dp"
-                            android:textStyle="bold"
-                            android:textColor="#ff32acf1" />
-
-                        <TextView
-                            android:id="@+id/cs_issue_desc_label"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.08"
-                            android:text="Issue Description"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="15dp"
-                            android:textColor="#828282" />
+                            android:textColor="#0099cc"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp" />
 
                         <TextView
                             android:id="@+id/scDescription"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.08"
                             android:text="Too much problem"
-                            android:paddingLeft="15dp"
                             android:textStyle="bold"
-                            android:textColor="#ff32acf1" />
+                            android:textColor="#ADADAD"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:layout_marginBottom="10dp" />
 
                     </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="0.5">
-
-                    <Button
-                        android:id="@+id/scClose"
-                        android:text="Close Complaint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal" />
-
-                    <FrameLayout
-                        android:id="@+id/scDisplayContainer"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="0.5"
-                        android:padding="10dp"/>
-
-                    <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
-                        android:id="@+id/scComplaintPhoto"
-                        android:src="@drawable/no_image_placeholder"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="0.5"
-                        android:padding="5dp" />
-
                 </LinearLayout>
 
             </LinearLayout>
 
+    <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+        android:id="@+id/scComplaintPhoto"
+        android:src="@drawable/no_image_placeholder"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:background="#FFFFFF"
+        android:padding="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp" />
+
+    <FrameLayout
+        android:id="@+id/scDisplayContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#FFFFFF"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#FFFFFF"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/cs_address"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Govind Vihar, Delhi"
+            android:textStyle="bold"
+            android:textColor="#ADADAD"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:layout_marginBottom="5dp" />
+
+        <TextView
+            android:id="@+id/scStatus"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Pending"
+            android:textStyle="bold"
+            android:textColor="#ADADAD"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:paddingRight="10dp" />
+
+    </LinearLayout>
+
+            <Button
+                android:id="@+id/scClose"
+                android:text="Close Complaint"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:background="#92B06A"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textCursorDrawable="@drawable/cross_button"
+                android:gravity="center_vertical|center_horizontal" />
+
             <FrameLayout
                 android:id="@+id/scCommentContainer"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent">
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
             </FrameLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
 
 </LinearLayout>

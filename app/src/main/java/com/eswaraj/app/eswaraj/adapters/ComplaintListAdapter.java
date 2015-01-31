@@ -53,7 +53,7 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
             holder.mcDate = (TextView)row.findViewById(R.id.mcDate);
             holder.mcStatus = (TextView)row.findViewById(R.id.mcStatus);
             holder.mcIcon = (CustomNetworkImageView)row.findViewById(R.id.mcIcon);
-            holder.mcImage = (CustomNetworkImageView)row.findViewById(R.id.mcImage);
+            //holder.mcImage = (CustomNetworkImageView)row.findViewById(R.id.mcImage);
             holder.mcProfilePhoto = (CustomNetworkImageView)row.findViewById(R.id.mcProfilePhoto);
 
             row.setTag(holder);
@@ -80,11 +80,11 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         }
         if(complaintDto.getImages() != null && complaintDto.getImages().get(0) != null && complaintDto.getImages().get(0).getOrgUrl() != null && !complaintDto.getImages().get(0).getOrgUrl().equals("")) {
             //holder.mcImage.loadComplaintImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
-            Picasso.with(context).load(complaintDto.getImages().get(0).getOrgUrl()).into(holder.mcImage);
-            holder.mcImage.setVisibility(View.VISIBLE);
+            //Picasso.with(context).load(complaintDto.getImages().get(0).getOrgUrl()).into(holder.mcImage);
+            //holder.mcImage.setVisibility(View.VISIBLE);
         }
         else {
-            holder.mcImage.setVisibility(View.GONE);
+            //holder.mcImage.setVisibility(View.GONE);
         }
         if(getRootCategoryId(complaintDto) != null) {
             holder.mcIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(getRootCategoryId(complaintDto)) + ".png"));
@@ -138,6 +138,6 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         TextView mcStatus;
         CustomNetworkImageView mcIcon;
         CustomNetworkImageView mcProfilePhoto;
-        CustomNetworkImageView mcImage;
+        //CustomNetworkImageView mcImage;
     }
 }

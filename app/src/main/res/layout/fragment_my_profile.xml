@@ -4,82 +4,414 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     tools:context="com.eswaraj.app.eswaraj.fragments.MyProfileFragment"
-    android:weightSum="1"
-    android:background="#FFFFFF"
+    android:background="#DBDBDB"
     android:padding="0dp"
     android:layout_margin="0dp"
     >
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:layout_weight="0.33"
-        android:background="#f2f2f2">
-        <include
-            android:id="@+id/mpUser"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            layout="@layout/complaint_reporters_details"
-            />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:weightSum="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="1dp">
+
+        <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+            android:id="@+id/mpPhoto"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/ravi"
+            android:padding="8dp"
+            android:layout_weight="0.9"/>
+
+        <TextView
+            android:id="@+id/mpchangepic"
+            android:text="Change Profile Pic"
+            android:layout_width="wrap_content"
+            android:drawableRight="@drawable/ic_edit"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:textColor="#0099cc"
+            android:padding="25dp" />
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:weightSum="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="1dp">
+
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+            android:weightSum="1"
+            android:layout_weight="0.3">
+
+            <TextView
+                android:id="@+id/mpnamelabel"
+                android:text="Name"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:textColor="#ADADAD"
+                android:gravity="bottom"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+            <TextView
+                android:id="@+id/mpName"
+                android:text="Aam Aadmi"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:textColor="#0099cc"
+                android:gravity="top"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+        </LinearLayout>
+
+            <TextView
+                android:id="@+id/mpeditname"
+                android:text="Edit"
+                android:layout_width="fill_parent"
+                android:drawableRight="@drawable/ic_edit"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:textColor="#0099cc"
+                android:paddingLeft="25dp"
+                android:paddingTop="25dp"
+                android:paddingBottom="25dp"
+                android:paddingRight="28dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:weightSum="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="1dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:layout_weight="0.3">
+
+            <TextView
+                android:id="@+id/mpemaillabel"
+                android:text="Email"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:textColor="#ADADAD"
+                android:gravity="bottom"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+            <TextView
+                android:id="@+id/mpemail"
+                android:text="AamAadmi@gov.nic.in"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:textColor="#0099cc"
+                android:gravity="top"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/mpeditemail"
+            android:text="Edit"
+            android:layout_width="fill_parent"
+            android:drawableRight="@drawable/ic_edit"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:textColor="#0099cc"
+            android:paddingLeft="25dp"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:paddingRight="28dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:weightSum="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:layout_weight="0.3">
+
+            <TextView
+                android:id="@+id/mpvoteridlabel"
+                android:text="Voter Id"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:textColor="#ADADAD"
+                android:gravity="bottom"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+            <TextView
+                android:id="@+id/mpvoterid"
+                android:text="DEL778956IN"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:textColor="#0099cc"
+                android:gravity="top"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/mpeditvoterid"
+            android:text="Edit"
+            android:layout_width="fill_parent"
+            android:drawableRight="@drawable/ic_edit"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:textColor="#0099cc"
+            android:paddingLeft="25dp"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:paddingRight="28dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:weightSum="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:layout_weight="0.3">
+
+            <TextView
+                android:id="@+id/mplocationlabel"
+                android:text="My Location"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:textColor="#ADADAD"
+                android:gravity="bottom"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+            <TextView
+                android:id="@+id/mplocation"
+                android:text="Govind Vihar, Delhi"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:textColor="#0099cc"
+                android:gravity="top"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/mpMarkLocation"
+            android:text="Edit"
+            android:layout_width="fill_parent"
+            android:drawableRight="@drawable/ic_edit"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:textColor="#0099cc"
+            android:paddingLeft="25dp"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:paddingRight="28dp" />
+
+    </LinearLayout>
     <RelativeLayout
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_weight="0.33">
+    android:layout_height="150dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
     <FrameLayout
         android:id="@+id/mpMap"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#ff86f184" />
-
-    <TextView
-        android:id="@+id/mpMarkLocation"
-        android:text="Update Home Location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_edit"
-        android:drawablePadding="5dp"
-        android:textColor="@color/red"
-        android:singleLine="false"
-        android:padding="10dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginLeft="150dp"
-        android:textStyle="bold" />
+        android:background="#FFFFFF"
+        android:padding="2dp" />
 
     </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:weightSum="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+            android:id="@+id/mppoliticalcoord"
+            android:text="My Political Coordinates"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="top"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:textStyle="bold"
+            android:textColor="#808080"
+            android:layout_marginTop="5dp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/mpassemblyconstlabel"
+                android:text="Assembly Constituency"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="#ADADAD"
+                android:gravity="bottom"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+            <TextView
+                android:id="@+id/mpassemblyconst"
+                android:text="Chandni Chowk"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="#0099cc"
+                android:gravity="top"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+            <TextView
+                android:id="@+id/mpparliamentaryconstlabel"
+                android:text="Parliamentary Constituency"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="#ADADAD"
+                android:gravity="bottom"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+            <TextView
+                android:id="@+id/mpparliamentaryconst"
+                android:text="Old Delhi"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="#0099cc"
+                android:gravity="top"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+            <TextView
+                android:id="@+id/mpwardlabel"
+                android:text="Ward"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="#ADADAD"
+                android:gravity="bottom"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+            <TextView
+                android:id="@+id/mpward"
+                android:text="Vikram Nagar"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="#0099cc"
+                android:gravity="top"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginBottom="5dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_weight="0.32"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:layout_weight="0.6"
-        android:layout_marginTop="20dp">
-    <TextView
-        android:text="Name"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.8"
-        android:gravity="center_vertical|center_horizontal"
-        android:textColor="#fff1653e" />
-    <EditText
-        android:id="@+id/mpInputName"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.2"
-        android:gravity="left|center_vertical"
-        android:layout_marginRight="5dp" />
-    </LinearLayout>
+    android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -87,25 +419,35 @@
         android:orientation="horizontal"
         android:weightSum="1"
         android:layout_weight="0.4"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="10dp">
     <Button
         android:id="@+id/mpSave"
         android:text="Save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.33"/>
+        android:layout_weight="0.33"
+        android:background="#0099cc"
+        android:layout_marginRight="5dp"
+        android:textColor="#FFFFFF" />
     <Button
         android:id="@+id/mpCancel"
         android:text="Cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.33"/>
+        android:layout_weight="0.33"
+        android:background="#DE593A"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="#FFFFFF" />
     <Button
         android:id="@+id/mpLogout"
         android:text="Log Out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.33"/>
+        android:layout_weight="0.33"
+        android:background="#AFAF77"
+        android:layout_marginLeft="5dp"
+        android:textColor="#FFFFFF" />
     </LinearLayout>
 </LinearLayout>
 </LinearLayout>

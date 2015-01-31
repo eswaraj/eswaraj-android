@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -43,7 +44,7 @@ public class CommentsFragment extends BaseFragment {
     private List<CommentDto> commentDtoList;
     private CommentListAdapter commentListAdapter;
     
-    private Button cSend;
+    private ImageView cSend;
     private EditText cComment;
     private ListView cOldComments;
     private Button cShowMore;
@@ -59,7 +60,7 @@ public class CommentsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_comments, container, false);
-        cSend = (Button) rootView.findViewById(R.id.cSend);
+        cSend = (ImageView) rootView.findViewById(R.id.cSend);
         cComment = (EditText) rootView.findViewById(R.id.cComment);
         cOldComments = (ListView) rootView.findViewById(R.id.cOldComments);
         cShowMore = (Button) rootView.findViewById(R.id.cShowMore);

@@ -1,6 +1,7 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -103,7 +104,8 @@ public class ConstituencySnapshotFragment extends BaseFragment {
 
         mcShowMore = new Button(getActivity());
         mcShowMore.setText("Show more");
-        headerView = getActivity().getLayoutInflater().inflate(R.layout.header_constituency_header, null);
+        mcShowMore.setBackgroundColor(Color.parseColor("#0099cc"));
+        mcShowMore.setTextColor(Color.parseColor("#FFFFFF"));        headerView = getActivity().getLayoutInflater().inflate(R.layout.header_constituency_header, null);
         complaintListFragment.setFooter(mcShowMore);
         complaintListFragment.setHeader(headerView);
 

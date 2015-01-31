@@ -47,7 +47,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     private CustomNetworkImageView complaintImage;
     private CustomNetworkImageView submitterImage;
     private TextView submitterName;
-    private TextView submitterDetails;
+    //private TextView submitterDetails;
     private GoogleMapFragment googleMapFragment;
     private ComplaintDto complaintDto;
     private CustomProgressDialog pDialog;
@@ -98,7 +98,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         complaintImage = (CustomNetworkImageView) rootView.findViewById(R.id.scComplaintPhoto);
         submitterName = (TextView) rootView.findViewById(R.id.scSubmitterName);
         submitterImage = (CustomNetworkImageView) rootView.findViewById(R.id.scSubmitterImage);
-        submitterDetails = (TextView) rootView.findViewById(R.id.scSubmitterDetails);
+        //submitterDetails = (TextView) rootView.findViewById(R.id.scSubmitterDetails);
         scStatus = (TextView) rootView.findViewById(R.id.scStatus);
         scComplaintId = (TextView) rootView.findViewById(R.id.scComplaintId);
 
@@ -133,6 +133,9 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
 
     private void showData() {
         scDescription.setText(complaintDto.getDescription());
+        if(complaintDto.getDescription() == null) {
+            scDescription.setVisibility(View.GONE);
+        }
         scComplaintId.setText(complaintDto.getId().toString());
         scStatus.setText(complaintDto.getStatus());
 
@@ -145,7 +148,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
             }
         }
         if(!userSession.getUser().getPerson().getExternalId().equals(complaintDto.getCreatedBy().get(0).getExternalId()) || complaintDto.getStatus().equals("Done")) {
-            scClose.setVisibility(View.INVISIBLE);
+            scClose.setVisibility(View.GONE);
         }
         if(complaintDto.getImages() != null) {
             complaintImage.loadComplaintImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
@@ -176,7 +179,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
 
     public void onEventMainThread(ComplaintClosedEvent event) {
         if(event.getSuccess()) {
-            scClose.setVisibility(View.INVISIBLE);
+            scClose.setVisibility(View.GONE);
             scStatus.setText("Closed");
         }
         else {

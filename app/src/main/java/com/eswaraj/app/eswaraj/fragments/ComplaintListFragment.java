@@ -82,7 +82,6 @@ public class ComplaintListFragment extends BaseFragment {
             complaintsAdapter = new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, complaintDtoListShort);
         }
         mcList.setAdapter(complaintsAdapter);
-        mcList.setDividerHeight(0);
     }
 
     public void markComplaintClosed(Long id) {
