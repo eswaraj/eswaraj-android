@@ -88,13 +88,6 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     private ProgressWheel constituencyProgressWheel;
     private AlertDialog constituencyAlertDialog;
 
-    private ArrayList<DialogItem> leaderDialogItems = new ArrayList<DialogItem>();
-    private GridView leaderGridView;
-    private ProgressWheel leaderProgressWheel;
-    private AlertDialog leaderAlertDialog;
-    private AtomicInteger leaderCount = new AtomicInteger(0);
-    private AtomicInteger leaderTotal = new AtomicInteger(0);
-
     private final int REQUEST_MY_COMPLAINTS = 0;
     private final int REQUEST_MY_CONSTITUENCY = 1;
     private final int REQUEST_MY_LEADERS = 2;
@@ -113,11 +106,6 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         hCreate = (ImageView) findViewById(R.id.hCreate);
 
         hRevGeocode.setTextColor(Color.parseColor("#929292"));
-
-        //complaints.setImageDrawable(getResources().getDrawable(R.drawable.complaint));
-        //leaders.setImageDrawable(getResources().getDrawable(R.drawable.leader));
-        //constituency.setImageDrawable(getResources().getDrawable(R.drawable.constituency));
-        //profile.setImageDrawable(getResources().getDrawable(R.drawable.profile));
 
         googleMapFragment = (GoogleMapFragment) getSupportFragmentManager().findFragmentById(R.id.hMap);
         googleMapFragment.setContext(this);
@@ -181,40 +169,15 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 }
             }
         });
+
         leaders.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Leaders");
                 if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     if (userSession.isUserLoggedIn(v.getContext()) && userSession.isUserLocationKnown()) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
-                        LayoutInflater inflater = getLayoutInflater();
-
-                        View rootView = inflater.inflate(R.layout.dialog_select, null);
-                        leaderGridView = (GridView) rootView.findViewById(R.id.sOptionList);
-                        leaderProgressWheel = (ProgressWheel) rootView.findViewById(R.id.sProgressWheel);
-                        sError = (LinearLayout) rootView.findViewById(R.id.sError);
-                        sClose = (Button) rootView.findViewById(R.id.sClose);
-
-                        leaderGridView.setVisibility(View.INVISIBLE);
-                        leaderProgressWheel.setVisibility(View.VISIBLE);
-                        sError.setVisibility(View.INVISIBLE);
-
-                        builder.setView(rootView)
-                                .setCancelable(true)
-                                .setTitle("Select Leader");
-                        leaderAlertDialog = builder.create();
-                        leaderAlertDialog.show();
-                        leaderAlertDialog.getWindow().setLayout(700, 400);
-
-                        sClose.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                leaderAlertDialog.dismiss();
-                            }
-                        });
-
-                        middlewareService.loadLeaders(v.getContext(), userSession, true);
+                        Intent i = new Intent(v.getContext(), LeaderListActivity.class);
+                        startActivity(i);
                     } else if (userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
                         googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Leaders: Location not marked");
                         Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
@@ -467,52 +430,6 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         }
     }
 
-    public void onEventMainThread(GetLeadersEvent event) {
-        if(event.getSuccess()) {
-            leaderDialogItems.clear();
-            leaderTotal.set(event.getPoliticalBodyAdminDtos().size());
-            leaderCount.set(0);
-            for(PoliticalBodyAdminDto politicalBodyAdminDto : event.getPoliticalBodyAdminDtos()) {
-                DialogItem dialogItem = new DialogItem();
-                dialogItem.setId(politicalBodyAdminDto.getId());
-                dialogItem.setName(politicalBodyAdminDto.getName());
-                dialogItem.setTitle(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
-                dialogItem.setPoliticalBodyAdminDto(politicalBodyAdminDto);
-                dialogItem.setTarget(LeaderActivity.class);
-                leaderDialogItems.add(dialogItem);
-                middlewareService.loadProfileImage(this, politicalBodyAdminDto.getProfilePhoto(), politicalBodyAdminDto.getId(), true, event.getLoadProfilePhotos());
-            }
-            if(event.getPoliticalBodyAdminDtos() == null || event.getPoliticalBodyAdminDtos().size() == 0) {
-                leaderProgressWheel.setVisibility(View.INVISIBLE);
-                sError.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
-    public void onEventMainThread(GetProfileImageEvent event) {
-        for(DialogItem dialogItem : leaderDialogItems) {
-            if(dialogItem.getId().equals(event.getId())) {
-                dialogItem.setIcon(event.getBitmap());
-            }
-        }
-        if(leaderCount.incrementAndGet() == leaderTotal.get()) {
-            DialogAdapter adapter = new DialogAdapter(this, R.layout.item_select_dialog, leaderDialogItems);
-            leaderGridView.setNumColumns(leaderTotal.get());
-            leaderGridView.setAdapter(adapter);
-            leaderGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    leaderAlertDialog.dismiss();
-                    Intent i = new Intent(view.getContext(), ((DialogItem) leaderGridView.getAdapter().getItem(position)).getTarget());
-                    i.putExtra("LEADER", (Serializable) ((DialogItem) leaderGridView.getAdapter().getItem(position)).getPoliticalBodyAdminDto());
-                    startActivity(i);
-                }
-            });
-            leaderProgressWheel.setVisibility(View.INVISIBLE);
-            leaderGridView.setVisibility(View.VISIBLE);
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -533,6 +450,4 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
             }
         }
     }
-
-
 }

@@ -9,6 +9,7 @@ import com.eswaraj.app.eswaraj.activities.ComplaintFilterActivity;
 import com.eswaraj.app.eswaraj.activities.ComplaintSummaryActivity;
 import com.eswaraj.app.eswaraj.activities.ConstituencyComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.ConstituencySnapshotActivity;
+import com.eswaraj.app.eswaraj.activities.LeaderListActivity;
 import com.eswaraj.app.eswaraj.activities.SearchableActivity;
 import com.eswaraj.app.eswaraj.activities.UserComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.ContentActivity;
@@ -38,6 +39,7 @@ import com.eswaraj.app.eswaraj.fragments.ComplaintsFragment;
 import com.eswaraj.app.eswaraj.fragments.ConstituencyComplaintsFragment;
 import com.eswaraj.app.eswaraj.fragments.ConstituencySnapshotFragment;
 import com.eswaraj.app.eswaraj.fragments.LeaderForComplaintFragment;
+import com.eswaraj.app.eswaraj.fragments.LeaderListFragment;
 import com.eswaraj.app.eswaraj.fragments.UserComplaintsFragment;
 import com.eswaraj.app.eswaraj.fragments.ConstituencyFragment;
 import com.eswaraj.app.eswaraj.fragments.ComplaintsMapFragment;
@@ -198,7 +200,9 @@ import de.greenrobot.event.EventBus;
                 GlobalSearchRequest.class,
                 SearchableActivity.class,
                 LoadLeaderByIdRequest.class,
-                LeaderForComplaintFragment.class
+                LeaderForComplaintFragment.class,
+                LeaderListActivity.class,
+                LeaderListFragment.class
         },
         complete = false,
         library = true

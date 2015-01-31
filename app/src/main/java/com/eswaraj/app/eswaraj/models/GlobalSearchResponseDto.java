@@ -12,6 +12,15 @@ public class GlobalSearchResponseDto implements Serializable {
     private String image;
     private String partyName;
     private String cName;
+    private PoliticalBodyAdminDto politicalBodyAdminDto;
+
+    public PoliticalBodyAdminDto getPoliticalBodyAdminDto() {
+        return politicalBodyAdminDto;
+    }
+
+    public void setPoliticalBodyAdminDto(PoliticalBodyAdminDto politicalBodyAdminDto) {
+        this.politicalBodyAdminDto = politicalBodyAdminDto;
+    }
 
     public Long getId() {
         return id;
@@ -79,6 +88,7 @@ public class GlobalSearchResponseDto implements Serializable {
                 ", image='" + image + '\'' +
                 ", partyName='" + partyName + '\'' +
                 ", cName='" + cName + '\'' +
+                ", politicalBodyAdminDto=" + politicalBodyAdminDto +
                 '}';
     }
 }

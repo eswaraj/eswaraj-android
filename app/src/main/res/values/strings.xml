@@ -41,5 +41,6 @@
     <string name="title_activity_constituency_snapshot">ConstituencySnapshotActivity</string>
     <string name="title_activity_user_snapshot">UserSnapshotActivity</string>
     <string name="title_activity_searchable">SearchableActivity</string>
+    <string name="title_activity_leader_list">LeaderListActivity</string>
 
 </resources>
