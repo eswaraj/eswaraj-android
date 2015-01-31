@@ -1,5 +1,7 @@
 package com.eswaraj.app.eswaraj.models;
 
+import com.eswaraj.web.dto.LocationDto;
+
 import java.io.Serializable;
 
 
@@ -13,6 +15,30 @@ public class GlobalSearchResponseDto implements Serializable {
     private String partyName;
     private String cName;
     private PoliticalBodyAdminDto politicalBodyAdminDto;
+    private LocationDto locationDto;
+
+    @Override
+    public String toString() {
+        return "GlobalSearchResponseDto{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", subType='" + subType + '\'' +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                ", partyName='" + partyName + '\'' +
+                ", cName='" + cName + '\'' +
+                ", politicalBodyAdminDto=" + politicalBodyAdminDto +
+                ", locationDto=" + locationDto +
+                '}';
+    }
+
+    public LocationDto getLocationDto() {
+        return locationDto;
+    }
+
+    public void setLocationDto(LocationDto locationDto) {
+        this.locationDto = locationDto;
+    }
 
     public PoliticalBodyAdminDto getPoliticalBodyAdminDto() {
         return politicalBodyAdminDto;
@@ -78,17 +104,4 @@ public class GlobalSearchResponseDto implements Serializable {
         this.cName = cName;
     }
 
-    @Override
-    public String toString() {
-        return "GlobalSearchResponseDto{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", subType='" + subType + '\'' +
-                ", name='" + name + '\'' +
-                ", image='" + image + '\'' +
-                ", partyName='" + partyName + '\'' +
-                ", cName='" + cName + '\'' +
-                ", politicalBodyAdminDto=" + politicalBodyAdminDto +
-                '}';
-    }
 }

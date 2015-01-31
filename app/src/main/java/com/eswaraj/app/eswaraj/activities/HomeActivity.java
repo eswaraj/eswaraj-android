@@ -63,8 +63,6 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     @Inject
     LocationServicesCheckUtil locationServicesCheckUtil;
     @Inject
-    MiddlewareServiceImpl middlewareService;
-    @Inject
     GoogleAnalyticsTracker googleAnalyticsTracker;
 
     private GoogleMapFragment googleMapFragment;
@@ -82,11 +80,6 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     private Button sClose;
 
     private Boolean retryRevGeocoding = false;
-
-    private ArrayList<DialogItem> constituencyDialogItems = new ArrayList<DialogItem>();
-    private GridView constituencyGridView;
-    private ProgressWheel constituencyProgressWheel;
-    private AlertDialog constituencyAlertDialog;
 
     private final int REQUEST_MY_COMPLAINTS = 0;
     private final int REQUEST_MY_CONSTITUENCY = 1;
@@ -207,96 +200,15 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 }
             }
         });
+
         constituency.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Constituency");
                 if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     if(userSession.isUserLoggedIn(v.getContext()) && userSession.isUserLocationKnown()) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
-                        LayoutInflater inflater = getLayoutInflater();
-
-                        View rootView = inflater.inflate(R.layout.dialog_select, null);
-                        constituencyGridView = (GridView) rootView.findViewById(R.id.sOptionList);
-                        constituencyProgressWheel = (ProgressWheel) rootView.findViewById(R.id.sProgressWheel);
-                        sError = (LinearLayout) rootView.findViewById(R.id.sError);
-                        sClose = (Button) rootView.findViewById(R.id.sClose);
-
-                        constituencyGridView.setVisibility(View.VISIBLE);
-                        constituencyProgressWheel.setVisibility(View.INVISIBLE);
-                        sError.setVisibility(View.INVISIBLE);
-
-                        sClose.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                constituencyAlertDialog.dismiss();
-                            }
-                        });
-
-                        constituencyDialogItems.clear();
-
-                        if(userSession.getUser().getPerson().getPersonAddress().getState() != null) {
-                            DialogItem state = new DialogItem();
-                            state.setName(userSession.getUser().getPerson().getPersonAddress().getState().getName());
-                            state.setTitle("State");
-                            state.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
-                            state.setId(userSession.getUser().getPerson().getPersonAddress().getState().getId());
-                            state.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getState());
-                            //state.setTarget(ConstituencyComplaintsActivity.class);
-                            state.setTarget(ConstituencySnapshotActivity.class);
-                            constituencyDialogItems.add(state);
-                        }
-
-                        if(userSession.getUser().getPerson().getPersonAddress().getPc() != null) {
-                            DialogItem pc = new DialogItem();
-                            pc.setName(userSession.getUser().getPerson().getPersonAddress().getPc().getName());
-                            pc.setTitle("Parliamentary Constituency");
-                            pc.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
-                            pc.setId(userSession.getUser().getPerson().getPersonAddress().getPc().getId());
-                            pc.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getPc());
-                            //state.setTarget(ConstituencyComplaintsActivity.class);
-                            pc.setTarget(ConstituencySnapshotActivity.class);
-                            constituencyDialogItems.add(pc);
-                        }
-
-                        if(userSession.getUser().getPerson().getPersonAddress().getAc() != null) {
-                            DialogItem ac = new DialogItem();
-                            ac.setName(userSession.getUser().getPerson().getPersonAddress().getAc().getName());
-                            ac.setTitle("Assembly Constituency");
-                            ac.setIcon(BitmapFactory.decodeResource(v.getResources(), R.drawable.constituency));
-                            ac.setId(userSession.getUser().getPerson().getPersonAddress().getAc().getId());
-                            ac.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getAc());
-                            //state.setTarget(ConstituencyComplaintsActivity.class);
-                            ac.setTarget(ConstituencySnapshotActivity.class);
-                            constituencyDialogItems.add(ac);
-                        }
-
-                        if(constituencyDialogItems.size() > 0) {
-                            DialogAdapter adapter = new DialogAdapter(v.getContext(), R.layout.item_select_dialog, constituencyDialogItems);
-                            constituencyGridView.setAdapter(adapter);
-                            constituencyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    constituencyAlertDialog.dismiss();
-                                    Intent i = new Intent(view.getContext(), ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getTarget());
-                                    i.putExtra("LOCATION", (Serializable) ((DialogItem) constituencyGridView.getAdapter().getItem(position)).getLocationDto());
-                                    startActivity(i);
-                                }
-                            });
-                        }
-                        else {
-                            sError.setVisibility(View.VISIBLE);
-                            constituencyGridView.setVisibility(View.INVISIBLE);
-                        }
-
-                        builder.setView(rootView)
-                                .setCancelable(true)
-                                .setTitle("Select Constituency");
-                        constituencyAlertDialog = builder.create();
-                        constituencyAlertDialog.show();
-                        constituencyAlertDialog.getWindow().setLayout(700, 400);
-
-
+                        Intent i = new Intent(v.getContext(), LocationListActivity.class);
+                        startActivity(i);
                     }
                     else if(userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
                         googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Constituency: Location not marked");
@@ -328,6 +240,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 }
             }
         });
+
         profile.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {

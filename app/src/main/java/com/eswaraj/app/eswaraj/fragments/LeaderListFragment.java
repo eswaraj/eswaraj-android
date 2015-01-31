@@ -95,6 +95,7 @@ public class LeaderListFragment extends BaseFragment {
             for(PoliticalBodyAdminDto politicalBodyAdminDto : event.getPoliticalBodyAdminDtos()) {
                 GlobalSearchResponseDto globalSearchResponseDto = new GlobalSearchResponseDto();
                 globalSearchResponseDto.setType("Leader");
+                globalSearchResponseDto.setName(politicalBodyAdminDto.getName());
                 globalSearchResponseDto.setSubType(politicalBodyAdminDto.getPoliticalAdminType().getShortName());
                 globalSearchResponseDto.setcName(politicalBodyAdminDto.getLocation().getName());
                 globalSearchResponseDto.setPartyName(politicalBodyAdminDto.getParty().getName());
