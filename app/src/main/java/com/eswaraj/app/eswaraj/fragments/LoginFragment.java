@@ -161,7 +161,7 @@ public class LoginFragment extends BaseFragment {
         else {
             view = inflater.inflate(R.layout.fragment_login, container, false);
         }
-        Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/HandmadeTypewriter.ttf");
+        Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/OxygenRegular.ttf");
 
         if(!dialogMode) {
             //References to UI elements
