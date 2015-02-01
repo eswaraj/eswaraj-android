@@ -94,6 +94,9 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
             //holder.mcProfilePhoto.loadProfileImage(complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getCreatedBy().get(0).getId());
             Picasso.with(context).load(complaintDto.getCreatedBy().get(0).getProfilePhoto().replace("http", "https")).error(R.drawable.anon).placeholder(R.drawable.anon).into(holder.mcProfilePhoto);
         }
+        else {
+            holder.mcProfilePhoto.setImageDrawable(context.getResources().getDrawable(R.drawable.anon));
+        }
         if(complaintDto.getImages() != null && complaintDto.getImages().get(0) != null && complaintDto.getImages().get(0).getOrgUrl() != null && !complaintDto.getImages().get(0).getOrgUrl().equals("")) {
             //holder.mcImage.loadComplaintImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
             Picasso.with(context).load(complaintDto.getImages().get(0).getOrgUrl()).into(holder.mcImage);

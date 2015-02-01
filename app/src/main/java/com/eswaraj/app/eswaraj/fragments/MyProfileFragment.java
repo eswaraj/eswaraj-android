@@ -84,7 +84,6 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
     public void onStart() {
         super.onStart();
         eventBus.register(this);
-        middlewareService.loadProfileImage(getActivity(), userSession.getProfilePhoto(), userSession.getUser().getPerson().getId(), false);
     }
 
     @Override
@@ -117,7 +116,12 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
         mpNameInput.setText(userSession.getUser().getPerson().getName());
         mpVoterId.setText(userSession.getUser().getPerson().getVoterId());
         mpVoterIdInput.setText(userSession.getUser().getPerson().getVoterId());
-        Picasso.with(getActivity()).load(userSession.getProfilePhoto().replace("http", "https")).error(R.drawable.anon).placeholder(R.drawable.anon).into(mpPhoto);
+        if(userSession.getProfilePhoto() != null && !userSession.getProfilePhoto().equals("")) {
+            Picasso.with(getActivity()).load(userSession.getProfilePhoto().replace("http", "https")).error(R.drawable.anon).placeholder(R.drawable.anon).into(mpPhoto);
+        }
+        else {
+            mpPhoto.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.anon));
+        }
         if(userSession.isUserLocationKnown()) {
             if(userSession.getUser().getPerson().getPersonAddress().getAc() != null && userSession.getUser().getPerson().getPersonAddress().getState() != null) {
                 mpLocation.setText(userSession.getUser().getPerson().getPersonAddress().getAc().getName() + ", " + userSession.getUser().getPerson().getPersonAddress().getState().getName());

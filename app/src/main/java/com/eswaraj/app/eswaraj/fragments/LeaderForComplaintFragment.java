@@ -53,6 +53,9 @@ public class LeaderForComplaintFragment extends BaseFragment {
             if(politicalBodyAdminDto.getProfilePhoto() != null && !politicalBodyAdminDto.getProfilePhoto().equals("")) {
                 Picasso.with(getActivity()).load(politicalBodyAdminDto.getProfilePhoto().replace("http", "https") + "?type=large").error(R.drawable.anon).placeholder(R.drawable.anon).into(photo);
             }
+            else {
+                photo.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.anon));
+            }
         }
     }
 }

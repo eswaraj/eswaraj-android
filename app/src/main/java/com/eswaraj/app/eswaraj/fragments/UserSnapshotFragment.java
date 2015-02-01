@@ -111,7 +111,12 @@ public class UserSnapshotFragment extends BaseFragment {
         showAll = (Button) footerView.findViewById(R.id.usShowAll);
         create = (Button) footerView.findViewById(R.id.usCreate);
 
+        if(userSession.getProfilePhoto() != null && !userSession.getProfilePhoto().equals("")) {
         Picasso.with(getActivity()).load(userSession.getProfilePhoto()).error(R.drawable.anon).placeholder(R.drawable.anon).into(photo);
+        }
+        else {
+            photo.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.anon));
+        }
         name.setText(userSession.getUser().getPerson().getName());
         if(userSession.getUser().getPerson().getDob() != null) {
             details.setText(GenericUtil.getAge(userSession.getUser().getPerson().getDob()) + " Years, " + userSession.getUser().getPerson().getGender());

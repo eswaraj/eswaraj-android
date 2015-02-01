@@ -93,7 +93,12 @@ public class LeaderFragment extends BaseFragment {
     }
 
     private void setFields() {
-        Picasso.with(getActivity()).load(politicalBodyAdminDto.getProfilePhoto().replace("http", "https")).error(R.drawable.anon).placeholder(R.drawable.anon).into(lPhoto);
+        if(politicalBodyAdminDto.getProfilePhoto() != null && politicalBodyAdminDto.getProfilePhoto().equals("")) {
+            Picasso.with(getActivity()).load(politicalBodyAdminDto.getProfilePhoto().replace("http", "https")).error(R.drawable.anon).placeholder(R.drawable.anon).into(lPhoto);
+        }
+        else {
+            lPhoto.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.anon));
+        }
         //lPhoto.loadProfileImage(politicalBodyAdminDto.getProfilePhoto(), politicalBodyAdminDto.getId());
         lName.setText(politicalBodyAdminDto.getName());
         lPost.setText(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
