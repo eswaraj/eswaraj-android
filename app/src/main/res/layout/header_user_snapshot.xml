@@ -2,38 +2,71 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="260dp">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp">
+        android:layout_height="160dp"
+        android:layout_marginTop="-5dp"
+        android:layout_marginBottom="-7.5dp">
 
         <ImageView
-            android:src="@drawable/constituency_default_header"
+            android:src="@drawable/leader_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"/>
+            android:scaleType="centerCrop"
+            android:cropToPadding="false" />
 
-        <ImageView
-            android:layout_centerInParent="true"
-            android:id="@+id/usPhoto"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
 
-        <TextView
-            android:id="@+id/usName"
-            android:text="Name"
-            android:layout_alignLeft="@+id/usPhoto"
-            android:layout_below="@+id/usPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_marginTop="50dp">
 
-        <TextView
-            android:id="@+id/usDetails"
-            android:layout_below="@+id/usName"
-            android:layout_alignLeft="@+id/usName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/usPhoto"
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:src="@drawable/ravi"
+                android:layout_weight="0.4"
+                android:layout_gravity="center|right"
+                android:cropToPadding="true"
+                android:layout_marginLeft="150dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="0.6"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/usName"
+                    android:layout_weight="0.5"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Ravi Sharma"
+                    android:textColor="#FFFFFF"
+                    android:layout_gravity="bottom"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <TextView
+                    android:id="@+id/usDetails"
+                    android:layout_weight="0.5"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:text="PM, India"
+                    android:textColor="#FFFFFF"
+                    android:layout_gravity="top"
+                    android:gravity="top"
+                    android:paddingLeft="5dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         </RelativeLayout>
 
@@ -47,21 +80,27 @@
             android:text="Total"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:background="#AFA577" />
 
         <Button
             android:id="@+id/usOpen"
             android:text="Open"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:background="#E19D29" />
 
         <Button
             android:id="@+id/usClose"
             android:text="Close"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:background="#29ABA4" />
 
     </LinearLayout>
 
