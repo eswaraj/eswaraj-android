@@ -99,7 +99,7 @@ public class LoginFragment extends BaseFragment {
         buttonRetry.setVisibility(View.INVISIBLE);
         buttonSkip.setVisibility(View.INVISIBLE);
         if(showInstruction) {
-            welcomeText.setText("The app is setup.\n\nOn the next screen you will be asked to mark your home location on a map.\n\nThis is a one-time activity and will help us serve you data about your constituency.");
+            welcomeText.setText("Almost done.\n\nOn the next screen you will be asked to mark your home location on a map.\n\nThis is a one-time activity and will help us serve you data about your constituency.");
             progressWheel.setVisibility(View.INVISIBLE);
             buttonGotIt.setVisibility(View.VISIBLE);
         }

@@ -146,10 +146,10 @@ public class SplashActivity extends BaseActivity {
     private void setUpPagerData(Boolean onlyOne) {
         splashScreenItems = new ArrayList<SplashScreenItem>();
         if(onlyOne) {
-            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswarajlogo), new ColorDrawable(R.color.navy_blue_background), "Welcome to eSwaraj", "A Mobile & Web Platform for better Governance"));
+            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.logo), new ColorDrawable(R.color.navy_blue_background), "Welcome to eSwaraj", "A Mobile & Web Platform for better Governance"));
         }
         else {
-            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswarajlogo), new ColorDrawable(R.color.navy_blue_background), "Welcome to eSwaraj", "Let's move towards better governance."));
+            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.logo), new ColorDrawable(R.color.navy_blue_background), "Welcome to eSwaraj", "Let's move towards better governance."));
             splashScreenItems.add(new SplashScreenItem(null, getResources().getDrawable(R.drawable.constitution), "Signing the constitution", "We came together and signed a contract named Constitution which paved the way for founding of this great nation. A contract that promised that our lives would be much better by being part of this nation. A contract that promised that together we can be much more than we are as individuals."));
             splashScreenItems.add(new SplashScreenItem(null, getResources().getDrawable(R.drawable.structure), "Administrative Structure", "A system of administration was laid out to achieve the promises in the Constitution. Considering everyone's similar basic needs, India was divided in multiple parts, each with same administrative and political structure."));
             splashScreenItems.add(new SplashScreenItem(null, getResources().getDrawable(R.drawable.audit), "The need for social audit", "Even the greatest plans fall short if ground-level feedback is not taken from end beneficiaries. eSwaraj aims to remove the disconnect between ground level realities and top level perception and bring transparency in quality of service delivery and governance."));
