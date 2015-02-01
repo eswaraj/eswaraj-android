@@ -17,7 +17,7 @@
         android:id="@+id/lPhoto"
         android:layout_width="fill_parent"
         android:layout_height="300dp"
-        android:src="@drawable/ravi"
+        android:src="@drawable/anon"
         android:cropToPadding="true"
         android:scaleType="centerCrop" />
 

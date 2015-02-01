@@ -7,7 +7,10 @@
     <ListView
         android:id="@+id/llList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:dividerHeight="10dp"
+        android:divider="@color/transparent"/>
 
     <TextView
         android:id="@+id/llEmpty"
