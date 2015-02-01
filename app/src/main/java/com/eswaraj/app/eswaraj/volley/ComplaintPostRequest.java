@@ -72,7 +72,7 @@ public class ComplaintPostRequest extends BaseClass {
                 complaintPostResponseDto.setAmenity(amenity);
                 complaintPostResponseDto.setTemplate(template);
                 complaintPostResponseDto.getComplaintDto().setDescription(description);
-                complaintPostResponseDto.getComplaintDto().setLocationString(userLocationString);
+                complaintPostResponseDto.getComplaintDto().setLocationAddress(userLocationString);
                 ComplaintReportedEvent event = new ComplaintReportedEvent();
                 event.setSuccess(true);
                 event.setComplaintPostResponseDto(complaintPostResponseDto);

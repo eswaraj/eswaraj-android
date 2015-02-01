@@ -103,7 +103,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
             descriptionLabel.setVisibility(View.GONE);
             description.setVisibility(View.GONE);
         }
-        address.setText(complaintPostResponseDto.getComplaintDto().getLocationString());
+        address.setText(complaintPostResponseDto.getComplaintDto().getLocationAddress());
 
         if(imageFile != null) {
             new BitmapWorkerTask(complaintPhoto, 200).execute(imageFile.getAbsolutePath());

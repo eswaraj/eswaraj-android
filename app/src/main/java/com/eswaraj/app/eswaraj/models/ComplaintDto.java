@@ -5,14 +5,14 @@ import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
 public class ComplaintDto extends com.eswaraj.web.dto.ComplaintDto {
     private CategoryWithChildCategoryDto rootCategory;
-    private String locationString;
+    private String locationAddress;
 
-    public String getLocationString() {
-        return locationString;
+    public String getLocationAddress() {
+        return locationAddress;
     }
 
-    public void setLocationString(String locationString) {
-        this.locationString = locationString;
+    public void setLocationAddress(String locationAddress) {
+        this.locationAddress = locationAddress;
     }
 
     public CategoryWithChildCategoryDto getRootCategory() {

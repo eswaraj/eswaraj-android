@@ -148,16 +148,8 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         scComplaintId.setText(complaintDto.getId().toString());
         scStatus.setText(complaintDto.getStatus());
         scDate.setText(DateUtils.getRelativeTimeSpanString(complaintDto.getComplaintTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
-        if(complaintDto.getLocationString() != null) {
-            Address bestMatch = new Gson().fromJson(complaintDto.getLocationString(), Address.class);
-            String complaintLocationString = null;
-            if(bestMatch != null) {
-                complaintLocationString = bestMatch.getAddressLine(1) + ", " + bestMatch.getAddressLine(2);
-                scAddress.setText(complaintLocationString);
-            }
-            else {
-                scAddress.setText("");
-            }
+        if(complaintDto.getLocationAddress() != null) {
+            scAddress.setText(complaintDto.getLocationAddress());
         }
         else {
             scAddress.setText("");

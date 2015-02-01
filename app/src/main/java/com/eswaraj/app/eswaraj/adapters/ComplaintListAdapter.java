@@ -105,16 +105,8 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         if(getRootCategoryId(complaintDto) != null) {
             holder.mcIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(getRootCategoryId(complaintDto)) + ".png"));
         }
-        if(complaintDto.getLocationString() != null) {
-            Address bestMatch = new Gson().fromJson(complaintDto.getLocationString(), Address.class);
-            String complaintLocationString = null;
-            if(bestMatch != null) {
-                complaintLocationString = bestMatch.getAddressLine(1) + ", " + bestMatch.getAddressLine(2);
-                holder.mcAddress.setText(complaintLocationString);
-            }
-            else {
-                holder.mcAddress.setText("");
-            }
+        if(complaintDto.getLocationAddress() != null) {
+            holder.mcAddress.setText(complaintDto.getLocationAddress());
         }
         else {
             holder.mcAddress.setText("");

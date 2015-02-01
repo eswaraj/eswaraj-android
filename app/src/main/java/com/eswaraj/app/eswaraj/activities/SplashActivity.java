@@ -146,7 +146,7 @@ public class SplashActivity extends BaseActivity {
     private void setUpPagerData(Boolean onlyOne) {
         splashScreenItems = new ArrayList<SplashScreenItem>();
         if(onlyOne) {
-            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswarajlogo), getResources().getDrawable(R.drawable.bgpic), "Welcome to eSwaraj", "A Mobile & Web Platform for better Governance"));
+            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswarajlogo), new ColorDrawable(R.color.navy_blue_background), "Welcome to eSwaraj", "A Mobile & Web Platform for better Governance"));
         }
         else {
             splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.eswarajlogo), new ColorDrawable(R.color.navy_blue_background), "Welcome to eSwaraj", "Let's move towards better governance."));
