@@ -112,7 +112,7 @@ public class UserSnapshotFragment extends BaseFragment {
         create = (Button) footerView.findViewById(R.id.usCreate);
 
         if(userSession.getProfilePhoto() != null && !userSession.getProfilePhoto().equals("")) {
-        Picasso.with(getActivity()).load(userSession.getProfilePhoto()).error(R.drawable.anon).placeholder(R.drawable.anon).into(photo);
+            Picasso.with(getActivity()).load(userSession.getProfilePhoto().replace("http", "https")).error(R.drawable.anon).placeholder(R.drawable.anon).into(photo);
         }
         else {
             photo.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.anon));
