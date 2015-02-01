@@ -89,8 +89,8 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
             categoryFilterItems.add(filter);
         }
 
-        categoryAdapter = new FilterListAdapter(this, android.R.layout.simple_list_item_1, categoryFilterItems);
-        statusAdapter = new FilterListAdapter(this, android.R.layout.simple_list_item_1, statusFilterItems);
+        categoryAdapter = new FilterListAdapter(this, R.layout.item_filter_citizenservices_list, categoryFilterItems);
+        statusAdapter = new FilterListAdapter(this, R.layout.item_filter_complaintstatus_list, statusFilterItems);
 
         categoryList.setAdapter(categoryAdapter);
         statusList.setAdapter(statusAdapter);
