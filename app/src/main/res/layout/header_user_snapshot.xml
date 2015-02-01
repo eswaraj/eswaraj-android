@@ -75,14 +75,18 @@
             android:text="Edit Profile"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:background="#0099cc" />
 
         <Button
             android:id="@+id/usSmart"
             android:text="Smart Data"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:background="#92B05A" />
 
     </LinearLayout>
 

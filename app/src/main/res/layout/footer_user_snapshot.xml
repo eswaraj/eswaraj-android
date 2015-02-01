@@ -8,12 +8,16 @@
         android:id="@+id/usShowAll"
         android:text="View all complaints"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#0099cc"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/usCreate"
         android:text="Do you want to lodge a complaint"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#DE593A"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>
