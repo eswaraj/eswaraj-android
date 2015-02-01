@@ -2,6 +2,7 @@ package com.eswaraj.app.eswaraj.fragments;
 
 
 import android.location.Address;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -49,6 +50,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     private CommentsFragment commentsFragment;
     private CustomNetworkImageView complaintImage;
     private CustomNetworkImageView submitterImage;
+    private CustomNetworkImageView scIcon;
     private TextView submitterName;
     //private TextView submitterDetails;
     private GoogleMapFragment googleMapFragment;
@@ -103,6 +105,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         complaintImage = (CustomNetworkImageView) rootView.findViewById(R.id.scComplaintPhoto);
         submitterName = (TextView) rootView.findViewById(R.id.scSubmitterName);
         submitterImage = (CustomNetworkImageView) rootView.findViewById(R.id.scSubmitterImage);
+        scIcon = (CustomNetworkImageView) rootView.findViewById(R.id.scIcon);
         //submitterDetails = (TextView) rootView.findViewById(R.id.scSubmitterDetails);
         scStatus = (TextView) rootView.findViewById(R.id.scStatus);
         scComplaintId = (TextView) rootView.findViewById(R.id.scComplaintId);
@@ -158,6 +161,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         for(CategoryDto category : complaintDto.getCategories()) {
             if(category.isRoot()) {
                 scCategory.setText(category.getName());
+                scIcon.setImageURI(Uri.parse(getActivity().getFilesDir() + "/eSwaraj_" + String.valueOf(category.getId()) + ".png"));
             }
             else {
                 scSubCategory.setText(category.getName());
