@@ -63,6 +63,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
     private PagerAdapter pagerAdapter;
     private ImageView back;
     private ImageView forward;
+    private TextView descriptionLabel;
 
     public ComplaintSummaryFragment() {
         // Required empty public constructor
@@ -79,6 +80,7 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         subCategory = (TextView) rootView.findViewById(R.id.csSubCategory);
         address = (TextView) rootView.findViewById(R.id.csAddress);
         description = (TextView) rootView.findViewById(R.id.csDescription);
+        descriptionLabel = (TextView) rootView.findViewById(R.id.csDescriptionLabel);
         complaintPhoto = (ImageView) rootView.findViewById(R.id.csComplaintPhoto);
         done = (Button) rootView.findViewById(R.id.csDone);
         another = (Button) rootView.findViewById(R.id.csAnother);
@@ -94,11 +96,20 @@ public class ComplaintSummaryFragment extends BaseFragment implements OnMapReady
         complaintPostResponseDto = (ComplaintPostResponseDto) getActivity().getIntent().getSerializableExtra("COMPLAINT");
 
         //Fill all complaint related details
-        description.setText(complaintPostResponseDto.getComplaintDto().getDescription());
+        if(complaintPostResponseDto.getComplaintDto().getDescription() != null && !complaintPostResponseDto.getComplaintDto().getDescription().equals("")) {
+            description.setText(complaintPostResponseDto.getComplaintDto().getDescription());
+        }
+        else {
+            descriptionLabel.setVisibility(View.GONE);
+            description.setVisibility(View.GONE);
+        }
         address.setText(complaintPostResponseDto.getComplaintDto().getLocationString());
 
         if(imageFile != null) {
             new BitmapWorkerTask(complaintPhoto, 200).execute(imageFile.getAbsolutePath());
+        }
+        else {
+            complaintPhoto.setVisibility(View.GONE);
         }
 
         rootCategory.setText(complaintPostResponseDto.getAmenity().getName());

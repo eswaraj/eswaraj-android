@@ -62,7 +62,7 @@ public class LeaderListFragment extends BaseFragment {
         pDialog.show();
         locationDto = (LocationDto) getActivity().getIntent().getSerializableExtra("LOCATION");
         if(locationDto == null) {
-            middlewareService.loadLeaders(getActivity(), userSession, true);
+            middlewareService.loadLeaders(getActivity(), userSession, false);
         }
         else {
             middlewareService.loadLeadersForLocation(getActivity(), locationDto);
@@ -90,6 +90,7 @@ public class LeaderListFragment extends BaseFragment {
                 eventBus.post(event);
             }
         });
+        createAndSetAdapter();
         return rootView;
     }
 
@@ -108,20 +109,24 @@ public class LeaderListFragment extends BaseFragment {
                 globalSearchResponseDto.setPoliticalBodyAdminDto(politicalBodyAdminDto);
                 globalSearchResponseDtoList.add(globalSearchResponseDto);
             }
-
-            if(globalSearchResponseDtoList.size() == 0) {
-                llEmpty.setVisibility(View.VISIBLE);
-                llList.setVisibility(View.GONE);
-            }
-            else {
-                globalSearchAdapter = new GlobalSearchAdapter(getActivity(), R.layout.item_global_search_result, globalSearchResponseDtoList);
-                llList.setAdapter(globalSearchAdapter);
-            }
+            createAndSetAdapter();
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch list of leaders. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
         pDialog.dismiss();
+    }
+
+    private void createAndSetAdapter() {
+        if(llEmpty != null && globalSearchResponseDtoList != null) {
+            if (globalSearchResponseDtoList.size() == 0) {
+                llEmpty.setVisibility(View.VISIBLE);
+                llList.setVisibility(View.GONE);
+            } else {
+                globalSearchAdapter = new GlobalSearchAdapter(getActivity(), R.layout.item_global_search_result, globalSearchResponseDtoList);
+                llList.setAdapter(globalSearchAdapter);
+            }
+        }
     }
 
 }

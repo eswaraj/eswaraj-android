@@ -232,6 +232,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         pDialogSave.dismiss();
         if(event.getSuccess()) {
             userSession.setUser(event.getUserDto());
+            middlewareService.updateLeaders(this, null);
             if (dialogMode) {
                 if (getParent() == null) {
                     setResult(Activity.RESULT_OK, null);

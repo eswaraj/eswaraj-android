@@ -184,6 +184,7 @@ public class GcmService extends BaseService {
         if(event.getSuccess()) {
             userSession.setUser(event.getUserDto());
             userSession.setToken(event.getToken());
+            cache.updateLeaders(this, null);
             GcmBroadcastReceiver.completeWakefulIntent(i);
             stopSelf();
         }

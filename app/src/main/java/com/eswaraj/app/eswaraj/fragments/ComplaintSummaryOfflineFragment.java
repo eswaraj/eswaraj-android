@@ -52,6 +52,7 @@ public class ComplaintSummaryOfflineFragment extends BaseFragment {
     private TextView description;
     private Button done;
     private Button another;
+    private TextView descriptionLabel;
 
 
     public ComplaintSummaryOfflineFragment() {
@@ -77,10 +78,20 @@ public class ComplaintSummaryOfflineFragment extends BaseFragment {
 
         //Fill all complaint related details
         description.setText(complaintSavedResponseDto.getDescription());
+        if(complaintSavedResponseDto.getDescription() != null && !complaintSavedResponseDto.getDescription().equals("")) {
+            description.setText(complaintSavedResponseDto.getDescription());
+        }
+        else {
+            descriptionLabel.setVisibility(View.GONE);
+            description.setVisibility(View.GONE);
+        }
         address.setText(complaintSavedResponseDto.getLocationString());
 
         if(imageFile != null) {
             new BitmapWorkerTask(complaintPhoto, 200).execute(imageFile.getAbsolutePath());
+        }
+        else {
+            complaintPhoto.setVisibility(View.GONE);
         }
 
         rootCategory.setText(complaintSavedResponseDto.getAmenity().getName());

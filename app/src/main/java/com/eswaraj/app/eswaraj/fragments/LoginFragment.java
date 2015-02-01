@@ -294,6 +294,7 @@ public class LoginFragment extends BaseFragment {
         userSession.setUser(event.getUserDto());
         userSession.setToken(event.getToken());
         userSession.loadUserProfilePhoto(getActivity());
+        middlewareService.updateLeaders(getActivity(), null);
 
         LoginStatusEvent loginStatusEvent = new LoginStatusEvent();
         loginStatusEvent.setSuccess(true);

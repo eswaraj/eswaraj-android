@@ -419,9 +419,14 @@ public class Cache extends BaseClass implements CacheInterface {
 
     @Override
     public void updateLeaders(Context context, String json) {
-        sharedPreferencesHelper.putString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.LEADERS, json);
-        sharedPreferencesHelper.putLong(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.LEADERS_DOWNLOAD_TIME_IN_MS, new Date().getTime());
-        sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.LEADERS_AVAILABLE, true);
+        if(json == null) {
+            sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.LEADERS_AVAILABLE, false);
+        }
+        else {
+            sharedPreferencesHelper.putString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.LEADERS, json);
+            sharedPreferencesHelper.putLong(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.LEADERS_DOWNLOAD_TIME_IN_MS, new Date().getTime());
+            sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.LEADERS_AVAILABLE, true);
+        }
     }
 
     @Override

@@ -66,7 +66,7 @@ public class AmenityBannerFragment extends BaseFragment implements View.OnClickL
         banner.setImageURI(Uri.parse(getActivity().getFilesDir() + "/eSwaraj_banner_" + String.valueOf(amenity.getId()) + ".png"));
         videoLink.setOnClickListener(this);
         amenityName.setText(amenity.getName());
-        issueCount.setText(Integer.toString(amenity.getChildCategories().size()) + "issues");
+        issueCount.setText(Integer.toString(amenity.getChildCategories().size()) + " issues");
         return rootView;
     }
 

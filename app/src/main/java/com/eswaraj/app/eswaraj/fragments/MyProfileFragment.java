@@ -253,11 +253,11 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
             mpVoterId.setText(userSession.getUser().getPerson().getVoterId());
             mpVoterId.setVisibility(View.VISIBLE);
             mpVoterIdInput.setVisibility(View.GONE);
-            pDialog.dismiss();
         }
         else {
             Toast.makeText(getActivity(), "Could not save changes to server. Please retry. Error = " + event.getError(), Toast.LENGTH_LONG).show();
         }
+        pDialog.dismiss();
     }
 
     @Override
