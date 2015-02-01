@@ -5,6 +5,7 @@
     android:orientation="vertical"
     tools:context="com.eswaraj.app.eswaraj.activities.ComplaintFilterActivity">
 
+
     <TextView android:text="Sort by Citizen Services"
         android:textSize="20sp"
         android:layout_width="match_parent"
@@ -20,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF" />
+
 
     <TextView android:text="Sort by Complaint Status"
         android:textSize="20sp"

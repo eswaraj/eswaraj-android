@@ -4,6 +4,7 @@ package com.eswaraj.app.eswaraj.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class FilterListAdapter extends ArrayAdapter<ComplaintFilter> {
 
         ComplaintFilter complaintFilter = filterList.get(position);
         holder.cfTitle.setText(complaintFilter.getDisplayText());
+        holder.cfTitle.setGravity(Gravity.CENTER);
         if(complaintFilter.getHighlight()) {
             holder.cfTitle.setBackgroundColor(context.getResources().getColor(R.color.navy_blue_background));
         }

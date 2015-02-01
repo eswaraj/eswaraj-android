@@ -86,7 +86,7 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
             else {
                 filter.setHighlight(false);
             }
-            statusFilterItems.add(filter);
+            categoryFilterItems.add(filter);
         }
 
         categoryAdapter = new FilterListAdapter(this, android.R.layout.simple_list_item_1, categoryFilterItems);
