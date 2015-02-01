@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#DBDBDB"
     tools:context="com.eswaraj.app.eswaraj.fragments.GooglePlacesListFragment">
 
     <ListView
@@ -9,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/transparent"
-        android:dividerHeight="10dp">
+        android:dividerHeight="10dp"
+        android:layout_margin="10dp">
     </ListView>
 
 </FrameLayout>
