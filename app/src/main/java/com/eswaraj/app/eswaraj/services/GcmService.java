@@ -136,13 +136,13 @@ public class GcmService extends BaseService {
             if(gcmMessageDto != null) {
                 if (event.getId().equals(gcmMessageDto.getViewedBy().getId())) {
                     notificationHelper.sendComplaintUpdateNotification(this, gcmMessageDto.getMessage(), event.getBitmap(), 8888, gcmMessageDto.getComplaintId());
-                    //notificationHelper.sendNotification(this, null, event.getBitmap(), gcmMessageDto, 8888);
+                    //notificationHelper.sendNotification(this, event.getBitmap(), gcmMessageDto, 8888);
                 }
             }
         }
         else {
             notificationHelper.sendComplaintUpdateNotification(this, gcmMessageDto.getMessage(), null, 8888, gcmMessageDto.getComplaintId());
-            //notificationHelper.sendNotification(this, null, null, gcmMessageDto, 8888);
+            //notificationHelper.sendNotification(this, null, gcmMessageDto, 8888);
         }
         GcmBroadcastReceiver.completeWakefulIntent(i);
         stopSelf();

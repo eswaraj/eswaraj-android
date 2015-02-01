@@ -1,6 +1,7 @@
 package com.eswaraj.app.eswaraj.helpers;
 
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -34,7 +35,7 @@ public class NotificationHelper {
         NotificationManager notifier = (NotificationManager) caller.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(caller)
-                        .setSmallIcon(android.R.drawable.ic_notification_overlay)
+                        .setSmallIcon(R.drawable.notif_icon)
                         .setContentTitle(title)
                         .setContentText(msg)
                         .setAutoCancel(true)
@@ -60,7 +61,7 @@ public class NotificationHelper {
         NotificationManager notifier = (NotificationManager) caller.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(caller)
-                        .setSmallIcon(android.R.drawable.ic_notification_overlay)
+                        .setSmallIcon(R.drawable.notif_icon)
                         .setContentIntent(intentBack);
 
         remoteViews.setTextViewText(R.id.nMessage, gcmMessageDto.getMessage());
@@ -70,7 +71,10 @@ public class NotificationHelper {
         mBuilder.setContent(remoteViews);
         mBuilder.setSound(alarmSound);
 
-        notifier.notify(id, mBuilder.build());
+        Notification notification = mBuilder.build();
+        notification.contentView = remoteViews;
+
+        notifier.notify(id, notification);
     }
 
     public void sendComplaintUpdateNotification(Context caller, String msg, Bitmap icon, int id, Long complaintId) {
@@ -91,7 +95,7 @@ public class NotificationHelper {
         NotificationManager notifier = (NotificationManager) caller.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(caller)
-                        .setSmallIcon(android.R.drawable.ic_notification_overlay)
+                        .setSmallIcon(R.drawable.notif_icon)
                         .setContentTitle("eSwaraj: Your voice is heard")
                         .setContentText(msg)
                         .setAutoCancel(true)

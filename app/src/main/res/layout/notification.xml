@@ -2,15 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="left">
 
     <com.makeramen.RoundedImageView
         android:id="@+id/nImage"
         android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/profile_image"
+        android:layout_height="match_parent"
         android:padding="15dp"
         android:scaleType="fitCenter"
         app:riv_corner_radius="30dip"
@@ -32,7 +31,7 @@
         android:id="@+id/nMessage"
         android:layout_below="@+id/nTitle"
         android:layout_toRightOf="@+id/nImage"
-        android:text="Your comaplaint viewed"
+        android:text="Your complaint viewed"
         android:textSize="15dp"
         android:paddingTop="5dp"
         android:layout_width="match_parent"

@@ -111,7 +111,7 @@
         <activity
             android:name=".activities.SingleComplaintActivity"
             android:label="@string/title_activity_single_complaint"
-            android:parentActivityName=".activities.UserComplaintsActivity"
+            android:parentActivityName=".activities.UserSnapshotActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
         </activity>
