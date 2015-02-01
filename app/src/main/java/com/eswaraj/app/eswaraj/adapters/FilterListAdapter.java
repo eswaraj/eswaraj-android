@@ -3,6 +3,7 @@ package com.eswaraj.app.eswaraj.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -55,6 +56,7 @@ public class FilterListAdapter extends ArrayAdapter<ComplaintFilter> {
         holder.cfTitle.setGravity(Gravity.CENTER);
         if(complaintFilter.getHighlight()) {
             holder.cfTitle.setBackgroundColor(context.getResources().getColor(R.color.navy_blue_background));
+            holder.cfTitle.setTextColor(Color.parseColor("#FFFFFF"));
         }
 
         return row;
