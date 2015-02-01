@@ -53,17 +53,24 @@ public class GlobalSearchAdapter extends ArrayAdapter<GlobalSearchResponseDto> {
         GlobalSearchResponseDto globalSearchResponseDto = globalSearchResponseDtoList.get(position);
 
         holder.sName.setText(globalSearchResponseDto.getName());
-        if(globalSearchResponseDto.getImage() != null && !globalSearchResponseDto.getImage().equals("")) {
-            Picasso.with(context).load(globalSearchResponseDto.getImage().replace("http", "https")).error(R.drawable.anon).placeholder(R.drawable.anon).into(holder.sImage);
-        }
-        else {
-            holder.sImage.setImageDrawable(context.getResources().getDrawable(R.drawable.anon));
-        }
+
         if(globalSearchResponseDto.getType().equals("Location")) {
             holder.sDetails.setText(globalSearchResponseDto.getSubType());
+            if(globalSearchResponseDto.getImage() != null && !globalSearchResponseDto.getImage().equals("")) {
+                Picasso.with(context).load(globalSearchResponseDto.getImage().replace("http", "https")).error(R.drawable.anon_grey).placeholder(R.drawable.anon_grey).into(holder.sImage);
+            }
+            else {
+                holder.sImage.setImageDrawable(context.getResources().getDrawable(R.drawable.anon_grey));
+            }
         }
         else if(globalSearchResponseDto.getType().equals("Leader")) {
             holder.sDetails.setText(globalSearchResponseDto.getSubType() + ", " + globalSearchResponseDto.getcName() + "\n" + globalSearchResponseDto.getPartyName());
+            if(globalSearchResponseDto.getImage() != null && !globalSearchResponseDto.getImage().equals("")) {
+                Picasso.with(context).load(globalSearchResponseDto.getImage().replace("http", "https")).error(R.drawable.anon_grey).placeholder(R.drawable.anon_grey).into(holder.sImage);
+            }
+            else {
+                holder.sImage.setImageDrawable(context.getResources().getDrawable(R.drawable.anon_grey));
+            }
         }
 
         return row;

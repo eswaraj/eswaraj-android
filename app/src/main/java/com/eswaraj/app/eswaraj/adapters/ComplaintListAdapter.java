@@ -92,10 +92,10 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         }
         if(complaintDto.getCreatedBy().get(0).getProfilePhoto() != null && !complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
             //holder.mcProfilePhoto.loadProfileImage(complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getCreatedBy().get(0).getId());
-            Picasso.with(context).load(complaintDto.getCreatedBy().get(0).getProfilePhoto().replace("http", "https")).error(R.drawable.anon).placeholder(R.drawable.anon).into(holder.mcProfilePhoto);
+            Picasso.with(context).load(complaintDto.getCreatedBy().get(0).getProfilePhoto().replace("http", "https")).error(R.drawable.anon_grey).placeholder(R.drawable.anon_grey).into(holder.mcProfilePhoto);
         }
         else {
-            holder.mcProfilePhoto.setImageDrawable(context.getResources().getDrawable(R.drawable.anon));
+            holder.mcProfilePhoto.setImageDrawable(context.getResources().getDrawable(R.drawable.anon_grey));
         }
         if(complaintDto.getImages() != null && complaintDto.getImages().get(0) != null && complaintDto.getImages().get(0).getOrgUrl() != null && !complaintDto.getImages().get(0).getOrgUrl().equals("")) {
             //holder.mcImage.loadComplaintImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());

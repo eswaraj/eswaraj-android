@@ -17,69 +17,71 @@
         android:layout_weight="0.3"
         /-->
 
-<RelativeLayout
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayout01"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:weightSum="1"
-    android:layout_gravity="bottom|center"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:gravity="center_vertical|center_horizontal"
-    android:layout_weight="1">
-    >
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:id="@+id/linearLayout">
-
-        <EditText
-            android:id="@+id/mlSearchText"
-            android:layout_width="fill_parent"
-            android:layout_height="45dp"
-            android:layout_weight="0.3" />
-
-        <Button
-            android:id="@+id/mlSearchButton"
-            android:text="Search"
-            android:gravity="center"
-            android:background="#92B06A"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:shadowRadius="1"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowColor="@android:color/black"
-            android:layout_width="fill_parent"
-            android:layout_height="45dp"
-            android:layout_weight="0.7"
-            android:layout_below="@+id/mlContainer"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/mlContainer"
+        android:id="@+id/RelativeLayout01"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="9"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/linearLayout"
-        android:background="#ffffff">
-    </FrameLayout>
+        android:weightSum="1"
+        android:layout_gravity="bottom|center"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_weight="1">
 
-</RelativeLayout>
 
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:weightSum="1"
-    android:orientation="horizontal">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:id="@+id/linearLayout">
+
+            <EditText
+                android:id="@+id/mlSearchText"
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:layout_weight="0.3" />
+
+            <Button
+                android:id="@+id/mlSearchButton"
+                android:text="Search"
+                android:gravity="center"
+                android:background="#92B06A"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:shadowRadius="1"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowColor="@android:color/black"
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:layout_weight="0.7"
+                android:layout_below="@+id/mlContainer"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/mlContainer"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="9"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/linearLayout"
+            android:background="#ffffff">
+        </FrameLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:id="@+id/mlButtons">
+
         <Button
             android:id="@+id/mlSaveLocation"
             android:text="Save Location"
@@ -95,6 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="#0099cc" />
+
         <Button
             android:id="@+id/mlSkip"
             android:text="Skip"
@@ -110,5 +113,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom" />
+
     </LinearLayout>
+
 </LinearLayout>

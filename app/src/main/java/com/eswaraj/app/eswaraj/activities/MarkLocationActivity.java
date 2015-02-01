@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.eswaraj.app.eswaraj.R;
@@ -66,6 +67,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     private Boolean mapDisplayed;
     private GooglePlace googlePlace;
     private Boolean dialogMode;
+    private LinearLayout mlButtons;
 
 
     @Override
@@ -95,6 +97,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
         mlSkip = (Button) findViewById(R.id.mlSkip);
         mlSearchText = (EditText) findViewById(R.id.mlSearchText);
         mlSearchButton = (Button) findViewById(R.id.mlSearchButton);
+        mlButtons = (LinearLayout) findViewById(R.id.mlButtons);
         markerUpdatedOnce = false;
         mapReady = false;
 
@@ -122,6 +125,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
                     getSupportFragmentManager().beginTransaction().remove(googleMapFragment).commit();
                     getSupportFragmentManager().beginTransaction().add(R.id.mlContainer, googlePlacesListFragment).commit();
                 }
+                mlButtons.setVisibility(View.GONE);
                 googlePlacesUtil.getPlacesList(mlSearchText.getText().toString());
                 hideKeyboard();
             }
@@ -136,6 +140,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
                     getSupportFragmentManager().beginTransaction().remove(googleMapFragment).commit();
                     getSupportFragmentManager().beginTransaction().add(R.id.mlContainer, googlePlacesListFragment).commit();
                 }
+                mlButtons.setVisibility(View.GONE);
             }
         });
         mlSkip.setOnClickListener(new View.OnClickListener() {
@@ -214,6 +219,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
             googleMapFragment.setContext(this);
             getSupportFragmentManager().beginTransaction().remove(googlePlacesListFragment).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.mlContainer, googleMapFragment).commit();
+            mlButtons.setVisibility(View.VISIBLE);
         }
         if(event.getSuccess()) {
             googlePlace = event.getGooglePlace();
