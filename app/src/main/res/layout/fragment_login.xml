@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#fff1bd48"
+    android:background="#0099cc"
     tools:context="com.eswaraj.app.eswaraj.fragments.LoginFragment"
     android:weightSum="1">
 
@@ -26,7 +26,9 @@
         android:layout_marginTop="0dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="10dp"
-        android:layout_weight="0.7" />
+        android:layout_weight="0.7"
+        android:textColor="#FFFFFF"
+        />
 
 
 

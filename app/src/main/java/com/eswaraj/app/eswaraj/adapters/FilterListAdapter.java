@@ -41,7 +41,7 @@ public class FilterListAdapter extends ArrayAdapter<ComplaintFilter> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new FilterDtoHolder();
-            holder.cfTitle = (TextView)row.findViewById(android.R.id.text1);
+            holder.cfTitle = (TextView)row.findViewById(R.id.cfTitle);
 
             row.setTag(holder);
         }
