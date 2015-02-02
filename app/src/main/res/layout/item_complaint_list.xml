@@ -85,7 +85,7 @@
                     android:textColor="#ADADAD"
                     android:text="3 hours ago"
                     android:drawableLeft="@drawable/my_complaints_time_icon"
-                    android:paddingLeft="85dp"
+                    android:paddingLeft="95dp"
                     android:drawablePadding="5dp"
                     android:textSize="12dp"
                     android:maxLines="1"
@@ -160,8 +160,7 @@
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:paddingRight="15dp"
-                android:paddingBottom="10dp"
-                android:layout_marginBottom="5dp" />
+                android:paddingBottom="10dp" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -198,7 +197,7 @@
                     android:textColor="#ADADAD"
                     android:drawableLeft="@drawable/my_complaints_comment"
                     android:drawablePadding="5dp"
-                    android:paddingLeft="20dp"
+                    android:paddingLeft="30dp"
                     android:maxLines="1"/>
 
                 <TextView
@@ -211,7 +210,7 @@
                     android:textColor="#ADADAD"
                     android:drawableLeft="@drawable/my_complaints_status"
                     android:drawablePadding="5dp"
-                    android:paddingLeft="25dp"
+                    android:paddingLeft="30dp"
                     android:textSize="9dp"
                     />
 
@@ -236,7 +235,7 @@
         android:layout_gravity="top"
         android:layout_marginTop="10dp"
         android:scaleType="fitCenter"
-        android:layout_marginLeft="40dp" />
+        android:layout_marginLeft="35dp" />
 
 
     <TextView
