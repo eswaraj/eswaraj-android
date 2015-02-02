@@ -27,6 +27,7 @@ public class ContentActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
+        setTitle("Content");
 
         contentFragment = (ContentFragment) getSupportFragmentManager().findFragmentById(R.id.contentFragment);
 

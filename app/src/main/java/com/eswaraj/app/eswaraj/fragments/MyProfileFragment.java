@@ -114,7 +114,12 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
 
         mpName.setText(userSession.getUser().getPerson().getName());
         mpNameInput.setText(userSession.getUser().getPerson().getName());
-        mpVoterId.setText(userSession.getUser().getPerson().getVoterId());
+        if(userSession.getUser().getPerson().getVoterId() != null && !userSession.getUser().getPerson().getVoterId().equals("")) {
+            mpVoterId.setText(userSession.getUser().getPerson().getVoterId());
+        }
+        else {
+            mpVoterId.setTextColor(getResources().getColor(R.color.gray_btn_bg_color));
+        }
         mpVoterIdInput.setText(userSession.getUser().getPerson().getVoterId());
         if(userSession.getProfilePhoto() != null && !userSession.getProfilePhoto().equals("")) {
             Picasso.with(getActivity()).load(userSession.getProfilePhoto().replace("http", "https")).error(R.drawable.anon).placeholder(R.drawable.anon).into(mpPhoto);

@@ -54,12 +54,12 @@ public class BaseActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((EswarajApplication)getApplication()).inject(this);
+        setTitle("eSwaraj");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        setTitle("");
     }
 
     @Override

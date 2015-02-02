@@ -38,6 +38,7 @@ public class SearchableActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchable);
+        setTitle("Search results");
         eventBus.register(this);
         resultList = (ListView) findViewById(R.id.sResultList);
 

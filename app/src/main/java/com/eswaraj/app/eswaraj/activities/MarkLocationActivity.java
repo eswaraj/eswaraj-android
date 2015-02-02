@@ -74,6 +74,7 @@ public class MarkLocationActivity extends BaseActivity implements OnMapReadyCall
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mark_location);
+        setTitle("Mark location of interest");
 
         dialogMode = getIntent().getBooleanExtra("MODE", false);
 

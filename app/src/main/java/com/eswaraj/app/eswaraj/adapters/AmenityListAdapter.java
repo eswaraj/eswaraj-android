@@ -3,6 +3,7 @@ package com.eswaraj.app.eswaraj.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eswaraj.app.eswaraj.R;
@@ -61,6 +63,7 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
             holder.saIcon = (ImageView)row.findViewById(R.id.saIcon);
             holder.saTitle = (TextView)row.findViewById(R.id.saTitle);
             holder.saStats = (TextView)row.findViewById(R.id.saStats);
+            holder.saWrapper = (RelativeLayout)row.findViewById(R.id.saWrapper);
 
             //if(colorMap != null)
             //    holder.saIcon.setBorderColor(colorMap.get(categoryList.get(position).getId()));
@@ -78,6 +81,13 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
         CategoryWithChildCategoryDto categoryDto = categoryList.get(position);
         holder.saTitle.setText(categoryDto.getName());
         holder.saIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(categoryDto.getId()) + ".png"));
+        if(complaintCounterList == null) {
+            if (categoryDto.getColor() != null) {
+                holder.saWrapper.setBackgroundColor(Color.parseColor("#" + categoryDto.getColor()));
+            } else {
+                holder.saWrapper.setBackgroundColor(colorMap.get(categoryDto.getId()));
+            }
+        }
         if(complaintCounterList != null) {
             for(ComplaintCounter complaintCounter : complaintCounterList) {
                 if(complaintCounter.getId().equals(categoryDto.getId())) {
@@ -100,5 +110,6 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
         ImageView saIcon;
         TextView saTitle;
         TextView saStats;
+        RelativeLayout saWrapper;
     }
 }

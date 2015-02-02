@@ -47,6 +47,7 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complaint_filter);
+        setTitle("Select filter");
 
         //selected = (ComplaintFilter) getIntent().getSerializableExtra("FILTER");
         //currentSelection = selected;

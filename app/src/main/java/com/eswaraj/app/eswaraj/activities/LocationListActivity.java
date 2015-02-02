@@ -29,6 +29,8 @@ public class LocationListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_list);
+        setTitle("My constituencies");
+
         eventBus.register(this);
         locationListFragment = new LocationListFragment();
 

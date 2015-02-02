@@ -30,6 +30,7 @@ public class LeaderListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leader_list);
+        setTitle("My leaders");
 
         eventBus.register(this);
 
