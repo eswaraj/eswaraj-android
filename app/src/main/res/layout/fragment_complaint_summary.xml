@@ -214,7 +214,8 @@
                 android:layout_height="130dp"
                 android:src="@drawable/no_image_placeholder"
                 android:padding="8dp"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="8dp"
+                android:scaleType="fitXY"/>
 
         </LinearLayout>
     </LinearLayout>

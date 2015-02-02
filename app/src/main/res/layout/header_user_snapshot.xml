@@ -81,8 +81,8 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:background="#AFA577" />
+            android:textColor="#808080"
+            android:background="#FFFFFF" />
 
         <Button
             android:id="@+id/usOpen"
@@ -90,8 +90,10 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:background="#E19D29" />
+            android:textColor="#808080"
+            android:background="#FFFFFF"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp" />
 
         <Button
             android:id="@+id/usClose"
@@ -99,15 +101,16 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:background="#29ABA4" />
+            android:textColor="#808080"
+            android:background="#FFFFFF" />
 
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
 
         <Button
             android:id="@+id/usProfile"
@@ -115,8 +118,10 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:background="#0099cc" />
+            android:textColor="#707070"
+            android:background="#FFFFFF"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
 
         <Button
             android:id="@+id/usSmart"
@@ -124,8 +129,10 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:background="#92B05A" />
+            android:textColor="#707070"
+            android:background="#FFFFFF"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp" />
 
     </LinearLayout>
 

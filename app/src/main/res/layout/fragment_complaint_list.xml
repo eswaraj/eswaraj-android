@@ -8,8 +8,6 @@
         android:id="@+id/mcList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#DBDBDB"
-        android:dividerHeight="1dp"
         />
 
 </LinearLayout>
