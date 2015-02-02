@@ -257,6 +257,7 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
             mpVoterId.setText(userSession.getUser().getPerson().getVoterId());
             mpVoterId.setVisibility(View.VISIBLE);
             mpVoterIdInput.setVisibility(View.GONE);
+            Toast.makeText(getActivity(), "Saved profile", Toast.LENGTH_SHORT).show();
         }
         else {
             Toast.makeText(getActivity(), "Could not save changes to server. Please retry. Error = " + event.getError(), Toast.LENGTH_LONG).show();

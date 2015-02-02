@@ -211,8 +211,7 @@
             android:name=".activities.ComplaintFilterActivity"
             android:label="@string/title_activity_complaint_filter"
             android:parentActivityName=".activities.UserComplaintsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.Dialog" >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.UserComplaintsActivity" />

@@ -5,51 +5,58 @@
     android:orientation="vertical"
     tools:context="com.eswaraj.app.eswaraj.activities.ComplaintFilterActivity">
 
-        <TextView android:text="Sort by Citizen Services"
-            android:textSize="20sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#0099cc"
-            android:padding="15dp"
-            android:gravity="center_vertical|center_horizontal"
-            android:background="@drawable/full_border"/>
+    <TextView android:text="Sort by Citizen Services"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#0099cc"
+        android:padding="15dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:background="@drawable/full_border"/>
 
-        <GridView
-            android:id="@+id/cfCategoryList"
-            android:numColumns="2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            />
+    <GridView
+        android:id="@+id/cfCategoryList"
+        android:numColumns="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"/>
 
 
-        <TextView android:text="Sort by Complaint Status"
-            android:textSize="20sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:textColor="#0099cc"
-            android:gravity="center_vertical|center_horizontal"
-            android:background="@drawable/full_border"/>
+    <TextView android:text="Sort by Complaint Status"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textColor="#0099cc"
+        android:gravity="center_vertical|center_horizontal"
+        android:background="@drawable/full_border"/>
 
-        <GridView
-            android:id="@+id/cfStatusList"
-            android:numColumns="2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            />
+    <GridView
+        android:id="@+id/cfStatusList"
+        android:numColumns="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"/>
 
-        <TextView
-            android:id="@+id/cfNone"
-            android:text="Remove All"
-            android:textSize="18sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:textColor="#0099cc"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@drawable/full_border" />
+    <TextView
+        android:id="@+id/cfNone"
+        android:text="Remove All"
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textColor="#0099cc"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@drawable/full_border" />
+
+    <Button
+        android:id="@+id/cfApply"
+        android:text="Apply Filter"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="#0099cc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

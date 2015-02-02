@@ -84,7 +84,7 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         holder.mcDate.setText(DateUtils.getRelativeTimeSpanString(complaintDto.getComplaintTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
         holder.mcStatus.setText(complaintDto.getStatus());
         holder.mcName.setText(complaintDto.getCreatedBy().get(0).getName());
-        if(complaintDto.getDescription() != null) {
+        if(complaintDto.getDescription() != null && !complaintDto.getDescription().equals("")) {
             holder.mcDescription.setText(complaintDto.getDescription());
         }
         else {

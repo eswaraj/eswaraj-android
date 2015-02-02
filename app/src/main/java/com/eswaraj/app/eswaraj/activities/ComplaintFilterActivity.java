@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
     private GridView categoryList;
     private GridView statusList;
     private TextView none;
+    private Button apply;
 
     private ArrayList<ComplaintFilter> categoryFilterItems = new ArrayList<ComplaintFilter>();
     private ArrayList<ComplaintFilter> statusFilterItems = new ArrayList<ComplaintFilter>();
@@ -39,40 +41,47 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
     private FilterListAdapter statusAdapter;
 
     private ComplaintFilter selected;
+    private ArrayList<ComplaintFilter> currentSelection = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complaint_filter);
 
-        selected = (ComplaintFilter) getIntent().getSerializableExtra("FILTER");
+        //selected = (ComplaintFilter) getIntent().getSerializableExtra("FILTER");
+        //currentSelection = selected;
 
         categoryList = (GridView) findViewById(R.id.cfCategoryList);
         statusList = (GridView) findViewById(R.id.cfStatusList);
         none = (TextView) findViewById(R.id.cfNone);
+        apply = (Button) findViewById(R.id.cfApply);
 
         ComplaintFilter filter = new ComplaintFilter();
         filter.setComplaintFilterType(ComplaintFilter.ComplaintFilterType.STATUS);
         filter.setStatus("Pending");
         filter.setDisplayText("Open");
+        /*
         if(selected != null && selected.getComplaintFilterType() == ComplaintFilter.ComplaintFilterType.STATUS && selected.getStatus().equals("Pending")) {
             filter.setHighlight(true);
         }
         else {
             filter.setHighlight(false);
         }
+        */
         statusFilterItems.add(filter);
 
         filter = new ComplaintFilter();
         filter.setComplaintFilterType(ComplaintFilter.ComplaintFilterType.STATUS);
         filter.setStatus("Done");
         filter.setDisplayText("Closed");
+        /*
         if(selected != null && selected.getComplaintFilterType() == ComplaintFilter.ComplaintFilterType.STATUS && selected.getStatus().equals("Done")) {
             filter.setHighlight(true);
         }
         else {
             filter.setHighlight(false);
         }
+        */
         statusFilterItems.add(filter);
 
         for(CategoryWithChildCategoryDto categoryDto : globalSession.getCategoryDtoList()) {
@@ -80,12 +89,14 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
             filter.setComplaintFilterType(ComplaintFilter.ComplaintFilterType.CATEGORY);
             filter.setCategoryId(categoryDto.getId());
             filter.setDisplayText(categoryDto.getName());
+            /*
             if(selected != null && selected.getComplaintFilterType() == ComplaintFilter.ComplaintFilterType.CATEGORY && selected.getCategoryId().equals(categoryDto.getId())) {
                 filter.setHighlight(true);
             }
             else {
                 filter.setHighlight(false);
             }
+            */
             categoryFilterItems.add(filter);
         }
 
@@ -98,28 +109,28 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
         categoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent data = new Intent();
-                data.putExtra("FILTER", categoryAdapter.getItem(position));
-                if (getParent() == null) {
-                    setResult(Activity.RESULT_OK, data);
-                } else {
-                    getParent().setResult(Activity.RESULT_OK, data);
+                if(!currentSelection.contains((ComplaintFilter) categoryAdapter.getItem(position))) {
+                    currentSelection.add((ComplaintFilter) categoryAdapter.getItem(position));
                 }
-                finish();
+                else {
+                    currentSelection.remove((ComplaintFilter) categoryAdapter.getItem(position));
+                }
+                categoryAdapter.addSelection(position);
+                categoryAdapter.notifyDataSetChanged();
             }
         });
 
         statusList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent data = new Intent();
-                data.putExtra("FILTER", statusAdapter.getItem(position));
-                if (getParent() == null) {
-                    setResult(Activity.RESULT_OK, data);
-                } else {
-                    getParent().setResult(Activity.RESULT_OK, data);
+                if(!currentSelection.contains((ComplaintFilter) statusAdapter.getItem(position))) {
+                    currentSelection.add((ComplaintFilter) statusAdapter.getItem(position));
                 }
-                finish();
+                else {
+                    currentSelection.remove((ComplaintFilter) statusAdapter.getItem(position));
+                }
+                statusAdapter.addSelection(position);
+                statusAdapter.notifyDataSetChanged();
             }
         });
 
@@ -130,6 +141,20 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
                 complaintFilter.setComplaintFilterType(ComplaintFilter.ComplaintFilterType.NONE);
                 Intent data = new Intent();
                 data.putExtra("FILTER", complaintFilter);
+                if (getParent() == null) {
+                    setResult(Activity.RESULT_OK, data);
+                } else {
+                    getParent().setResult(Activity.RESULT_OK, data);
+                }
+                finish();
+            }
+        });
+
+        apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent data = new Intent();
+                data.putExtra("FILTER", currentSelection);
                 if (getParent() == null) {
                     setResult(Activity.RESULT_OK, data);
                 } else {

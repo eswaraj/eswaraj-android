@@ -142,7 +142,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     }
 
     private void showData() {
-        if(complaintDto.getDescription() == null) {
+        if(complaintDto.getDescription() == null || complaintDto.getDescription().equals("")) {
             scDescription.setVisibility(View.GONE);
         }
         else {

@@ -24,20 +24,25 @@ public class PieChartView extends GraphicalView {
 		super(context, arg1);
 	}
 
-	public static GraphicalView getNewInstance(Context context, List<ComplaintCounter> complaintCounters, List<CategoryWithChildCategoryDto> categoryDtoList) {
-		GraphicalView pieChartView = ChartFactory.getPieChartView(context, getDataSet(context, complaintCounters, categoryDtoList), getRenderer(context, complaintCounters, categoryDtoList));
+	public static GraphicalView getNewInstance(Context context, List<ComplaintCounter> complaintCounters, List<CategoryWithChildCategoryDto> categoryDtoList, Map<Long, Integer> colorMap) {
+		GraphicalView pieChartView = ChartFactory.getPieChartView(context, getDataSet(context, complaintCounters, categoryDtoList), getRenderer(context, complaintCounters, categoryDtoList, colorMap));
 		pieChartView.zoomIn();
 		return pieChartView;
 	}
 
-	private static DefaultRenderer getRenderer(Context context, List<ComplaintCounter> complaintCounters, List<CategoryWithChildCategoryDto> categoryDtoList) {
+	private static DefaultRenderer getRenderer(Context context, List<ComplaintCounter> complaintCounters, List<CategoryWithChildCategoryDto> categoryDtoList, Map<Long, Integer> colorMap) {
 
 		DefaultRenderer defaultRenderer = new DefaultRenderer();
         for(int i = 0; i < complaintCounters.size(); i++) {
             int color = 0;
             for(CategoryWithChildCategoryDto categoryDto : categoryDtoList) {
                 if(categoryDto.getId().equals(complaintCounters.get(i).getId())) {
-                    color = Color.parseColor("#" + categoryDto.getColor());
+                    if(categoryDto.getColor() != null) {
+                        color = Color.parseColor("#" + categoryDto.getColor());
+                    }
+                    else {
+                        color = colorMap.get(categoryDto.getId());
+                    }
                 }
             }
 			SimpleSeriesRenderer simpleRenderer = new SimpleSeriesRenderer();

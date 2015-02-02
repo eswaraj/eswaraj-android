@@ -279,7 +279,7 @@
                     }
                 }
             }
-            GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters, globalSession.getCategoryDtoList());
+            GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters, globalSession.getCategoryDtoList(), globalSession.getColorMap());
             mcChartContainer.addView(chartView);
             AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), complaintCounters, globalSession.getColorMap());
             mcAmenityList.setAdapter(amenityListAdapter);
