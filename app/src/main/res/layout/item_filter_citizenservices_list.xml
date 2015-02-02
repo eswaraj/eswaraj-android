@@ -4,8 +4,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:background="#FFFFFF">
+    android:gravity="center_vertical">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -19,9 +18,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="0.1"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:layout_weight="0.1">
             <TextView android:id="@+id/cfTitle"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -33,7 +30,8 @@
                 android:maxLines="2"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp"
-                android:autoText="false" />
+                android:autoText="false"
+                android:background="@drawable/left_border"/>
 
         </LinearLayout>
 

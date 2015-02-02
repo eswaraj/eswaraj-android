@@ -85,7 +85,7 @@
                     android:textColor="#ADADAD"
                     android:text="3 hours ago"
                     android:drawableLeft="@drawable/my_complaints_time_icon"
-                    android:paddingLeft="95dp"
+                    android:paddingLeft="85dp"
                     android:drawablePadding="5dp"
                     android:textSize="12dp"
                     android:maxLines="1"
@@ -137,7 +137,8 @@
                     android:textColor="#707070"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
+                    android:paddingTop="10dp"
+                    android:layout_marginBottom="5dp" />
 
                 <TextView
                     android:id="@+id/mcDescription"
@@ -170,7 +171,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="#FFFFFF"
-                android:paddingBottom="10dp">
+                android:paddingBottom="10dp"
+                android:layout_marginTop="5dp">
 
                 <TextView
                     android:id="@+id/mcAddress"

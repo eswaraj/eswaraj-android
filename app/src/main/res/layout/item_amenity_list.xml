@@ -22,7 +22,7 @@
         android:id="@+id/saWrapper"
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="90dp"
+        android:layout_height="85dp"
         android:layout_gravity="fill"
         android:layout_rowSpan="2">
 
@@ -32,7 +32,7 @@
             android:layout_height="fill_parent"
             android:gravity="center"
             android:scaleType="fitCenter"
-            android:padding="20dp" />
+            android:padding="15dp" />
 
         <TextView android:id="@+id/saTitle"
             android:layout_width="fill_parent"
@@ -42,7 +42,8 @@
             android:textSize="14sp"
             android:textColor="#FFFFFF"
             android:maxLines="1"
-            android:layout_marginTop="65dp" />
+            android:layout_marginTop="60dp"
+            android:text="Water" />
 
     </RelativeLayout>
 
