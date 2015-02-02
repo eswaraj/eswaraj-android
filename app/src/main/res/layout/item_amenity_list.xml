@@ -1,40 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="90dp"
-    android:layout_gravity="fill"
-    android:layout_rowSpan="2"
-    >
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
 
     <TextView android:id="@+id/saStats"
-        android:layout_width="100dp"
+        android:layout_width="fill_parent"
         android:layout_height="20dp"
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="12sp"
         android:textColor="#929292"
         android:visibility="gone"
-        android:maxLines="1"/>
+        android:text="20%"
+        android:maxLines="1"
+        android:layout_centerHorizontal="true" />
+
+    <RelativeLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="90dp"
+    android:layout_gravity="fill"
+    android:layout_rowSpan="2"
+    android:background="#29aba4">
 
     <ImageView
         android:id="@+id/saIcon"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
-        android:src="@drawable/water"
-        android:scaleType="fitXY" />
+        android:src="@drawable/my_complaints_water"
+        android:scaleType="fitCenter"
+        android:padding="20dp" />
 
     <TextView android:id="@+id/saTitle"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:textStyle="bold"
-        android:textSize="12sp"
-        android:textColor="#929292"
+        android:textSize="14sp"
+        android:textColor="#FFFFFF"
         android:maxLines="1"
-        android:visibility="gone"
-        />
+        android:text="Water"
+        android:layout_marginTop="65dp" />
 
+</RelativeLayout>
 </LinearLayout>
