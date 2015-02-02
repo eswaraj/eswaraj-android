@@ -24,7 +24,7 @@ public class FilterListAdapter extends ArrayAdapter<ComplaintFilter> {
     private Context context;
     private int layoutResourceId;
     private List<ComplaintFilter> filterList;
-    private ArrayList<Integer> currentSelectionPositions = new ArrayList<>();
+    private int currentSelection = 9999;
 
 
     public FilterListAdapter(Context context, int layoutResourceId, List<ComplaintFilter> filterList) {
@@ -57,11 +57,11 @@ public class FilterListAdapter extends ArrayAdapter<ComplaintFilter> {
         ComplaintFilter complaintFilter = filterList.get(position);
         holder.cfTitle.setText(complaintFilter.getDisplayText());
         holder.cfTitle.setGravity(Gravity.CENTER);
-        if(complaintFilter.getHighlight()) {
+        if(complaintFilter.getHighlight() != null && complaintFilter.getHighlight()) {
             holder.cfTitle.setBackgroundColor(context.getResources().getColor(R.color.navy_blue_background));
             holder.cfTitle.setTextColor(Color.parseColor("#FFFFFF"));
         }
-        if(currentSelectionPositions.contains(position)) {
+        if(currentSelection == position) {
             holder.cfTitle.setBackgroundColor(context.getResources().getColor(R.color.red));
             holder.cfTitle.setTextColor(Color.parseColor("#FFFFFF"));
         }
@@ -73,13 +73,8 @@ public class FilterListAdapter extends ArrayAdapter<ComplaintFilter> {
         return row;
     }
 
-    public void addSelection(int position) {
-        if(!currentSelectionPositions.contains(position)) {
-            currentSelectionPositions.add((Integer) position);
-        }
-        else {
-            currentSelectionPositions.remove((Integer) position);
-        }
+    public void setSelection(int position) {
+        currentSelection = position;
     }
 
     static class FilterDtoHolder

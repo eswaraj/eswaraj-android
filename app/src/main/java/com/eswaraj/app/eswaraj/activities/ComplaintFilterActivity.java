@@ -41,7 +41,7 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
     private FilterListAdapter statusAdapter;
 
     private ComplaintFilter selected;
-    private ArrayList<ComplaintFilter> currentSelection = new ArrayList<>();
+    private ComplaintFilter currentSelection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,13 +109,8 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
         categoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(!currentSelection.contains((ComplaintFilter) categoryAdapter.getItem(position))) {
-                    currentSelection.add((ComplaintFilter) categoryAdapter.getItem(position));
-                }
-                else {
-                    currentSelection.remove((ComplaintFilter) categoryAdapter.getItem(position));
-                }
-                categoryAdapter.addSelection(position);
+                currentSelection = (ComplaintFilter) categoryAdapter.getItem(position);
+                categoryAdapter.setSelection(position);
                 categoryAdapter.notifyDataSetChanged();
             }
         });
@@ -123,13 +118,8 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
         statusList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(!currentSelection.contains((ComplaintFilter) statusAdapter.getItem(position))) {
-                    currentSelection.add((ComplaintFilter) statusAdapter.getItem(position));
-                }
-                else {
-                    currentSelection.remove((ComplaintFilter) statusAdapter.getItem(position));
-                }
-                statusAdapter.addSelection(position);
+                currentSelection = (ComplaintFilter) statusAdapter.getItem(position);
+                statusAdapter.setSelection(position);
                 statusAdapter.notifyDataSetChanged();
             }
         });

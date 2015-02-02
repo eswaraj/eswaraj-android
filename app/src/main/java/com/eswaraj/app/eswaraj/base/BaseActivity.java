@@ -48,7 +48,7 @@ public class BaseActivity extends ActionBarActivity {
     private final int SHOW_FILTER_REQUEST = 9999;
     protected Boolean dontUseAnimation = false;
     protected Boolean showFilter = false;
-    protected ArrayList<ComplaintFilter> complaintFilter;
+    protected ComplaintFilter complaintFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +157,7 @@ public class BaseActivity extends ActionBarActivity {
                 return true;
             case R.id.menu_filter:
                 i = new Intent(getBaseContext(), ComplaintFilterActivity.class);
-                //i.putExtra("FILTER", complaintFilter);
+                i.putExtra("FILTER", complaintFilter);
                 startActivityForResult(i, SHOW_FILTER_REQUEST);
                 return true;
         }
