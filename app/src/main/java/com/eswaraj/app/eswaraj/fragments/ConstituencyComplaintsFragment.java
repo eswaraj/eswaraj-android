@@ -95,6 +95,7 @@ public class ConstituencyComplaintsFragment extends BaseFragment {
         pDialog.show();
 
         if(locationDtoAvailable) {
+            getActivity().setTitle(locationDto.getName());
             middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, requestCount);
             middlewareService.loadLocationComplaintCounters(getActivity(), locationDto);
         }
@@ -205,6 +206,7 @@ public class ConstituencyComplaintsFragment extends BaseFragment {
             locationDto = event.getLocationDto();
             middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, requestCount);
             middlewareService.loadLocationComplaintCounters(getActivity(), locationDto);
+            getActivity().setTitle(locationDto.getName());
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch constituency details. Error = " + event.getError(), Toast.LENGTH_LONG).show();

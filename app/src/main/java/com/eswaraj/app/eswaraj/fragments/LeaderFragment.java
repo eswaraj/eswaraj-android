@@ -76,6 +76,7 @@ public class LeaderFragment extends BaseFragment {
         politicalBodyAdminDto = (PoliticalBodyAdminDto) getActivity().getIntent().getSerializableExtra("LEADER");
 
         if(politicalBodyAdminDto == null) {
+            getActivity().setTitle(politicalBodyAdminDto.getName());
             middlewareService.loadLeaderById(getActivity(), getActivity().getIntent().getLongExtra("ID", 0));
         }
         else {
@@ -115,6 +116,7 @@ public class LeaderFragment extends BaseFragment {
     public void onEventMainThread(GetLeaderEvent event) {
         if(event.getSuccess()) {
             politicalBodyAdminDto = event.getPoliticalBodyAdminDto();
+            getActivity().setTitle(politicalBodyAdminDto.getName());
             setFields();
         }
         else {

@@ -31,6 +31,7 @@ public class MyProfileActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
+        setTitle("Profile");
 
         myProfileFragment = (MyProfileFragment) getSupportFragmentManager().findFragmentById(R.id.mpFragment);
     }

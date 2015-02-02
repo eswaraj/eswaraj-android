@@ -88,6 +88,7 @@ public class ConstituencySnapshotFragment extends BaseFragment {
         pDialog.show();
 
         if(locationDtoAvailable) {
+            getActivity().setTitle(locationDto.getName());
             middlewareService.loadLocationComplaints(getActivity(), locationDto, 0, requestCount);
             middlewareService.loadLocationComplaintCounters(getActivity(), locationDto);
         }
@@ -183,6 +184,7 @@ public class ConstituencySnapshotFragment extends BaseFragment {
             else {
                 header.setImageDrawable(getResources().getDrawable(R.drawable.constituency_default_header));
             }
+            getActivity().setTitle(locationDto.getName());
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch constituency details. Error = " + event.getError(), Toast.LENGTH_LONG).show();
