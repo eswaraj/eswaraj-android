@@ -19,28 +19,29 @@
 
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="1"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="40dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginLeft="65dp">
 
             <ImageView
                 android:id="@+id/usPhoto"
                 android:layout_width="fill_parent"
-                android:layout_height="80dp"
+                android:layout_height="50dp"
                 android:src="@drawable/ravi"
-                android:layout_weight="0.4"
-                android:layout_gravity="center|right"
-                android:cropToPadding="true"
-                android:layout_marginLeft="150dp" />
+                android:layout_gravity="center"
+                android:cropToPadding="true" />
 
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_weight="0.6"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:weightSum="1">
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_gravity="center">
 
                 <TextView
                     android:id="@+id/usName"
@@ -49,9 +50,8 @@
                     android:layout_height="fill_parent"
                     android:text="Ravi Sharma"
                     android:textColor="#FFFFFF"
-                    android:layout_gravity="bottom"
-                    android:gravity="bottom"
-                    android:paddingLeft="5dp" />
+                    android:paddingLeft="5dp"
+                    android:gravity="center_vertical|center_horizontal" />
 
                 <TextView
                     android:id="@+id/usDetails"
@@ -61,8 +61,9 @@
                     android:text="PM, India"
                     android:textColor="#FFFFFF"
                     android:layout_gravity="top"
-                    android:gravity="top"
-                    android:paddingLeft="5dp" />
+                    android:gravity="top|center_horizontal"
+                    android:paddingLeft="5dp"
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
@@ -92,8 +93,8 @@
             android:layout_height="wrap_content"
             android:textColor="#808080"
             android:background="#FFFFFF"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp" />
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp" />
 
         <Button
             android:id="@+id/usClose"
@@ -120,8 +121,7 @@
             android:layout_height="wrap_content"
             android:textColor="#707070"
             android:background="#FFFFFF"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="5dp" />
 
         <Button
             android:id="@+id/usSmart"
@@ -131,8 +131,7 @@
             android:layout_height="wrap_content"
             android:textColor="#707070"
             android:background="#FFFFFF"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="5dp" />
 
     </LinearLayout>
 
