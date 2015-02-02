@@ -46,6 +46,7 @@ public class ComplaintListFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_complaint_list, container, false);
         mcList = (ListView) rootView.findViewById(R.id.mcList);
+        mcList.setDividerHeight(0);
 
         if(header != null) {
             mcList.addHeaderView(header);

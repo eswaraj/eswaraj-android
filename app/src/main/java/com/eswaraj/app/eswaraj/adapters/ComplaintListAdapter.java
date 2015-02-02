@@ -54,7 +54,7 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
             holder.mcCategory = (TextView)row.findViewById(R.id.mcCategory);
             holder.mcDate = (TextView)row.findViewById(R.id.mcDate);
             holder.mcStatus = (TextView)row.findViewById(R.id.mcStatus);
-            holder.mcIcon = (CustomNetworkImageView)row.findViewById(R.id.mcIcon);
+            //holder.mcIcon = (CustomNetworkImageView)row.findViewById(R.id.mcIcon);
             holder.mcImage = (CustomNetworkImageView)row.findViewById(R.id.mcImage);
             holder.mcProfilePhoto = (CustomNetworkImageView)row.findViewById(R.id.mcProfilePhoto);
             holder.mcName = (TextView) row.findViewById(R.id.mcSubmitterName);
@@ -106,7 +106,7 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
             holder.mcImage.setVisibility(View.GONE);
         }
         if(getRootCategoryId(complaintDto) != null) {
-            holder.mcIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(getRootCategoryId(complaintDto)) + ".png"));
+            //holder.mcIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(getRootCategoryId(complaintDto)) + ".png"));
         }
         if(complaintDto.getLocationAddress() != null) {
             holder.mcAddress.setText(complaintDto.getLocationAddress());

@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:weightSum="1"
     android:background="#FFFFFF"
-    android:layout_margin="10dp"
-    >
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="1"
-        android:background="#FFFFFF"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp">
+        android:background="#FFFFFF">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:weightSum="1"
-            android:layout_weight="0.8">
+            android:layout_weight="0.85">
 
             <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
                 android:id="@+id/mcProfilePhoto"
@@ -36,17 +39,6 @@
                 android:paddingRight="5dp"
                 android:layout_weight="0.5" />
 
-            <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
-                android:id="@+id/mcIcon"
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:src="@drawable/water"
-                android:layout_weight="0.5"
-                android:paddingBottom="10dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:layout_gravity="top" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -54,8 +46,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="left"
-            android:layout_weight="0.2"
-            android:layout_margin="5dp">
+            android:layout_weight="0.15"
+            android:layout_marginLeft="-5dp">
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -71,29 +63,33 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:weightSum="1"
-                    android:layout_weight="0.5">
+                    android:layout_weight="0.6">
 
                     <TextView
                         android:id="@+id/mcSubmitterName"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:text="Aam Aadmi"
-                        android:gravity="left|bottom"
+                        android:gravity="left"
                         android:textStyle="bold"
-                        android:textColor="#0099cc" />
+                        android:textColor="#404040"
+                        android:maxLines="1"/>
 
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/mcAmenityName"
-                    android:layout_width="fill_parent"
+                    android:id="@+id/mcDate"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="Water"
-                    android:textStyle="bold"
-                    android:textColor="#0099cc"
-                    android:gravity="right"
-                    android:layout_marginRight="10dp" />
+                    android:layout_weight="0.4"
+                    android:textColor="#ADADAD"
+                    android:text="3 hours ago"
+                    android:drawableLeft="@drawable/my_complaints_time_icon"
+                    android:paddingLeft="85dp"
+                    android:drawablePadding="5dp"
+                    android:textSize="12dp"
+                    android:maxLines="1"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -112,23 +108,23 @@
                     android:paddingRight="10dp">
 
                     <TextView
+                        android:id="@+id/mcIDprefix"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.97"
+                        android:text="#"
+                        android:textStyle="bold"
+                        android:textColor="#ADADAD"
+                        />
+
+                    <TextView
                         android:id="@+id/mcID"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
+                        android:layout_weight="0.03"
                         android:text="84801"
                         android:textStyle="bold"
                         android:textColor="#ADADAD" />
-
-                    <TextView
-                        android:id="@+id/mcDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:textColor="#ADADAD"
-                        android:text="3 hours ago"
-                        android:gravity="right"
-                        android:layout_marginRight="10dp" />
 
                 </LinearLayout>
 
@@ -138,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:text="Leaking Water Pipes"
                     android:textStyle="bold"
-                    android:textColor="#0099cc"
+                    android:textColor="#707070"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp" />
@@ -156,6 +152,17 @@
 
             </LinearLayout>
 
+            <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+                android:id="@+id/mcImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
+                android:layout_marginBottom="5dp" />
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -170,30 +177,45 @@
                     android:id="@+id/mcAddress"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
+                    android:layout_weight="0.333"
                     android:text="Govind Vihar, Delhi"
                     android:textStyle="bold"
+                    android:textSize="9dp"
                     android:textColor="#ADADAD"
-                    android:gravity="left" />
+                    android:gravity="left"
+                    android:drawableLeft="@drawable/my_complaints_location"
+                    android:drawablePadding="5dp"
+                    android:maxLines="2"/>
+
+                <TextView
+                    android:id="@+id/mcComments"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.333"
+                    android:text="Comments"
+                    android:textStyle="bold"
+                    android:textSize="9dp"
+                    android:textColor="#ADADAD"
+                    android:drawableLeft="@drawable/my_complaints_comment"
+                    android:drawablePadding="5dp"
+                    android:paddingLeft="20dp"
+                    android:maxLines="1"/>
 
                 <TextView
                     android:id="@+id/mcStatus"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.6"
+                    android:layout_weight="0.333"
                     android:text="Pending"
                     android:textStyle="bold"
                     android:textColor="#ADADAD"
-                    android:layout_gravity="right"
-                    android:gravity="right"
-                    android:paddingRight="10dp" />
+                    android:drawableLeft="@drawable/my_complaints_status"
+                    android:drawablePadding="5dp"
+                    android:paddingLeft="25dp"
+                    android:textSize="9dp"
+                    />
 
             </LinearLayout>
-
-            <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
-                android:id="@+id/mcImage"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
 
         </LinearLayout>
 
@@ -201,3 +223,37 @@
 
 
 </LinearLayout>
+
+    <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+        android:id="@+id/mcIcon1"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:src="@drawable/my_complaints_water"
+        android:layout_weight="0.5"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="10dp"
+        android:scaleType="fitCenter"
+        android:layout_marginLeft="40dp" />
+
+
+    <TextView
+        android:id="@+id/mcAmenityName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#808080"
+        android:text="Water"
+        android:layout_weight="0.5"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="45dp"
+        android:scaleType="fitCenter"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="gone"
+        android:layout_marginLeft="40dp" />
+
+</RelativeLayout>
