@@ -1,8 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
     android:weightSum="1"
     tools:context="com.eswaraj.app.eswaraj.activities.MarkLocationActivity"
     android:background="#ffffffff">
@@ -17,103 +16,123 @@
         android:layout_weight="0.3"
         /-->
 
-    <RelativeLayout
+    <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/RelativeLayout01"
+        android:id="@+id/mapContainer"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:orientation="vertical"
         android:weightSum="1"
         android:layout_gravity="bottom|center"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_weight="1">
-
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            android:id="@+id/linearLayout">
-
-            <EditText
-                android:id="@+id/mlSearchText"
-                android:layout_width="fill_parent"
-                android:layout_height="45dp"
-                android:layout_weight="0.3" />
-
-            <Button
-                android:id="@+id/mlSearchButton"
-                android:text="Search"
-                android:gravity="center"
-                android:background="#92B06A"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:shadowRadius="1"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowColor="@android:color/black"
-                android:layout_width="fill_parent"
-                android:layout_height="45dp"
-                android:layout_weight="0.7"
-                android:layout_below="@+id/mlContainer"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-        </LinearLayout>
+        android:gravity="center_vertical|center_horizontal">
 
         <FrameLayout
             android:id="@+id/mlContainer"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="9"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@+id/linearLayout"
-            android:background="#ffffff">
+            android:background="#ffffff"
+            android:layout_weight="1">
         </FrameLayout>
 
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:orientation="horizontal"
-        android:id="@+id/mlButtons">
-
-        <Button
-            android:id="@+id/mlSaveLocation"
-            android:text="Save Location"
-            android:layout_weight="0.5"
-            android:gravity="center_vertical|center_horizontal"
-            android:textColor="@android:color/white"
-            android:textSize="18dp"
-            android:shadowRadius="1"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowColor="@android:color/black"
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="#0099cc" />
+            android:weightSum="1"
+            android:orientation="horizontal"
+            android:id="@+id/mlButtons">
 
-        <Button
-            android:id="@+id/mlSkip"
-            android:text="Skip"
-            android:layout_weight="0.5"
-            android:gravity="center_vertical|center_horizontal"
-            android:background="#DE593A"
-            android:textColor="@android:color/white"
-            android:textSize="18dp"
-            android:shadowRadius="1"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowColor="@android:color/black"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom" />
+            <Button
+                android:id="@+id/mlSaveLocation"
+                android:text="Save Location"
+                android:layout_weight="0.5"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:shadowRadius="1"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowColor="@android:color/black"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="#0099cc" />
+
+            <Button
+                android:id="@+id/mlSkip"
+                android:text="Skip"
+                android:layout_weight="0.5"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="#DE593A"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:shadowRadius="1"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowColor="@android:color/black"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/mlSearchlocationback"
+            android:gravity="center"
+            android:background="@drawable/ic_search_location_back"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:layout_weight="0.85"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:focusable="false"
+            android:layout_marginLeft="10dp" />
+
+        <EditText
+            android:id="@+id/mlSearchText"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:layout_weight="0.3"
+            android:background="#FFFFFF"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp" />
+
+        <Button
+            android:id="@+id/mlSearchButton"
+            android:gravity="center"
+            android:background="@drawable/ic_search_location"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:layout_weight="0.85"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:focusable="false"
+            android:layout_marginRight="10dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/mlSearchHomeLocation"
+        android:gravity="center"
+        android:background="@drawable/ic_search_home_location"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:focusable="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="10dp" />
+
+</RelativeLayout>

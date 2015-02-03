@@ -51,7 +51,8 @@
                     android:text="Ravi Sharma"
                     android:textColor="#FFFFFF"
                     android:paddingLeft="5dp"
-                    android:gravity="center_vertical|center_horizontal" />
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/usDetails"
@@ -59,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:text="PM, India"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#DBDBDB"
                     android:layout_gravity="top"
                     android:gravity="top|center_horizontal"
                     android:paddingLeft="5dp"
