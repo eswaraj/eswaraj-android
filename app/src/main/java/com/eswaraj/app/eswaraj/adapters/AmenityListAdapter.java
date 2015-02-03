@@ -81,12 +81,10 @@ public class AmenityListAdapter extends ArrayAdapter<CategoryWithChildCategoryDt
         CategoryWithChildCategoryDto categoryDto = categoryList.get(position);
         holder.saTitle.setText(categoryDto.getName());
         holder.saIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(categoryDto.getId()) + ".png"));
-        if(complaintCounterList == null) {
-            if (categoryDto.getColor() != null) {
-                holder.saWrapper.setBackgroundColor(Color.parseColor("#" + categoryDto.getColor()));
-            } else {
-                holder.saWrapper.setBackgroundColor(colorMap.get(categoryDto.getId()));
-            }
+        if (categoryDto.getColor() != null) {
+            holder.saWrapper.setBackgroundColor(Color.parseColor("#" + categoryDto.getColor()));
+        } else {
+            holder.saWrapper.setBackgroundColor(colorMap.get(categoryDto.getId()));
         }
         if(complaintCounterList != null) {
             for(ComplaintCounter complaintCounter : complaintCounterList) {

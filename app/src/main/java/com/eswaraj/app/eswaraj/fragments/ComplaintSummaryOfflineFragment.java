@@ -67,6 +67,7 @@ public class ComplaintSummaryOfflineFragment extends BaseFragment {
         subCategory = (TextView) rootView.findViewById(R.id.csSubCategory);
         address = (TextView) rootView.findViewById(R.id.csAddress);
         description = (TextView) rootView.findViewById(R.id.csDescription);
+        descriptionLabel = (TextView) rootView.findViewById(R.id.csDescriptionLabel);
         complaintPhoto = (ImageView) rootView.findViewById(R.id.csComplaintPhoto);
         done = (Button) rootView.findViewById(R.id.csDone);
         another = (Button) rootView.findViewById(R.id.csAnother);

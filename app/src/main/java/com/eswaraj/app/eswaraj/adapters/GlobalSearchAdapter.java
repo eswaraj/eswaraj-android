@@ -57,7 +57,7 @@ public class GlobalSearchAdapter extends ArrayAdapter<GlobalSearchResponseDto> {
         if(globalSearchResponseDto.getType().equals("Location")) {
             holder.sDetails.setText(globalSearchResponseDto.getSubType());
             if(globalSearchResponseDto.getImage() != null && !globalSearchResponseDto.getImage().equals("")) {
-                Picasso.with(context).load(globalSearchResponseDto.getImage().replace("http", "https")).error(R.drawable.anon_loc_grey).placeholder(R.drawable.anon_loc_grey).into(holder.sImage);
+                Picasso.with(context).load(globalSearchResponseDto.getImage().replace("http:", "https:")).error(R.drawable.anon_loc_grey).placeholder(R.drawable.anon_loc_grey).into(holder.sImage);
             }
             else {
                 holder.sImage.setImageDrawable(context.getResources().getDrawable(R.drawable.anon_loc_grey));
@@ -66,7 +66,7 @@ public class GlobalSearchAdapter extends ArrayAdapter<GlobalSearchResponseDto> {
         else if(globalSearchResponseDto.getType().equals("Leader")) {
             holder.sDetails.setText(globalSearchResponseDto.getSubType() + ", " + globalSearchResponseDto.getcName() + "\n" + globalSearchResponseDto.getPartyName());
             if(globalSearchResponseDto.getImage() != null && !globalSearchResponseDto.getImage().equals("")) {
-                Picasso.with(context).load(globalSearchResponseDto.getImage().replace("http", "https")).error(R.drawable.anon_grey).placeholder(R.drawable.anon_grey).into(holder.sImage);
+                Picasso.with(context).load(globalSearchResponseDto.getImage().replace("http:", "https:")).error(R.drawable.anon_grey).placeholder(R.drawable.anon_grey).into(holder.sImage);
             }
             else {
                 holder.sImage.setImageDrawable(context.getResources().getDrawable(R.drawable.anon_grey));

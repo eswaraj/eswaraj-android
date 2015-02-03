@@ -60,7 +60,7 @@ public class CommentListAdapter extends ArrayAdapter<CommentDto> {
         if(commentDto.getPostedBy() != null) {
             holder.cName.setText(commentDto.getPostedBy().getName());
             if(commentDto.getPostedBy().getProfilePhoto() != null && !commentDto.getPostedBy().getProfilePhoto().equals("")) {
-                Picasso.with(context).load(commentDto.getPostedBy().getProfilePhoto().replace("http", "https")).error(R.drawable.anon).placeholder(R.drawable.anon).into(holder.cImage);
+                Picasso.with(context).load(commentDto.getPostedBy().getProfilePhoto().replace("http:", "https:")).error(R.drawable.anon).placeholder(R.drawable.anon).into(holder.cImage);
             }
             else {
                 holder.cImage.setImageDrawable(context.getResources().getDrawable(R.drawable.anon));
