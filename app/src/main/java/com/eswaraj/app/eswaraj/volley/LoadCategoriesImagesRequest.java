@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
@@ -12,7 +13,9 @@ import com.eswaraj.app.eswaraj.base.BaseClass;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.events.GetCategoriesImagesEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
+import com.eswaraj.app.eswaraj.models.ErrorDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.google.gson.Gson;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -70,8 +73,19 @@ public class LoadCategoriesImagesRequest extends BaseClass {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                ErrorDto errorDto = null;
+                NetworkResponse response = error.networkResponse;
+                if(response != null && response.data != null) {
+                    errorDto = new Gson().fromJson(new String(response.data), ErrorDto.class);
+                }
                 successImages = false;
                 errorImages = error.toString();
+                if(errorDto == null) {
+                    errorImages = error.toString();
+                }
+                else {
+                    errorImages = errorDto.getMessage();
+                }
                 imageResCount.incrementAndGet();
                 if(imageResCount.get() == imageReqCount) {
                     GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();

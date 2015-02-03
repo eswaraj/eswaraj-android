@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
@@ -18,6 +19,8 @@ import com.eswaraj.app.eswaraj.events.GetHeaderImageEvent;
 import com.eswaraj.app.eswaraj.events.GetProfileImageEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.models.ErrorDto;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -52,24 +55,36 @@ public class LoadImageRequest extends BaseClass {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                ErrorDto errorDto = null;
+                String errorString;
+                NetworkResponse response = error.networkResponse;
+                if(response != null && response.data != null) {
+                    errorDto = new Gson().fromJson(new String(response.data), ErrorDto.class);
+                }
+                if(errorDto == null) {
+                    errorString = error.toString();
+                }
+                else {
+                    errorString = errorDto.getMessage();
+                }
                 if(type == ImageType.COMPLAINT) {
                     GetComplaintImageEvent event = new GetComplaintImageEvent();
                     event.setSuccess(false);
-                    event.setError(error.toString());
+                    event.setError(errorString);
                     event.setId(id);
                     eventBus.postSticky(event);
                 }
                 else if(type == ImageType.PROFILE) {
                     GetProfileImageEvent event = new GetProfileImageEvent();
                     event.setSuccess(false);
-                    event.setError(error.toString());
+                    event.setError(errorString);
                     event.setId(id);
                     eventBus.postSticky(event);
                 }
                 else if(type == ImageType.HEADER) {
                     GetHeaderImageEvent event = new GetHeaderImageEvent();
                     event.setSuccess(false);
-                    event.setError(error.toString());
+                    event.setError(errorString);
                     event.setId(id);
                     eventBus.postSticky(event);
                 }

@@ -2,6 +2,7 @@ package com.eswaraj.app.eswaraj.volley;
 
 import android.content.Context;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -13,6 +14,7 @@ import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
 import com.eswaraj.app.eswaraj.models.CommentDto;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
+import com.eswaraj.app.eswaraj.models.ErrorDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
@@ -42,8 +44,18 @@ public class CommentsRequest extends BaseClass {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                ErrorDto errorDto = null;
+                NetworkResponse response = error.networkResponse;
+                if(response != null && response.data != null) {
+                    errorDto = new Gson().fromJson(new String(response.data), ErrorDto.class);
+                }
                 GetCommentsEvent event = new GetCommentsEvent();
-                event.setError(error.toString());
+                if(errorDto == null) {
+                    event.setError(error.toString());
+                }
+                else {
+                    event.setError(errorDto.getMessage());
+                }
                 eventBus.postSticky(event);
             }
         };

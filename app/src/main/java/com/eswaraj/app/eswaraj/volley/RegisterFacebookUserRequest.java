@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.eswaraj.app.eswaraj.R;
@@ -12,6 +13,7 @@ import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.events.GetUserEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
+import com.eswaraj.app.eswaraj.models.ErrorDto;
 import com.eswaraj.app.eswaraj.util.DeviceUtil;
 import com.eswaraj.web.dto.RegisterFacebookAccountRequest;
 import com.eswaraj.web.dto.UserDto;
@@ -111,9 +113,19 @@ public class RegisterFacebookUserRequest extends BaseClass {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                ErrorDto errorDto = null;
+                NetworkResponse response = error.networkResponse;
+                if(response != null && response.data != null) {
+                    errorDto = new Gson().fromJson(new String(response.data), ErrorDto.class);
+                }
                 GetUserEvent event = new GetUserEvent();
                 event.setSuccess(false);
-                event.setError(error.toString());
+                if(errorDto == null) {
+                    event.setError(error.toString());
+                }
+                else {
+                    event.setError(errorDto.getMessage());
+                }
                 eventBus.postSticky(event);
             }
         };

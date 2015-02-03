@@ -3,6 +3,7 @@ package com.eswaraj.app.eswaraj.volley;
 
 import android.content.Context;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -12,6 +13,7 @@ import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.events.GetCategoriesDataEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.middleware.MiddlewareServiceImpl;
+import com.eswaraj.app.eswaraj.models.ErrorDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -42,10 +44,20 @@ public class LoadCategoriesDataRequest extends BaseClass {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
-                getCategoriesDataEvent.setSuccess(false);
-                getCategoriesDataEvent.setError(error.toString());
-                eventBus.postSticky(getCategoriesDataEvent);
+                ErrorDto errorDto = null;
+                NetworkResponse response = error.networkResponse;
+                if(response != null && response.data != null) {
+                    errorDto = new Gson().fromJson(new String(response.data), ErrorDto.class);
+                }
+                GetCategoriesDataEvent event = new GetCategoriesDataEvent();
+                event.setSuccess(false);
+                if(errorDto == null) {
+                    event.setError(error.toString());
+                }
+                else {
+                    event.setError(errorDto.getMessage());
+                }
+                eventBus.postSticky(event);
             }
         };
     }
@@ -57,18 +69,18 @@ public class LoadCategoriesDataRequest extends BaseClass {
                 Gson gson = new Gson();
                 try {
                     List<CategoryWithChildCategoryDto> categoryDtoList;
-                    GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
+                    GetCategoriesDataEvent event = new GetCategoriesDataEvent();
                     categoryDtoList = gson.fromJson(json, new TypeToken<ArrayList<CategoryWithChildCategoryDto>>(){}.getType());
-                    getCategoriesDataEvent.setSuccess(true);
-                    getCategoriesDataEvent.setCategoryList(categoryDtoList);
-                    eventBus.postSticky(getCategoriesDataEvent);
+                    event.setSuccess(true);
+                    event.setCategoryList(categoryDtoList);
+                    eventBus.postSticky(event);
                     //Update the cache
                     cache.updateCategoriesData(context, json);
                 } catch (JsonParseException e) {
-                    GetCategoriesDataEvent getCategoriesDataEvent = new GetCategoriesDataEvent();
-                    getCategoriesDataEvent.setSuccess(false);
-                    getCategoriesDataEvent.setError("Invalid json");
-                    eventBus.postSticky(getCategoriesDataEvent);
+                    GetCategoriesDataEvent event = new GetCategoriesDataEvent();
+                    event.setSuccess(false);
+                    event.setError("Invalid data from server");
+                    eventBus.postSticky(event);
                 }
             }
         };

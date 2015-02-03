@@ -7,6 +7,7 @@ import android.location.Location;
 import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.eswaraj.app.eswaraj.base.BaseClass;
@@ -15,6 +16,7 @@ import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.events.ComplaintReportedEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
 import com.eswaraj.app.eswaraj.models.ComplaintPostResponseDto;
+import com.eswaraj.app.eswaraj.models.ErrorDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.eswaraj.web.dto.SaveComplaintRequestDto;
 import com.eswaraj.web.dto.UserDto;
@@ -86,9 +88,19 @@ public class ComplaintPostRequest extends BaseClass {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                ErrorDto errorDto = null;
+                NetworkResponse response = error.networkResponse;
+                if(response != null && response.data != null) {
+                    errorDto = new Gson().fromJson(new String(response.data), ErrorDto.class);
+                }
                 ComplaintReportedEvent event = new ComplaintReportedEvent();
                 event.setSuccess(false);
-                event.setError(error.toString());
+                if(errorDto == null) {
+                    event.setError(error.toString());
+                }
+                else {
+                    event.setError(errorDto.getMessage());
+                }
                 eventBus.postSticky(event);
             }
         };

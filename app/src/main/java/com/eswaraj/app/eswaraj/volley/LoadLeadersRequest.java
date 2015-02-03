@@ -3,6 +3,7 @@ package com.eswaraj.app.eswaraj.volley;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -11,6 +12,7 @@ import com.eswaraj.app.eswaraj.config.Constants;
 import com.eswaraj.app.eswaraj.datastore.Cache;
 import com.eswaraj.app.eswaraj.events.GetLeadersEvent;
 import com.eswaraj.app.eswaraj.helpers.NetworkAccessHelper;
+import com.eswaraj.app.eswaraj.models.ErrorDto;
 import com.eswaraj.app.eswaraj.models.PoliticalBodyAdminDto;
 import com.eswaraj.app.eswaraj.util.UserSessionUtil;
 import com.google.gson.Gson;
@@ -51,9 +53,19 @@ public class LoadLeadersRequest extends BaseClass {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                ErrorDto errorDto = null;
+                NetworkResponse response = error.networkResponse;
+                if(response != null && response.data != null) {
+                    errorDto = new Gson().fromJson(new String(response.data), ErrorDto.class);
+                }
                 GetLeadersEvent event = new GetLeadersEvent();
                 event.setSuccess(false);
-                event.setError(error.toString());
+                if(errorDto == null) {
+                    event.setError(error.toString());
+                }
+                else {
+                    event.setError(errorDto.getMessage());
+                }
                 eventBus.postSticky(event);
             }
         };
