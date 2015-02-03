@@ -99,7 +99,7 @@ public class MarkHomeActivity extends BaseActivity implements OnMapReadyCallback
         mhSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MarkLocation: Skip Location");
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MarkHome: Skip Location");
                 if(dialogMode) {
                     finish();
                 }
