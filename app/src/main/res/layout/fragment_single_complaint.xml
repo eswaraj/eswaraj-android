@@ -83,7 +83,7 @@
                     android:textColor="#ADADAD"
                     android:text="3 hours ago"
                     android:drawableLeft="@drawable/my_complaints_time_icon"
-                    android:paddingLeft="65dp"
+                    android:paddingLeft="60dp"
                     android:drawablePadding="5dp"
                     android:textSize="12dp"
                     android:maxLines="1"
