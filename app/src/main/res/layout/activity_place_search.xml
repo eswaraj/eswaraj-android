@@ -15,28 +15,18 @@
         android:layout_width="fill_parent"
         android:layout_height="45dp"
         android:orientation="horizontal"
-        android:weightSum="1"
+        android:weightSum="2"
         android:layout_marginTop="10dp">
-
-        <Button
-            android:id="@+id/psSearchButton"
-            android:gravity="center"
-            android:background="@drawable/ic_search_location"
-            android:layout_width="fill_parent"
-            android:layout_height="45dp"
-            android:layout_weight="0.85"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginLeft="10dp" />
 
         <EditText
             android:id="@+id/psInput"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="0.15"
+            android:layout_weight="0.3"
             android:background="#FFFFFF"
             android:layout_marginRight="10dp"
             android:padding="5dp"
+            android:drawableLeft="@drawable/ic_search_location"
             android:hint="Enter Your Location ..."/>
 
     </LinearLayout>

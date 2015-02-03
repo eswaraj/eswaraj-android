@@ -72,6 +72,7 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
         super.getMapAsync(this);
     }
 
+    /*
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View mapView = super.onCreateView(inflater, container, savedInstanceState);
@@ -87,6 +88,7 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
 
         return mapView;
     }
+    */
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {

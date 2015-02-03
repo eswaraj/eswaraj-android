@@ -76,10 +76,10 @@ public class LeaderFragment extends BaseFragment {
         politicalBodyAdminDto = (PoliticalBodyAdminDto) getActivity().getIntent().getSerializableExtra("LEADER");
 
         if(politicalBodyAdminDto == null) {
-            getActivity().setTitle(politicalBodyAdminDto.getName());
             middlewareService.loadLeaderById(getActivity(), getActivity().getIntent().getLongExtra("ID", 0));
         }
         else {
+            getActivity().setTitle(politicalBodyAdminDto.getName());
             setFields();
         }
         lConstituency.setOnClickListener(new View.OnClickListener() {
