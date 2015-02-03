@@ -1,28 +1,75 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="fill_parent"
+    android:layout_width="wrap_content">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.eswaraj.app.eswaraj.activities.PlaceSearchActivity">
 
-    <EditText
-        android:id="@+id/psInput"
-        android:drawableLeft="@drawable/ic_menu_search_small"
-        android:layout_width="match_parent"
-        android:hint="Search"
-        android:layout_height="50dp"
-        android:paddingBottom="10dp"
-        android:layout_marginBottom="10dp"/>
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/psSearchlocationback"
+            android:gravity="center"
+            android:background="@drawable/ic_search_location_back"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:layout_weight="0.85"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:focusable="false"
+            android:layout_marginLeft="10dp" />
+
+        <Button
+            android:id="@+id/psSearchButton"
+            android:gravity="center"
+            android:background="@drawable/ic_search_location"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:layout_weight="0.85"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="10dp" />
+
+        <EditText
+            android:id="@+id/psInput"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.3"
+            android:background="#FFFFFF"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"
+            android:hint="Enter Your Location ..."/>
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/psList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:dividerHeight="10dp"
+        android:divider="@color/transparent"/>
+
+</LinearLayout>
 
     <ImageView
         android:src="@drawable/powered_by_google"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="true" />
 
-</LinearLayout>
+</RelativeLayout>
