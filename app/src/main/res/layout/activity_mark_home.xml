@@ -77,27 +77,15 @@ android:background="#ffffffff">
     android:weightSum="1"
     android:layout_marginTop="10dp">
 
-    <Button
-        android:id="@+id/mlSearchlocationback"
-        android:gravity="center"
-        android:background="@drawable/ic_search_location_back"
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_weight="0.85"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:focusable="false"
-        android:layout_marginLeft="10dp" />
-
     <EditText
         android:id="@+id/mhSearchText"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:layout_weight="0.3"
         android:background="#FFFFFF"
         android:layout_marginLeft="10dp"
         android:padding="5dp"
-        android:hint="Enter Your Location ..."/>
+        android:hint="Enter Your Location ..."
+        android:layout_marginRight="10dp" />
 
 </LinearLayout>
 
