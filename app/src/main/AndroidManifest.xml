@@ -264,12 +264,14 @@
         </activity>
         <activity
             android:name=".activities.MarkHomeActivity"
-            android:label="@string/title_activity_mark_home" >
+            android:label="@string/title_activity_mark_home"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
         </activity>
         <activity
             android:name=".activities.PlaceSearchActivity"
             android:label="@string/title_activity_place_search"
-            android:parentActivityName=".activities.MarkHomeActivity" >
+            android:parentActivityName=".activities.MarkHomeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.eswaraj.app.eswaraj.activities.MarkHomeActivity" />

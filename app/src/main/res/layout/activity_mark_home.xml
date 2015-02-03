@@ -1,33 +1,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:weightSum="1"
+tools:context="com.eswaraj.app.eswaraj.activities.MarkHomeActivity"
+android:background="#ffffffff">
+
+<LinearLayout
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.eswaraj.app.eswaraj.activities.MarkHomeActivity">
+    android:id="@+id/mapContainer"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:layout_gravity="bottom|center"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:gravity="center_vertical|center_horizontal">
 
     <FrameLayout
         android:id="@+id/mhContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <ImageView
-        android:src="@drawable/anon_loc_grey"
-        android:layout_centerInParent="true"
-        android:layout_width="80dp"
-        android:layout_height="80dp" />
-
-    <EditText
-        android:id="@+id/mhSearchText"
         android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        android:layout_weight="0.3" />
+        android:layout_height="fill_parent"
+        android:background="#ffffff"
+        android:layout_weight="1">
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:weightSum="1"
         android:orientation="horizontal"
-        android:id="@+id/mlButtons"
-        android:layout_below="@+id/mhSearchText">
+        android:id="@+id/mlButtons">
 
         <Button
             android:id="@+id/mhSaveLocation"
@@ -35,7 +39,7 @@
             android:layout_weight="0.5"
             android:gravity="center_vertical|center_horizontal"
             android:textColor="@android:color/white"
-            android:textSize="18dp"
+            android:textSize="14sp"
             android:shadowRadius="1"
             android:shadowDx="1"
             android:shadowDy="1"
@@ -52,7 +56,7 @@
             android:gravity="center_vertical|center_horizontal"
             android:background="#DE593A"
             android:textColor="@android:color/white"
-            android:textSize="18dp"
+            android:textSize="14sp"
             android:shadowRadius="1"
             android:shadowDx="1"
             android:shadowDy="1"
@@ -62,5 +66,59 @@
             android:layout_gravity="bottom" />
 
     </LinearLayout>
+
+</LinearLayout>
+
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    android:layout_marginTop="10dp">
+
+    <Button
+        android:id="@+id/mlSearchlocationback"
+        android:gravity="center"
+        android:background="@drawable/ic_search_location_back"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_weight="0.85"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:focusable="false"
+        android:layout_marginLeft="10dp" />
+
+    <EditText
+        android:id="@+id/mhSearchText"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_weight="0.3"
+        android:background="#FFFFFF"
+        android:layout_marginLeft="10dp"
+        android:padding="5dp"
+        android:hint="Enter Your Location ..."/>
+
+</LinearLayout>
+
+    <ImageView
+        android:src="@drawable/anon_loc_grey"
+        android:layout_centerInParent="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+
+    <Button
+    android:id="@+id/mlSearchHomeLocation"
+    android:gravity="center"
+    android:background="@drawable/ic_search_home_location"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
+    android:focusable="false"
+    android:layout_alignParentBottom="true"
+    android:layout_marginBottom="60dp"
+    android:layout_marginRight="10dp"
+        android:visibility="gone" />
 
 </RelativeLayout>
