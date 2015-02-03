@@ -174,7 +174,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                         startActivity(i);
                     } else if (userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
                         googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Leaders: Location not marked");
-                        Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
+                        Intent i = new Intent(v.getContext(), MarkHomeActivity.class);
                         i.putExtra("MODE", true);
                         startActivityForResult(i, REQUEST_MY_LEADERS);
                     } else {
@@ -213,7 +213,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                     }
                     else if(userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
                         googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Constituency: Location not marked");
-                        Intent i = new Intent(v.getContext(), MarkLocationActivity.class);
+                        Intent i = new Intent(v.getContext(), MarkHomeActivity.class);
                         i.putExtra("MODE", true);
                         startActivityForResult(i, REQUEST_MY_CONSTITUENCY);
                     }

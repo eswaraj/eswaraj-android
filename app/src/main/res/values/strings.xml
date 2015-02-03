@@ -43,5 +43,7 @@
     <string name="title_activity_searchable">SearchableActivity</string>
     <string name="title_activity_leader_list">LeaderListActivity</string>
     <string name="title_activity_location_list">LocationListActivity</string>
+    <string name="title_activity_mark_home">MarkHomeActivity</string>
+    <string name="title_activity_place_search">PlaceSearchActivity</string>
 
 </resources>

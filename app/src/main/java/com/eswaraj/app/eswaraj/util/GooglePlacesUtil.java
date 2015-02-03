@@ -61,7 +61,6 @@ public class GooglePlacesUtil extends BaseClass {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
-
                     JSONArray jsonArray = jsonObject.getJSONArray("predictions");
                     ArrayList<GooglePlace> arrayList = new ArrayList<GooglePlace>();
                     for (int i=0; i<jsonArray.length(); i++) {

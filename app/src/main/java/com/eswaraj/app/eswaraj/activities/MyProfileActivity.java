@@ -49,7 +49,7 @@ public class MyProfileActivity extends BaseActivity {
     }
 
     public void onEventMainThread(StartAnotherActivityEvent event) {
-        Intent i = new Intent(this, MarkLocationActivity.class);
+        Intent i = new Intent(this, MarkHomeActivity.class);
         i.putExtra("MODE", true);
         i.putExtra("ALWAYS", true);
         startActivityForResult(i, UPDATE_LOCATION);

@@ -174,7 +174,7 @@ public class LoginActivity extends BaseFragmentActivity {
                     i = new Intent(this, HomeActivity.class);
                 }
                 else {
-                    i = new Intent(this, MarkLocationActivity.class);
+                    i = new Intent(this, MarkHomeActivity.class);
                     i.putExtra("MODE", false);
                 }
                 startActivity(i);

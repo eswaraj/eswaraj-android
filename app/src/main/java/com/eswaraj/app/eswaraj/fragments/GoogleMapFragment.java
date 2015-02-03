@@ -1,22 +1,12 @@
 package com.eswaraj.app.eswaraj.fragments;
 
 
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.SparseArray;
-import android.view.ViewGroup;
 
-import com.eswaraj.app.eswaraj.R;
+
 import com.eswaraj.app.eswaraj.application.EswarajApplication;
 import com.eswaraj.app.eswaraj.events.MarkerClickEvent;
 import com.eswaraj.app.eswaraj.models.ComplaintDto;
-import com.eswaraj.web.dto.UserDto;
 import com.eswaraj.app.eswaraj.models.GoogleMapCluster;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,8 +14,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -33,19 +21,13 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
-import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
-import com.google.maps.android.clustering.view.ClusterRenderer;
-import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
-import com.google.maps.android.ui.IconGenerator;
-import com.google.maps.android.ui.SquareTextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -117,6 +99,29 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
         }
     }
 
+    public Boolean centreMapAt(double lat, double lng) {
+        if(googleMap != null) {
+            LatLng location = new LatLng(lat, lng);
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(location)
+                    .zoom(zoomLevel)
+                    .bearing(0)
+                    .tilt(45)
+                    .build();
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            return true;
+        }
+        return false;
+    }
+
+    public void showMyLocationButton() {
+        if(googleMap != null) {
+            UiSettings uiSettings = googleMap.getUiSettings();
+            googleMap.setMyLocationEnabled(true);
+            uiSettings.setMyLocationButtonEnabled(true);
+        }
+    }
+
     public void updateMarkerLocation(double lat, double lng) {
         LatLng location = new LatLng(lat, lng);
 
@@ -151,6 +156,14 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
 
     public double getMarkerLongitude() {
         return marker.getPosition().longitude;
+    }
+
+    public double getMarkedLatitude() {
+        return googleMap.getCameraPosition().target.latitude;
+    }
+
+    public double getMarkedLongitude() {
+        return googleMap.getCameraPosition().target.longitude;
     }
 
     public void disableGestures() {

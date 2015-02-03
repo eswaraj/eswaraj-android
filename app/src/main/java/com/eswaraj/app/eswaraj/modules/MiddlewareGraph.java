@@ -11,6 +11,8 @@ import com.eswaraj.app.eswaraj.activities.ConstituencyComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.ConstituencySnapshotActivity;
 import com.eswaraj.app.eswaraj.activities.LeaderListActivity;
 import com.eswaraj.app.eswaraj.activities.LocationListActivity;
+import com.eswaraj.app.eswaraj.activities.MarkHomeActivity;
+import com.eswaraj.app.eswaraj.activities.PlaceSearchActivity;
 import com.eswaraj.app.eswaraj.activities.SearchableActivity;
 import com.eswaraj.app.eswaraj.activities.UserComplaintsActivity;
 import com.eswaraj.app.eswaraj.activities.ContentActivity;
@@ -208,7 +210,9 @@ import de.greenrobot.event.EventBus;
                 LeaderListFragment.class,
                 LocationListActivity.class,
                 LocationListFragment.class,
-                LoadLeaderForLocationRequest.class
+                LoadLeaderForLocationRequest.class,
+                MarkHomeActivity.class,
+                PlaceSearchActivity.class
         },
         complete = false,
         library = true
