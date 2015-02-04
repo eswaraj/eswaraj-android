@@ -12,9 +12,8 @@
             <ImageView
                 android:id="@+id/lfcPhoto"
                 android:layout_width="fill_parent"
-                android:layout_height="340dp"
+                android:layout_height="300dp"
                 android:src="@drawable/ravi"
-                android:layout_weight="0.4"
                 android:cropToPadding="true"
                 android:scaleType="centerCrop" />
 
@@ -27,47 +26,51 @@
 
             <TextView
                 android:id="@+id/lfcName"
-                android:layout_weight="0.55"
+                android:layout_weight="0.525"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:text="Ravi Sharma"
                 android:paddingLeft="10dp"
-                android:gravity="right"
-                android:textStyle="bold" />
+                android:gravity="bottom|right"
+                android:textStyle="bold"
+                android:maxLines="1"/>
 
             <TextView
                 android:id="@+id/lfcseparator"
-                android:layout_weight="0.9"
+                android:layout_weight="0.95"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:text=" | "
+                android:text="|"
                 android:textColor="#707070"
                 android:layout_gravity="top"
-                android:gravity="left"
-                android:paddingLeft="10dp" />
+                android:gravity="center_vertical|center_horizontal" />
 
             <TextView
                 android:id="@+id/lfcDetails"
-                android:layout_weight="0.55"
+                android:layout_weight="0.525"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:text="PM, India"
                 android:layout_gravity="top"
-                android:gravity="left"
-                android:textColor="#505050" />
+                android:gravity="left|bottom"
+                android:textColor="#505050"
+                android:textSize="11sp"
+                android:maxLines="1"/>
 
         </LinearLayout>
 
     <TextView
         android:id="@+id/lfcMessage"
-        android:layout_weight="1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Thank you for using eSwaraj. \nTogether we deliver Governance, Sabka Saath Sabka Vikas."
         android:textColor="#333"
-        android:padding="10dp"
         android:gravity="center_vertical|center_horizontal"
-        android:textSize="13sp" />
+        android:textSize="11sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="5dp" />
 
 </LinearLayout>
 
