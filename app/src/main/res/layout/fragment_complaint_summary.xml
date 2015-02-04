@@ -6,58 +6,13 @@
     tools:context="com.eswaraj.app.eswaraj.fragments.ComplaintSummaryFragment"
     android:background="#DBDBDB">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="10"
-        android:background="#FFFFFF"
-        android:layout_margin="10dp"
-        >
-
-        <TextView
-            android:text="Complaint Successful"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="2"
-            android:paddingLeft="10dp"
-            android:longClickable="false"
-            android:gravity="center_vertical"
-            android:textSize="25dp"
-            android:textColor="#0099cc" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:id="@+id/imageView"
-            android:src="@drawable/complaint_success"
-            android:paddingTop="5dp"
-            android:layout_weight="8"
-            android:paddingBottom="5dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
-
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="320dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/leader_background"
+        android:layout_margin="10dp"
+        android:background="#FFFFFF"
         >
 
-        <TextView
-            android:text="Know Your Leaders"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center_vertical"
-            android:textSize="25dp"
-            android:textColor="#0099cc"
-            android:layout_alignTop="@+id/csPager"
-            android:background="#FFFFFF"
-            android:paddingLeft="10dp"
-            />
         <android.support.v4.view.ViewPager
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/csPager"
@@ -90,9 +45,7 @@
         android:background="#FFFFFF"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="-45dp"
-        android:paddingBottom="10dp"
-        >
+        android:paddingBottom="10dp">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -223,8 +176,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp">

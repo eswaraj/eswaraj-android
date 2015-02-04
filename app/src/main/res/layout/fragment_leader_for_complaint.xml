@@ -9,65 +9,66 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:layout_marginTop="100dp">
-
             <ImageView
                 android:id="@+id/lfcPhoto"
                 android:layout_width="fill_parent"
-                android:layout_height="80dp"
+                android:layout_height="340dp"
                 android:src="@drawable/ravi"
                 android:layout_weight="0.4"
-                android:layout_gravity="center|right"
                 android:cropToPadding="true"
-                android:layout_marginLeft="140dp" />
+                android:scaleType="centerCrop" />
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="0.6"
-                android:layout_width="fill_parent"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:id="@+id/lfcName"
+                android:layout_weight="0.55"
+                android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:weightSum="1">
+                android:text="Ravi Sharma"
+                android:paddingLeft="10dp"
+                android:gravity="right"
+                android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/lfcName"
-                        android:layout_weight="0.5"
-                        android:layout_width="match_parent"
-                        android:layout_height="fill_parent"
-                        android:text="Ravi Sharma"
-                        android:textColor="#FFFFFF"
-                        android:layout_gravity="bottom"
-                        android:gravity="bottom"
-                        android:paddingLeft="10dp" />
+            <TextView
+                android:id="@+id/lfcseparator"
+                android:layout_weight="0.9"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:text=" | "
+                android:textColor="#707070"
+                android:layout_gravity="top"
+                android:gravity="left"
+                android:paddingLeft="10dp" />
 
-                    <TextView
-                        android:id="@+id/lfcDetails"
-                        android:layout_weight="0.5"
-                        android:layout_width="match_parent"
-                        android:layout_height="fill_parent"
-                        android:text="PM, India"
-                        android:textColor="#FFFFFF"
-                        android:layout_gravity="top"
-                        android:gravity="top"
-                        android:paddingLeft="10dp" />
+            <TextView
+                android:id="@+id/lfcDetails"
+                android:layout_weight="0.55"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:text="PM, India"
+                android:layout_gravity="top"
+                android:gravity="left"
+                android:textColor="#505050" />
 
-            </LinearLayout>
-
-            </LinearLayout>
+        </LinearLayout>
 
     <TextView
         android:id="@+id/lfcMessage"
         android:layout_weight="1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Thank you for using eSwaraj"
-        android:textColor="#FFFFFF"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp" />
+        android:text="Thank you for using eSwaraj. \nTogether we deliver Governance, Sabka Saath Sabka Vikas."
+        android:textColor="#333"
+        android:padding="10dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="13sp" />
 
 </LinearLayout>
+
 </FrameLayout>
