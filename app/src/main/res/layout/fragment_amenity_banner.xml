@@ -71,7 +71,6 @@
             android:textSize="15sp"
             android:layout_marginRight="5dp"/>
         <TextView
-            android:id="@+id/issue_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="related issue"
