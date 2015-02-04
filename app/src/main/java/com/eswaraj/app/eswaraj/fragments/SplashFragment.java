@@ -55,7 +55,9 @@ public class SplashFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         //TODO:Remove the bg setting from here if needed as it is only support from api level 16
-        root.setBackground(splashScreenItem.getBgImage());
+        if(splashScreenItem.getBgImage() != null) {
+            root.setBackground(splashScreenItem.getBgImage());
+        }
 
         mText.setText(splashScreenItem.getText());
         //mText.setTextSize(18);

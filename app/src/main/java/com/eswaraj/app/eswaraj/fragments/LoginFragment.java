@@ -184,8 +184,8 @@ public class LoginFragment extends BaseFragment {
             else {
                 wasUserAlreadyLoggedIn = false;
             }
-            welcomeText.setText("Lets be the change we want to see in the world.\nLets play our part in betterment of nation through click of a button.\n Lets live the dream of Swaraj");
-            welcomeText.setTypeface(custom_font);
+            welcomeText.setText("Making Good Governance a Peoples' Movement");
+            //welcomeText.setTypeface(custom_font);
 
             //Register callback handlers
             buttonRetry.setOnClickListener(new Button.OnClickListener() {

@@ -146,19 +146,19 @@ public class SplashActivity extends BaseActivity {
     private void setUpPagerData(Boolean onlyOne) {
         splashScreenItems = new ArrayList<SplashScreenItem>();
         if(onlyOne) {
-            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.logo), new ColorDrawable(R.color.navy_blue_background), "Welcome to eSwaraj", "A Mobile & Web Platform for better Governance"));
+            splashScreenItems.add(new SplashScreenItem(null, null, "eSwaraj", "Making Good Governance a Peoples' Movement"));
         }
         else {
-            splashScreenItems.add(new SplashScreenItem(getResources().getDrawable(R.drawable.logo), new ColorDrawable(R.color.navy_blue_background), "Welcome to eSwaraj", "Let's move towards better governance."));
-            splashScreenItems.add(new SplashScreenItem(null, getResources().getDrawable(R.drawable.constitution), "Signing the constitution", "We came together and signed a contract named Constitution which paved the way for founding of this great nation. A contract that promised that our lives would be much better by being part of this nation. A contract that promised that together we can be much more than we are as individuals."));
-            splashScreenItems.add(new SplashScreenItem(null, getResources().getDrawable(R.drawable.structure), "Administrative Structure", "A system of administration was laid out to achieve the promises in the Constitution. Considering everyone's similar basic needs, India was divided in multiple parts, each with same administrative and political structure."));
-            splashScreenItems.add(new SplashScreenItem(null, getResources().getDrawable(R.drawable.audit), "The need for social audit", "Even the greatest plans fall short if ground-level feedback is not taken from end beneficiaries. eSwaraj aims to remove the disconnect between ground level realities and top level perception and bring transparency in quality of service delivery and governance."));
-            splashScreenItems.add(new SplashScreenItem(null, getResources().getDrawable(R.drawable.dialogue), "Need for Continuous Dialogue", "The citizens should be able to reach out to elected leaders. The representatives should have access to effective tools to communicate progress of work. Such dialogue will lead to faster issue resolution and transparency."));
-            splashScreenItems.add(new SplashScreenItem(null, getResources().getDrawable(R.drawable.person1), "eSwaraj", "eSwaraj is a continuous engagement platform for citizens and leaders. It aims to eliminate the divide between ground level realities and top level perception and render transparency in quality of service delivery and governance."));
-            splashScreenItems.add(new SplashScreenItem(null, getResources().getDrawable(R.drawable.unite), "Let's unite?", "Report problems\n" +
-                    "Stay updated about progress from elected leaders\n" +
-                    "Always be aware of your leaders and their policies\n" +
-                    "Be acquainted with problems in your constituency"));
+            splashScreenItems.add(new SplashScreenItem(null, null, "eSwaraj", "Making Good Governance a Peoples' Movement"));
+            splashScreenItems.add(new SplashScreenItem(null, null, "Constitution : A Nation's Blueprint", "We came together and signed a contract called constitution which paved the way for founding of this great nation. A Contract that promised that our lives would be much better by being part of this nation. A contract that promised that together we can be much more than we are as individuals."));
+            splashScreenItems.add(new SplashScreenItem(null, null, "Political & Administrative Structure", "A system of public administration was laid out to achieve the promises in the Constitution. Considering everyone has similar basic needs, India was divided in multiple parts, each with same political and administrative structure. People elect representative who coordinate with administration to deliver governance."));
+            splashScreenItems.add(new SplashScreenItem(null, null, "Promises Need Dose of Reality : Social Audit", "Even the greatest plans fall short if ground-level feedback is not taken from end beneficiaries. eSwaraj aims to remove the disconnect between ground level realities and top level perception and bring transparency in quality of service delivery and governance."));
+            splashScreenItems.add(new SplashScreenItem(null, null, "Keep System Running Effectively : Run a Tight Ship", " In absence of continuous dialogue, no proper tool to monitor development, missing progress metrics, directionless talks and rising disconnect, people get disillusioned leading to widespread negativity and pessimism, and the system loses steam. eSwaraj aims to become the missing link"));
+            splashScreenItems.add(new SplashScreenItem(null, null, "eSwaraj : Banking on the new age revolution #DigitalIndia", "eSwaraj is a continuous engagement platform for citizens and leaders. It aims to eliminate the divide between ground level realities and top level perception and render transparency in quality of service delivery and governance."));
+            splashScreenItems.add(new SplashScreenItem(null, null, "Let's unite?", "\u2022 Report problems\n" +
+                    "\u2022 Stay updated about progress from elected leaders\n" +
+                    "\u2022 Always be aware of your leaders and their policies\n" +
+                    "\u2022 Be acquainted with problems in your constituency"));
         }
 
         if(splashScreenItems.size() < 2) {
