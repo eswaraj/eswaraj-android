@@ -49,7 +49,7 @@ public class LeaderForComplaintFragment extends BaseFragment {
         if(photo != null && politicalBodyAdminDto != null) {
             name.setText(politicalBodyAdminDto.getName());
             details.setText(politicalBodyAdminDto.getPoliticalAdminType().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
-            message.setText("Thank you for using eSwaraj. Together we will offer better support to Government");
+            message.setText("Thank you for using eSwaraj. \nTogether we deliver Governance, Sabka Saath Sabka Vikas.");
             if(politicalBodyAdminDto.getProfilePhoto() != null && !politicalBodyAdminDto.getProfilePhoto().equals("")) {
                 Picasso.with(getActivity()).load(politicalBodyAdminDto.getProfilePhoto().replace("http:", "https:") + "?type=large").error(R.drawable.anon).placeholder(R.drawable.anon).into(photo);
             }

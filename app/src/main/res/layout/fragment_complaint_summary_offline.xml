@@ -47,7 +47,7 @@
             android:id="@+id/thankyou_note"
             android:layout_width="fill_parent"
             android:layout_height="33dp"
-            android:text="Thank you for using eSwaraj. Together we will deliver better support to the government"
+            android:text="Thank you for using eSwaraj. Together we deliver Governance, Sabka Saath Sabka Vikas."
             android:textSize="9dp"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
