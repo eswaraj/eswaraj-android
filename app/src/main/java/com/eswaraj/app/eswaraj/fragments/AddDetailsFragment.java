@@ -181,6 +181,10 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
             @Override
             public void onClick(View view) {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Post Complaint");
+                if(location == null) {
+                    Toast.makeText(getActivity(), "Could not find your location. Check if location service is enabled in phone settings", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if(userSession.isUserLoggedIn(getActivity())) {
                     if (!posted) {
                         if(internetServicesCheckUtil.isServiceAvailable(getActivity())) {
