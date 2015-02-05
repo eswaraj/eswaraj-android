@@ -7,7 +7,7 @@ public class Constants {
 
     //API keys
     public static final String GOOGLE_API_KEY = "AIzaSyBpDIEEPbFGUr7cvXI5_nq04J6i5fou9rY";
-    public static final String GOOGLE_API_BROWSER_KEY = "AIzaSyBpDIEEPbFGUr7cvXI5_nq04J6i5fou9rY";
+    public static final String GOOGLE_API_BROWSER_KEY = "AIzaSyBjBEcixsQ_FNyfohbzZHgeDJqLzPaRsXw";
     public static final String FACEBOOK_API_KEY = "";
     public static final String YOUTUBE_API_KEY = "";
     public static final String GOOGLE_ANALYTICS_KEY = "UA-58373525-1";

@@ -69,7 +69,7 @@ public class ComplaintListFragment extends BaseFragment {
     }
 
     public void setData(List<ComplaintDto> complaintDtoList) {
-        if(showCount == null) {
+        if(showCount == null || showCount > complaintDtoList.size()) {
             complaintsAdapter = new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, complaintDtoList);
         }
         else {

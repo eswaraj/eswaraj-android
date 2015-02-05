@@ -59,7 +59,7 @@ public class LeaderListFragment extends BaseFragment {
         pDialog.show();
         locationDto = (LocationDto) getActivity().getIntent().getSerializableExtra("LOCATION");
         if(locationDto == null) {
-            middlewareService.loadLeaders(getActivity(), userSession, false);
+            middlewareService.loadLeaders(getActivity(), userSession, true);
         }
         else {
             middlewareService.loadLeadersForLocation(getActivity(), locationDto);
