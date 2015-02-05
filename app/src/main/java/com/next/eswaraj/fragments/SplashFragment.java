@@ -38,7 +38,7 @@ public class SplashFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_splash, container, false);
-        Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/HandmadeTypewriter.ttf");
+        //Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/HandmadeTypewriter.ttf");
         root = rootView;
         mText = (TextView) rootView.findViewById(R.id.splash_pager_text);
         mImage = (ImageView) rootView.findViewById(R.id.splash_pager_image);

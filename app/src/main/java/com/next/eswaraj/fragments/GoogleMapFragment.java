@@ -258,6 +258,10 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
             builder.include(latLng);
         }
 
+        if(list.size() < 1) {
+            return;
+        }
+
         mProvider = new HeatmapTileProvider.Builder()
                     .data(list)
                     .build();
