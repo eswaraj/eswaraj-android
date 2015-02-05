@@ -7,7 +7,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context="com.eswaraj.app.eswaraj.fragments.SingleComplaintFragment"
+    tools:context="com.next.eswaraj.fragments.SingleComplaintFragment"
     android:background="#DBDBDB">
 
     <LinearLayout
@@ -26,7 +26,7 @@
             android:layout_weight="0.8"
             android:orientation="vertical">
 
-            <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+            <com.next.eswaraj.widgets.CustomNetworkImageView
                 android:id="@+id/scSubmitterImage"
                 android:layout_width="fill_parent"
                 android:layout_height="80dp"
@@ -153,7 +153,7 @@
 
     </LinearLayout>
 
-    <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+    <com.next.eswaraj.widgets.CustomNetworkImageView
         android:id="@+id/scComplaintPhoto"
         android:src="@drawable/no_image_placeholder"
         android:layout_width="fill_parent"
@@ -254,7 +254,7 @@
 
 </LinearLayout>
 
-    <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+    <com.next.eswaraj.widgets.CustomNetworkImageView
         android:id="@+id/scIcon"
         android:layout_width="fill_parent"
         android:layout_height="40dp"

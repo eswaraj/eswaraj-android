@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.eswaraj.app.eswaraj" >
+    package="com.next.eswaraj" >
 
     <permission
-        android:name="com.eswaraj.app.eswaraj.permission.C2D_MESSAGE"
+        android:name="com.next.eswaraj.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="com.eswaraj.app.eswaraj.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.next.eswaraj.permission.C2D_MESSAGE" />
 
     <application
         android:name=".application.EswarajApplication"
@@ -24,7 +24,7 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id_old" >
+            android:value="@string/facebook_app_id" >
         </meta-data>
         <meta-data
             android:name="com.google.android.gms.version"
@@ -32,7 +32,7 @@
         </meta-data>
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBvatkHkBtQ8lk6xtRnd4ZXTX8CgxfsZQQ" >
+            android:value="AIzaSyBpDIEEPbFGUr7cvXI5_nq04J6i5fou9rY" >
         </meta-data>
 
         <activity
@@ -69,7 +69,7 @@
             android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.eswaraj.app.eswaraj.activities.SelectAmenityActivity" />
+                android:value=".activities.SelectAmenityActivity" />
         </activity>
         <activity
             android:name=".activities.AddDetailsActivity"
@@ -79,7 +79,7 @@
             android:windowSoftInputMode="adjustPan|stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.eswaraj.app.eswaraj.activities.SelectTemplateActivity" />
+                android:value=".activities.SelectTemplateActivity" />
         </activity>
         <activity
             android:name=".activities.MarkLocationActivity"
@@ -100,7 +100,7 @@
             android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.eswaraj.app.eswaraj.activities.AddDetailsActivity" />
+                android:value=".activities.AddDetailsActivity" />
         </activity>
         <activity
             android:name=".activities.UserComplaintsActivity"
@@ -140,7 +140,7 @@
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
+                android:value=".activities.HomeActivity" />
         </activity>
         <activity
             android:name=".activities.ConstituencyComplaintsActivity"
@@ -149,7 +149,7 @@
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
+                android:value=".activities.HomeActivity" />
         </activity>
 
         <receiver
@@ -180,7 +180,7 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-                <category android:name="com.eswaraj.app.eswaraj" />
+                <category android:name="com.next.eswaraj" />
             </intent-filter>
         </receiver>
 
@@ -191,7 +191,7 @@
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
+                android:value=".activities.HomeActivity" />
         </activity>
 
         <service
@@ -206,7 +206,7 @@
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
+                android:value=".activities.HomeActivity" />
         </activity>
         <activity
             android:name=".activities.ComplaintFilterActivity"
@@ -224,7 +224,7 @@
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
+                android:value=".activities.HomeActivity" />
         </activity>
         <activity
             android:name=".activities.UserSnapshotActivity"
@@ -233,7 +233,7 @@
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.eswaraj.app.eswaraj.activities.HomeActivity" />
+                android:value=".activities.HomeActivity" />
         </activity>
         <activity
             android:name=".activities.SearchableActivity"
@@ -274,7 +274,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.eswaraj.app.eswaraj.activities.MarkHomeActivity" />
+                android:value=".activities.MarkHomeActivity" />
         </activity>
     </application>
 

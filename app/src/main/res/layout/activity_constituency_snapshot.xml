@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.eswaraj.app.eswaraj.activities.ConstituencySnapshotActivity">
+    tools:context="com.next.eswaraj.activities.ConstituencySnapshotActivity">
 
     <fragment
-        class="com.eswaraj.app.eswaraj.fragments.ConstituencySnapshotFragment"
+        class="com.next.eswaraj.fragments.ConstituencySnapshotFragment"
         android:id="@+id/csFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context="com.eswaraj.app.eswaraj.fragments.MyProfileFragment"
+    tools:context="com.next.eswaraj.fragments.MyProfileFragment"
     android:background="#DBDBDB"
     android:padding="0dp"
     android:layout_margin="0dp"
@@ -20,7 +20,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="1dp">
 
-        <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+        <com.next.eswaraj.widgets.CustomNetworkImageView
             android:id="@+id/mpPhoto"
             android:layout_width="70dp"
             android:layout_height="70dp"

@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.eswaraj.app.eswaraj.activities.MyProfileActivity">
+    tools:context="com.next.eswaraj.activities.MyProfileActivity">
 
 <ScrollView
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
     <fragment
-        class="com.eswaraj.app.eswaraj.fragments.MyProfileFragment"
+        class="com.next.eswaraj.fragments.MyProfileFragment"
         android:id="@+id/mpFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:weightSum="1"
-    tools:context="com.eswaraj.app.eswaraj.activities.MarkLocationActivity"
+    tools:context="com.next.eswaraj.activities.MarkLocationActivity"
     android:background="#ffffffff">
 
     <!--TextView android:text="Home location"

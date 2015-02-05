@@ -1,9 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.eswaraj.app.eswaraj.fragments.AnalyticsFragment">
+    tools:context="com.next.eswaraj.fragments.AnalyticsFragment">
 
-    <com.eswaraj.app.eswaraj.widgets.CustomScrollView
+    <com.next.eswaraj.widgets.CustomScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
@@ -19,7 +19,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"/>
 
-        <com.eswaraj.app.eswaraj.widgets.NonScrollableGridView
+        <com.next.eswaraj.widgets.NonScrollableGridView
             android:id="@+id/mcAmenityList"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
@@ -27,6 +27,6 @@
 
     </LinearLayout>
 
-    </com.eswaraj.app.eswaraj.widgets.CustomScrollView>
+    </com.next.eswaraj.widgets.CustomScrollView>
 
 </FrameLayout>

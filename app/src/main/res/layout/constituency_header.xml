@@ -13,7 +13,7 @@
         android:layout_height="200dp"
         android:layout_weight="0.3">
 
-        <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+        <com.next.eswaraj.widgets.CustomNetworkImageView
             android:id="@+id/cPhoto"
             android:layout_width="match_parent"
             android:layout_height="150dp"

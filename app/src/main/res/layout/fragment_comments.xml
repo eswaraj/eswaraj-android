@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.eswaraj.app.eswaraj.fragments.CommentsFragment"
+    tools:context="com.next.eswaraj.fragments.CommentsFragment"
     android:background="#FFFFFF">
 
     <LinearLayout
@@ -31,12 +31,12 @@
     </LinearLayout>
 
 
-    <com.eswaraj.app.eswaraj.widgets.NonScrollableListView
+    <com.next.eswaraj.widgets.NonScrollableListView
         android:id="@+id/cOldComments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="9.5">
-    </com.eswaraj.app.eswaraj.widgets.NonScrollableListView>
+    </com.next.eswaraj.widgets.NonScrollableListView>
 
     <Button
         android:id="@+id/cShowMore"

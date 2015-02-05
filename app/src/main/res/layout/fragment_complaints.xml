@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ffffff"
-    tools:context="com.eswaraj.app.eswaraj.fragments.ComplaintsFragment">
+    tools:context="com.next.eswaraj.fragments.ComplaintsFragment">
 
         <LinearLayout
             android:orientation="vertical"

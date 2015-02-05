@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#DBDBDB"
-    tools:context="com.eswaraj.app.eswaraj.fragments.GooglePlacesListFragment">
+    tools:context="com.next.eswaraj.fragments.GooglePlacesListFragment">
 
     <ListView
         android:id="@+id/mlSearchResults"

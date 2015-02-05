@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.eswaraj.app.eswaraj.activities.ComplaintFilterActivity">
+    tools:context="com.next.eswaraj.activities.ComplaintFilterActivity">
 
     <TextView android:text="Sort by Citizen Services"
         android:textSize="20sp"

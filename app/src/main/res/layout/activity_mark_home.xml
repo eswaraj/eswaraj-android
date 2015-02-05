@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:weightSum="1"
-    tools:context="com.eswaraj.app.eswaraj.activities.MarkHomeActivity"
+    tools:context="com.next.eswaraj.activities.MarkHomeActivity"
     android:background="#ffffffff">
 
     <LinearLayout

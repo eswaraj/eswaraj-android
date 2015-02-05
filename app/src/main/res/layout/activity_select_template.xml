@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.eswaraj.app.eswaraj.activities.SelectTemplateActivity"
+    tools:context="com.next.eswaraj.activities.SelectTemplateActivity"
     android:background="#f2f2f2"
     android:padding="0dp">
 

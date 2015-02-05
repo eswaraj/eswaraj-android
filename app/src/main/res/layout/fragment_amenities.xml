@@ -17,7 +17,7 @@
         >
     </FrameLayout>
 
-    <com.eswaraj.app.eswaraj.widgets.ProgressTextView
+    <com.next.eswaraj.widgets.ProgressTextView
         android:id="@+id/asRevGeocode"
         android:layout_width="fill_parent"
         android:layout_height="0dp"

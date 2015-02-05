@@ -13,7 +13,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="5dp">
 
-        <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+        <com.next.eswaraj.widgets.CustomNetworkImageView
             android:id="@+id/cImage"
             android:layout_width="fill_parent"
             android:layout_height="80dp"

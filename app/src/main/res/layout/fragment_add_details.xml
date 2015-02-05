@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ffe9e7ee"
-    tools:context="com.eswaraj.app.eswaraj.fragments.AddDetailsFragment">
+    tools:context="com.next.eswaraj.fragments.AddDetailsFragment">
 
 <LinearLayout
     android:layout_width="fill_parent"

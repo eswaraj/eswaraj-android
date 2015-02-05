@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.eswaraj.app.eswaraj.activities.PlaceSearchActivity">
+        tools:context="com.next.eswaraj.activities.PlaceSearchActivity">
 
         <LinearLayout
             android:layout_width="fill_parent"

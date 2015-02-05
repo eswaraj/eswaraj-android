@@ -28,7 +28,7 @@
             android:weightSum="1"
             android:layout_weight="0.85">
 
-            <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+            <com.next.eswaraj.widgets.CustomNetworkImageView
                 android:id="@+id/mcProfilePhoto"
                 android:layout_width="fill_parent"
                 android:layout_height="80dp"
@@ -151,7 +151,7 @@
 
             </LinearLayout>
 
-            <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+            <com.next.eswaraj.widgets.CustomNetworkImageView
                 android:id="@+id/mcImage"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -223,7 +223,7 @@
 
 </LinearLayout>
 
-    <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+    <com.next.eswaraj.widgets.CustomNetworkImageView
         android:id="@+id/mcIcon"
         android:layout_width="fill_parent"
         android:layout_height="40dp"

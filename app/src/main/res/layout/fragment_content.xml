@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.eswaraj.app.eswaraj.fragments.ContentFragment">
+    tools:context="com.next.eswaraj.fragments.ContentFragment">
 
     <ImageView
         android:id="@+id/cBanner"
@@ -36,7 +36,7 @@
         android:layout_marginBottom="10dp"
         android:background="#FFFFFF" />
 
-    <com.eswaraj.app.eswaraj.widgets.NonScrollableListView
+    <com.next.eswaraj.widgets.NonScrollableListView
         android:id="@+id/cVideoList"
         android:layout_below="@+id/cVideoListTitle"
         android:layout_width="match_parent"

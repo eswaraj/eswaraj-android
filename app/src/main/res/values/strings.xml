@@ -11,8 +11,7 @@
     <string name="quitButtonText">Quit</string>
     <string name="gotItButtonText">Got It!</string>
     <string name="getDataError">Network Error. Could not fetch data</string>
-    <string name="facebook_app_id">958809957480252</string>
-    <string name="facebook_app_id_old">306847796169444</string>
+    <string name="facebook_app_id">292853217568902</string>
     <string name="title_activity_select_amenity">SelectAmenityActivity</string>
     <string name="title_activity_youtube">YoutubeActivity</string>
     <string name="title_activity_base">BaseActivity</string>

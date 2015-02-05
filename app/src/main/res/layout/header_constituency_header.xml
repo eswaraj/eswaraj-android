@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp">
 
-        <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+        <com.next.eswaraj.widgets.CustomNetworkImageView
             android:id="@+id/cHeader"
             android:layout_width="match_parent"
             android:layout_height="200dp"

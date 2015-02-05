@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.eswaraj.app.eswaraj.fragments.LeaderFragment"
+    tools:context="com.next.eswaraj.fragments.LeaderFragment"
     android:orientation="vertical"
     android:background="#DBDBDB"
     >
@@ -13,7 +13,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="15dp">
 
-    <com.eswaraj.app.eswaraj.widgets.CustomNetworkImageView
+    <com.next.eswaraj.widgets.CustomNetworkImageView
         android:id="@+id/lPhoto"
         android:layout_width="fill_parent"
         android:layout_height="300dp"

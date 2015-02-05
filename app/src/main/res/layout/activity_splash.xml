@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bg"
-    tools:context="com.eswaraj.app.eswaraj.activities.SplashActivity">
+    tools:context="com.next.eswaraj.activities.SplashActivity">
 
-    <com.eswaraj.app.eswaraj.widgets.CustomViewPager
+    <com.next.eswaraj.widgets.CustomViewPager
         android:id="@+id/viewPager"
         android:layout_marginBottom="100dp"
         android:layout_marginTop="300dp"
