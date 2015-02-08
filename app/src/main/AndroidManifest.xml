@@ -85,17 +85,6 @@
                 android:value=".activities.SelectTemplateActivity" />
         </activity>
         <activity
-            android:name=".activities.MarkLocationActivity"
-            android:label="@string/title_activity_mark_location"
-            android:parentActivityName=".activities.LoginActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.LoginActivity" />
-        </activity>
-        <activity
             android:name=".activities.ComplaintSummaryActivity"
             android:label="@string/title_activity_complaint_summary"
             android:parentActivityName=".activities.AddDetailsActivity"

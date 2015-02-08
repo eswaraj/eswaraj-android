@@ -19,7 +19,6 @@ import com.next.eswaraj.activities.ContentActivity;
 import com.next.eswaraj.activities.HomeActivity;
 import com.next.eswaraj.activities.LeaderActivity;
 import com.next.eswaraj.activities.LoginActivity;
-import com.next.eswaraj.activities.MarkLocationActivity;
 import com.next.eswaraj.activities.MyProfileActivity;
 import com.next.eswaraj.activities.SelectAmenityActivity;
 import com.next.eswaraj.activities.SelectTemplateActivity;
@@ -138,7 +137,6 @@ import de.greenrobot.event.EventBus;
                 AddDetailsActivity.class,
                 AddDetailsFragment.class,
                 RegisterUserAndDeviceRequest.class,
-                MarkLocationActivity.class,
                 ComplaintSummaryFragment.class,
                 ComplaintSummaryActivity.class,
                 UserComplaintsActivity.class,
