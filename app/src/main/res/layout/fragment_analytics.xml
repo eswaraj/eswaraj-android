@@ -4,6 +4,7 @@
     tools:context="com.next.eswaraj.fragments.AnalyticsFragment">
 
     <com.next.eswaraj.widgets.CustomScrollView
+        android:id="@+id/mcScroll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
@@ -23,7 +24,11 @@
             android:id="@+id/mcAmenityList"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:numColumns="2"/>
+            android:numColumns="2"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 
     </LinearLayout>
 

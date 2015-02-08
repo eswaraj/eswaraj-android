@@ -17,6 +17,7 @@ import com.next.eswaraj.middleware.MiddlewareServiceImpl;
 import com.next.eswaraj.models.ComplaintCounter;
 import com.next.eswaraj.models.ComplaintDto;
 import com.next.eswaraj.util.GlobalSessionUtil;
+import com.next.eswaraj.widgets.CustomScrollView;
 import com.next.eswaraj.widgets.PieChartView;
 import com.eswaraj.web.dto.CategoryDto;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
@@ -43,6 +44,7 @@ public class AnalyticsFragment extends BaseFragment {
 
     private FrameLayout mcChartContainer;
     private GridView mcAmenityList;
+    private CustomScrollView mcScrollView;
 
     public AnalyticsFragment() {
         // Required empty public constructor
@@ -65,6 +67,9 @@ public class AnalyticsFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_analytics, container, false);
         mcChartContainer = (FrameLayout) rootView.findViewById(R.id.mcChartContainer);
         mcAmenityList = (GridView) rootView.findViewById(R.id.mcAmenityList);
+        mcScrollView = (CustomScrollView) rootView.findViewById(R.id.mcScroll);
+
+        mcScrollView.scrollTo(0,0);
         return rootView;
     }
 
@@ -105,6 +110,7 @@ public class AnalyticsFragment extends BaseFragment {
         if(event.getSuccess()) {
             List<ComplaintCounter> complaintCounters = event.getComplaintCounters();
             createChart(complaintCounters);
+            mcScrollView.scrollTo(0,0);
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch constituency complaint counters. Error = " + event.getError(), Toast.LENGTH_LONG).show();

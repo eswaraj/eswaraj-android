@@ -93,7 +93,7 @@
     </LinearLayout>
 
     <ImageView
-        android:src="@drawable/anon_loc_grey"
+        android:src="@drawable/marker_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerHorizontal="true"

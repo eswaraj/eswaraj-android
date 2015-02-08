@@ -19,6 +19,8 @@ import com.next.eswaraj.models.PoliticalBodyAdminDto;
 import com.next.eswaraj.widgets.CustomNetworkImageView;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
@@ -39,7 +41,7 @@ public class LeaderFragment extends BaseFragment {
     private TextView lParty;
     private TextView lEducation;
     private WebView lDetails;
-    private Button lConstituency;
+    private TextView lConstituency;
 
     private PoliticalBodyAdminDto politicalBodyAdminDto;
 
@@ -70,7 +72,7 @@ public class LeaderFragment extends BaseFragment {
         lParty = (TextView) rootView.findViewById(R.id.lParty);
         lAddress = (TextView) rootView.findViewById(R.id.lAddress);
         lEducation = (TextView) rootView.findViewById(R.id.lEducation);
-        lConstituency = (Button) rootView.findViewById(R.id.lConstituency);
+        lConstituency = (TextView) rootView.findViewById(R.id.lConstituency);
 
         politicalBodyAdminDto = (PoliticalBodyAdminDto) getActivity().getIntent().getSerializableExtra("LEADER");
 
@@ -102,13 +104,16 @@ public class LeaderFragment extends BaseFragment {
         //lPhoto.loadProfileImage(politicalBodyAdminDto.getProfilePhoto(), politicalBodyAdminDto.getId());
         lName.setText(politicalBodyAdminDto.getName());
         lPost.setText(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
-        lParty.setText(politicalBodyAdminDto.getParty().getName());
+        lParty.setText(WordUtils.capitalizeFully(politicalBodyAdminDto.getParty().getName()));
         lAddress.setText("");
         lAge.setText("");
         lEducation.setText("");
-        lConstituency.setText("Go to " + politicalBodyAdminDto.getLocation().getName());
-        if (politicalBodyAdminDto.getBiodata() != null) {
+        lConstituency.setText(politicalBodyAdminDto.getLocation().getName());
+        if (politicalBodyAdminDto.getBiodata() != null && !politicalBodyAdminDto.getBiodata().equals("")) {
             lDetails.loadData(politicalBodyAdminDto.getBiodata(), "text/html", null);
+        }
+        else {
+            lDetails.setVisibility(View.GONE);
         }
     }
 

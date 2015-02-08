@@ -190,7 +190,7 @@
 
                 <TextView
                     android:id="@+id/lLink"
-                    android:layout_width="fill_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Constituency Link:"
                     android:gravity="left"
@@ -200,15 +200,15 @@
                     android:layout_weight="0.5" />
 
 
-                <Button
+                <TextView
                     android:id="@+id/lConstituency"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:gravity="right"
                     android:padding="10dp"
                     android:layout_weight="0.5"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/map_view"/>
+                    android:drawableLeft="@drawable/map_view"
+                    android:layout_marginRight="10dp"/>
 
             </LinearLayout>
 
