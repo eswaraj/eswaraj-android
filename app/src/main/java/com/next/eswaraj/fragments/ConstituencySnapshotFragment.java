@@ -65,6 +65,7 @@ public class ConstituencySnapshotFragment extends BaseFragment {
     private Button smart;
 
     private Integer requestCount = 20;
+    private Boolean isStopped = false;
 
     public ConstituencySnapshotFragment() {
         // Required empty public constructor
@@ -97,6 +98,18 @@ public class ConstituencySnapshotFragment extends BaseFragment {
     public void onDestroy() {
         eventBus.unregister(this);
         super.onDestroy();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        isStopped = false;
+    }
+
+    @Override
+    public void onStop() {
+        isStopped = true;
+        super.onStop();
     }
 
     @Override
@@ -191,6 +204,9 @@ public class ConstituencySnapshotFragment extends BaseFragment {
     }
 
     public void onEventMainThread(GetLocationComplaintsEvent event) {
+        if(isStopped) {
+            return;
+        }
         if(event.getSuccess()) {
             int old = 0;
             if(currentComplaintDtoList != null) {

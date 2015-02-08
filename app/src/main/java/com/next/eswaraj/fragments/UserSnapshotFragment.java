@@ -67,6 +67,7 @@ public class UserSnapshotFragment extends BaseFragment {
     private Long closeCount;
     private Long totalCount;
     private Integer requestCount = 5;
+    private Boolean isStopped = false;
 
     public UserSnapshotFragment() {
         // Required empty public constructor
@@ -90,6 +91,18 @@ public class UserSnapshotFragment extends BaseFragment {
     public void onDestroy() {
         eventBus.unregister(this);
         super.onDestroy();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        isStopped = false;
+    }
+
+    @Override
+    public void onStop() {
+        isStopped = true;
+        super.onStop();
     }
 
     @Override
@@ -177,6 +190,9 @@ public class UserSnapshotFragment extends BaseFragment {
     }
 
     public void onEventMainThread(GetUserComplaintsEvent event) {
+        if(isStopped) {
+            return;
+        }
         if(event.getSuccess()) {
             complaintDtoList = event.getComplaintDtoList();
             setComplaintData(ComplaintFilterHelper.filter(complaintDtoList, complaintFilter));

@@ -92,7 +92,7 @@ public class UserComplaintsFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "UserComplaints: Show More");
-                middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), complaintDtoList.size(), requestCount);
+                middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), complaintDtoList.size(), requestCount, true);
                 pDialog = new CustomProgressDialog(getActivity(), false, true, "Fetching more complaints ...");
                 pDialog.show();
             }
