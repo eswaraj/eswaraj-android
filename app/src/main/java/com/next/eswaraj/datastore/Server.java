@@ -106,8 +106,8 @@ public class Server extends BaseClass implements ServerInterface {
     }
 
     @Override
-    public void loadUserComplaints(Context context, UserDto userDto) {
-        userComplaintsRequest.processRequest(context, userDto);
+    public void loadUserComplaints(Context context, UserDto userDto, int start, int count) {
+        userComplaintsRequest.processRequest(context, userDto, start, count);
     }
 
     @Override

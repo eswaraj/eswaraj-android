@@ -78,4 +78,8 @@ public class Constants {
     public static String getGlobalSearchUrl(String query) {
         return BASE_URL + "/search?q=" + query;
     }
+
+    public static String getUserComplaintsUrl(Long userId, int start, int count) {
+        return USER_COMPLAINTS_URL + "/" + userId + "?count=" + count + "&start=" + start;
+    }
 }

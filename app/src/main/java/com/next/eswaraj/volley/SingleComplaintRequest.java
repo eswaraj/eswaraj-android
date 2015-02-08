@@ -31,7 +31,7 @@ public class SingleComplaintRequest extends BaseClass {
     NetworkAccessHelper networkAccessHelper;
 
     public void processRequest(Context context, Long id) {
-        StringRequest request = new StringRequest(Constants.GET_SINGLE_COMPLAINT_URL + "/" + id, createSuccessListener(context), createErrorListener(context));
+        StringRequest request = new StringRequest(Constants.GET_SINGLE_COMPLAINT_URL + "/" + id, createSuccessListener(context, id), createErrorListener(context));
         networkAccessHelper.submitNetworkRequest("GetSingleComplaint", request);
     }
 
@@ -57,7 +57,7 @@ public class SingleComplaintRequest extends BaseClass {
         };
     }
 
-    private Response.Listener<String> createSuccessListener(final Context context) {
+    private Response.Listener<String> createSuccessListener(final Context context, final Long id) {
         return new Response.Listener<String>() {
             @Override
             public void onResponse(String json) {
@@ -70,7 +70,7 @@ public class SingleComplaintRequest extends BaseClass {
                     event.setComplaintDto(complaintDto);
                     eventBus.postSticky(event);
                     //Update the cache
-                    cache.updateUserComplaints(context, json);
+                    cache.updateSingleComplaint(context, id, json);
                 } catch (JsonParseException e) {
                     GetSingleComplaintEvent event = new GetSingleComplaintEvent();
                     event.setError("Invalid json");

@@ -132,32 +132,32 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void loadUserComplaints(Context context, UserDto userDto, Boolean dontGetFromCache) {
+    public void loadUserComplaints(Context context, UserDto userDto, int start, int count, Boolean dontGetFromCache) {
         if(dontGetFromCache) {
-            server.loadUserComplaints(context, userDto);
+            server.loadUserComplaints(context, userDto, start, count);
         }
         else {
-            loadUserComplaints(context, userDto);
+            loadUserComplaints(context, userDto, start, count);
         }
     }
 
     @Override
-    public Boolean isUserComplaintsAvailable(Context context) {
-        return cache.isUserComplaintsAvailable(context);
+    public Boolean isUserComplaintsAvailable(Context context, int start, int count) {
+        return cache.isUserComplaintsAvailable(context, start, count);
     }
 
     @Override
-    public void updateUserComplaints(Context context, String json) {
-        cache.updateUserComplaints(context, json);
+    public void updateUserComplaints(Context context, int start, int count, String json) {
+        cache.updateUserComplaints(context, start, count, json);
     }
 
     @Override
-    public void loadUserComplaints(Context context, UserDto userDto) {
-        if(cache.isUserComplaintsAvailable(context)) {
-            cache.loadUserComplaints(context, userDto);
+    public void loadUserComplaints(Context context, UserDto userDto, int start, int count) {
+        if(cache.isUserComplaintsAvailable(context, start, count)) {
+            cache.loadUserComplaints(context, userDto, start, count);
         }
         else {
-            server.loadUserComplaints(context, userDto);
+            server.loadUserComplaints(context, userDto, start, count);
         }
     }
 

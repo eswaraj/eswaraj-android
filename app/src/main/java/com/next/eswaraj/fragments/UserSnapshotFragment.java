@@ -66,6 +66,7 @@ public class UserSnapshotFragment extends BaseFragment {
     private Long openCount;
     private Long closeCount;
     private Long totalCount;
+    private Integer requestCount = 5;
 
     public UserSnapshotFragment() {
         // Required empty public constructor
@@ -80,7 +81,7 @@ public class UserSnapshotFragment extends BaseFragment {
         if(savedInstanceState == null) {
             getChildFragmentManager().beginTransaction().add(R.id.usListFragment, complaintListFragment).commit();
         }
-        middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), true);
+        middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), 0, requestCount, true);
         pDialog = new CustomProgressDialog(getActivity(), false, true, "Fetching your complaints ...");
         pDialog.show();
     }

@@ -34,8 +34,8 @@ public class UserComplaintsRequest extends BaseClass {
     @Inject
     NetworkAccessHelper networkAccessHelper;
 
-    public void processRequest(Context context, UserDto userDto) {
-        StringRequest request = new StringRequest(Constants.USER_COMPLAINTS_URL + "/" + userDto.getId(), createSuccessListener(context), createErrorListener(context));
+    public void processRequest(Context context, UserDto userDto, int start, int count) {
+        StringRequest request = new StringRequest(Constants.getUserComplaintsUrl(userDto.getId(), start, count), createSuccessListener(context, start, count), createErrorListener(context));
         request.setRetryPolicy(new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 3));
         networkAccessHelper.submitNetworkRequest("GetUserComplaints", request);
     }
@@ -62,7 +62,7 @@ public class UserComplaintsRequest extends BaseClass {
         };
     }
 
-    private Response.Listener<String> createSuccessListener(final Context context) {
+    private Response.Listener<String> createSuccessListener(final Context context, final int start, final int count) {
 
         return new Response.Listener<String>() {
             @Override
@@ -76,7 +76,7 @@ public class UserComplaintsRequest extends BaseClass {
                     event.setComplaintDtoList(complaintDtoList);
                     eventBus.postSticky(event);
                     //Update the cache
-                    cache.updateUserComplaints(context, json);
+                    cache.updateUserComplaints(context, start, count, json);
                 } catch (JsonParseException e) {
                     GetUserComplaintsEvent event = new GetUserComplaintsEvent();
                     event.setError("Invalid json");

@@ -38,16 +38,13 @@ import com.next.eswaraj.fragments.AddDetailsFragment;
 import com.next.eswaraj.fragments.AnalyticsFragment;
 import com.next.eswaraj.fragments.ComplaintListFragment;
 import com.next.eswaraj.fragments.ComplaintSummaryOfflineFragment;
-import com.next.eswaraj.fragments.ComplaintsFragment;
 import com.next.eswaraj.fragments.ConstituencyComplaintsFragment;
 import com.next.eswaraj.fragments.ConstituencySnapshotFragment;
 import com.next.eswaraj.fragments.LeaderForComplaintFragment;
 import com.next.eswaraj.fragments.LeaderListFragment;
 import com.next.eswaraj.fragments.LocationListFragment;
 import com.next.eswaraj.fragments.UserComplaintsFragment;
-import com.next.eswaraj.fragments.ConstituencyFragment;
 import com.next.eswaraj.fragments.ComplaintsMapFragment;
-import com.next.eswaraj.fragments.MyConstituencyFragment;
 import com.next.eswaraj.fragments.ConstituencyInfoFragment;
 import com.next.eswaraj.fragments.ContentFragment;
 import com.next.eswaraj.fragments.LeaderFragment;
@@ -59,7 +56,6 @@ import com.next.eswaraj.fragments.ComplaintSummaryFragment;
 import com.next.eswaraj.fragments.GoogleMapFragment;
 import com.next.eswaraj.fragments.GooglePlacesListFragment;
 import com.next.eswaraj.fragments.ImageFragment;
-import com.next.eswaraj.fragments.MyComplaintsFragment;
 import com.next.eswaraj.fragments.SelectTemplateFragment;
 import com.next.eswaraj.fragments.SingleComplaintFragment;
 import com.next.eswaraj.fragments.LoginFragment;
@@ -146,7 +142,6 @@ import de.greenrobot.event.EventBus;
                 ComplaintSummaryFragment.class,
                 ComplaintSummaryActivity.class,
                 UserComplaintsActivity.class,
-                MyComplaintsFragment.class,
                 UserComplaintsRequest.class,
                 SingleComplaintActivity.class,
                 SingleComplaintFragment.class,
@@ -167,7 +162,6 @@ import de.greenrobot.event.EventBus;
                 MyProfileActivity.class,
                 MyProfileFragment.class,
                 ConstituencyComplaintsActivity.class,
-                MyConstituencyFragment.class,
                 LocationComplaintsRequest.class,
                 LocationComplaintCountersRequest.class,
                 VolleyUtil.class,
@@ -189,11 +183,9 @@ import de.greenrobot.event.EventBus;
                 ContentActivity.class,
                 ContentFragment.class,
                 AnalyticsFragment.class,
-                ComplaintsFragment.class,
                 ComplaintListFragment.class,
                 ComplaintFilterActivity.class,
                 ConstituencyInfoFragment.class,
-                ConstituencyFragment.class,
                 ComplaintsMapFragment.class,
                 BaseActivity.class,
                 UserComplaintsFragment.class,

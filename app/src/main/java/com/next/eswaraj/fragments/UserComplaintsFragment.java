@@ -1,6 +1,7 @@
 package com.next.eswaraj.fragments;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -45,10 +47,12 @@ public class UserComplaintsFragment extends BaseFragment {
     private ComplaintsMapFragment complaintsMapFragment;
 
     private CustomProgressDialog pDialog;
+    private Button mcShowMore;
     private List<ComplaintDto> complaintDtoList;
     private List<ComplaintDto> currentComplaintDtoList;
     private ComplaintFilter complaintFilter;
     private ComplaintsPagerAdapter complaintsPagerAdapter;
+    private Integer requestCount = 20;
 
     public UserComplaintsFragment() {
         // Required empty public constructor
@@ -63,7 +67,7 @@ public class UserComplaintsFragment extends BaseFragment {
 
         eventBus.register(this);
 
-        middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), true);
+        middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), 0, requestCount, true);
     }
 
     @Override
@@ -78,6 +82,21 @@ public class UserComplaintsFragment extends BaseFragment {
         complaintListFragment = new ComplaintListFragment();
         analyticsFragment = new AnalyticsFragment();
         complaintsMapFragment = new ComplaintsMapFragment();
+
+        mcShowMore = new Button(getActivity());
+        mcShowMore.setText("Show more");
+        mcShowMore.setBackgroundColor(Color.parseColor("#0099cc"));
+        mcShowMore.setTextColor(Color.parseColor("#FFFFFF"));
+        complaintListFragment.setFooter(mcShowMore);
+        mcShowMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "UserComplaints: Show More");
+                middlewareService.loadUserComplaints(getActivity(), userSession.getUser(), complaintDtoList.size(), requestCount);
+                pDialog = new CustomProgressDialog(getActivity(), false, true, "Fetching more complaints ...");
+                pDialog.show();
+            }
+        });
 
         ViewPager pager = (ViewPager) rootView.findViewById(R.id.viewPager);
         complaintsPagerAdapter = new ComplaintsPagerAdapter(getChildFragmentManager(), complaintListFragment, analyticsFragment, complaintsMapFragment);
@@ -130,8 +149,25 @@ public class UserComplaintsFragment extends BaseFragment {
 
     public void onEventMainThread(GetUserComplaintsEvent event) {
         if(event.getSuccess()) {
-            complaintDtoList = event.getComplaintDtoList();
-            setFilter(complaintFilter);
+            int old = 0;
+            if(currentComplaintDtoList != null) {
+                old = currentComplaintDtoList.size();
+            }
+            if(complaintDtoList == null) {
+                complaintDtoList = event.getComplaintDtoList();
+            }
+            else {
+                for(ComplaintDto complaintDto : event.getComplaintDtoList()) {
+                    complaintDtoList.add(complaintDto);
+                }
+            }
+            setComplaintData(ComplaintFilterHelper.filter(complaintDtoList, complaintFilter));
+            if(old != 0) {
+                complaintListFragment.scrollTo(old - 1);
+            }
+            if(complaintDtoList.size() < requestCount) {
+                mcShowMore.setVisibility(View.GONE);
+            }
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch user complaints. Error = " + event.getError(), Toast.LENGTH_LONG).show();

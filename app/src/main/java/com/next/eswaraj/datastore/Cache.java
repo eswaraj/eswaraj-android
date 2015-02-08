@@ -236,7 +236,7 @@ public class Cache extends BaseClass implements CacheInterface {
     }
 
     @Override
-    public Boolean isUserComplaintsAvailable(Context context) {
+    public Boolean isUserComplaintsAvailable(Context context, int start, int count) {
         if(sharedPreferencesHelper.getBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_COMPLAINTS_AVAILABLE, false)) {
             if((new Date().getTime() - sharedPreferencesHelper.getLong(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_COMPLAINTS_DOWNLOAD_TIME_IN_MS, 0L)) < Constants.SERVER_DATA_UPDATE_INTERVAL_IN_MS) {
                 return true;
@@ -246,14 +246,14 @@ public class Cache extends BaseClass implements CacheInterface {
     }
 
     @Override
-    public void updateUserComplaints(Context context, String json) {
+    public void updateUserComplaints(Context context, int start, int count, String json) {
         sharedPreferencesHelper.putString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_COMPLAINTS, json);
         sharedPreferencesHelper.putBoolean(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_COMPLAINTS_AVAILABLE, true);
         sharedPreferencesHelper.putLong(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_COMPLAINTS_DOWNLOAD_TIME_IN_MS, new Date().getTime());
     }
 
     @Override
-    public void loadUserComplaints(Context context, UserDto userDto) {
+    public void loadUserComplaints(Context context, UserDto userDto, int start, int count) {
         Gson gson = new Gson();
         String json = sharedPreferencesHelper.getString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.USER_COMPLAINTS, null);
         try {
