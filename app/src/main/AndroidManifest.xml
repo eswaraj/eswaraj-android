@@ -46,12 +46,14 @@
             android:name=".activities.SelectAmenityActivity"
             android:label="@string/title_activity_select_amenity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden"
+            android:parentActivityName=".activities.HomeActivity">
         </activity>
         <activity
             android:name=".activities.YoutubeActivity"
             android:label="@string/title_activity_youtube"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden"
+            android:parentActivityName=".activities.ContentActivity">
         </activity>
         <activity
             android:name=".base.BaseActivity"
@@ -238,6 +240,7 @@
         <activity
             android:name=".activities.SearchableActivity"
             android:label="@string/title_activity_searchable"
+            android:parentActivityName=".activities.HomeActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -255,16 +258,20 @@
         <activity
             android:name=".activities.LeaderListActivity"
             android:label="@string/title_activity_leader_list"
+            android:parentActivityName=".activities.HomeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.LocationListActivity"
-            android:label="@string/title_activity_location_list" >
+            android:label="@string/title_activity_location_list"
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activities.MarkHomeActivity"
             android:label="@string/title_activity_mark_home"
+            android:parentActivityName=".activities.MyProfileActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
         </activity>
         <activity
