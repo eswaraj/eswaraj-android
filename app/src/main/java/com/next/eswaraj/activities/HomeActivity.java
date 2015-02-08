@@ -130,7 +130,6 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints");
                 if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     if (userSession.isUserLoggedIn(v.getContext())) {
-                        //Intent i = new Intent(v.getContext(), UserComplaintsActivity.class);
                         Intent i = new Intent(v.getContext(), UserSnapshotActivity.class);
                         startActivity(i);
                     } else {
@@ -143,12 +142,20 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 else {
                     googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, "My Complaints: No Internet Service");
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
+                    final Context c = v.getContext();
                     builder.setMessage("You need internet services enabled to use this feature")
                             .setCancelable(false)
                             .setTitle("Internet Connection needed")
                             .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setPositiveButton("Enable WiFi", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    GenericUtil.enableWifi(c);
                                     dialog.dismiss();
                                 }
                             });
@@ -181,12 +188,20 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 else {
                     googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, "My Leaders: No Internet Service");
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
+                    final Context c = v.getContext();
                     builder.setMessage("You need internet services enabled to use this feature")
                             .setCancelable(false)
                             .setTitle("Internet Connection needed")
                             .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setPositiveButton("Enable WiFi", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    GenericUtil.enableWifi(c);
                                     dialog.dismiss();
                                 }
                             });
@@ -221,12 +236,20 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 else {
                     googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, "My Constituency: No Internet Service");
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
+                    final Context c = v.getContext();
                     builder.setMessage("You need internet services enabled to use this feature")
                             .setCancelable(false)
                             .setTitle("Internet Connection needed")
                             .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setPositiveButton("Enable WiFi", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    GenericUtil.enableWifi(c);
                                     dialog.dismiss();
                                 }
                             });
@@ -255,12 +278,20 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                 else {
                     googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, "My Profile: No Internet Service");
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
+                    final Context c = v.getContext();
                     builder.setMessage("You need internet services enabled to use this feature")
                             .setCancelable(false)
                             .setTitle("Internet Connection needed")
                             .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setPositiveButton("Enable WiFi", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    GenericUtil.enableWifi(c);
                                     dialog.dismiss();
                                 }
                             });
