@@ -13,6 +13,8 @@ import com.next.eswaraj.R;
 import com.next.eswaraj.models.GlobalSearchResponseDto;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import java.util.List;
 
 public class GlobalSearchAdapter extends ArrayAdapter<GlobalSearchResponseDto> {
@@ -64,7 +66,7 @@ public class GlobalSearchAdapter extends ArrayAdapter<GlobalSearchResponseDto> {
             }
         }
         else if(globalSearchResponseDto.getType().equals("Leader")) {
-            holder.sDetails.setText(globalSearchResponseDto.getSubType() + ", " + globalSearchResponseDto.getcName() + "\n" + globalSearchResponseDto.getPartyName());
+            holder.sDetails.setText(globalSearchResponseDto.getSubType() + ", " + WordUtils.capitalizeFully(globalSearchResponseDto.getcName()) + "\n" + WordUtils.initials(globalSearchResponseDto.getPartyName()));
             if(globalSearchResponseDto.getImage() != null && !globalSearchResponseDto.getImage().equals("")) {
                 Picasso.with(context).load(globalSearchResponseDto.getImage().replace("http:", "https:")).error(R.drawable.anon_grey).placeholder(R.drawable.anon_grey).into(holder.sImage);
             }
