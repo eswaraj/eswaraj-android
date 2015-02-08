@@ -199,12 +199,12 @@
                     android:textStyle="bold"
                     android:layout_weight="0.5" />
 
-
                 <TextView
                     android:id="@+id/lConstituency"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:gravity="right"
+                    android:gravity="left"
+                    android:drawablePadding="10dp"
                     android:padding="10dp"
                     android:layout_weight="0.5"
                     android:drawableLeft="@drawable/map_view"
