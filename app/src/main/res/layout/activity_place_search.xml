@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="fill_parent"
-    android:layout_width="wrap_content">
+    android:layout_width="match_parent"
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,11 +22,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.3"
-                android:background="#FFFFFF"
                 android:layout_marginRight="10dp"
                 android:padding="5dp"
-                android:drawableLeft="@drawable/ic_search_location"
-                android:hint="Enter Your Location ..."/>
+                android:drawableLeft="@android:drawable/ic_menu_search"
+                android:background="#f1f1f1"
+                android:hint="Search"/>
 
         </LinearLayout>
 
@@ -33,9 +34,7 @@
             android:id="@+id/psList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:dividerHeight="10dp"
-            android:divider="@color/transparent"/>
+            android:layout_margin="10dp"/>
 
     </LinearLayout>
 

@@ -11,17 +11,15 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="1"
-        android:background="@drawable/left_border"
-        >
+        android:weightSum="1" >
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="0.1"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
 
             <TextView android:id="@+id/text1"
                 android:layout_width="fill_parent"
@@ -30,10 +28,10 @@
                 android:textSize="18sp"
                 android:text="Delhi, India"
                 android:maxLines="2"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 android:autoText="false" />
 
             <TextView android:id="@+id/text2"
@@ -43,19 +41,11 @@
                 android:textSize="12sp"
                 android:text="Lack of Infrastructure"
                 android:maxLines="2"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="10dp"/>
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp"/>
 
         </LinearLayout>
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/forward"
-            android:layout_weight="0.9"
-            android:layout_gravity="center"
-            android:adjustViewBounds="false" />
 
     </LinearLayout>
 
