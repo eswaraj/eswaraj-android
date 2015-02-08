@@ -10,49 +10,46 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/left_border"
+        android:layout_height="80dp"
         >
 
         <ImageView
             android:id="@+id/sImage"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop" />
 
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="0.3"
-            >
+            android:layout_height="fill_parent">
 
             <TextView
                 android:id="@+id/sName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:textStyle="bold"
-                android:layout_margin="5dp"
-                android:textColor="@color/navy_blue_background" />
+                android:textColor="#808080"
+                android:layout_weight="0.5"
+                android:text="Rakesh Sharma"
+                android:textSize="13sp"
+                android:padding="5dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/grey_border_left"/>
 
             <TextView
                 android:id="@+id/sDetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:textColor="#808080" />
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="#ABABAB"
+                android:layout_weight="0.5"
+                android:text="MP, Delhi"
+                android:textSize="10sp"
+                android:padding="5dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/grey_border_left"/>
 
         </LinearLayout>
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/forward"
-            android:layout_weight="0.9"
-            android:layout_gravity="center"
-            android:adjustViewBounds="false" />
 
     </LinearLayout>
 

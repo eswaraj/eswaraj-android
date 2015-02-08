@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="fill_parent"
     android:layout_width="match_parent"
-    android:background="#FFFFFF">
+    android:background="#DBDBDB">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,8 +25,11 @@
                 android:layout_marginRight="10dp"
                 android:padding="5dp"
                 android:drawableLeft="@android:drawable/ic_menu_search"
-                android:background="#f1f1f1"
-                android:hint="Search"/>
+                android:drawablePadding="5dp"
+                android:background="#ffffff"
+                android:hint="Search"
+                android:layout_marginLeft="10dp"
+                />
 
         </LinearLayout>
 
