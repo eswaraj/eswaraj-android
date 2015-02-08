@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.next.eswaraj.BuildConfig;
 import com.next.eswaraj.R;
 import com.next.eswaraj.activities.ComplaintFilterActivity;
 import com.next.eswaraj.activities.ContentActivity;
@@ -47,6 +48,9 @@ public class BaseActivity extends ActionBarActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if(BuildConfig.DEBUG) {
+            setTitle("Test: " + getTitle());
+        }
     }
 
     @Override

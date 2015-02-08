@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -104,8 +105,16 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
                             .setCancelable(false)
                             .setTitle("Location Service needed")
                             .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                    startActivity(settingsIntent);
                                     dialog.dismiss();
                                 }
                             });
