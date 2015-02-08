@@ -12,7 +12,6 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.next.eswaraj.R;
 import com.next.eswaraj.base.BaseActivity;
@@ -61,8 +60,6 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     private ImageView profile;
     private ProgressTextView hRevGeocode;
     private ImageView hCreate;
-    private LinearLayout sError;
-    private Button sClose;
 
     private Boolean retryRevGeocoding = false;
 

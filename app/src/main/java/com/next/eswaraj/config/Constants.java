@@ -10,7 +10,7 @@ public class Constants {
     public static final String GOOGLE_API_BROWSER_KEY = "AIzaSyBjBEcixsQ_FNyfohbzZHgeDJqLzPaRsXw";
     public static final String FACEBOOK_API_KEY = "";
     public static final String YOUTUBE_API_KEY = "";
-    public static final String GOOGLE_ANALYTICS_KEY = "UA-58373525-1";
+    public static final String GOOGLE_ANALYTICS_KEY = "UA-59500540-1";
 
     //eSwaraj URLS
     public static String BASE_URL = "http://dev.api.eswaraj.com/api/v0";
