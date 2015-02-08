@@ -1,6 +1,7 @@
 package com.next.eswaraj.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 
@@ -39,6 +40,7 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
     EventBus eventBus;
 
     private OnMapReadyCallback callback;
+    private GoogleMap.OnCameraChangeListener cameraChangeListener;
     private GoogleMap googleMap;
     private Marker marker;
     private int zoomLevel;
@@ -68,6 +70,10 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
         super.getMapAsync(this);
     }
 
+    public void addCameraChangeListener(GoogleMap.OnCameraChangeListener context) {
+        cameraChangeListener = context;
+    }
+
     /*
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,6 +97,9 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
         this.googleMap = googleMap;
         if(callback != null) {
             callback.onMapReady(googleMap);
+        }
+        if(cameraChangeListener != null) {
+            googleMap.setOnCameraChangeListener(cameraChangeListener);
         }
         googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override

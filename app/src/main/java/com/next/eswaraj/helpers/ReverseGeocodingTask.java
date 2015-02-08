@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import com.next.eswaraj.application.EswarajApplication;
 import com.next.eswaraj.events.RevGeocodeEvent;
 import com.google.gson.Gson;
+import com.next.eswaraj.events.UserActionRevGeocodeEvent;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,10 +25,18 @@ public class ReverseGeocodingTask extends AsyncTask<Void, Void, Void>{
 
     private Context context;
     private Location location;
+    private Boolean onUserAction = false;
 
     public ReverseGeocodingTask(Context context, Location location) {
         this.context = context;
         this.location = location;
+        EswarajApplication.getInstance().inject(this);
+    }
+
+    public ReverseGeocodingTask(Context context, Location location, Boolean onUserAction) {
+        this.context = context;
+        this.location = location;
+        this.onUserAction = onUserAction;
         EswarajApplication.getInstance().inject(this);
     }
 
@@ -42,12 +51,24 @@ public class ReverseGeocodingTask extends AsyncTask<Void, Void, Void>{
         	matches = geoCoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
         	Address bestMatch = (matches.isEmpty() ? null : matches.get(0));
             if(bestMatch != null) {
-                String userLocationString = bestMatch.getAddressLine(1) + ", " + bestMatch.getAddressLine(2);
-                RevGeocodeEvent event = new RevGeocodeEvent();
-                event.setRevGeocodedLocation(userLocationString);
-                event.setRevGeocodedFullData(new Gson().toJson(bestMatch));
-                event.setSuccess(true);
-                eventBus.post(event);
+                String userLocationString = bestMatch.getAddressLine(1);
+                if(bestMatch.getAddressLine(2) != null) {
+                    userLocationString += ", " + bestMatch.getAddressLine(2);
+                }
+                if(onUserAction) {
+                    UserActionRevGeocodeEvent event = new UserActionRevGeocodeEvent();
+                    event.setRevGeocodedLocation(userLocationString);
+                    event.setRevGeocodedFullData(new Gson().toJson(bestMatch));
+                    event.setSuccess(true);
+                    eventBus.post(event);
+                }
+                else {
+                    RevGeocodeEvent event = new RevGeocodeEvent();
+                    event.setRevGeocodedLocation(userLocationString);
+                    event.setRevGeocodedFullData(new Gson().toJson(bestMatch));
+                    event.setSuccess(true);
+                    eventBus.post(event);
+                }
             }
         } catch (IOException e) {
         	e.printStackTrace();

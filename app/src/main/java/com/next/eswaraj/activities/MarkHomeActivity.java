@@ -5,17 +5,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.CameraPosition;
 import com.next.eswaraj.R;
 import com.next.eswaraj.base.BaseActivity;
 import com.next.eswaraj.events.ProfileUpdateEvent;
+import com.next.eswaraj.events.RevGeocodeEvent;
+import com.next.eswaraj.events.UserActionRevGeocodeEvent;
 import com.next.eswaraj.fragments.GoogleMapFragment;
 import com.next.eswaraj.helpers.GoogleAnalyticsTracker;
+import com.next.eswaraj.helpers.ReverseGeocodingTask;
 import com.next.eswaraj.middleware.MiddlewareServiceImpl;
 import com.next.eswaraj.util.LocationUtil;
 import com.next.eswaraj.util.UserSessionUtil;
@@ -29,7 +34,7 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class MarkHomeActivity extends BaseActivity implements OnMapReadyCallback {
+public class MarkHomeActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnCameraChangeListener {
 
     @Inject
     EventBus eventBus;
@@ -53,6 +58,7 @@ public class MarkHomeActivity extends BaseActivity implements OnMapReadyCallback
     private Boolean markerUpdatedOnce = false;
     private int SEARCH_REQUEST = 8888;
     private Double lat, lng;
+    private ReverseGeocodingTask reverseGeocodingTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +69,7 @@ public class MarkHomeActivity extends BaseActivity implements OnMapReadyCallback
         dialogMode = getIntent().getBooleanExtra("MODE", false);
         googleMapFragment = new GoogleMapFragment();
         googleMapFragment.setContext(this);
+        googleMapFragment.addCameraChangeListener(this);
 
         eventBus.register(this);
 
@@ -198,6 +205,36 @@ public class MarkHomeActivity extends BaseActivity implements OnMapReadyCallback
             googleMapFragment.centreMapAt(lat, lng);
             lat = null;
             lng = null;
+        }
+    }
+
+    @Override
+    public void onCameraChange(CameraPosition cameraPosition) {
+        if(reverseGeocodingTask != null) {
+            if(reverseGeocodingTask.getStatus() == AsyncTask.Status.FINISHED) {
+                startRevGeocodeTask(cameraPosition);
+            }
+            else {
+                reverseGeocodingTask.cancel(true);
+                startRevGeocodeTask(cameraPosition);
+            }
+        }
+        else {
+            startRevGeocodeTask(cameraPosition);
+        }
+    }
+
+    private void startRevGeocodeTask(CameraPosition cameraPosition) {
+        Location location = new Location("Map");
+        location.setLatitude(cameraPosition.target.latitude);
+        location.setLongitude(cameraPosition.target.longitude);
+        reverseGeocodingTask = new ReverseGeocodingTask(this, location, true);
+        reverseGeocodingTask.execute();
+    }
+
+    public void onEventMainThread(UserActionRevGeocodeEvent event) {
+        if(event.getSuccess()) {
+            mhSearchText.setText(event.getRevGeocodedLocation());
         }
     }
 }

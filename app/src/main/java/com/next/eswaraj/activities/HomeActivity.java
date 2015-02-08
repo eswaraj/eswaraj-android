@@ -75,6 +75,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setTitle("Choose action");
+        eventBus.register(this);
 
         complaints = (ImageView) findViewById(R.id.hComplaints);
         leaders = (ImageView) findViewById(R.id.hLeaders);
@@ -264,7 +265,6 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     @Override
     protected void onStart() {
         super.onStart();
-        eventBus.register(this);
         locationUtil.subscribe(applicationContext, true);
         mapReady = false;
     }
@@ -272,8 +272,13 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     @Override
     protected void onStop() {
         locationUtil.unsubscribe();
-        eventBus.unregister(this);
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        eventBus.unregister(this);
+        super.onDestroy();
     }
 
     @Override
