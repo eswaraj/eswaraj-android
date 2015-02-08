@@ -39,6 +39,7 @@ public class GooglePlacesListAdapter extends ArrayAdapter<GooglePlace> {
 
             holder = new GooglePlaceHolder();
             holder.stTitle = (TextView)row.findViewById(R.id.text1);
+            holder.stDescription = (TextView)row.findViewById(R.id.text2);
 
             row.setTag(holder);
         }
@@ -48,7 +49,8 @@ public class GooglePlacesListAdapter extends ArrayAdapter<GooglePlace> {
         }
 
         GooglePlace googlePlace = googlePlacesList.get(position);
-        holder.stTitle.setText(googlePlace.getDescription());
+        holder.stTitle.setText(googlePlace.getTitle());
+        holder.stDescription.setText(googlePlace.getDescription());
 
         return row;
     }
@@ -56,5 +58,6 @@ public class GooglePlacesListAdapter extends ArrayAdapter<GooglePlace> {
     static class GooglePlaceHolder
     {
         TextView stTitle;
+        TextView stDescription;
     }
 }

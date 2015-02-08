@@ -64,7 +64,10 @@ public class GooglePlacesUtil extends BaseClass {
                     JSONArray jsonArray = jsonObject.getJSONArray("predictions");
                     ArrayList<GooglePlace> arrayList = new ArrayList<GooglePlace>();
                     for (int i=0; i<jsonArray.length(); i++) {
-                        GooglePlace googlePlace = new GooglePlace(jsonArray.getJSONObject(i).getString("place_id"), jsonArray.getJSONObject(i).getString("description"));
+                        String str = jsonArray.getJSONObject(i).getString("description");
+                        String title = getTitle(str);
+                        String description = getDescription(str);
+                        GooglePlace googlePlace = new GooglePlace(jsonArray.getJSONObject(i).getString("place_id"), title, description);
                         arrayList.add(googlePlace);
                     }
                     GooglePlacesListEvent event = new GooglePlacesListEvent();
@@ -103,7 +106,7 @@ public class GooglePlacesUtil extends BaseClass {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
-                    googlePlace = new GooglePlace(null,null);
+                    googlePlace = new GooglePlace(null,null,null);
                     googlePlace.setLatitude(jsonObject.getJSONObject("result").getJSONObject("geometry").getJSONObject("location").getDouble("lat"));
                     googlePlace.setLongitude(jsonObject.getJSONObject("result").getJSONObject("geometry").getJSONObject("location").getDouble("lng"));
                     GooglePlaceDetailsEvent event = new GooglePlaceDetailsEvent();
@@ -116,5 +119,24 @@ public class GooglePlacesUtil extends BaseClass {
                 }
             }
         };
+    }
+
+    private String getTitle(String str) {
+        return str.split(",")[0];
+    }
+
+    private String getDescription(String str) {
+        int i = 0;
+        String description = "";
+        for(String s : str.split(",")) {
+            if(i != 0) {
+                if(i != 1) {
+                    description += ", ";
+                }
+                description += s.trim();
+            }
+            i++;
+        }
+        return description;
     }
 }

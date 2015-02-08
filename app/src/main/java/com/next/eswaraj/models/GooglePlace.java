@@ -1,6 +1,7 @@
 package com.next.eswaraj.models;
 
 public class GooglePlace {
+    private String title;
     private String description;
     private String id;
     private double latitude;
@@ -10,13 +11,22 @@ public class GooglePlace {
 
     }
 
-    public GooglePlace(String id, String description) {
+    public GooglePlace(String id, String title, String description) {
         this.id = id;
+        this.title = title;
         this.description = description;
     }
 
     public String getId() {
         return this.id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
