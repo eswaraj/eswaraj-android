@@ -54,6 +54,14 @@ public class BaseActivity extends ActionBarActivity {
     }
 
     @Override
+    protected void onStop() {
+        if(BuildConfig.DEBUG) {
+            setTitle(getTitle().toString().replace("Test:", ""));
+        }
+        super.onStop();
+    }
+
+    @Override
     public void finish() {
         super.finish();
         if(!dontUseAnimation) {

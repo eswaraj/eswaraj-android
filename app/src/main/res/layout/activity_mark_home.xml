@@ -82,6 +82,7 @@
             android:layout_height="50dp"
             android:background="#FFFFFF"
             android:textSize="14sp"
+            android:drawableLeft="@android:drawable/ic_menu_search"
             android:layout_marginLeft="10dp"
             android:padding="5dp"
             android:layout_marginRight="60dp"
