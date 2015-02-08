@@ -3,10 +3,12 @@ package com.next.eswaraj.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.next.eswaraj.R;
@@ -39,6 +41,7 @@ public class VideoContentListAdapter extends ArrayAdapter<VideoContentItem> {
 
             holder = new VideoContentDtoHolder();
             holder.cText = (TextView)row.findViewById(R.id.vcName);
+            holder.cIcon = (ImageView)row.findViewById(R.id.vcIcon);
 
             row.setTag(holder);
         }
@@ -48,6 +51,7 @@ public class VideoContentListAdapter extends ArrayAdapter<VideoContentItem> {
         }
 
         VideoContentItem videoContentItem = videoContentItemList.get(position);
+        holder.cIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(videoContentItem.getId()) + ".png"));
 
         holder.cText.setText(videoContentItem.getName());
         return row;
@@ -56,5 +60,6 @@ public class VideoContentListAdapter extends ArrayAdapter<VideoContentItem> {
     static class VideoContentDtoHolder
     {
         TextView cText;
+        ImageView cIcon;
     }
 }

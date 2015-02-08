@@ -14,6 +14,7 @@ import com.next.eswaraj.events.BannerClickEvent;
 import com.next.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.next.eswaraj.models.VideoContentItem;
 import com.next.eswaraj.util.GlobalSessionUtil;
+import com.next.eswaraj.widgets.NonScrollableGridView;
 import com.next.eswaraj.widgets.NonScrollableListView;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 
@@ -35,7 +36,7 @@ public class ContentFragment extends BaseFragment {
     @Inject
     GoogleAnalyticsTracker googleAnalyticsTracker;
 
-    private NonScrollableListView cVideoList;
+    private NonScrollableGridView cVideoList;
     private String pattern = ".*v=(.*)";
 
     public ContentFragment() {
@@ -46,12 +47,13 @@ public class ContentFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_content, container, false);
-        cVideoList = (NonScrollableListView) rootView.findViewById(R.id.cVideoList);
+        cVideoList = (NonScrollableGridView) rootView.findViewById(R.id.cVideoList);
 
         ArrayList<VideoContentItem> videoContentItems = new ArrayList<VideoContentItem>();
 
         for(CategoryWithChildCategoryDto categoryDto : globalSession.getCategoryDtoList()) {
             VideoContentItem videoContentItem = new VideoContentItem();
+            videoContentItem.setId(categoryDto.getId());
             videoContentItem.setName(categoryDto.getName());
             videoContentItem.setLink(extractVideoId(categoryDto.getVideoUrl()));
             videoContentItems.add(videoContentItem);

@@ -23,7 +23,7 @@
             android:id="@+id/mcAmenityList"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:numColumns="3"/>
+            android:numColumns="2"/>
 
     </LinearLayout>
 
