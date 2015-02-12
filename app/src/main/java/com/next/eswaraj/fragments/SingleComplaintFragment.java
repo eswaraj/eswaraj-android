@@ -49,7 +49,6 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     private CustomNetworkImageView submitterImage;
     private CustomNetworkImageView scIcon;
     private TextView submitterName;
-    //private TextView submitterDetails;
     private GoogleMapFragment googleMapFragment;
     private ComplaintDto complaintDto;
     private CustomProgressDialog pDialog;
@@ -103,7 +102,6 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         submitterName = (TextView) rootView.findViewById(R.id.scSubmitterName);
         submitterImage = (CustomNetworkImageView) rootView.findViewById(R.id.scSubmitterImage);
         scIcon = (CustomNetworkImageView) rootView.findViewById(R.id.scIcon);
-        //submitterDetails = (TextView) rootView.findViewById(R.id.scSubmitterDetails);
         scStatus = (TextView) rootView.findViewById(R.id.scStatus);
         scComplaintId = (TextView) rootView.findViewById(R.id.scComplaintId);
         scAddress = (TextView) rootView.findViewById(R.id.scAddress);
@@ -164,7 +162,12 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
                 scSubCategory.setText(category.getName());
             }
         }
-        if(!userSession.getUser().getPerson().getExternalId().equals(complaintDto.getCreatedBy().get(0).getExternalId()) || complaintDto.getStatus().equals("Done")) {
+        if(complaintDto.getCreatedBy() != null) {
+            if (!userSession.getUser().getPerson().getExternalId().equals(complaintDto.getCreatedBy().get(0).getExternalId()) || complaintDto.getStatus().equals("Done")) {
+                scClose.setVisibility(View.GONE);
+            }
+        }
+        else {
             scClose.setVisibility(View.GONE);
         }
         if(complaintDto.getImages() != null) {
@@ -175,9 +178,11 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         }
 
         //Submitter details
-        submitterName.setText(complaintDto.getCreatedBy().get(0).getName());
-        if(!complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
-            submitterImage.loadProfileImage(complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getCreatedBy().get(0).getId());
+        if(complaintDto.getCreatedBy() != null) {
+            submitterName.setText(complaintDto.getCreatedBy().get(0).getName());
+            if (!complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
+                submitterImage.loadProfileImage(complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getCreatedBy().get(0).getId());
+            }
         }
 
         //Set up fragments
