@@ -78,27 +78,27 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         holder.mcId.setText(complaintDto.getId().toString());
         holder.mcDate.setText(DateUtils.getRelativeTimeSpanString(complaintDto.getComplaintTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
         holder.mcStatus.setText(complaintDto.getStatus());
-        holder.mcName.setText(complaintDto.getCreatedBy().get(0).getName());
-        if(complaintDto.getDescription() != null && !complaintDto.getDescription().equals("")) {
-            holder.mcDescription.setText(complaintDto.getDescription());
-        }
-        else {
-            holder.mcDescription.setVisibility(View.GONE);
-        }
-        if(complaintDto.getCreatedBy().get(0).getProfilePhoto() != null && !complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
-            //holder.mcProfilePhoto.loadProfileImage(complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getCreatedBy().get(0).getId());
-            Picasso.with(context).load(complaintDto.getCreatedBy().get(0).getProfilePhoto().replace("http:", "https:")).error(R.drawable.anon_grey).placeholder(R.drawable.anon_grey).into(holder.mcProfilePhoto);
-        }
-        else {
-            holder.mcProfilePhoto.setImageDrawable(context.getResources().getDrawable(R.drawable.anon_grey));
-        }
-        if(complaintDto.getImages() != null && complaintDto.getImages().get(0) != null && complaintDto.getImages().get(0).getOrgUrl() != null && !complaintDto.getImages().get(0).getOrgUrl().equals("")) {
-            //holder.mcImage.loadComplaintImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
-            Picasso.with(context).load(complaintDto.getImages().get(0).getOrgUrl()).into(holder.mcImage);
-            holder.mcImage.setVisibility(View.VISIBLE);
-        }
-        else {
-            holder.mcImage.setVisibility(View.GONE);
+        if(complaintDto.getCreatedBy() != null) {
+            holder.mcName.setText(complaintDto.getCreatedBy().get(0).getName());
+            if (complaintDto.getDescription() != null && !complaintDto.getDescription().equals("")) {
+                holder.mcDescription.setText(complaintDto.getDescription());
+                holder.mcDescription.setVisibility(View.VISIBLE);
+            } else {
+                holder.mcDescription.setVisibility(View.GONE);
+            }
+            if (complaintDto.getCreatedBy().get(0).getProfilePhoto() != null && !complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
+                //holder.mcProfilePhoto.loadProfileImage(complaintDto.getCreatedBy().get(0).getProfilePhoto(), complaintDto.getCreatedBy().get(0).getId());
+                Picasso.with(context).load(complaintDto.getCreatedBy().get(0).getProfilePhoto().replace("http:", "https:")).error(R.drawable.anon_grey).placeholder(R.drawable.anon_grey).into(holder.mcProfilePhoto);
+            } else {
+                holder.mcProfilePhoto.setImageDrawable(context.getResources().getDrawable(R.drawable.anon_grey));
+            }
+            if (complaintDto.getImages() != null && complaintDto.getImages().get(0) != null && complaintDto.getImages().get(0).getOrgUrl() != null && !complaintDto.getImages().get(0).getOrgUrl().equals("")) {
+                //holder.mcImage.loadComplaintImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
+                Picasso.with(context).load(complaintDto.getImages().get(0).getOrgUrl()).into(holder.mcImage);
+                holder.mcImage.setVisibility(View.VISIBLE);
+            } else {
+                holder.mcImage.setVisibility(View.GONE);
+            }
         }
         if(getRootCategoryId(complaintDto) != null) {
             holder.mcIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(getRootCategoryId(complaintDto)) + ".png"));

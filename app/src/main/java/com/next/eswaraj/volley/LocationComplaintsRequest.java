@@ -2,6 +2,7 @@ package com.next.eswaraj.volley;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
@@ -36,6 +37,7 @@ public class LocationComplaintsRequest extends BaseClass {
     NetworkAccessHelper networkAccessHelper;
 
     public void processRequest(Context context, LocationDto locationDto, int start, int count) {
+        Log.e("LocationComplaints", Constants.getLocationComplaintsUrl(locationDto.getId(), start, count));
         StringRequest request = new StringRequest(Constants.getLocationComplaintsUrl(locationDto.getId(), start, count), createSuccessListener(context, locationDto, start, count), createErrorListener(context));
         request.setRetryPolicy(new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 3));
         networkAccessHelper.submitNetworkRequest("GetLocationComplaints", request);
@@ -64,7 +66,6 @@ public class LocationComplaintsRequest extends BaseClass {
     }
 
     private Response.Listener<String> createSuccessListener(final Context context, final LocationDto locationDto, final int start, final int count) {
-
         return new Response.Listener<String>() {
             @Override
             public void onResponse(String json) {
@@ -76,6 +77,7 @@ public class LocationComplaintsRequest extends BaseClass {
                     event.setSuccess(true);
                     event.setComplaintDtoList(complaintDtoList);
                     eventBus.postSticky(event);
+                    Log.e("LocationComplaints", json);
                     //Update the cache
                     cache.updateLocationComplaints(context, locationDto, start, count, json);
                 } catch (JsonParseException e) {

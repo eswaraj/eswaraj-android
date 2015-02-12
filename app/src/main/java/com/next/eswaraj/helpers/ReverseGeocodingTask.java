@@ -72,6 +72,9 @@ public class ReverseGeocodingTask extends AsyncTask<Void, Void, Void>{
             }
         } catch (IOException e) {
         	e.printStackTrace();
+            RevGeocodeEvent event = new RevGeocodeEvent();
+            event.setSuccess(false);
+            eventBus.post(event);
         }
         return null;
     }
