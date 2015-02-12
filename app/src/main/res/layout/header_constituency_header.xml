@@ -55,7 +55,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_margin="10dp">
 
         <Button
             android:id="@+id/cLeader"
@@ -63,8 +63,9 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="#0099cc"
-            android:textColor="#FFFFFF" />
+            android:textColor="#707070"
+            android:background="#FFFFFF"
+            android:layout_marginRight="5dp" />
 
         <Button
             android:id="@+id/cSmart"
@@ -72,8 +73,9 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="#92B06A"
-            android:textColor="#FFFFFF" />
+            android:textColor="#707070"
+            android:background="#FFFFFF"
+            android:layout_marginLeft="5dp" />
 
     </LinearLayout>
 
