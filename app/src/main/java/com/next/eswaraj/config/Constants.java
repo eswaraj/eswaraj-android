@@ -13,8 +13,8 @@ public class Constants {
     public static final String GOOGLE_ANALYTICS_KEY = "UA-59500540-1";
 
     //eSwaraj URLS
-    public static String BASE_URL = "http://dev.api.eswaraj.com/api/v0";
-    public static String BASE_URL_2 = "http://dev.api.eswaraj.com";
+    public static String BASE_URL = "http://api.eswaraj.com/api/v0";
+    public static String BASE_URL_2 = "http://api.eswaraj.com";
 
     public static String GET_CATEGORIES_URL = BASE_URL + "/categories";
     public static String SAVE_FACEBOOK_USER_URL = BASE_URL + "/user/facebook";
