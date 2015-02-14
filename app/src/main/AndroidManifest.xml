@@ -69,7 +69,8 @@
             android:label="@string/title_activity_select_template"
             android:parentActivityName=".activities.SelectAmenityActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleInstance">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.SelectAmenityActivity" />
@@ -79,7 +80,8 @@
             android:label="@string/title_activity_add_details"
             android:parentActivityName=".activities.SelectTemplateActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:launchMode="singleInstance">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.SelectTemplateActivity" />
