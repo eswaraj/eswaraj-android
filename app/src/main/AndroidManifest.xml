@@ -46,15 +46,15 @@
         <activity
             android:name=".activities.SelectAmenityActivity"
             android:label="@string/title_activity_select_amenity"
+            android:parentActivityName=".activities.HomeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:parentActivityName=".activities.HomeActivity">
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.YoutubeActivity"
             android:label="@string/title_activity_youtube"
-            android:windowSoftInputMode="stateHidden"
-            android:parentActivityName=".activities.ContentActivity">
+            android:parentActivityName=".activities.ContentActivity"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".base.BaseActivity"
@@ -256,22 +256,32 @@
             android:name=".activities.LocationListActivity"
             android:label="@string/title_activity_location_list"
             android:parentActivityName=".activities.HomeActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.MarkHomeActivity"
             android:label="@string/title_activity_mark_home"
             android:parentActivityName=".activities.MyProfileActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
         </activity>
         <activity
             android:name=".activities.PlaceSearchActivity"
             android:label="@string/title_activity_place_search"
             android:parentActivityName=".activities.MarkHomeActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MarkHomeActivity" />
+        </activity>
+        <activity
+            android:name=".activities.AboutUsActivity"
+            android:label="@string/title_activity_about_us"
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.next.eswaraj.activities.HomeActivity" />
         </activity>
     </application>
 

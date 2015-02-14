@@ -183,7 +183,7 @@ public class LoginFragment extends BaseFragment {
             else {
                 wasUserAlreadyLoggedIn = false;
             }
-            welcomeText.setText("Making Good Governance a Peoples' Movement");
+            welcomeText.setText("Making Good Governance a People's Movement");
             //welcomeText.setTypeface(custom_font);
 
             //Register callback handlers

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.next.eswaraj.activities.AboutUsActivity;
 import com.next.eswaraj.activities.AddDetailsActivity;
 import com.next.eswaraj.activities.ComplaintFilterActivity;
 import com.next.eswaraj.activities.ComplaintSummaryActivity;
@@ -202,7 +203,8 @@ import de.greenrobot.event.EventBus;
                 LocationListFragment.class,
                 LoadLeaderForLocationRequest.class,
                 MarkHomeActivity.class,
-                PlaceSearchActivity.class
+                PlaceSearchActivity.class,
+                AboutUsActivity.class
         },
         complete = false,
         library = true

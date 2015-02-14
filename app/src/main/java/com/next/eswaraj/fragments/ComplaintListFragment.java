@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.next.eswaraj.R;
 import com.next.eswaraj.adapters.ComplaintListAdapter;
@@ -28,6 +29,7 @@ public class ComplaintListFragment extends BaseFragment {
     EventBus eventBus;
 
     private ListView mcList;
+    private TextView mcPlaceholderText;
     private ComplaintListAdapter complaintsAdapter;
     private View header;
     private View footer;
@@ -43,6 +45,7 @@ public class ComplaintListFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_complaint_list, container, false);
         mcList = (ListView) rootView.findViewById(R.id.mcList);
+        mcPlaceholderText = (TextView) rootView.findViewById(R.id.mcPlaceholderText);
         mcList.setDividerHeight(0);
 
         if(header != null) {
@@ -69,6 +72,10 @@ public class ComplaintListFragment extends BaseFragment {
     }
 
     public void setData(List<ComplaintDto> complaintDtoList) {
+        if(complaintDtoList == null || complaintDtoList.size() == 0) {
+            mcList.setVisibility(View.GONE);
+            mcPlaceholderText.setVisibility(View.VISIBLE);
+        }
         if(showCount == null || showCount > complaintDtoList.size()) {
             complaintsAdapter = new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, complaintDtoList);
         }

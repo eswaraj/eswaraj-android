@@ -145,10 +145,10 @@ public class SplashActivity extends BaseActivity {
     private void setUpPagerData(Boolean onlyOne) {
         splashScreenItems = new ArrayList<SplashScreenItem>();
         if(onlyOne) {
-            splashScreenItems.add(new SplashScreenItem(null, null, "eSwaraj", "Making Good Governance a Peoples' Movement"));
+            splashScreenItems.add(new SplashScreenItem(null, null, "eSwaraj", "Making Good Governance a People's Movement"));
         }
         else {
-            splashScreenItems.add(new SplashScreenItem(null, null, "eSwaraj", "Making Good Governance a Peoples' Movement"));
+            splashScreenItems.add(new SplashScreenItem(null, null, "eSwaraj", "Making Good Governance a People's Movement"));
             splashScreenItems.add(new SplashScreenItem(null, null, "Constitution : A Nation's Blueprint", "We came together and signed a contract called constitution which paved the way for founding of this great nation. A Contract that promised that our lives would be much better by being part of this nation. A contract that promised that together we can be much more than we are as individuals."));
             splashScreenItems.add(new SplashScreenItem(null, null, "Political & Administrative Structure", "A system of public administration was laid out to achieve the promises in the Constitution. Considering everyone has similar basic needs, India was divided in multiple parts, each with same political and administrative structure. People elect representative who coordinate with administration to deliver governance."));
             splashScreenItems.add(new SplashScreenItem(null, null, "Promises Need Dose of Reality : Social Audit", "Even the greatest plans fall short if ground-level feedback is not taken from end beneficiaries. eSwaraj aims to remove the disconnect between ground level realities and top level perception and bring transparency in quality of service delivery and governance."));

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.next.eswaraj.BuildConfig;
 import com.next.eswaraj.R;
+import com.next.eswaraj.activities.AboutUsActivity;
 import com.next.eswaraj.activities.ComplaintFilterActivity;
 import com.next.eswaraj.activities.ContentActivity;
 import com.next.eswaraj.activities.MyProfileActivity;
@@ -158,6 +159,10 @@ public class BaseActivity extends ActionBarActivity {
                 i = new Intent(getBaseContext(), ComplaintFilterActivity.class);
                 i.putExtra("FILTER", complaintFilter);
                 startActivityForResult(i, SHOW_FILTER_REQUEST);
+                return true;
+            case R.id.menu_aboutus:
+                i = new Intent(getBaseContext(), AboutUsActivity.class);
+                startActivity(i);
                 return true;
         }
 

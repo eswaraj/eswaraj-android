@@ -2,6 +2,7 @@ package com.next.eswaraj.volley;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
@@ -35,6 +36,7 @@ public class UserComplaintsRequest extends BaseClass {
     NetworkAccessHelper networkAccessHelper;
 
     public void processRequest(Context context, UserDto userDto, int start, int count) {
+        Log.d("UserComplaintsRequest", Constants.getUserComplaintsUrl(userDto.getId(), start, count));
         StringRequest request = new StringRequest(Constants.getUserComplaintsUrl(userDto.getId(), start, count), createSuccessListener(context, start, count), createErrorListener(context));
         request.setRetryPolicy(new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 3));
         networkAccessHelper.submitNetworkRequest("GetUserComplaints", request);
@@ -63,7 +65,6 @@ public class UserComplaintsRequest extends BaseClass {
     }
 
     private Response.Listener<String> createSuccessListener(final Context context, final int start, final int count) {
-
         return new Response.Listener<String>() {
             @Override
             public void onResponse(String json) {

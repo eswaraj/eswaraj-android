@@ -28,8 +28,6 @@ public class ComplaintPostVolleyRequest extends Request<String> {
 
 
     private final Response.Listener<String> mListener;
-    private  File issueImage;
-
 
     public ComplaintPostVolleyRequest(Response.ErrorListener errorListener, Response.Listener<String> listener, SaveComplaintRequestDto saveComplaintRequestDto, File image, String url) throws UnsupportedEncodingException {
         super(Method.POST, url, errorListener);
@@ -48,6 +46,7 @@ public class ComplaintPostVolleyRequest extends Request<String> {
 
     private void addIssueDetailImage(String partName, File image) {
         if(image != null) {
+            Log.i("eswaraj", "requestFile : " + image.toString());
             entity.addPart(partName, new FileBody(image));
         }
     }
@@ -87,6 +86,5 @@ public class ComplaintPostVolleyRequest extends Request<String> {
         if(mListener != null){
             mListener.onResponse(response);
         }
-
     }
 }
