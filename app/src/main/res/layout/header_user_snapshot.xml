@@ -59,7 +59,6 @@
                     android:layout_weight="0.5"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
-                    android:text="PM, India"
                     android:textColor="#DBDBDB"
                     android:layout_gravity="top"
                     android:gravity="top|center_horizontal"

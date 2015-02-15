@@ -134,6 +134,9 @@ public class UserSnapshotFragment extends BaseFragment {
         if(userSession.getUser().getPerson().getDob() != null) {
             details.setText(GenericUtil.getAge(userSession.getUser().getPerson().getDob()) + " Years, " + userSession.getUser().getPerson().getGender());
         }
+        else {
+            details.setText("");
+        }
 
         if(totalCount != null) {
             total.setText("Total\n" + totalCount);
