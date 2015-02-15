@@ -3,7 +3,7 @@ package com.next.eswaraj.config;
 
 public class Constants {
 
-    public static final long SERVER_DATA_UPDATE_INTERVAL_IN_MS = 7*24*60*60*1000;
+    public static final long SERVER_DATA_UPDATE_INTERVAL_IN_MS = 1*24*60*60*1000;
 
     //API keys
     public static final String GOOGLE_API_KEY = "AIzaSyBpDIEEPbFGUr7cvXI5_nq04J6i5fou9rY";
