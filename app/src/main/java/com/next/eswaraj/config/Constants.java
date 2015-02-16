@@ -39,8 +39,8 @@ public class Constants {
     public static final String GOOGLE_PLACES_DETAILS_URL= "https://maps.googleapis.com/maps/api/place/details/json?key=" + GOOGLE_API_BROWSER_KEY + "&placeid=";
 
     public static void setDevMode() {
-        //BASE_URL = "http://dev.api.eswaraj.com/api/v0";
-        //BASE_URL_2 = "http://dev.api.eswaraj.com";
+        BASE_URL = "http://dev.api.eswaraj.com/api/v0";
+        BASE_URL_2 = "http://dev.api.eswaraj.com";
 
         GET_CATEGORIES_URL = BASE_URL + "/categories";
         SAVE_FACEBOOK_USER_URL = BASE_URL + "/user/facebook";
@@ -58,6 +58,7 @@ public class Constants {
         GET_LOCATION_URL = BASE_URL + "/location";
         GET_LEADER_URL = BASE_URL + "/leader";
         GET_LEADERS_FOR_LOCATION = BASE_URL + "/leaders/location";
+        GET_LEADER_PROMISES = BASE_URL + "/promises";
     }
 
     public static String getCommentsUrl(Long complaintId, int start, int count) {
