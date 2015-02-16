@@ -199,7 +199,7 @@
             android:gravity="left"
             android:drawableLeft="@drawable/my_complaints_location"
             android:drawablePadding="5dp"
-            android:maxLines="2"/>
+            android:maxLines="4"/>
 
         <TextView
             android:id="@+id/scComments"
