@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.next.eswaraj.R;
 import com.next.eswaraj.base.BaseFragment;
 import com.next.eswaraj.events.GetLeaderEvent;
+import com.next.eswaraj.events.ShowPromisesEvent;
 import com.next.eswaraj.events.StartAnotherActivityEvent;
 import com.next.eswaraj.middleware.MiddlewareServiceImpl;
 import com.next.eswaraj.models.PoliticalBodyAdminDto;
@@ -42,6 +43,7 @@ public class LeaderFragment extends BaseFragment {
     private TextView lEducation;
     private WebView lDetails;
     private TextView lConstituency;
+    private Button lPromise;
 
     private PoliticalBodyAdminDto politicalBodyAdminDto;
 
@@ -73,6 +75,7 @@ public class LeaderFragment extends BaseFragment {
         lAddress = (TextView) rootView.findViewById(R.id.lAddress);
         lEducation = (TextView) rootView.findViewById(R.id.lEducation);
         lConstituency = (TextView) rootView.findViewById(R.id.lConstituency);
+        lPromise = (Button) rootView.findViewById(R.id.lPromise);
 
         politicalBodyAdminDto = (PoliticalBodyAdminDto) getActivity().getIntent().getSerializableExtra("LEADER");
 
@@ -91,6 +94,15 @@ public class LeaderFragment extends BaseFragment {
                 eventBus.post(event);
             }
         });
+        lPromise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowPromisesEvent event = new ShowPromisesEvent();
+                event.setSuccess(true);
+                event.setPoliticalBodyAdminDto(politicalBodyAdminDto);
+                eventBus.post(event);
+            }
+        });
         return rootView;
     }
 
@@ -101,7 +113,6 @@ public class LeaderFragment extends BaseFragment {
         else {
             lPhoto.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.anon));
         }
-        //lPhoto.loadProfileImage(politicalBodyAdminDto.getProfilePhoto(), politicalBodyAdminDto.getId());
         lName.setText(politicalBodyAdminDto.getName());
         lPost.setText(politicalBodyAdminDto.getPoliticalAdminTypeDto().getShortName() + ", " + politicalBodyAdminDto.getLocation().getName());
         lParty.setText(WordUtils.capitalizeFully(politicalBodyAdminDto.getParty().getName()));

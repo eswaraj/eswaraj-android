@@ -1,5 +1,6 @@
 package com.next.eswaraj.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -41,6 +42,8 @@ public class PromisesListActivity extends BaseActivity {
     }
 
     public void onEventMainThread(PromiseSelectedEvent event) {
-
+        Intent i = new Intent(this, SinglePromiseActivity.class);
+        i.putExtra("PROMISE", event.getPromiseDto());
+        startActivity(i);
     }
 }

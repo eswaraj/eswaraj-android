@@ -1,6 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     tools:context="com.next.eswaraj.fragments.LeaderFragment"
@@ -8,219 +7,227 @@
     android:background="#DBDBDB"
     >
 
-<RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="15dp">
-
-    <com.next.eswaraj.widgets.CustomNetworkImageView
-        android:id="@+id/lPhoto"
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="300dp"
-        android:src="@drawable/anon"
-        android:cropToPadding="true"
-        android:scaleType="centerCrop" />
-
-</RelativeLayout>
-
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="#FFFFFF"
-    android:layout_margin="10dp"
-    android:padding="10dp"
-    android:gravity="center_vertical|center_horizontal"
-    android:layout_gravity="center">
-
-    <TextView
-        android:id="@+id/lName"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MLA Name"
-        android:layout_marginLeft="20dp"
-        android:textColor="#606060" />
+        android:layout_margin="15dp">
 
-    <TextView
-        android:id="@+id/lNamelPost_separator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="|"
-        android:layout_toRightOf="@+id/lName"
-        android:layout_marginLeft="10dp"
-        android:textColor="#606060" />
+        <com.next.eswaraj.widgets.CustomNetworkImageView
+            android:id="@+id/lPhoto"
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
+            android:src="@drawable/anon"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/lPost"
-        android:layout_width="wrap_content"
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="MP, Delhi"
-        android:layout_toRightOf="@+id/lNamelPost_separator"
-        android:layout_marginLeft="10dp"
-        android:textColor="#606060" />
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/lName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MLA Name"
+            android:layout_marginLeft="20dp"
+            android:textColor="#606060" />
+
+        <TextView
+            android:id="@+id/lNamelPost_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="|"
+            android:layout_toRightOf="@+id/lName"
+            android:layout_marginLeft="10dp"
+            android:textColor="#606060" />
+
+        <TextView
+            android:id="@+id/lPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MP, Delhi"
+            android:layout_toRightOf="@+id/lNamelPost_separator"
+            android:layout_marginLeft="10dp"
+            android:textColor="#606060" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:paddingBottom="5dp">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#FFFFFF"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:paddingBottom="5dp">
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="1">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/lAge_label"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                android:weightSum="1">
+                android:text="Age:"
+                android:gravity="left"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:layout_weight="0.5"/>
 
-                <TextView
-                    android:id="@+id/lAge_label"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Age:"
-                    android:gravity="left"
-                    android:padding="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:textStyle="bold"
-                    android:layout_weight="0.5"/>
-
-                <TextView
-                    android:id="@+id/lAge"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="45 Years"
-                    android:gravity="right"
-                    android:padding="10dp"
-                    android:layout_weight="0.5"
-                    android:layout_marginRight="10dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/lAge"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:id="@+id/lPoliticalParty"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Political Party:"
-                    android:gravity="left"
-                    android:padding="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:textStyle="bold"
-                    android:layout_weight="0.5" />
-
-                <TextView
-                    android:id="@+id/lParty"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Aam Aadmi Party"
-                    android:gravity="right"
-                    android:padding="10dp"
-                    android:layout_weight="0.5"
-                    android:layout_marginRight="10dp" />
-
-                </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                android:weightSum="1">
-
-                <TextView
-                    android:id="@+id/lEducation_label"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Education:"
-                    android:gravity="left"
-                    android:padding="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:textStyle="bold"
-                    android:layout_weight="0.5" />
-
-                <TextView
-                    android:id="@+id/lEducation"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Political Science, Oxford Univ."
-                    android:gravity="right"
-                    android:padding="10dp"
-                    android:layout_weight="0.5"
-                    android:layout_marginRight="10dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                android:weightSum="1">
-
-                <TextView
-                    android:id="@+id/lAddress_label"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Address:"
-                    android:gravity="left"
-                    android:padding="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:textStyle="bold"
-                    android:layout_weight="0.5" />
-
-                <TextView
-                    android:id="@+id/lAddress"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="12, Shastri Nagar, Delhi"
-                    android:gravity="right"
-                    android:padding="10dp"
-                    android:layout_weight="0.5"
-                    android:layout_marginRight="10dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:id="@+id/lLink"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Constituency Link:"
-                    android:gravity="left"
-                    android:padding="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:textStyle="bold"
-                    android:layout_weight="0.5" />
-
-                <TextView
-                    android:id="@+id/lConstituency"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:gravity="left"
-                    android:drawablePadding="10dp"
-                    android:padding="10dp"
-                    android:layout_weight="0.5"
-                    android:drawableLeft="@drawable/map_view"
-                    android:layout_marginRight="10dp"/>
-
-            </LinearLayout>
+                android:text="45 Years"
+                android:gravity="right"
+                android:padding="10dp"
+                android:layout_weight="0.5"
+                android:layout_marginRight="10dp" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/lPoliticalParty"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Political Party:"
+                android:gravity="left"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:layout_weight="0.5" />
+
+            <TextView
+                android:id="@+id/lParty"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Aam Aadmi Party"
+                android:gravity="right"
+                android:padding="10dp"
+                android:layout_weight="0.5"
+                android:layout_marginRight="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/lEducation_label"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Education:"
+                android:gravity="left"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:layout_weight="0.5" />
+
+            <TextView
+                android:id="@+id/lEducation"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Political Science, Oxford Univ."
+                android:gravity="right"
+                android:padding="10dp"
+                android:layout_weight="0.5"
+                android:layout_marginRight="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/lAddress_label"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Address:"
+                android:gravity="left"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:layout_weight="0.5" />
+
+            <TextView
+                android:id="@+id/lAddress"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="12, Shastri Nagar, Delhi"
+                android:gravity="right"
+                android:padding="10dp"
+                android:layout_weight="0.5"
+                android:layout_marginRight="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/lLink"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Constituency Link:"
+                android:gravity="left"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:layout_weight="0.5" />
+
+            <TextView
+                android:id="@+id/lConstituency"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:gravity="left"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:layout_weight="0.5"
+                android:drawableLeft="@drawable/map_view"
+                android:layout_marginRight="10dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/lPromise"
+        android:text="Promises"
+        android:background="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
     <WebView
         android:id="@+id/lDetails"

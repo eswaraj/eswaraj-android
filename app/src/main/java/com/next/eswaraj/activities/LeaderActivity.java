@@ -5,8 +5,11 @@ import android.os.Bundle;
 
 import com.next.eswaraj.R;
 import com.next.eswaraj.base.BaseActivity;
+import com.next.eswaraj.events.ShowPromisesEvent;
 import com.next.eswaraj.events.StartAnotherActivityEvent;
 import com.next.eswaraj.fragments.LeaderFragment;
+
+import java.io.Serializable;
 
 import javax.inject.Inject;
 
@@ -37,6 +40,12 @@ public class LeaderActivity extends BaseActivity {
     public void onEventMainThread(StartAnotherActivityEvent event) {
         Intent i = new Intent(this, ConstituencySnapshotActivity.class);
         i.putExtra("ID", event.getId());
+        startActivity(i);
+    }
+
+    public void onEventMainThread(ShowPromisesEvent event) {
+        Intent i = new Intent(this, PromisesListActivity.class);
+        i.putExtra("LEADER", (Serializable) event.getPoliticalBodyAdminDto());
         startActivity(i);
     }
 }

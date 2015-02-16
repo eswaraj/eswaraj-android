@@ -287,7 +287,16 @@
         </activity>
         <activity
             android:name=".activities.PromisesListActivity"
-            android:label="@string/title_activity_promises_list" >
+            android:label="@string/title_activity_promises_list"
+            android:parentActivityName=".activities.LeaderActivity">
+        </activity>
+        <activity
+            android:name=".activities.SinglePromiseActivity"
+            android:label="@string/title_activity_single_promise"
+            android:parentActivityName=".activities.PromisesListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.next.eswaraj.activities.PromisesListActivity" />
         </activity>
     </application>
 

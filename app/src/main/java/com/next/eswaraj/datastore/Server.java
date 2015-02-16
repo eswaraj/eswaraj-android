@@ -202,6 +202,6 @@ public class Server extends BaseClass implements ServerInterface {
 
     @Override
     public void loadPromisesByLeaders(Context context, Long id) {
-        loadPromisesByLeaders(context, id);
+        loadPromisesByLeaderRequest.processRequest(context, id);
     }
 }

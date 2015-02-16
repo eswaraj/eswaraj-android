@@ -16,6 +16,7 @@ import com.next.eswaraj.activities.MarkHomeActivity;
 import com.next.eswaraj.activities.PlaceSearchActivity;
 import com.next.eswaraj.activities.PromisesListActivity;
 import com.next.eswaraj.activities.SearchableActivity;
+import com.next.eswaraj.activities.SinglePromiseActivity;
 import com.next.eswaraj.activities.UserComplaintsActivity;
 import com.next.eswaraj.activities.ContentActivity;
 import com.next.eswaraj.activities.HomeActivity;
@@ -45,6 +46,7 @@ import com.next.eswaraj.fragments.LeaderForComplaintFragment;
 import com.next.eswaraj.fragments.LeaderListFragment;
 import com.next.eswaraj.fragments.LocationListFragment;
 import com.next.eswaraj.fragments.PromisesListFragment;
+import com.next.eswaraj.fragments.SinglePromiseFragment;
 import com.next.eswaraj.fragments.UserComplaintsFragment;
 import com.next.eswaraj.fragments.ComplaintsMapFragment;
 import com.next.eswaraj.fragments.ConstituencyInfoFragment;
@@ -208,7 +210,9 @@ import de.greenrobot.event.EventBus;
                 AboutUsActivity.class,
                 LoadPromisesByLeaderRequest.class,
                 PromisesListFragment.class,
-                PromisesListActivity.class
+                PromisesListActivity.class,
+                SinglePromiseActivity.class,
+                SinglePromiseFragment.class
         },
         complete = false,
         library = true
