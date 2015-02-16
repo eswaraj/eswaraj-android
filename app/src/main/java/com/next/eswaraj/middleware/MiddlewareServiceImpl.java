@@ -572,6 +572,36 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
         }
     }
 
+    @Override
+    public void loadPromisesByLeaders(Context context, Long id, Boolean dontGetFromCache) {
+        if(dontGetFromCache) {
+            server.loadPromisesByLeaders(context, id);
+        }
+        else {
+            loadPromisesByLeaders(context, id);
+        }
+    }
+
+    @Override
+    public Boolean isPromisesByLeaderAvailable(Context context, Long id) {
+        return cache.isPromisesByLeaderAvailable(context, id);
+    }
+
+    @Override
+    public void updatePromisesByLeader(Context context, Long id, String json) {
+        cache.updatePromisesByLeader(context, id, json);
+    }
+
+    @Override
+    public void loadPromisesByLeaders(Context context, Long id) {
+        if(cache.isPromisesByLeaderAvailable(context, id)) {
+            cache.loadPromisesByLeaders(context, id);
+        }
+        else {
+            server.loadPromisesByLeaders(context, id);
+        }
+    }
+
 
 //Database
 

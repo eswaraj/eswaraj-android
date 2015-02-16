@@ -19,6 +19,7 @@ import com.next.eswaraj.volley.LoadLeaderForLocationRequest;
 import com.next.eswaraj.volley.LoadLeadersRequest;
 import com.next.eswaraj.volley.LoadLocationRequest;
 import com.next.eswaraj.volley.LoadProfileUpdateRequest;
+import com.next.eswaraj.volley.LoadPromisesByLeaderRequest;
 import com.next.eswaraj.volley.LocationComplaintCountersRequest;
 import com.next.eswaraj.volley.LocationComplaintsRequest;
 import com.next.eswaraj.volley.ProfileUpdateRequest;
@@ -84,6 +85,8 @@ public class Server extends BaseClass implements ServerInterface {
     LoadLeaderByIdRequest loadLeaderByIdRequest;
     @Inject
     LoadLeaderForLocationRequest loadLeaderForLocationRequest;
+    @Inject
+    LoadPromisesByLeaderRequest loadPromisesByLeaderRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -195,5 +198,10 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void loadLeadersForLocation(Context context, LocationDto locationDto) {
         loadLeaderForLocationRequest.processRequest(context, locationDto);
+    }
+
+    @Override
+    public void loadPromisesByLeaders(Context context, Long id) {
+        loadPromisesByLeaders(context, id);
     }
 }

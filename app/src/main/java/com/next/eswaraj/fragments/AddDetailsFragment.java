@@ -2,7 +2,9 @@ package com.next.eswaraj.fragments;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
@@ -29,6 +31,7 @@ import com.next.eswaraj.helpers.CameraHelper;
 import com.next.eswaraj.helpers.GoogleAnalyticsTracker;
 import com.next.eswaraj.middleware.MiddlewareServiceImpl;
 import com.next.eswaraj.models.ComplaintSavedResponseDto;
+import com.next.eswaraj.util.GenericUtil;
 import com.next.eswaraj.util.InternetServicesCheckUtil;
 import com.next.eswaraj.util.LocationUtil;
 import com.next.eswaraj.util.UserSessionUtil;
@@ -292,7 +295,18 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
         }
         else {
             //If the request fails dont go to next screen instead try again
-            Toast.makeText(getActivity(), event.getError(), Toast.LENGTH_LONG).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), AlertDialog.THEME_HOLO_LIGHT);
+            builder.setMessage(event.getError())
+                    .setCancelable(false)
+                    .setTitle("Complaint Post Failed")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
         }
     }
 

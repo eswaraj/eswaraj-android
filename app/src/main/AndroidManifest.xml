@@ -67,10 +67,10 @@
         <activity
             android:name=".activities.SelectTemplateActivity"
             android:label="@string/title_activity_select_template"
+            android:launchMode="singleInstance"
             android:parentActivityName=".activities.SelectAmenityActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode="singleInstance">
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.SelectAmenityActivity" />
@@ -78,10 +78,10 @@
         <activity
             android:name=".activities.AddDetailsActivity"
             android:label="@string/title_activity_add_details"
+            android:launchMode="singleInstance"
             android:parentActivityName=".activities.SelectTemplateActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:launchMode="singleInstance">
+            android:windowSoftInputMode="adjustPan|stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.SelectTemplateActivity" />
@@ -280,10 +280,14 @@
             android:label="@string/title_activity_about_us"
             android:parentActivityName=".activities.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.next.eswaraj.activities.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".activities.PromisesListActivity"
+            android:label="@string/title_activity_promises_list" >
         </activity>
     </application>
 

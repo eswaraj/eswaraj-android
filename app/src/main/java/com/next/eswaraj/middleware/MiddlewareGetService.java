@@ -31,4 +31,5 @@ public interface MiddlewareGetService {
     public void globalSearch(Context context, String query);
     public void loadLeaderById(Context context, Long id);
     public void loadLeadersForLocation(Context context, LocationDto locationDto);
+    public void loadPromisesByLeaders(Context context, Long id);
 }

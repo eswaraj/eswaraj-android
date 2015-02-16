@@ -45,5 +45,6 @@
     <string name="title_activity_mark_home">MarkHomeActivity</string>
     <string name="title_activity_place_search">PlaceSearchActivity</string>
     <string name="title_activity_about_us">AboutUsActivity</string>
+    <string name="title_activity_promises_list">PromisesListActivity</string>
 
 </resources>

@@ -34,4 +34,5 @@ public interface MiddlewareService extends MiddlewareGetService, MiddlewarePostS
     public void globalSearch(Context context, String query, Boolean dontGetFromCache);
     public void loadLeaderById(Context context, Long id, Boolean dontGetFromCache);
     public void loadLeadersForLocation(Context context, LocationDto locationDto, Boolean dontGetFromCache);
+    public void loadPromisesByLeaders(Context context, Long id, Boolean dontGetFromCache);
 }
