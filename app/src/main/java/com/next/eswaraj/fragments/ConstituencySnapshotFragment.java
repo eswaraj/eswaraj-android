@@ -101,15 +101,15 @@ public class ConstituencySnapshotFragment extends BaseFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         isStopped = false;
     }
 
     @Override
-    public void onStop() {
+    public void onPause() {
         isStopped = true;
-        super.onStop();
+        super.onPause();
     }
 
     @Override
@@ -119,7 +119,8 @@ public class ConstituencySnapshotFragment extends BaseFragment {
         mcShowMore = new Button(getActivity());
         mcShowMore.setText("Show more");
         mcShowMore.setBackgroundColor(Color.parseColor("#0099cc"));
-        mcShowMore.setTextColor(Color.parseColor("#FFFFFF"));        headerView = getActivity().getLayoutInflater().inflate(R.layout.header_constituency_header, null);
+        mcShowMore.setTextColor(Color.parseColor("#FFFFFF"));
+        headerView = getActivity().getLayoutInflater().inflate(R.layout.header_constituency_header, null);
         complaintListFragment.setFooter(mcShowMore);
         complaintListFragment.setHeader(headerView);
 
@@ -235,6 +236,9 @@ public class ConstituencySnapshotFragment extends BaseFragment {
     }
 
     public void onEventMainThread(GetLocationComplaintCountersEvent event) {
+        if(isStopped) {
+            return;
+        }
         if(event.getSuccess()) {
             complaintCounters = event.getComplaintCounters();
             complaintCount = 0L;

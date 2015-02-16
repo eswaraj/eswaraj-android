@@ -37,7 +37,7 @@ public class LocationComplaintsRequest extends BaseClass {
     NetworkAccessHelper networkAccessHelper;
 
     public void processRequest(Context context, LocationDto locationDto, int start, int count) {
-        Log.e("LocationComplaints", Constants.getLocationComplaintsUrl(locationDto.getId(), start, count));
+        Log.d("LocationComplaints", Constants.getLocationComplaintsUrl(locationDto.getId(), start, count));
         StringRequest request = new StringRequest(Constants.getLocationComplaintsUrl(locationDto.getId(), start, count), createSuccessListener(context, locationDto, start, count), createErrorListener(context));
         request.setRetryPolicy(new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 3));
         networkAccessHelper.submitNetworkRequest("GetLocationComplaints", request);
@@ -77,7 +77,7 @@ public class LocationComplaintsRequest extends BaseClass {
                     event.setSuccess(true);
                     event.setComplaintDtoList(complaintDtoList);
                     eventBus.postSticky(event);
-                    Log.e("LocationComplaints", json);
+                    Log.d("LocationComplaints", json);
                     //Update the cache
                     cache.updateLocationComplaints(context, locationDto, start, count, json);
                 } catch (JsonParseException e) {

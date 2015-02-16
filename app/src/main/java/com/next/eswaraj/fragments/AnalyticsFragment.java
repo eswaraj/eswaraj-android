@@ -68,8 +68,6 @@ public class AnalyticsFragment extends BaseFragment {
         mcChartContainer = (FrameLayout) rootView.findViewById(R.id.mcChartContainer);
         mcAmenityList = (GridView) rootView.findViewById(R.id.mcAmenityList);
         mcScrollView = (CustomScrollView) rootView.findViewById(R.id.mcScroll);
-
-        mcScrollView.scrollTo(0,0);
         return rootView;
     }
 
@@ -110,7 +108,6 @@ public class AnalyticsFragment extends BaseFragment {
         if(event.getSuccess()) {
             List<ComplaintCounter> complaintCounters = event.getComplaintCounters();
             createChart(complaintCounters);
-            mcScrollView.scrollTo(0,0);
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch constituency complaint counters. Error = " + event.getError(), Toast.LENGTH_LONG).show();

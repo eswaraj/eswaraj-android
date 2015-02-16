@@ -192,17 +192,6 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
-    public void registerDevice(Context context) {
-        if(cache.isUserDataAvailable(context)) {
-            //If user is already logged in then bypass RegisterUserEvent and directly launch GetUserEvent
-            cache.loadUserData(context, null);
-        }
-        else {
-            server.registerDevice(context);
-        }
-    }
-
-    @Override
     public void updateProfile(Context context, String token, String name, String voterId, Double lat, Double lng) {
         server.updateProfile(context, token, name, voterId, lat, lng);
     }

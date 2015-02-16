@@ -1,43 +1,42 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="10"
-    android:padding="0dp"
-    android:background="#ffffffff"
-    >
+    android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/asMapContainer"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:layout_marginBottom="16dp"
-        >
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="0dp"
+        android:background="#ffffffff"
+        android:focusableInTouchMode="true">
 
-    <com.next.eswaraj.widgets.ProgressTextView
-        android:id="@+id/asRevGeocode"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="-8dp"
-        android:textColor="#929292"
-        android:textStyle="bold"
-        android:maxLines="1"
-        android:gravity="center_vertical|center_horizontal" />
+        <FrameLayout
+            android:id="@+id/asMapContainer"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginBottom="16dp">
+        </FrameLayout>
 
-    <GridView
-        android:id="@+id/gvAmenityList"
-        android:layout_height="0dp"
-        android:layout_weight="7"
-        android:layout_width="match_parent"
-        android:numColumns="2"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
-        android:layout_margin="10dp"
-        >
-    </GridView>
+        <com.next.eswaraj.widgets.ProgressTextView
+            android:id="@+id/asRevGeocode"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="-8dp"
+            android:textColor="#929292"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:gravity="center_vertical|center_horizontal" />
 
-</LinearLayout>
+        <com.next.eswaraj.widgets.NonScrollableGridView
+            android:id="@+id/gvAmenityList"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:numColumns="2"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:layout_margin="10dp">
+        </com.next.eswaraj.widgets.NonScrollableGridView>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -292,7 +292,7 @@ public class AddDetailsFragment extends CameraHelper.CameraUtilFragment {
         }
         else {
             //If the request fails dont go to next screen instead try again
-            Toast.makeText(getActivity(), "Complaint save failed. Try again. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), event.getError(), Toast.LENGTH_LONG).show();
         }
     }
 

@@ -24,7 +24,6 @@ import com.next.eswaraj.volley.LocationComplaintsRequest;
 import com.next.eswaraj.volley.ProfileUpdateRequest;
 import com.next.eswaraj.volley.RegisterFacebookUserRequest;
 import com.next.eswaraj.volley.RegisterGcmIdRequest;
-import com.next.eswaraj.volley.RegisterUserAndDeviceRequest;
 import com.next.eswaraj.volley.SingleComplaintRequest;
 import com.next.eswaraj.volley.UserComplaintsRequest;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
@@ -51,8 +50,6 @@ public class Server extends BaseClass implements ServerInterface {
     LoadCategoriesImagesRequest loadCategoriesImagesRequest;
     @Inject
     RegisterFacebookUserRequest registerFacebookUserRequest;
-    @Inject
-    RegisterUserAndDeviceRequest registerUserAndDeviceRequest;
     @Inject
     ComplaintPostRequest complaintPostRequest;
     @Inject
@@ -118,11 +115,6 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void loadComments(Context context, ComplaintDto complaintDto, int start, int count) {
         commentsRequest.processRequest(context, complaintDto, start, count);
-    }
-
-    @Override
-    public void registerDevice(Context context) {
-        registerUserAndDeviceRequest.processRequest(context);
     }
 
     @Override

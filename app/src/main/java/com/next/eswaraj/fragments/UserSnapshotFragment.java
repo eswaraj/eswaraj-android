@@ -94,15 +94,15 @@ public class UserSnapshotFragment extends BaseFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         isStopped = false;
     }
 
     @Override
-    public void onStop() {
+    public void onPause() {
         isStopped = true;
-        super.onStop();
+        super.onPause();
     }
 
     @Override
@@ -214,6 +214,9 @@ public class UserSnapshotFragment extends BaseFragment {
                 total.setText("Total\n" + totalCount);
                 open.setText("Open\n" + openCount);
                 close.setText("Closed\n" + closeCount);
+            }
+            if(totalCount <= requestCount) {
+                showAll.setVisibility(View.GONE);
             }
         }
         else {

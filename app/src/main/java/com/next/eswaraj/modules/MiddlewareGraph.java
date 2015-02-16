@@ -100,7 +100,6 @@ import com.next.eswaraj.volley.LocationComplaintsRequest;
 import com.next.eswaraj.volley.ProfileUpdateRequest;
 import com.next.eswaraj.volley.RegisterFacebookUserRequest;
 import com.next.eswaraj.volley.RegisterGcmIdRequest;
-import com.next.eswaraj.volley.RegisterUserAndDeviceRequest;
 import com.next.eswaraj.volley.SingleComplaintRequest;
 import com.next.eswaraj.volley.UserComplaintsRequest;
 import com.next.eswaraj.widgets.CustomNetworkImageView;
@@ -137,7 +136,6 @@ import de.greenrobot.event.EventBus;
                 ComplaintPostRequest.class,
                 AddDetailsActivity.class,
                 AddDetailsFragment.class,
-                RegisterUserAndDeviceRequest.class,
                 ComplaintSummaryFragment.class,
                 ComplaintSummaryActivity.class,
                 UserComplaintsActivity.class,
@@ -293,11 +291,6 @@ public class MiddlewareGraph {
     @Provides
     LoadCategoriesImagesRequest provideLoadCategoriesImagesRequest() {
         return new LoadCategoriesImagesRequest();
-    }
-
-    @Provides @Singleton
-    RegisterUserAndDeviceRequest provideRegisterUserAndDeviceRequest() {
-        return new RegisterUserAndDeviceRequest();
     }
 
     @Provides @Singleton

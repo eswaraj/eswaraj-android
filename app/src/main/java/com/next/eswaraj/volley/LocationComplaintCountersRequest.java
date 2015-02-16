@@ -1,6 +1,7 @@
 package com.next.eswaraj.volley;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
@@ -36,6 +37,7 @@ public class LocationComplaintCountersRequest extends BaseClass {
     NetworkAccessHelper networkAccessHelper;
 
     public void processRequest(Context context, LocationDto locationDto) {
+        Log.e("LocationCounters", Constants.LOCATION_COUNTERS_URL + "/" +locationDto.getId());
         StringRequest request = new StringRequest(Constants.LOCATION_COUNTERS_URL + "/" +locationDto.getId(), createSuccessListener(context, locationDto), createErrorListener(context));
         request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 3));
         networkAccessHelper.submitNetworkRequest("GetLocationComplaintCounters", request);
