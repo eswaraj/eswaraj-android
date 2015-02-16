@@ -24,8 +24,10 @@
         android:layout_marginTop="-8dp"
         android:textColor="#929292"
         android:textStyle="bold"
-        android:maxLines="1"
-        android:gravity="center_vertical|center_horizontal" />
+        android:maxLines="2"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
