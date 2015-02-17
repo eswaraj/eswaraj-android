@@ -26,24 +26,13 @@
                 android:layout_height="fill_parent"
                 android:gravity="left|center_vertical"
                 android:textSize="18sp"
-                android:text="Delhi, India"
+                android:text="CAG Audit of Discoms"
                 android:maxLines="2"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:autoText="false" />
-
-            <TextView android:id="@+id/text2"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="left|center_vertical"
-                android:textSize="12sp"
-                android:text="Lack of Infrastructure"
-                android:maxLines="2"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="5dp"/>
 
         </LinearLayout>
 

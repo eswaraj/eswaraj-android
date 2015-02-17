@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:weightSum="1"
     tools:context="com.next.eswaraj.activities.MarkHomeActivity"
-    android:background="#ffffffff">
+    android:background="@color/white">
 
     <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
@@ -22,7 +22,7 @@
             android:id="@+id/mhContainer"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="#ffffff"
+            android:background="@color/white"
             android:layout_weight="1">
         </FrameLayout>
 
@@ -47,7 +47,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:background="#0099cc" />
+                android:background="@color/navy_blue_background" />
 
             <Button
                 android:id="@+id/mhSkip"
@@ -81,7 +81,7 @@
             android:id="@+id/mhSearchText"
             android:layout_width="fill_parent"
             android:layout_height="45dp"
-            android:background="#FFFFFF"
+            android:background="@color/white"
             android:textSize="11sp"
             android:drawableLeft="@android:drawable/ic_menu_search"
             android:drawablePadding="5dp"

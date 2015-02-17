@@ -13,7 +13,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:weightSum="1"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
@@ -46,7 +46,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:weightSum="1"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -119,7 +119,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:weightSum="1"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -181,7 +181,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:weightSum="1"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -253,7 +253,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:weightSum="1"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
@@ -318,7 +318,7 @@
             android:id="@+id/mpMap"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="#FFFFFF"
+            android:background="@color/white"
             android:padding="2dp" />
 
     </RelativeLayout>
@@ -328,7 +328,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:weightSum="1"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
@@ -456,7 +456,7 @@
                 android:layout_weight="0.33"
                 android:background="#0099cc"
                 android:layout_marginRight="5dp"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/white" />
             <Button
                 android:id="@+id/mpCancel"
                 android:text="Cancel"
@@ -466,7 +466,7 @@
                 android:background="#DE593A"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:visibility="gone"/>
             <Button
                 android:id="@+id/mpLogout"
@@ -476,7 +476,7 @@
                 android:layout_weight="0.33"
                 android:background="#AFAF77"
                 android:layout_marginLeft="5dp"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/white" />
 
         </LinearLayout>
 

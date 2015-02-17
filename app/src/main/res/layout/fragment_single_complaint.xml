@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="1"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp">
@@ -159,7 +159,7 @@
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         android:scaleType="fitXY"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:padding="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -171,7 +171,7 @@
         android:layout_height="200dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
     <LinearLayout
@@ -181,51 +181,63 @@
         android:weightSum="1"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
         android:paddingRight="10dp"
         android:paddingTop="5dp">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/my_complaints_location"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="top" />
         <TextView
             android:id="@+id/scAddress"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.333"
+            android:layout_weight="0.28"
             android:text="Govind Vihar, Delhi"
             android:textStyle="bold"
             android:textSize="9dp"
             android:textColor="#ADADAD"
             android:gravity="left"
-            android:drawableLeft="@drawable/my_complaints_location"
-            android:drawablePadding="5dp"
             android:maxLines="4"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/my_complaints_comment"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="top"
+            android:paddingLeft="20dp" />
         <TextView
             android:id="@+id/scComments"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.333"
+            android:layout_weight="0.36"
             android:text="Comments"
             android:textStyle="bold"
             android:textSize="9dp"
             android:textColor="#ADADAD"
-            android:drawableLeft="@drawable/my_complaints_comment"
-            android:drawablePadding="5dp"
-            android:paddingLeft="30dp"
             android:maxLines="1"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/my_complaints_status"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="top"
+            android:paddingLeft="50dp" />
         <TextView
             android:id="@+id/scStatus"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.333"
+            android:layout_weight="0.36"
             android:text="Pending"
             android:textStyle="bold"
             android:textColor="#ADADAD"
-            android:drawableLeft="@drawable/my_complaints_status"
-            android:drawablePadding="5dp"
-            android:paddingLeft="45dp"
             android:textSize="9dp"
             />
 
@@ -236,7 +248,7 @@
         android:text="Close Complaint"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:background="#92B06A"
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"

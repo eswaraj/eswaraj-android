@@ -41,7 +41,7 @@
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            wheel:barColor="#FFFFFF"
+            wheel:barColor="@color/white"
             android:visibility="invisible"
             wheel:progressIndeterminate="true" />
 

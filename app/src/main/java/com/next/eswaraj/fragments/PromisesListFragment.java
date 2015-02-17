@@ -81,7 +81,7 @@ public class PromisesListFragment extends BaseFragment {
     public void onEventMainThread(GetPromisesEvent event) {
         if(event.getSuccess()) {
             promiseDtoList = event.getPromiseDtoList();
-            plList.setAdapter(new PromiseListAdapter(getActivity(), android.R.layout.simple_list_item_1, promiseDtoList));
+            plList.setAdapter(new PromiseListAdapter(getActivity(), R.layout.item_promise_list, promiseDtoList));
             if(promiseDtoList.size() == 0) {
                 plPlaceholder.setVisibility(View.VISIBLE);
             }

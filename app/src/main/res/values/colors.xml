@@ -20,7 +20,11 @@
     <color name="magenta">#FF00FF</color>
     <color name="bright_pink">#FF007F</color>
     <color name="navy_blue_background">#0099cc</color>
+    <color name="little_dark_blue_background">#ff0655cc</color>
     <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="lightGrey">#D5D5D5</color>
+
 
     <array name="rainbow">
         <item>@color/red</item>

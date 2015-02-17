@@ -27,11 +27,14 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="#FFFFFF"
-    android:layout_margin="10dp"
+    android:background="@color/white"
     android:padding="10dp"
     android:gravity="center_vertical|center_horizontal"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="-20dp"
+    android:layout_marginBottom="10dp">
 
     <TextView
         android:id="@+id/lName"
@@ -65,10 +68,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#FFFFFF"
+            android:background="@color/white"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:paddingBottom="5dp">
 
             <LinearLayout
@@ -226,9 +229,13 @@
         android:id="@+id/lPromise"
         android:text="Promises"
         android:layout_gravity="center"
-        android:background="@android:color/white"
+        android:background="@drawable/white_grey_highlight"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="#444" />
 
     <WebView
         android:id="@+id/lDetails"

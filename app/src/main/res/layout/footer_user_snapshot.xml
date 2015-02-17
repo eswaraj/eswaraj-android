@@ -9,15 +9,15 @@
         android:text="View all complaints"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#0099cc"
-        android:textColor="#FFFFFF" />
+        android:background="@drawable/blue_darkblue_highlight"
+        android:textColor="@color/white" />
 
     <Button
         android:id="@+id/usCreate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/raise_complaint_button"
-        android:textColor="#FFFFFF"
+        android:background="@drawable/new_complaint_imageview"
+        android:textColor="@color/white"
         android:layout_marginTop="-2dp" />
 
 </LinearLayout>
