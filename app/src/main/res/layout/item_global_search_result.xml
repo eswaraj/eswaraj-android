@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:background="#FFFFFF">
+    android:background="@drawable/white_grey_highlight">
 
     <LinearLayout
         android:orientation="horizontal"

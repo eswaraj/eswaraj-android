@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.next.eswaraj.R;
 import com.next.eswaraj.models.PromiseDto;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class PromiseListAdapter extends ArrayAdapter<PromiseDto> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new PromiseDtoHolder();
-            holder.plTitle = (TextView) row.findViewById(android.R.id.text1);
+            holder.plTitle = (TextView) row.findViewById(R.id.text1);
 
             row.setTag(holder);
         } else {

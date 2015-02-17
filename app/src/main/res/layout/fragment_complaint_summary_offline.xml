@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="10"
-            android:background="#FFFFFF">
+            android:background="@color/white">
 
             <TextView
                 android:text="Complaint Successful"
@@ -52,7 +52,7 @@
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
             android:textColor="#525252"
-            android:background="#FFFFFF"
+            android:background="@color/white"
             android:layout_marginTop="-4dp" />
 
     </LinearLayout>
@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="1"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
 
@@ -93,7 +93,7 @@
                 android:textSize="25dp"
                 android:textColor="#0099cc"
                 android:layout_alignTop="@+id/csissuedetails"
-                android:background="#FFFFFF"
+                android:background="@color/white"
                 android:paddingLeft="10dp"
                 />
 
@@ -205,7 +205,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:layout_marginRight="5dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="12dp"
             android:layout_marginLeft="15dp"
             android:background="#0099cc"
@@ -219,7 +219,7 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="12dp"
             android:layout_marginRight="15dp"
             android:background="#92B06A"

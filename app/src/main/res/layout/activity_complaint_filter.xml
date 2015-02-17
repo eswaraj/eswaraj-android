@@ -9,11 +9,11 @@
         android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#0099cc"
+        android:textColor="@color/navy_blue_background"
         android:padding="15dp"
         android:layout_margin="10dp"
         android:gravity="center_vertical|center_horizontal"
-        android:background="#FFFFFF"/>
+        android:background="@color/white"/>
 
     <GridView
         android:id="@+id/cfCategoryList"
@@ -32,12 +32,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:textColor="#0099cc"
+        android:textColor="@color/navy_blue_background"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center_vertical|center_horizontal"
-        android:background="#FFFFFF"/>
+        android:background="@color/white"/>
 
     <GridView
         android:id="@+id/cfStatusList"
@@ -54,7 +54,7 @@
         android:id="@+id/cfApply"
         android:text="Apply Filter"
         android:layout_gravity="center"
-        android:background="#0099cc"
+        android:background="@color/navy_blue_background"
         android:padding="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,12 +71,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:textColor="#0099cc"
+        android:textColor="@color/navy_blue_background"
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center_vertical|center_horizontal"
-        android:background="#FFFFFF" />
+        android:background="@color/white" />
 
 </LinearLayout>
