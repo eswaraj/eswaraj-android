@@ -20,6 +20,7 @@ public class LeaderListActivity extends BaseActivity {
     EventBus eventBus;
 
     private LeaderListFragment leaderListFragment;
+    private Boolean isStopped = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +42,23 @@ public class LeaderListActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isStopped = false;
+    }
+
+    @Override
+    protected void onPause() {
+        isStopped = true;
+        super.onPause();
+    }
+
     public void onEventMainThread(ShowLeaderEvent event) {
-        Intent i = new Intent(this, LeaderActivity.class);
-        i.putExtra("LEADER", (Serializable) event.getPoliticalBodyAdminDto());
-        startActivity(i);
+        if(!isStopped) {
+            Intent i = new Intent(this, LeaderActivity.class);
+            i.putExtra("LEADER", (Serializable) event.getPoliticalBodyAdminDto());
+            startActivity(i);
+        }
     }
 }

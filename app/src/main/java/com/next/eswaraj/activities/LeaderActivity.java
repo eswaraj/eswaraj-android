@@ -22,6 +22,8 @@ public class LeaderActivity extends BaseActivity {
 
     private LeaderFragment leaderFragment;
 
+    private Boolean isStopped = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,15 +39,31 @@ public class LeaderActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isStopped = false;
+    }
+
+    @Override
+    protected void onPause() {
+        isStopped = true;
+        super.onPause();
+    }
+
     public void onEventMainThread(StartAnotherActivityEvent event) {
-        Intent i = new Intent(this, ConstituencySnapshotActivity.class);
-        i.putExtra("ID", event.getId());
-        startActivity(i);
+        if(!isStopped) {
+            Intent i = new Intent(this, ConstituencySnapshotActivity.class);
+            i.putExtra("ID", event.getId());
+            startActivity(i);
+        }
     }
 
     public void onEventMainThread(ShowPromisesEvent event) {
-        Intent i = new Intent(this, PromisesListActivity.class);
-        i.putExtra("LEADER", (Serializable) event.getPoliticalBodyAdminDto());
-        startActivity(i);
+        if(!isStopped) {
+            Intent i = new Intent(this, PromisesListActivity.class);
+            i.putExtra("LEADER", (Serializable) event.getPoliticalBodyAdminDto());
+            startActivity(i);
+        }
     }
 }

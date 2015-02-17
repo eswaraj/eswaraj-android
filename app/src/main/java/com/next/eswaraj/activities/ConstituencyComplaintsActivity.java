@@ -25,6 +25,8 @@ public class ConstituencyComplaintsActivity extends BaseActivity {
     private final int OPEN_COMPLAINT_REQUEST = 99;
     private final int SHOW_FILTER_REQUEST = 9999;
 
+    private Boolean isStopped = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,20 +43,34 @@ public class ConstituencyComplaintsActivity extends BaseActivity {
         super.onStop();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isStopped = false;
+    }
+
+    @Override
+    protected void onPause() {
+        isStopped = true;
+        super.onPause();
+    }
+
     public void onEventMainThread(ComplaintSelectedEvent event) {
-        Intent i = new Intent(this, SingleComplaintActivity.class);
-        i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
-        i.putExtra("DATA_PRESENT", true);
-        //i.putExtra("COMPLAINT_ID", event.getComplaintDto().getId());
-        //i.putExtra("DATA_PRESENT", false);
-        startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+        if(!isStopped) {
+            Intent i = new Intent(this, SingleComplaintActivity.class);
+            i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
+            i.putExtra("DATA_PRESENT", true);
+            startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+        }
     }
 
     public void onEventMainThread(MarkerClickEvent event) {
-        Intent i = new Intent(this, SingleComplaintActivity.class);
-        i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
-        i.putExtra("DATA_PRESENT", true);
-        startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+        if(!isStopped) {
+            Intent i = new Intent(this, SingleComplaintActivity.class);
+            i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
+            i.putExtra("DATA_PRESENT", true);
+            startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+        }
     }
 
     @Override

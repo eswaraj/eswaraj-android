@@ -8,6 +8,7 @@ import com.next.eswaraj.base.BaseActivity;
 import com.next.eswaraj.events.ComplaintSelectedEvent;
 import com.next.eswaraj.events.ShowConstituencyComplaintsEvent;
 import com.next.eswaraj.events.ShowLeadersForLocationEvent;
+import com.next.eswaraj.events.ShowSelectAmenityEvent;
 import com.next.eswaraj.fragments.ConstituencySnapshotFragment;
 import com.next.eswaraj.models.ComplaintFilter;
 
@@ -45,15 +46,15 @@ public class ConstituencySnapshotActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         isStopped = false;
     }
 
     @Override
-    protected void onStop() {
+    protected void onPause() {
         isStopped = true;
-        super.onStop();
+        super.onPause();
     }
 
     public void onEventMainThread(ComplaintSelectedEvent event) {
@@ -66,16 +67,27 @@ public class ConstituencySnapshotActivity extends BaseActivity {
     }
 
     public void onEventMainThread(ShowConstituencyComplaintsEvent event) {
-        Intent i = new Intent(this, ConstituencyComplaintsActivity.class);
-        i.putExtra("LOCATION", (Serializable) event.getLocationDto());
-        i.putExtra("DATA_PRESENT", true);
-        startActivity(i);
+        if(!isStopped) {
+            Intent i = new Intent(this, ConstituencyComplaintsActivity.class);
+            i.putExtra("LOCATION", (Serializable) event.getLocationDto());
+            i.putExtra("DATA_PRESENT", true);
+            startActivity(i);
+        }
     }
 
     public void onEventMainThread(ShowLeadersForLocationEvent event) {
-        Intent i = new Intent(this, LeaderListActivity.class);
-        i.putExtra("LOCATION", (Serializable) event.getLocationDto());
-        startActivity(i);
+        if(!isStopped) {
+            Intent i = new Intent(this, LeaderListActivity.class);
+            i.putExtra("LOCATION", (Serializable) event.getLocationDto());
+            startActivity(i);
+        }
+    }
+
+    public void onEventMainThread(ShowSelectAmenityEvent event) {
+        if(!isStopped) {
+            Intent i = new Intent(this, SelectAmenityActivity.class);
+            startActivity(i);
+        }
     }
 
     @Override

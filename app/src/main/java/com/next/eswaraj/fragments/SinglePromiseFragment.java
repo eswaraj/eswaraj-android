@@ -27,6 +27,7 @@ public class SinglePromiseFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().setTitle("Promise");
         promiseDto = (PromiseDto) getActivity().getIntent().getSerializableExtra("PROMISE");
     }
 
