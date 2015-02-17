@@ -13,7 +13,17 @@
         android:layout_height="fill_parent"
         android:textSize="20sp"
         android:text="No complaints to show yet"
-        android:visibility="gone"/>
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/mcRaiseComplaint"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/new_complaint_imageview"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:layout_marginBottom="-2dp"
+        />
 
     <ListView
         android:id="@+id/mcList"

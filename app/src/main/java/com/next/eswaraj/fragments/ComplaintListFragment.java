@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.next.eswaraj.adapters.ComplaintListAdapter;
 import com.next.eswaraj.base.BaseFragment;
 import com.next.eswaraj.events.ComplaintSelectedEvent;
 import com.next.eswaraj.models.ComplaintDto;
+import com.next.eswaraj.events.ShowSelectAmenityEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ public class ComplaintListFragment extends BaseFragment {
 
     private ListView mcList;
     private TextView mcPlaceholderText;
+    private Button mcRaiseComplaint;
     private ComplaintListAdapter complaintsAdapter;
     private View header;
     private View footer;
@@ -46,6 +49,7 @@ public class ComplaintListFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_complaint_list, container, false);
         mcList = (ListView) rootView.findViewById(R.id.mcList);
         mcPlaceholderText = (TextView) rootView.findViewById(R.id.mcPlaceholderText);
+        mcRaiseComplaint = (Button) rootView.findViewById(R.id.mcRaiseComplaint);
         mcList.setDividerHeight(0);
 
         if(header != null) {
@@ -68,6 +72,15 @@ public class ComplaintListFragment extends BaseFragment {
             mcList.setOnScrollListener(onScrollListener);
         }
 
+        mcRaiseComplaint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowSelectAmenityEvent event = new ShowSelectAmenityEvent();
+                event.setSuccess(true);
+                eventBus.post(event);
+            }
+        });
+
         return rootView;
     }
 
@@ -75,6 +88,7 @@ public class ComplaintListFragment extends BaseFragment {
         if(complaintDtoList == null || complaintDtoList.size() == 0) {
             mcList.setVisibility(View.GONE);
             mcPlaceholderText.setVisibility(View.VISIBLE);
+            mcRaiseComplaint.setVisibility(View.VISIBLE);
         }
         if(showCount == null || showCount > complaintDtoList.size()) {
             complaintsAdapter = new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, complaintDtoList);

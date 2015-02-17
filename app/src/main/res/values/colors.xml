@@ -26,6 +26,8 @@
     <color name="lightGrey">#D5D5D5</color>
     <color name="orangeRed">#DE593A</color>
     <color name="dark_orangeRed">#DE4427</color>
+    <color name="dark_grey_green">#9AAF72</color>
+    <color name="light_grey_green">#AFAF77</color>
 
 
     <array name="rainbow">

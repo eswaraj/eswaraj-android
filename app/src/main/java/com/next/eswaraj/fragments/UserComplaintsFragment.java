@@ -85,7 +85,12 @@ public class UserComplaintsFragment extends BaseFragment {
 
         mcShowMore = new Button(getActivity());
         mcShowMore.setText("Show more");
-        mcShowMore.setBackgroundColor(Color.parseColor("#0099cc"));
+        int sdk = android.os.Build.VERSION.SDK_INT;
+        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            mcShowMore.setBackgroundColor(Color.parseColor("#0099cc"));
+        } else {
+            mcShowMore.setBackgroundResource( R.drawable.blue_darkblue_highlight );
+        }
         mcShowMore.setTextColor(Color.parseColor("#FFFFFF"));
         complaintListFragment.setFooter(mcShowMore);
         mcShowMore.setOnClickListener(new View.OnClickListener() {
