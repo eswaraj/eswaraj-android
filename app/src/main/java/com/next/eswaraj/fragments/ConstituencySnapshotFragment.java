@@ -117,8 +117,13 @@ public class ConstituencySnapshotFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_constituency_snapshot, container, false);
 
         mcShowMore = new Button(getActivity());
-        mcShowMore.setText("Show more");
-        mcShowMore.setBackgroundColor(Color.parseColor("#0099cc"));
+        mcShowMore.setText("Show More");
+        int sdk = android.os.Build.VERSION.SDK_INT;
+        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            mcShowMore.setBackgroundColor(Color.parseColor("#0099cc"));
+        } else {
+            mcShowMore.setBackgroundResource( R.drawable.blue_darkblue_highlight );
+        }
         mcShowMore.setTextColor(Color.parseColor("#FFFFFF"));
         headerView = getActivity().getLayoutInflater().inflate(R.layout.header_constituency_header, null);
         complaintListFragment.setFooter(mcShowMore);
