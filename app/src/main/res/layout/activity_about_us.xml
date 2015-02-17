@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/navy_blue_background"
-    tools:context="com.next.eswaraj.activities.SplashActivity"
-    >
+    tools:context="com.next.eswaraj.activities.SplashActivity">
 
     <ImageView
         android:id="@+id/auLogo"
@@ -17,7 +16,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:text="Version 1.2.4"
+        android:text="Version 1.2.5"
         android:gravity="center_vertical|center_horizontal"
         android:layout_marginTop="85dp"
         android:textStyle="bold"
