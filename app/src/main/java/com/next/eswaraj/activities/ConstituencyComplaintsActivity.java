@@ -7,6 +7,7 @@ import com.next.eswaraj.R;
 import com.next.eswaraj.base.BaseActivity;
 import com.next.eswaraj.events.ComplaintSelectedEvent;
 import com.next.eswaraj.events.MarkerClickEvent;
+import com.next.eswaraj.events.ShowSelectAmenityEvent;
 import com.next.eswaraj.fragments.ConstituencyComplaintsFragment;
 import com.next.eswaraj.models.ComplaintFilter;
 
@@ -70,6 +71,13 @@ public class ConstituencyComplaintsActivity extends BaseActivity {
             i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
             i.putExtra("DATA_PRESENT", true);
             startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+        }
+    }
+
+    public void onEventMainThread(ShowSelectAmenityEvent event) {
+        if(!isStopped) {
+            Intent i = new Intent(this, SelectAmenityActivity.class);
+            startActivity(i);
         }
     }
 

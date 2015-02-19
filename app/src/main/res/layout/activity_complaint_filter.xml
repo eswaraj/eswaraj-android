@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-            <TextView android:text="Sort by Citizen Services"
+            <TextView android:text="Filter by Citizen Services"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/navy_blue_background"
@@ -35,7 +35,7 @@
                 android:horizontalSpacing="10dp"/>
 
 
-            <TextView android:text="Sort by Complaint Status"
+            <TextView android:text="Filter by Complaint Status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"

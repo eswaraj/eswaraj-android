@@ -109,7 +109,7 @@ public class MyProfileFragment extends BaseFragment implements OnMapReadyCallbac
         }
         mpVoterIdInput.setText(userSession.getUser().getPerson().getVoterId());
         if(userSession.getProfilePhoto() != null && !userSession.getProfilePhoto().equals("")) {
-            Picasso.with(getActivity()).load(userSession.getProfilePhoto().replace("http:", "https:")).error(R.drawable.anon).placeholder(R.drawable.anon).into(mpPhoto);
+            Picasso.with(getActivity()).load(userSession.getProfilePhoto().replace("http:", "https:") + "?type=large").error(R.drawable.anon).placeholder(R.drawable.anon).into(mpPhoto);
         }
         else {
             mpPhoto.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.anon));

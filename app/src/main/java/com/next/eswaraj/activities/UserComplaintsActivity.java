@@ -8,6 +8,7 @@ import com.next.eswaraj.R;
 import com.next.eswaraj.base.BaseActivity;
 import com.next.eswaraj.events.ComplaintSelectedEvent;
 import com.next.eswaraj.events.MarkerClickEvent;
+import com.next.eswaraj.events.ShowSelectAmenityEvent;
 import com.next.eswaraj.fragments.UserComplaintsFragment;
 import com.next.eswaraj.models.ComplaintFilter;
 
@@ -26,40 +27,59 @@ public class UserComplaintsActivity extends BaseActivity {
     private UserComplaintsFragment complaintsFragment;
     private final int OPEN_COMPLAINT_REQUEST = 99;
     private final int SHOW_FILTER_REQUEST = 9999;
+    private Boolean isStopped = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         showFilter = true;
+        eventBus.register(this);
         setContentView(R.layout.activity_my_complaints);
 
         complaintsFragment = (UserComplaintsFragment) getSupportFragmentManager().findFragmentById(R.id.mcFragment);
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        eventBus.register(this);
+    protected void onPause() {
+        isStopped = true;
+        super.onPause();
     }
 
     @Override
-    protected void onStop() {
+    protected void onResume() {
+        super.onResume();
+        isStopped = false;
+    }
+
+    @Override
+    protected void onDestroy() {
         eventBus.unregister(this);
-        super.onStop();
+        super.onDestroy();
     }
 
     public void onEventMainThread(ComplaintSelectedEvent event) {
-        Intent i = new Intent(this, SingleComplaintActivity.class);
-        i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
-        i.putExtra("DATA_PRESENT", true);
-        startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+        if(!isStopped) {
+            Intent i = new Intent(this, SingleComplaintActivity.class);
+            i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
+            i.putExtra("DATA_PRESENT", true);
+            startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+        }
     }
 
     public void onEventMainThread(MarkerClickEvent event) {
-        Intent i = new Intent(this, SingleComplaintActivity.class);
-        i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
-        i.putExtra("DATA_PRESENT", true);
-        startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+        if(!isStopped) {
+            Intent i = new Intent(this, SingleComplaintActivity.class);
+            i.putExtra("COMPLAINT", (Serializable) event.getComplaintDto());
+            i.putExtra("DATA_PRESENT", true);
+            startActivityForResult(i, OPEN_COMPLAINT_REQUEST);
+        }
+    }
+
+    public void onEventMainThread(ShowSelectAmenityEvent event) {
+        if(!isStopped) {
+            Intent i = new Intent(this, SelectAmenityActivity.class);
+            startActivity(i);
+        }
     }
 
     @Override

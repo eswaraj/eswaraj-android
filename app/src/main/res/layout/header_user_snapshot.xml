@@ -83,7 +83,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="#808080"
-            android:background="@drawable/white_grey_highlight" />
+            android:background="@drawable/white_grey_highlight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"/>
 
         <Button
             android:id="@+id/usOpen"
@@ -93,8 +95,8 @@
             android:layout_height="wrap_content"
             android:textColor="#808080"
             android:background="@drawable/white_grey_highlight"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="1dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
 
         <Button
             android:id="@+id/usClose"
@@ -103,7 +105,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="#808080"
-            android:background="@drawable/white_grey_highlight" />
+            android:background="@drawable/white_grey_highlight"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"/>
 
     </LinearLayout>
 
