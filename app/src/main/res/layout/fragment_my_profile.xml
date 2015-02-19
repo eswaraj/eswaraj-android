@@ -18,16 +18,20 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="1dp">
+        android:layout_marginBottom="1dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
 
         <com.next.eswaraj.widgets.CustomNetworkImageView
             android:id="@+id/mpPhoto"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:scaleType="fitStart"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/ravi"
-            android:padding="8dp"
-            android:layout_weight="0.9"/>
+            android:layout_weight="1"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp" />
 
         <TextView
             android:id="@+id/mpchangepic"
