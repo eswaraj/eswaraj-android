@@ -6,9 +6,9 @@
             >
             <gradient
                 android:angle="0"
-                android:startColor="#F8F8F8"
+                android:startColor="#FAFAFA"
                 android:centerColor="@android:color/transparent"
-                android:centerX="0.01" />
+                android:centerX="0.0005" />
         </shape>
     </item>
 </layer-list>

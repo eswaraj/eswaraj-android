@@ -59,7 +59,7 @@ public class FilterListAdapter extends ArrayAdapter<ComplaintFilter> {
             holder.cfTitle.setTextColor(Color.parseColor("#FFFFFF"));
         }
         if(currentSelection == position) {
-            holder.cfTitle.setBackgroundColor(context.getResources().getColor(R.color.red));
+            holder.cfTitle.setBackgroundColor(context.getResources().getColor(R.color.light_grey_green));
             holder.cfTitle.setTextColor(Color.parseColor("#FFFFFF"));
         }
         else {

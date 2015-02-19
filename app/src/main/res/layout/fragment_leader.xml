@@ -11,7 +11,9 @@
 <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="15dp">
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="10dp">
 
     <com.next.eswaraj.widgets.CustomNetworkImageView
         android:id="@+id/lPhoto"
@@ -31,10 +33,8 @@
     android:padding="10dp"
     android:gravity="center_vertical|center_horizontal"
     android:layout_gravity="center"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
-    android:layout_marginTop="-20dp"
-    android:layout_marginBottom="10dp">
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
 
     <TextView
         android:id="@+id/lName"
@@ -64,15 +64,46 @@
 
     </LinearLayout>
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/white"
+        android:gravity="top"
+        android:layout_gravity="top">
+
+        <TextView
+            android:id="@+id/lPoliticalParty"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Political Party:"
+            android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/lParty"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Aam Aadmi Party"
+            android:gravity="top|center_horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp" />
+
+        </LinearLayout>
+
+    <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/white"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            android:paddingBottom="5dp">
+        android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -104,36 +135,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:id="@+id/lPoliticalParty"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Political Party:"
-                    android:gravity="left"
-                    android:padding="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:textStyle="bold"
-                    android:layout_weight="0.5" />
-
-                <TextView
-                    android:id="@+id/lParty"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Aam Aadmi Party"
-                    android:gravity="right"
-                    android:padding="10dp"
-                    android:layout_weight="0.5"
-                    android:layout_marginRight="10dp" />
-
-                </LinearLayout>
-
-            <LinearLayout
+        <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -199,43 +201,36 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <TextView
-                    android:id="@+id/lLink"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Constituency Link:"
-                    android:gravity="left"
-                    android:padding="10dp"
+                <Button
+                    android:id="@+id/lPromise"
+                    android:text="Election Promises"
+                    android:layout_gravity="center"
+                    android:background="@drawable/white_grey_highlight"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
                     android:layout_marginLeft="10dp"
-                    android:textStyle="bold"
+                    android:layout_marginRight="5dp"
+                    android:textColor="#808080"
                     android:layout_weight="0.5" />
 
-                <TextView
-                    android:id="@+id/lConstituency"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:gravity="left"
-                    android:drawablePadding="10dp"
-                    android:padding="10dp"
-                    android:layout_weight="0.5"
-                    android:drawableLeft="@drawable/map_view"
-                    android:layout_marginRight="10dp"/>
+                    <TextView
+                        android:id="@+id/lConstituency"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="left|center_vertical"
+                        android:layout_weight="0.5"
+                        android:background="@drawable/white_grey_highlight"
+                        android:drawableLeft="@drawable/map_view"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="Delhi"
+                        android:paddingLeft="20dp"
+                        android:textColor="#808080"
+                        />
 
             </LinearLayout>
 
         </LinearLayout>
-
-    <Button
-        android:id="@+id/lPromise"
-        android:text="Promises"
-        android:layout_gravity="center"
-        android:background="@drawable/white_grey_highlight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:textColor="#444" />
 
     <WebView
         android:id="@+id/lDetails"
@@ -243,8 +238,8 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:padding="20dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="15dp" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp" />
 
 </LinearLayout>

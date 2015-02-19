@@ -24,7 +24,6 @@
             android:layout_height="fill_parent"
             android:textSize="20sp"
             android:text="No complaints to show yet."
-            android:background="@drawable/left_border"
             android:visibility="gone"
             android:layout_marginTop="-120dp"/>
 

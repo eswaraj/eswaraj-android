@@ -5,78 +5,94 @@
     android:orientation="vertical"
     tools:context="com.next.eswaraj.activities.ComplaintFilterActivity">
 
-    <TextView android:text="Sort by Citizen Services"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/navy_blue_background"
-        android:padding="15dp"
-        android:layout_margin="10dp"
-        android:gravity="center_vertical|center_horizontal"
-        android:background="@color/white"/>
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
 
-    <GridView
-        android:id="@+id/cfCategoryList"
-        android:numColumns="2"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"/>
+        android:orientation="vertical">
+
+            <TextView android:text="Sort by Citizen Services"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/navy_blue_background"
+                android:padding="15dp"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@color/white"/>
+
+            <GridView
+                android:id="@+id/cfCategoryList"
+                android:numColumns="2"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:verticalSpacing="10dp"
+                android:horizontalSpacing="10dp"/>
 
 
-    <TextView android:text="Sort by Complaint Status"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:textColor="@color/navy_blue_background"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center_vertical|center_horizontal"
-        android:background="@color/white"/>
+            <TextView android:text="Sort by Complaint Status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:textColor="@color/navy_blue_background"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@color/white"/>
 
-    <GridView
-        android:id="@+id/cfStatusList"
-        android:numColumns="2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"/>
+            <GridView
+                android:id="@+id/cfStatusList"
+                android:numColumns="2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:verticalSpacing="10dp"
+                android:horizontalSpacing="10dp"/>
 
-    <Button
-        android:id="@+id/cfApply"
-        android:text="Apply Filter"
-        android:layout_gravity="center"
-        android:background="@color/navy_blue_background"
-        android:padding="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center_vertical|center_horizontal"
-        />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp">
 
-    <TextView
-        android:id="@+id/cfNone"
-        android:text="Remove All"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:textColor="@color/navy_blue_background"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center_vertical|center_horizontal"
-        android:background="@color/white" />
+                <Button
+                android:id="@+id/cfApply"
+                android:text="Apply Filter"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:background="@drawable/blue_darkblue_highlight"
+                android:textColor="@color/white"
+                android:padding="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_marginRight="5dp" />
+
+            <TextView
+                android:id="@+id/cfNone"
+                android:text="Remove All"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:padding="15dp"
+                android:textColor="@color/white"
+                android:background="@drawable/red_darkred_highlight"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_marginLeft="5dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

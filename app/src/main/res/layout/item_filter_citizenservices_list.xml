@@ -17,30 +17,19 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="0.1">
+            android:orientation="vertical">
             <TextView android:id="@+id/cfTitle"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center_vertical|center_horizontal"
-                android:textStyle="bold"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:text="Water"
-                android:textColor="#929292"
+                android:textColor="#808080"
                 android:maxLines="2"
                 android:paddingBottom="20dp"
-                android:paddingTop="20dp"
-                android:autoText="false"
-                android:background="@drawable/left_border"/>
+                android:paddingTop="20dp"/>
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/forward"
-            android:layout_weight="0.9"
-            android:layout_gravity="center"
-            android:adjustViewBounds="false" />
     </LinearLayout>
 </LinearLayout>

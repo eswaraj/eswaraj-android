@@ -54,6 +54,7 @@
             android:name=".activities.YoutubeActivity"
             android:label="@string/title_activity_youtube"
             android:parentActivityName=".activities.ContentActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
@@ -62,7 +63,9 @@
         </activity>
         <activity
             android:name="com.facebook.LoginActivity"
-            android:label="Login to Continue" >
+            android:label="Login to Continue"
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity
             android:name=".activities.SelectTemplateActivity"
@@ -274,12 +277,14 @@
         <activity
             android:name=".activities.MarkHomeActivity"
             android:label="@string/title_activity_mark_home"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.MyProfileActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
         </activity>
         <activity
             android:name=".activities.PlaceSearchActivity"
             android:label="@string/title_activity_place_search"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.MarkHomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
             <meta-data
@@ -300,12 +305,14 @@
         <activity
             android:name=".activities.PromisesListActivity"
             android:label="@string/title_activity_promises_list"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:parentActivityName=".activities.LeaderActivity">
         </activity>
         <activity
             android:name=".activities.SinglePromiseActivity"
             android:label="@string/title_activity_single_promise"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:parentActivityName=".activities.PromisesListActivity" >
             <meta-data
