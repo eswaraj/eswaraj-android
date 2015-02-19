@@ -1,7 +1,16 @@
 package com.next.eswaraj.events;
 
-/**
- * Created by vaisinha on 20/02/15.
- */
-public class CallPhoneEvent {
+import com.next.eswaraj.base.BaseEvent;
+
+
+public class CallPhoneEvent extends BaseEvent {
+    private String number;
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
 }

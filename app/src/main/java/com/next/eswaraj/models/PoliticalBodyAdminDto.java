@@ -20,11 +20,20 @@ public class PoliticalBodyAdminDto extends BaseDto implements Serializable {
     private String fbPage;
     private String officeEmail;
     private String biodata;
+    private String mobile1;
 
     public PoliticalBodyAdminDto() {
         party = new PartyDto();
         politicalAdminType = new PoliticalAdminTypeDto();
         location = new PoliticalAdminLocationDto();
+    }
+
+    public String getMobile1() {
+        return mobile1;
+    }
+
+    public void setMobile1(String mobile1) {
+        this.mobile1 = mobile1;
     }
 
     public PoliticalAdminLocationDto getLocation() {

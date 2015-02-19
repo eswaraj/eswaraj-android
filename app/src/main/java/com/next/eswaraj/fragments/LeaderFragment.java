@@ -1,6 +1,8 @@
 package com.next.eswaraj.fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +14,14 @@ import android.widget.Toast;
 
 import com.next.eswaraj.R;
 import com.next.eswaraj.base.BaseFragment;
+import com.next.eswaraj.events.CallPhoneEvent;
 import com.next.eswaraj.events.GetLeaderEvent;
+import com.next.eswaraj.events.SendEmailEvent;
 import com.next.eswaraj.events.ShowPromisesEvent;
 import com.next.eswaraj.events.StartAnotherActivityEvent;
 import com.next.eswaraj.middleware.MiddlewareServiceImpl;
 import com.next.eswaraj.models.PoliticalBodyAdminDto;
+import com.next.eswaraj.util.UserSessionUtil;
 import com.next.eswaraj.widgets.CustomNetworkImageView;
 import com.squareup.picasso.Picasso;
 
@@ -33,6 +38,8 @@ public class LeaderFragment extends BaseFragment {
     EventBus eventBus;
     @Inject
     MiddlewareServiceImpl middlewareService;
+    @Inject
+    UserSessionUtil userSession;
 
     private CustomNetworkImageView lPhoto;
     private TextView lName;
@@ -44,6 +51,8 @@ public class LeaderFragment extends BaseFragment {
     private WebView lDetails;
     private TextView lConstituency;
     private Button lPromise;
+    private Button lEmail;
+    private Button lPhone;
 
     private PoliticalBodyAdminDto politicalBodyAdminDto;
 
@@ -76,6 +85,8 @@ public class LeaderFragment extends BaseFragment {
         lEducation = (TextView) rootView.findViewById(R.id.lEducation);
         lConstituency = (TextView) rootView.findViewById(R.id.lConstituency);
         lPromise = (Button) rootView.findViewById(R.id.lPromise);
+        lEmail = (Button) rootView.findViewById(R.id.lEmail);
+        lPhone = (Button) rootView.findViewById(R.id.lPhone);
 
         politicalBodyAdminDto = (PoliticalBodyAdminDto) getActivity().getIntent().getSerializableExtra("LEADER");
 
@@ -101,6 +112,57 @@ public class LeaderFragment extends BaseFragment {
                 event.setSuccess(true);
                 event.setPoliticalBodyAdminDto(politicalBodyAdminDto);
                 eventBus.post(event);
+            }
+        });
+        lEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(politicalBodyAdminDto.getOfficeEmail() != null && !politicalBodyAdminDto.getOfficeEmail().equals("")) {
+                    SendEmailEvent event = new SendEmailEvent();
+                    event.setEmail(politicalBodyAdminDto.getOfficeEmail());
+                    event.setSubject("[eSwaraj] Message from " + userSession.getUser().getPerson().getName());
+                    event.setMessage("Sent from eSwaraj");
+                    eventBus.post(event);
+                }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), AlertDialog.THEME_HOLO_LIGHT);
+                    builder.setMessage("We dont have the official email ID of " + politicalBodyAdminDto.getName() + " yet. We will try to get it soon.")
+                            .setCancelable(false)
+                            .setTitle("Email ID not known")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            }
+        });
+        lPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Fix the field in DTO also and here too
+                if(politicalBodyAdminDto.getMobile1() != null && !politicalBodyAdminDto.getMobile1().equals("")) {
+                    CallPhoneEvent event = new CallPhoneEvent();
+                    event.setNumber(politicalBodyAdminDto.getMobile1());
+                    eventBus.post(event);
+                }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), AlertDialog.THEME_HOLO_LIGHT);
+                    builder.setMessage("We dont have the phone number of " + politicalBodyAdminDto.getName() + " yet. We will try to get it soon.")
+                            .setCancelable(false)
+                            .setTitle("Phone number not known")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
             }
         });
         return rootView;
