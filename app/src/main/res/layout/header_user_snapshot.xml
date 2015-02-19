@@ -19,29 +19,32 @@
 
 
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="90dp"
             android:weightSum="1"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="35dp"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_marginLeft="65dp">
+            android:layout_marginLeft="120dp"
+            android:layout_marginRight="50dp">
 
             <ImageView
                 android:id="@+id/usPhoto"
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
+                android:layout_width="200dp"
+                android:layout_height="90dp"
                 android:src="@drawable/ravi"
                 android:layout_gravity="center"
-                android:cropToPadding="true" />
+                android:cropToPadding="true"
+                android:layout_weight="0.5" />
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="1"
-                android:gravity="center_vertical|center_horizontal"
-                android:layout_gravity="center">
+                android:gravity="left|center_vertical"
+                android:layout_gravity="center"
+                android:layout_weight="0.5">
 
                 <TextView
                     android:id="@+id/usName"
@@ -51,7 +54,7 @@
                     android:text="Ravi Sharma"
                     android:textColor="@color/white"
                     android:paddingLeft="5dp"
-                    android:gravity="center_vertical|center_horizontal"
+                    android:gravity="left|center_vertical"
                     android:textSize="12sp" />
 
                 <TextView
@@ -61,7 +64,7 @@
                     android:layout_height="fill_parent"
                     android:textColor="#DBDBDB"
                     android:layout_gravity="top"
-                    android:gravity="top|center_horizontal"
+                    android:gravity="left"
                     android:paddingLeft="5dp"
                     android:textSize="11sp" />
 
@@ -74,7 +77,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
 
         <Button
             android:id="@+id/usTotal"
@@ -82,10 +86,9 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#808080"
-            android:background="@drawable/white_grey_highlight"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"/>
+            android:textColor="@color/white"
+            android:background="@drawable/greygreen_darkgreygreen_highlight"
+            android:layout_marginLeft="10dp" />
 
         <Button
             android:id="@+id/usOpen"
@@ -93,8 +96,8 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#808080"
-            android:background="@drawable/white_grey_highlight"
+            android:textColor="@color/white"
+            android:background="@drawable/greygreen_darkgreygreen_highlight"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp" />
 
@@ -104,10 +107,10 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#808080"
-            android:background="@drawable/white_grey_highlight"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"/>
+            android:textColor="@color/white"
+            android:background="@drawable/greygreen_darkgreygreen_highlight"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="5dp" />
 
     </LinearLayout>
 
@@ -123,8 +126,8 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#707070"
-            android:background="@drawable/white_grey_highlight"
+            android:textColor="@color/white"
+            android:background="@drawable/blue_darkblue_highlight"
             android:layout_marginRight="5dp" />
 
         <Button
@@ -133,8 +136,8 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#707070"
-            android:background="@drawable/white_grey_highlight"
+            android:textColor="@color/white"
+            android:background="@drawable/blue_darkblue_highlight"
             android:layout_marginLeft="5dp" />
 
     </LinearLayout>
