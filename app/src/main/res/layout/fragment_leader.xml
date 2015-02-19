@@ -69,7 +69,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:weightSum="1"
-        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@color/white"
@@ -199,19 +198,23 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="1">
+                android:weightSum="1"
+                android:background="@color/white"
+                android:paddingBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
 
                 <Button
                     android:id="@+id/lPromise"
                     android:text="Election Promises"
                     android:layout_gravity="center"
-                    android:background="@drawable/white_grey_highlight"
+                    android:background="@drawable/blue_darkblue_highlight"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
-                    android:textColor="#808080"
-                    android:layout_weight="0.5" />
+                    android:textColor="@color/white"
+                    android:layout_weight="0.5"
+                    android:layout_marginRight="5dp" />
 
                     <TextView
                         android:id="@+id/lConstituency"
@@ -219,14 +222,13 @@
                         android:layout_height="fill_parent"
                         android:gravity="left|center_vertical"
                         android:layout_weight="0.5"
-                        android:background="@drawable/white_grey_highlight"
-                        android:drawableLeft="@drawable/map_view"
+                        android:background="@drawable/greygreen_darkgreygreen_highlight"
+                        android:drawableLeft="@drawable/map_view_white"
                         android:layout_marginRight="10dp"
-                        android:layout_marginLeft="5dp"
                         android:text="Delhi"
                         android:paddingLeft="20dp"
-                        android:textColor="#808080"
-                        />
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="5dp" />
 
             </LinearLayout>
 
@@ -235,24 +237,34 @@
             android:gravity="center"
             android:textSize="20sp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="#808080"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:paddingBottom="10dp"
+            android:background="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
             <Button
                 android:id="@+id/lEmail"
                 android:text="Email"
                 android:layout_gravity="center"
-                android:background="@drawable/white_grey_highlight"
+                android:background="@drawable/blue_darkblue_highlight"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
-                android:textColor="#808080"
+                android:textColor="@color/white"
                 android:layout_weight="0.5" />
 
             <Button
@@ -261,12 +273,12 @@
                 android:layout_height="fill_parent"
                 android:gravity="center"
                 android:layout_weight="0.5"
-                android:background="@drawable/white_grey_highlight"
+                android:background="@drawable/greygreen_darkgreygreen_highlight"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="5dp"
                 android:text="Phone"
                 android:paddingLeft="20dp"
-                android:textColor="#808080"
+                android:textColor="@color/white"
                 />
 
         </LinearLayout>
