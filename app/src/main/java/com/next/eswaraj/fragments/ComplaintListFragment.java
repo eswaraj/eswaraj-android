@@ -86,9 +86,13 @@ public class ComplaintListFragment extends BaseFragment {
 
     public void setData(List<ComplaintDto> complaintDtoList) {
         if(complaintDtoList == null || complaintDtoList.size() == 0) {
-            mcList.setVisibility(View.GONE);
             mcPlaceholderText.setVisibility(View.VISIBLE);
             mcRaiseComplaint.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            mcPlaceholderText.setVisibility(View.GONE);
+            mcRaiseComplaint.setVisibility(View.GONE);
         }
         if(showCount == null || showCount > complaintDtoList.size()) {
             complaintsAdapter = new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, complaintDtoList);
