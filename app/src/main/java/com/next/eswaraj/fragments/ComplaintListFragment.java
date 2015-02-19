@@ -38,6 +38,8 @@ public class ComplaintListFragment extends BaseFragment {
     private View footer;
     private Integer showCount;
     private ListView.OnScrollListener onScrollListener;
+    Boolean headerAdded = false;
+    Boolean footerAdded = false;
 
     public ComplaintListFragment() {
         // Required empty public constructor
@@ -53,10 +55,16 @@ public class ComplaintListFragment extends BaseFragment {
         mcList.setDividerHeight(0);
 
         if(header != null) {
-            mcList.addHeaderView(header);
+            if(!headerAdded) {
+                mcList.addHeaderView(header);
+                headerAdded = true;
+            }
         }
         if(footer != null) {
-            mcList.addFooterView(footer);
+            if(!footerAdded) {
+                mcList.addFooterView(footer);
+                footerAdded = true;
+            }
         }
 
         mcList.setOnItemClickListener(new ListView.OnItemClickListener() {
@@ -110,7 +118,10 @@ public class ComplaintListFragment extends BaseFragment {
 
     public void setHeader(View view) {
         if(mcList != null) {
-            mcList.addHeaderView(view);
+            if(!headerAdded) {
+                mcList.addHeaderView(view);
+                headerAdded = true;
+            }
         }
         else {
             header = view;
@@ -119,7 +130,10 @@ public class ComplaintListFragment extends BaseFragment {
 
     public void setFooter(View view) {
         if(mcList != null) {
-            mcList.addFooterView(view);
+            if(!footerAdded) {
+                mcList.addFooterView(view);
+                footerAdded = true;
+            }
         }
         else {
             footer = view;

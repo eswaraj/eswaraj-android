@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.next.eswaraj.R;
@@ -28,6 +29,7 @@ public class SearchableActivity extends BaseActivity {
     MiddlewareServiceImpl middlewareService;
 
     private ListView resultList;
+    private TextView placeholder;
     private GlobalSearchAdapter globalSearchAdapter;
     private CustomProgressDialog pDialog;
 
@@ -38,6 +40,7 @@ public class SearchableActivity extends BaseActivity {
         setTitle("Search results");
         eventBus.register(this);
         resultList = (ListView) findViewById(R.id.sResultList);
+        placeholder = (TextView) findViewById(R.id.sPlaceholder);
 
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -75,9 +78,12 @@ public class SearchableActivity extends BaseActivity {
         if(event.getSuccess()) {
             globalSearchAdapter = new GlobalSearchAdapter(this, R.layout.item_global_search_result, event.getGlobalSearchResponseDtoList());
             resultList.setAdapter(globalSearchAdapter);
+            if(event.getGlobalSearchResponseDtoList().size() == 0) {
+                placeholder.setVisibility(View.VISIBLE);
+            }
         }
         else {
-            Toast.makeText(this, "Could not get search results. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, event.getError(), Toast.LENGTH_LONG).show();
         }
         pDialog.dismiss();
         eventBus.unregister(this);
