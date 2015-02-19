@@ -15,11 +15,21 @@
         android:layout_height="wrap_content"
         android:focusableInTouchMode="true">
 
-        <FrameLayout
+        <RelativeLayout
+            android:layout_gravity="center"
+            android:layout_width="200dp"
+            android:layout_height="200dp">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/placeholder_analytics"/>
+            <FrameLayout
             android:id="@+id/mcChartContainer"
             android:layout_gravity="center"
             android:layout_width="200dp"
             android:layout_height="200dp"/>
+        </RelativeLayout>
 
         <com.next.eswaraj.widgets.NonScrollableGridView
             android:id="@+id/mcAmenityList"
