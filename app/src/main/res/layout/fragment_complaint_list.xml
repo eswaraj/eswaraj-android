@@ -14,7 +14,7 @@
         <ListView
             android:id="@+id/mcList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
 
         <TextView
             android:id="@+id/mcPlaceholderText"
@@ -28,14 +28,5 @@
             android:layout_marginTop="-120dp"/>
 
     </LinearLayout>
-        <Button
-            android:id="@+id/mcRaiseComplaint"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/new_complaint_imageview"
-            android:layout_alignParentBottom="true"
-            android:visibility="gone"
-            android:layout_marginBottom="-2dp"
-            />
 
 </RelativeLayout>

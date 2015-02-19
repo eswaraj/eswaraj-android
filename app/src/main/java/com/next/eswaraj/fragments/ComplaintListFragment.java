@@ -32,7 +32,6 @@ public class ComplaintListFragment extends BaseFragment {
 
     private ListView mcList;
     private TextView mcPlaceholderText;
-    private Button mcRaiseComplaint;
     private ComplaintListAdapter complaintsAdapter;
     private View header;
     private View footer;
@@ -51,7 +50,6 @@ public class ComplaintListFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_complaint_list, container, false);
         mcList = (ListView) rootView.findViewById(R.id.mcList);
         mcPlaceholderText = (TextView) rootView.findViewById(R.id.mcPlaceholderText);
-        mcRaiseComplaint = (Button) rootView.findViewById(R.id.mcRaiseComplaint);
         mcList.setDividerHeight(0);
 
         if(header != null) {
@@ -80,27 +78,16 @@ public class ComplaintListFragment extends BaseFragment {
             mcList.setOnScrollListener(onScrollListener);
         }
 
-        mcRaiseComplaint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShowSelectAmenityEvent event = new ShowSelectAmenityEvent();
-                event.setSuccess(true);
-                eventBus.post(event);
-            }
-        });
-
         return rootView;
     }
 
     public void setData(List<ComplaintDto> complaintDtoList) {
         if(complaintDtoList == null || complaintDtoList.size() == 0) {
             mcPlaceholderText.setVisibility(View.VISIBLE);
-            mcRaiseComplaint.setVisibility(View.VISIBLE);
         }
         else
         {
             mcPlaceholderText.setVisibility(View.GONE);
-            mcRaiseComplaint.setVisibility(View.GONE);
         }
         if(showCount == null || showCount > complaintDtoList.size()) {
             complaintsAdapter = new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, complaintDtoList);

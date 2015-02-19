@@ -215,7 +215,7 @@ public class UserSnapshotFragment extends BaseFragment {
                 open.setText("Open\n" + openCount);
                 close.setText("Closed\n" + closeCount);
             }
-            if(totalCount <= requestCount) {
+            if(totalCount < requestCount) {
                 showAll.setVisibility(View.GONE);
             }
         }
