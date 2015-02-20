@@ -60,7 +60,7 @@ public class LoginFragment extends BaseFragment {
     GoogleAnalyticsTracker googleAnalyticsTracker;
 
     private Boolean showInstruction;
-    private Boolean dialogMode;
+    private Boolean dialogMode = false;
     private Session session;
     private Boolean wasUserAlreadyLoggedIn = false;
 
