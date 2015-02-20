@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/dummyComplaintPlaceholderText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="No Complaints to show yet. \nRaise a complaint like the one below and contribute towards good governance."
+        android:textStyle="bold"
+        android:textColor="#707070"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:background="@color/white"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="gone"/>
+
+    <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
 
@@ -269,4 +290,19 @@
         android:visibility="gone"
         android:layout_marginLeft="40dp" />
 
+        <ImageView
+            android:id="@+id/mcSampleStampBg"
+            android:layout_width="240dp"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/sample_stamp_background"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="85dp"
+            android:visibility="gone"/>
+
 </RelativeLayout>
+</LinearLayout>

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.next.eswaraj.R;
@@ -56,6 +57,8 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
             holder.mcDescription = (TextView) row.findViewById(R.id.mcDescription);
             holder.mcAddress = (TextView) row.findViewById(R.id.mcAddress);
             holder.mcAmenity = (TextView) row.findViewById(R.id.mcAmenityName);
+            holder.dummyComplaintPlaceholderText = (TextView) row.findViewById(R.id.dummyComplaintPlaceholderText);
+            holder.mcSampleStampBg = (ImageView) row.findViewById(R.id.mcSampleStampBg);
 
             row.setTag(holder);
         }
@@ -64,51 +67,70 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
             holder = (ComplaintDtoHolder)row.getTag();
         }
 
-        ComplaintDto complaintDto = complaintDtoList.get(position);
+        if(complaintDtoList.size() > 0) {
 
-        for(CategoryDto categoryDto : complaintDto.getCategories()) {
-            if(!categoryDto.isRoot()) {
-                holder.mcCategory.setText(categoryDto.getName());
+            ComplaintDto complaintDto = complaintDtoList.get(position);
+
+            for (CategoryDto categoryDto : complaintDto.getCategories()) {
+                if (!categoryDto.isRoot()) {
+                    holder.mcCategory.setText(categoryDto.getName());
+                } else {
+                    holder.mcAmenity.setText(categoryDto.getName());
+                }
             }
+
+            holder.mcId.setText(complaintDto.getId().toString());
+            holder.mcDate.setText(DateUtils.getRelativeTimeSpanString(complaintDto.getComplaintTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
+            holder.mcStatus.setText(complaintDto.getStatus());
+            holder.dummyComplaintPlaceholderText.setVisibility(View.GONE);
+            holder.mcSampleStampBg.setVisibility(View.GONE);
+            if (complaintDto.getCreatedBy() != null) {
+                holder.mcName.setText(complaintDto.getCreatedBy().get(0).getName());
+                if (complaintDto.getDescription() != null && !complaintDto.getDescription().equals("")) {
+                    holder.mcDescription.setText(complaintDto.getDescription());
+                    holder.mcDescription.setVisibility(View.VISIBLE);
+                } else {
+                    holder.mcDescription.setVisibility(View.GONE);
+                }
+                if (complaintDto.getCreatedBy().get(0).getProfilePhoto() != null && !complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
+                    Picasso.with(context).load(complaintDto.getCreatedBy().get(0).getProfilePhoto().replace("http:", "https:")).error(R.drawable.anon_grey).placeholder(R.drawable.anon_grey).into(holder.mcProfilePhoto);
+                } else {
+                    holder.mcProfilePhoto.setImageDrawable(context.getResources().getDrawable(R.drawable.anon_grey));
+                }
+                if (complaintDto.getImages() != null && complaintDto.getImages().get(0) != null && complaintDto.getImages().get(0).getOrgUrl() != null && !complaintDto.getImages().get(0).getOrgUrl().equals("")) {
+                    Picasso.with(context).load(complaintDto.getImages().get(0).getOrgUrl()).into(holder.mcImage);
+                    holder.mcImage.setVisibility(View.VISIBLE);
+                } else {
+                    holder.mcImage.setVisibility(View.GONE);
+                }
+            }
+            if (getRootCategoryId(complaintDto) != null) {
+                holder.mcIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(getRootCategoryId(complaintDto)) + ".png"));
+            }
+            if (complaintDto.getLocationAddress() != null) {
+                holder.mcAddress.setText(complaintDto.getLocationAddress());
+            } else {
+                holder.mcAddress.setText("");
+            }
+        }
             else {
-                holder.mcAmenity.setText(categoryDto.getName());
-            }
-        }
 
-        holder.mcId.setText(complaintDto.getId().toString());
-        holder.mcDate.setText(DateUtils.getRelativeTimeSpanString(complaintDto.getComplaintTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
-        holder.mcStatus.setText(complaintDto.getStatus());
-        if(complaintDto.getCreatedBy() != null) {
-            holder.mcName.setText(complaintDto.getCreatedBy().get(0).getName());
-            if (complaintDto.getDescription() != null && !complaintDto.getDescription().equals("")) {
-                holder.mcDescription.setText(complaintDto.getDescription());
-                holder.mcDescription.setVisibility(View.VISIBLE);
-            } else {
-                holder.mcDescription.setVisibility(View.GONE);
-            }
-            if (complaintDto.getCreatedBy().get(0).getProfilePhoto() != null && !complaintDto.getCreatedBy().get(0).getProfilePhoto().equals("")) {
-                Picasso.with(context).load(complaintDto.getCreatedBy().get(0).getProfilePhoto().replace("http:", "https:")).error(R.drawable.anon_grey).placeholder(R.drawable.anon_grey).into(holder.mcProfilePhoto);
-            } else {
+                holder.mcId.setText("12001");
+                holder.mcCategory.setText("Leaking Water Pipes");
+                holder.mcDate.setText("3 Hours ago");
+                holder.mcStatus.setText("Pending");
+                holder.mcIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.water_category));
+                holder.mcImage.setImageDrawable(context.getResources().getDrawable(R.drawable.leaking_water));
                 holder.mcProfilePhoto.setImageDrawable(context.getResources().getDrawable(R.drawable.anon_grey));
+                holder.mcName.setText("Aam Aadmi");
+                holder.mcDescription.setText("Gallons of water leaking everyday in this area. Please take required action.");
+                holder.mcAddress.setText("Govind Vihar, Delhi");
+                holder.mcAmenity.setText("Water");
+                holder.dummyComplaintPlaceholderText.setVisibility(View.VISIBLE);
+                holder.mcSampleStampBg.setVisibility(View.VISIBLE);
             }
-            if (complaintDto.getImages() != null && complaintDto.getImages().get(0) != null && complaintDto.getImages().get(0).getOrgUrl() != null && !complaintDto.getImages().get(0).getOrgUrl().equals("")) {
-                Picasso.with(context).load(complaintDto.getImages().get(0).getOrgUrl()).into(holder.mcImage);
-                holder.mcImage.setVisibility(View.VISIBLE);
-            } else {
-                holder.mcImage.setVisibility(View.GONE);
-            }
-        }
-        if(getRootCategoryId(complaintDto) != null) {
-            holder.mcIcon.setImageURI(Uri.parse(context.getFilesDir() + "/eSwaraj_" + String.valueOf(getRootCategoryId(complaintDto)) + ".png"));
-        }
-        if(complaintDto.getLocationAddress() != null) {
-            holder.mcAddress.setText(complaintDto.getLocationAddress());
-        }
-        else {
-            holder.mcAddress.setText("");
-        }
 
-        return row;
+            return row;
     }
 
     private Long getRootCategoryId(ComplaintDto complaintDto) {
@@ -148,6 +170,13 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         complaintDtoList.clear();
     }
 
+    public int getCount() {
+        if (complaintDtoList.size()==0) {
+            return 1;
+        }
+        return complaintDtoList.size();
+    }
+
     static class ComplaintDtoHolder
     {
         TextView mcId;
@@ -161,5 +190,7 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
         TextView mcDescription;
         TextView mcAddress;
         TextView mcAmenity;
+        TextView dummyComplaintPlaceholderText;
+        ImageView mcSampleStampBg;
     }
 }

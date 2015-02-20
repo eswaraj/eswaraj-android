@@ -31,7 +31,6 @@ public class ComplaintListFragment extends BaseFragment {
     EventBus eventBus;
 
     private ListView mcList;
-    private TextView mcPlaceholderText;
     private ComplaintListAdapter complaintsAdapter;
     private View header;
     private View footer;
@@ -49,7 +48,6 @@ public class ComplaintListFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_complaint_list, container, false);
         mcList = (ListView) rootView.findViewById(R.id.mcList);
-        mcPlaceholderText = (TextView) rootView.findViewById(R.id.mcPlaceholderText);
         mcList.setDividerHeight(0);
 
         if(header != null) {
@@ -68,9 +66,15 @@ public class ComplaintListFragment extends BaseFragment {
         mcList.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ComplaintSelectedEvent event = new ComplaintSelectedEvent();
-                event.setComplaintDto((ComplaintDto) mcList.getAdapter().getItem(position));
-                eventBus.post(event);
+                try{
+                    ComplaintSelectedEvent event = new ComplaintSelectedEvent();
+                    event.setComplaintDto((ComplaintDto) mcList.getAdapter().getItem(position));
+                    eventBus.post(event);
+                }
+                catch ( IndexOutOfBoundsException e)
+                {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -82,13 +86,6 @@ public class ComplaintListFragment extends BaseFragment {
     }
 
     public void setData(List<ComplaintDto> complaintDtoList) {
-        if(complaintDtoList == null || complaintDtoList.size() == 0) {
-            mcPlaceholderText.setVisibility(View.VISIBLE);
-        }
-        else
-        {
-            mcPlaceholderText.setVisibility(View.GONE);
-        }
         if(showCount == null || showCount > complaintDtoList.size()) {
             complaintsAdapter = new ComplaintListAdapter(getActivity(), R.layout.item_complaint_list, complaintDtoList);
         }
