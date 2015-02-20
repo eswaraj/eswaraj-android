@@ -38,14 +38,14 @@
             android:textSize="20sp"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:layout_marginTop="40dp" />
+            android:layout_marginTop="70dp" />
 
         <View
             android:id="@+id/cIcon"
             android:layout_width="16dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="52dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="74dp"
             android:background="@drawable/ic_issue_bullet" >
         </View>
 
@@ -63,8 +63,8 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#707070"
-            android:background="@drawable/white_grey_highlight"
+            android:textColor="@color/white"
+            android:background="@drawable/blue_darkblue_highlight"
             android:layout_marginRight="5dp" />
 
         <Button
@@ -73,8 +73,8 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#707070"
-            android:background="@drawable/white_grey_highlight"
+            android:textColor="@color/white"
+            android:background="@drawable/greygreen_darkgreygreen_highlight"
             android:layout_marginLeft="5dp" />
 
     </LinearLayout>
