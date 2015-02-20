@@ -16,17 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <TextView
-            android:id="@+id/mcPlaceholderText"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:gravity="center_horizontal|center_vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:textSize="20sp"
-            android:text="No complaints to show yet."
-            android:visibility="gone"
-            android:layout_marginTop="-120dp"/>
-
     </LinearLayout>
 
 </RelativeLayout>
