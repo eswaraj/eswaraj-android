@@ -3,19 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.next.eswaraj.fragments.ComplaintListFragment"
-    android:orientation="vertical">
-
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/mcRelativeLayout">
 
         <ListView
             android:id="@+id/mcList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/mcPlaceholderText"
+            android:text="No complaints to show yet"
+            android:layout_marginTop="340dp"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
 </RelativeLayout>

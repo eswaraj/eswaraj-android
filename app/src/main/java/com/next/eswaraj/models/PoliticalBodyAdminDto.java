@@ -19,8 +19,12 @@ public class PoliticalBodyAdminDto extends BaseDto implements Serializable {
     private String profilePhoto;
     private String fbPage;
     private String officeEmail;
+    private String email;
     private String biodata;
-    private String mobile1;
+    private String mobileNumber1;
+    private String mobileNumber2;
+    private String landlineNumber1;
+    private String landlineNumber2;
 
     public PoliticalBodyAdminDto() {
         party = new PartyDto();
@@ -28,12 +32,44 @@ public class PoliticalBodyAdminDto extends BaseDto implements Serializable {
         location = new PoliticalAdminLocationDto();
     }
 
-    public String getMobile1() {
-        return mobile1;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMobile1(String mobile1) {
-        this.mobile1 = mobile1;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMobileNumber1() {
+        return mobileNumber1;
+    }
+
+    public void setMobileNumber1(String mobileNumber1) {
+        this.mobileNumber1 = mobileNumber1;
+    }
+
+    public String getMobileNumber2() {
+        return mobileNumber2;
+    }
+
+    public void setMobileNumber2(String mobileNumber2) {
+        this.mobileNumber2 = mobileNumber2;
+    }
+
+    public String getLandlineNumber1() {
+        return landlineNumber1;
+    }
+
+    public void setLandlineNumber1(String landlineNumber1) {
+        this.landlineNumber1 = landlineNumber1;
+    }
+
+    public String getLandlineNumber2() {
+        return landlineNumber2;
+    }
+
+    public void setLandlineNumber2(String landlineNumber2) {
+        this.landlineNumber2 = landlineNumber2;
     }
 
     public PoliticalAdminLocationDto getLocation() {

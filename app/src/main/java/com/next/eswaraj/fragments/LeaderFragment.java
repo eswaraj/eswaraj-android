@@ -143,10 +143,9 @@ public class LeaderFragment extends BaseFragment {
         lPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Fix the field in DTO also and here too
-                if(politicalBodyAdminDto.getMobile1() != null && !politicalBodyAdminDto.getMobile1().equals("")) {
+                if(politicalBodyAdminDto.getMobileNumber1() != null && !politicalBodyAdminDto.getMobileNumber1().equals("")) {
                     CallPhoneEvent event = new CallPhoneEvent();
-                    event.setNumber(politicalBodyAdminDto.getMobile1());
+                    event.setNumber(politicalBodyAdminDto.getMobileNumber1());
                     eventBus.post(event);
                 }
                 else {
