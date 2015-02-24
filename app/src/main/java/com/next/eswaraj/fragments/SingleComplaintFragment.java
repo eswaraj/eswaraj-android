@@ -1,6 +1,7 @@
 package com.next.eswaraj.fragments;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateUtils;
@@ -64,6 +65,7 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     private TextView scDate;
 
     private Bundle savedInstanceState;
+    private Boolean mapReady = false;
 
     public SingleComplaintFragment() {
         // Required empty public constructor
@@ -73,6 +75,18 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventBus.register(this);
+
+        //Create fragments
+        commentsFragment = new CommentsFragment();
+        googleMapFragment = new GoogleMapFragment();
+
+        googleMapFragment.setContext(this);
+
+        //Add fragments
+        if(savedInstanceState == null) {
+            getChildFragmentManager().beginTransaction().add(R.id.scCommentContainer, commentsFragment).commit();
+            getChildFragmentManager().beginTransaction().add(R.id.scDisplayContainer, googleMapFragment).commit();
+        }
     }
 
     @Override
@@ -106,10 +120,6 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         scComplaintId = (TextView) rootView.findViewById(R.id.scComplaintId);
         scAddress = (TextView) rootView.findViewById(R.id.scAddress);
         scDate = (TextView) rootView.findViewById(R.id.scDate);
-
-        //Create fragments
-        commentsFragment = new CommentsFragment();
-        googleMapFragment = new GoogleMapFragment();
 
         this.savedInstanceState = savedInstanceState;
 
@@ -187,19 +197,25 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
 
         //Set up fragments
         commentsFragment.setComplaintDto(complaintDto);
-        googleMapFragment.setContext(this);
-
-        //Add fragments
-        if(savedInstanceState == null) {
-            getChildFragmentManager().beginTransaction().add(R.id.scCommentContainer, commentsFragment).commit();
-            getChildFragmentManager().beginTransaction().add(R.id.scDisplayContainer, googleMapFragment).commit();
+        if(mapReady) {
+            googleMapFragment.updateMarkerLocation(complaintDto.getLattitude(), complaintDto.getLongitude());
         }
+
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mapReady = true;
         googleMapFragment.disableGestures();
-        googleMapFragment.updateMarkerLocation(complaintDto.getLattitude(), complaintDto.getLongitude());
+        if(complaintDto != null) {
+            googleMapFragment.updateMarkerLocation(complaintDto.getLattitude(), complaintDto.getLongitude());
+        }
+    }
+
+    public void onNewIntent(Intent i) {
+        middlewareService.loadSingleComplaint(getActivity(), getActivity().getIntent().getLongExtra("COMPLAINT_ID", 0L));
+        pDialog = new CustomProgressDialog(getActivity(), false, true, "Loading your complaint ...");
+        pDialog.show();
     }
 
     public void onEventMainThread(ComplaintClosedEvent event) {

@@ -86,7 +86,7 @@ public class NotificationHelper {
         stackBuilder.addParentStack(SingleComplaintActivity.class);
         stackBuilder.addNextIntent(toLaunch);
 
-        PendingIntent intentBack = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent intentBack = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT);
 
         //PendingIntent intentBack = PendingIntent.getActivity(caller, 0, toLaunch, 0);
 

@@ -36,6 +36,12 @@ public class SingleComplaintActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        singleComplaintFragment.onNewIntent(intent);
+    }
+
     public void onEventMainThread(ComplaintClosedEvent event) {
         if(event.getSuccess()) {
             Intent i = new Intent();

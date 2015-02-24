@@ -55,6 +55,7 @@ public class CommentsFragment extends BaseFragment {
 
     public void setComplaintDto(ComplaintDto complaintDto) {
         this.complaintDto = complaintDto;
+        middlewareService.loadComments(getActivity(), complaintDto, 0, 5);
     }
 
     @Override
@@ -94,7 +95,6 @@ public class CommentsFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventBus.register(this);
-        middlewareService.loadComments(getActivity(), complaintDto, 0, 5);
     }
 
     @Override

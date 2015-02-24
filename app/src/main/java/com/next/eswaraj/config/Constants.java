@@ -18,7 +18,6 @@ public class Constants {
 
     public static String GET_CATEGORIES_URL = BASE_URL + "/categories";
     public static String SAVE_FACEBOOK_USER_URL = BASE_URL + "/user/facebook";
-    public static String SAVE_DEVICE_ANONYMOUS_USER_URL = BASE_URL + "/user/device";
     public static String POST_COMPLAINT_URL = BASE_URL + "/complaint";
     public static String USER_COMPLAINTS_URL = BASE_URL + "/user/complaints";
     public static String COMMENT_POST_URL = BASE_URL + "/complaint/user/comment";
@@ -44,7 +43,6 @@ public class Constants {
 
         GET_CATEGORIES_URL = BASE_URL + "/categories";
         SAVE_FACEBOOK_USER_URL = BASE_URL + "/user/facebook";
-        SAVE_DEVICE_ANONYMOUS_USER_URL = BASE_URL + "/user/device";
         POST_COMPLAINT_URL = BASE_URL + "/complaint";
         USER_COMPLAINTS_URL = BASE_URL + "/user/complaints";
         COMMENT_POST_URL = BASE_URL + "/complaint/user/comment";

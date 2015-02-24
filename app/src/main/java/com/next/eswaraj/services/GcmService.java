@@ -47,6 +47,7 @@ public class GcmService extends BaseService {
     private final String TAG = "GcmService";
     private GcmMessageDto gcmMessageDto;
     private Intent i;
+    private Boolean startedAtleastOnce = false;
 
     public GcmService() {
     }
@@ -66,6 +67,7 @@ public class GcmService extends BaseService {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //Toast.makeText(this, "Started GcmService", Toast.LENGTH_LONG).show();
+        startedAtleastOnce = true;
         Bundle extras = intent.getExtras();
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         String messageType = gcm.getMessageType(intent);
@@ -121,66 +123,69 @@ public class GcmService extends BaseService {
     }
 
     public void onEventMainThread(GetProfileImageEvent event) {
-        if(event.getSuccess()) {
-            if(gcmMessageDto != null) {
-                if (event.getId().equals(gcmMessageDto.getViewedBy().getId())) {
-                    notificationHelper.sendComplaintUpdateNotification(this, gcmMessageDto.getMessage(), event.getBitmap(), 8888, gcmMessageDto.getComplaintId());
-                    //notificationHelper.sendNotification(this, event.getBitmap(), gcmMessageDto, 8888);
+        if(startedAtleastOnce) {
+            if (event.getSuccess()) {
+                if (gcmMessageDto != null) {
+                    if (event.getId().equals(gcmMessageDto.getViewedBy().getId())) {
+                        notificationHelper.sendComplaintUpdateNotification(this, gcmMessageDto.getMessage(), event.getBitmap(), 8888, gcmMessageDto.getComplaintId());
+                        //notificationHelper.sendNotification(this, event.getBitmap(), gcmMessageDto, 8888);
+                    }
                 }
+            } else {
+                notificationHelper.sendComplaintUpdateNotification(this, gcmMessageDto.getMessage(), null, 8888, gcmMessageDto.getComplaintId());
+                //notificationHelper.sendNotification(this, null, gcmMessageDto, 8888);
             }
-        }
-        else {
-            notificationHelper.sendComplaintUpdateNotification(this, gcmMessageDto.getMessage(), null, 8888, gcmMessageDto.getComplaintId());
-            //notificationHelper.sendNotification(this, null, gcmMessageDto, 8888);
-        }
-        GcmBroadcastReceiver.completeWakefulIntent(i);
-        stopSelf();
-    }
-
-    public void onEventMainThread(GetCategoriesDataEvent event) {
-        if(event.getSuccess()) {
-            globalSession.setCategoryDtoList(event.getCategoryList());
-            middlewareService.loadProfileImage(this, gcmMessageDto.getViewedBy().getProfilePhoto(), gcmMessageDto.getViewedBy().getId(), false, false);
-        }
-        else {
             GcmBroadcastReceiver.completeWakefulIntent(i);
             stopSelf();
         }
     }
 
-    public void onEventMainThread(GetUserEvent event) {
-        if(event.getSuccess()) {
-            if(event.getUserDto() != null) {
-                userSession.setUser(event.getUserDto());
-                userSession.setToken(event.getToken());
-                cache.loadCategoriesData(this);
-
+    public void onEventMainThread(GetCategoriesDataEvent event) {
+        if(startedAtleastOnce) {
+            if (event.getSuccess()) {
+                globalSession.setCategoryDtoList(event.getCategoryList());
+                middlewareService.loadProfileImage(this, gcmMessageDto.getViewedBy().getProfilePhoto(), gcmMessageDto.getViewedBy().getId(), false, false);
+            } else {
+                GcmBroadcastReceiver.completeWakefulIntent(i);
+                stopSelf();
             }
-            else {
+        }
+    }
+
+    public void onEventMainThread(GetUserEvent event) {
+        if(startedAtleastOnce) {
+            if (event.getSuccess()) {
+                if (event.getUserDto() != null) {
+                    userSession.setUser(event.getUserDto());
+                    userSession.setToken(event.getToken());
+                    cache.loadCategoriesData(this);
+
+                } else {
+                    //User not logged in. No need to do anything
+                    GcmBroadcastReceiver.completeWakefulIntent(i);
+                    stopSelf();
+                }
+            } else {
                 //User not logged in. No need to do anything
                 GcmBroadcastReceiver.completeWakefulIntent(i);
                 stopSelf();
             }
         }
-        else {
-            //User not logged in. No need to do anything
-            GcmBroadcastReceiver.completeWakefulIntent(i);
-            stopSelf();
-        }
     }
 
     public void onEventMainThread(GetProfileEvent event) {
-        if(event.getSuccess()) {
-            userSession.setUser(event.getUserDto());
-            userSession.setToken(event.getToken());
-            cache.updateLeaders(this, null);
-            GcmBroadcastReceiver.completeWakefulIntent(i);
-            stopSelf();
-        }
-        else {
-            cache.setUserDataStale(this);
-            GcmBroadcastReceiver.completeWakefulIntent(i);
-            stopSelf();
+        if(startedAtleastOnce) {
+            if (event.getSuccess()) {
+                userSession.setUser(event.getUserDto());
+                userSession.setToken(event.getToken());
+                cache.updateLeaders(this, null);
+                GcmBroadcastReceiver.completeWakefulIntent(i);
+                stopSelf();
+            } else {
+                cache.setUserDataStale(this);
+                GcmBroadcastReceiver.completeWakefulIntent(i);
+                stopSelf();
+            }
         }
     }
 }
