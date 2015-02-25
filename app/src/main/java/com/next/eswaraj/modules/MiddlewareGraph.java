@@ -10,6 +10,7 @@ import com.next.eswaraj.activities.ComplaintFilterActivity;
 import com.next.eswaraj.activities.ComplaintSummaryActivity;
 import com.next.eswaraj.activities.ConstituencyComplaintsActivity;
 import com.next.eswaraj.activities.ConstituencySnapshotActivity;
+import com.next.eswaraj.activities.DocumentActivity;
 import com.next.eswaraj.activities.LeaderListActivity;
 import com.next.eswaraj.activities.LocationListActivity;
 import com.next.eswaraj.activities.MarkHomeActivity;
@@ -216,7 +217,8 @@ import de.greenrobot.event.EventBus;
                 SinglePromiseActivity.class,
                 SinglePromiseFragment.class,
                 LoadTimelineRequest.class,
-                TimelineFragment.class
+                TimelineFragment.class,
+                DocumentActivity.class
         },
         complete = false,
         library = true

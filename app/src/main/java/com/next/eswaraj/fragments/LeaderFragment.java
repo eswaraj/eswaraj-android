@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.next.eswaraj.R;
 import com.next.eswaraj.base.BaseFragment;
+import com.next.eswaraj.config.TimelineType;
 import com.next.eswaraj.events.CallPhoneEvent;
 import com.next.eswaraj.events.GetLeaderEvent;
 import com.next.eswaraj.events.SendEmailEvent;
@@ -53,6 +54,8 @@ public class LeaderFragment extends BaseFragment {
     private Button lPromise;
     private Button lEmail;
     private Button lPhone;
+    private View headerView;
+    private TimelineFragment timelineFragment;
 
     private PoliticalBodyAdminDto politicalBodyAdminDto;
 
@@ -64,6 +67,11 @@ public class LeaderFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventBus.register(this);
+
+        if(savedInstanceState == null) {
+            timelineFragment = new TimelineFragment();
+            getChildFragmentManager().beginTransaction().add(R.id.lTimeline, timelineFragment).commit();
+        }
     }
 
     @Override
@@ -75,18 +83,22 @@ public class LeaderFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_leader, container, false);
-        lPhoto = (CustomNetworkImageView) rootView.findViewById(R.id.lPhoto);
-        lName = (TextView) rootView.findViewById(R.id.lName);
-        lPost = (TextView) rootView.findViewById(R.id.lPost);
-        lDetails = (WebView) rootView.findViewById(R.id.lDetails);
-        lAge = (TextView) rootView.findViewById(R.id.lAge);
-        lParty = (TextView) rootView.findViewById(R.id.lParty);
-        lAddress = (TextView) rootView.findViewById(R.id.lAddress);
-        lEducation = (TextView) rootView.findViewById(R.id.lEducation);
-        lConstituency = (TextView) rootView.findViewById(R.id.lConstituency);
-        lPromise = (Button) rootView.findViewById(R.id.lPromise);
-        lEmail = (Button) rootView.findViewById(R.id.lEmail);
-        lPhone = (Button) rootView.findViewById(R.id.lPhone);
+        headerView = getActivity().getLayoutInflater().inflate(R.layout.header_leader, null);
+        timelineFragment.setHeader(headerView);
+
+        lPhoto = (CustomNetworkImageView) headerView.findViewById(R.id.lPhoto);
+        lName = (TextView) headerView.findViewById(R.id.lName);
+        lPost = (TextView) headerView.findViewById(R.id.lPost);
+        lDetails = (WebView) headerView.findViewById(R.id.lDetails);
+        lAge = (TextView) headerView.findViewById(R.id.lAge);
+        lParty = (TextView) headerView.findViewById(R.id.lParty);
+        lAddress = (TextView) headerView.findViewById(R.id.lAddress);
+        lEducation = (TextView) headerView.findViewById(R.id.lEducation);
+        lConstituency = (TextView) headerView.findViewById(R.id.lConstituency);
+        lPromise = (Button) headerView.findViewById(R.id.lPromise);
+        lEmail = (Button) headerView.findViewById(R.id.lEmail);
+        lPhone = (Button) headerView.findViewById(R.id.lPhone);
+
 
         politicalBodyAdminDto = (PoliticalBodyAdminDto) getActivity().getIntent().getSerializableExtra("LEADER");
 
@@ -168,6 +180,7 @@ public class LeaderFragment extends BaseFragment {
     }
 
     private void setFields() {
+        timelineFragment.setTypeAndId(TimelineType.LEADER, politicalBodyAdminDto.getId());
         if(politicalBodyAdminDto.getProfilePhoto() != null && !politicalBodyAdminDto.getProfilePhoto().equals("")) {
             Picasso.with(getActivity()).load(politicalBodyAdminDto.getProfilePhoto().replace("http:", "https:")).error(R.drawable.anon).placeholder(R.drawable.anon).into(lPhoto);
         }

@@ -16,6 +16,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.next.eswaraj.R;
+import com.next.eswaraj.activities.DocumentActivity;
 import com.next.eswaraj.activities.YoutubeActivity;
 import com.next.eswaraj.config.Constants;
 import com.next.eswaraj.models.TimelineDto;
@@ -50,7 +51,8 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
         View row = convertView;
         TimelineDtoHolder holder = null;
 
-        TimelineDto timelineDto = timelineDtoList.get(position);
+        final TimelineDto timelineDto = timelineDtoList.get(position);
+        Log.e("TimelineListAdapter", "Posidfdfdtion=" + position);
 
         if(row == null)
         {
@@ -63,6 +65,8 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
             holder.tlDate = (TextView)row.findViewById(R.id.tlDate);
             holder.tlYoutube = (YouTubeThumbnailView)row.findViewById(R.id.tlYoutube);
             holder.tlImage = (ImageView)row.findViewById(R.id.tlImage);
+            holder.tlIcon = (ImageView)row.findViewById(R.id.tlIcon);
+            holder.tlDoc = (ImageView)row.findViewById(R.id.tlDoc);
 
             if(timelineDto.getYoutubeUrl() != null && timelineDto.getYoutubeUrl().get(0) != null && !timelineDto.getYoutubeUrl().get(0).equals("")) {
                 holder.tlYoutube.setVisibility(View.VISIBLE);
@@ -71,8 +75,9 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
             }
             else {
                 holder.tlYoutube.setVisibility(View.GONE);
+                holder.tlIcon.setVisibility(View.GONE);
             }
-            
+
             holder.tlYoutube.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -95,6 +100,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
                 }
                 else {
                     holder.tlYoutube.setVisibility(View.GONE);
+                    holder.tlIcon.setVisibility(View.GONE);
                 }
             } else {
                 if(timelineDto.getYoutubeUrl() != null && timelineDto.getYoutubeUrl().get(0) != null && !timelineDto.getYoutubeUrl().get(0).equals("")) {
@@ -104,6 +110,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
                 }
                 else {
                     holder.tlYoutube.setVisibility(View.GONE);
+                    holder.tlIcon.setVisibility(View.GONE);
                 }
             }
         }
@@ -118,6 +125,20 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
         else {
             holder.tlImage.setVisibility(View.GONE);
         }
+        if(timelineDto.getDocuments() != null && timelineDto.getDocuments().get(0) != null && !timelineDto.getDocuments().get(0).equals("")) {
+            holder.tlDoc.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.tlDoc.setVisibility(View.GONE);
+        }
+        holder.tlDoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, DocumentActivity.class);
+                i.putExtra("URL", timelineDto.getDocuments().get(0));
+                context.startActivity(i);
+            }
+        });
         return row;
     }
 
@@ -151,5 +172,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
         TextView tlDate;
         YouTubeThumbnailView tlYoutube;
         ImageView tlImage;
+        ImageView tlIcon;
+        ImageView tlDoc;
     }
 }

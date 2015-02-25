@@ -4,17 +4,11 @@
     android:layout_height="match_parent"
     tools:context="com.next.eswaraj.activities.LeaderActivity">
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
     <fragment
         class="com.next.eswaraj.fragments.LeaderFragment"
         android:id="@+id/leaderFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_leader" />
-
-    </ScrollView>
 
 </RelativeLayout>

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tlTitle"
@@ -19,15 +19,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <com.google.android.youtube.player.YouTubeThumbnailView
-        android:id="@+id/tlYoutube"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="300dp" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.google.android.youtube.player.YouTubeThumbnailView
+            android:id="@+id/tlYoutube"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+
+        <ImageView
+            android:id="@+id/tlIcon"
+            android:src="@drawable/video_preview_fg"
+            android:layout_centerInParent="true"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/tlImage"
         android:layout_width="match_parent"
         android:layout_height="300dp" />
+
+    <ImageView
+        android:id="@+id/tlDoc"
+        android:src="@drawable/ic_launcher"
+        android:layout_gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 
 </LinearLayout>

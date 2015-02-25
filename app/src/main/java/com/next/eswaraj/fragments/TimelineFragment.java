@@ -3,6 +3,7 @@ package com.next.eswaraj.fragments;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class TimelineFragment extends BaseFragment {
     private View header;
     private Boolean headerAdded = false;
     private Boolean footerAdded = false;
+    private Boolean dataDownloadStarted = false;
     private Button showMore;
 
     private RelativeLayout tlRelativeLayout;
@@ -96,13 +98,20 @@ public class TimelineFragment extends BaseFragment {
                 middlewareService.loadTimeline(getActivity(), type, id, totalCount, requestCount);
             }
         });
+
+        if(!dataDownloadStarted && id != null) {
+            middlewareService.loadTimeline(getActivity(), type, id, totalCount, requestCount);
+        }
         return rootView;
     }
 
     public void setTypeAndId(TimelineType type, Long id) {
         this.type = type;
         this.id = id;
-        middlewareService.loadTimeline(getActivity(), type, id, totalCount, requestCount);
+        if(getActivity() != null) {
+            middlewareService.loadTimeline(getActivity(), type, id, totalCount, requestCount);
+            dataDownloadStarted = true;
+        }
     }
 
     public void onEventMainThread(GetTimelineEvent event) {

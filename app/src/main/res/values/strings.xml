@@ -47,5 +47,6 @@
     <string name="title_activity_about_us">AboutUsActivity</string>
     <string name="title_activity_promises_list">PromisesListActivity</string>
     <string name="title_activity_single_promise">SinglePromiseActivity</string>
+    <string name="title_activity_document">DocumentActivity</string>
 
 </resources>
