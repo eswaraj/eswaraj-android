@@ -14,13 +14,21 @@ public class DocumentActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_document);
+        setTitle("Document Viewer");
         WebView mWebView=new WebView(this);
         mWebView.getSettings().setJavaScriptEnabled(true);
-        //mWebView.getSettings().setPluginsEnabled(true);
         mWebView.loadUrl("https://docs.google.com/gview?embedded=true&url="+getIntent().getStringExtra("URL"));
         setContentView(mWebView);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return(true);
+        }
 
+        return(super.onOptionsItemSelected(item));
+    }
 }
