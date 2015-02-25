@@ -86,15 +86,9 @@ public class ComplaintListFragment extends BaseFragment {
         if(complaintDtoList == null || complaintDtoList.size() == 0) {
             mcPlaceholderText.setVisibility(View.VISIBLE);
             if(footerAdded) {
-                Log.e("ComplaintList", "Coming here");
                 Boolean removed = mcList.removeFooterView(footer);
                 if(((ViewGroup)footer.getParent()) != null) {
                     ((ViewGroup)footer.getParent()).removeView(footer);
-                }
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
                 footerAdded = false;
             }

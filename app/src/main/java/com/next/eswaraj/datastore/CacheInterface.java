@@ -2,6 +2,7 @@ package com.next.eswaraj.datastore;
 
 import android.content.Context;
 
+import com.next.eswaraj.config.TimelineType;
 import com.next.eswaraj.middleware.MiddlewareGetService;
 import com.next.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.LocationDto;
@@ -65,4 +66,7 @@ public interface CacheInterface extends MiddlewareGetService {
 
     public Boolean isPromisesByLeaderAvailable(Context context, Long id);
     public void updatePromisesByLeader(Context context, Long id, String json);
+
+    public Boolean isTimelineAvailable(Context context, TimelineType type, Long id, int start, int count);
+    public void updateTimeline(Context context, TimelineType type, Long id, int start, int count, String json);
 }

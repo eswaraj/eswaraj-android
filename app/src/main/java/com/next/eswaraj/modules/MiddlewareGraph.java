@@ -47,6 +47,7 @@ import com.next.eswaraj.fragments.LeaderListFragment;
 import com.next.eswaraj.fragments.LocationListFragment;
 import com.next.eswaraj.fragments.PromisesListFragment;
 import com.next.eswaraj.fragments.SinglePromiseFragment;
+import com.next.eswaraj.fragments.TimelineFragment;
 import com.next.eswaraj.fragments.UserComplaintsFragment;
 import com.next.eswaraj.fragments.ComplaintsMapFragment;
 import com.next.eswaraj.fragments.ConstituencyInfoFragment;
@@ -100,6 +101,7 @@ import com.next.eswaraj.volley.LoadLeadersRequest;
 import com.next.eswaraj.volley.LoadLocationRequest;
 import com.next.eswaraj.volley.LoadProfileUpdateRequest;
 import com.next.eswaraj.volley.LoadPromisesByLeaderRequest;
+import com.next.eswaraj.volley.LoadTimelineRequest;
 import com.next.eswaraj.volley.LocationComplaintCountersRequest;
 import com.next.eswaraj.volley.LocationComplaintsRequest;
 import com.next.eswaraj.volley.ProfileUpdateRequest;
@@ -212,7 +214,9 @@ import de.greenrobot.event.EventBus;
                 PromisesListFragment.class,
                 PromisesListActivity.class,
                 SinglePromiseActivity.class,
-                SinglePromiseFragment.class
+                SinglePromiseFragment.class,
+                LoadTimelineRequest.class,
+                TimelineFragment.class
         },
         complete = false,
         library = true
@@ -449,5 +453,10 @@ public class MiddlewareGraph {
     @Provides @Singleton
     LoadPromisesByLeaderRequest provideLoadPromisesByLeaderRequest() {
         return new LoadPromisesByLeaderRequest();
+    }
+
+    @Provides @Singleton
+    LoadTimelineRequest provideLoadTimelineRequest() {
+        return new LoadTimelineRequest();
     }
 }

@@ -5,6 +5,7 @@ import android.location.Location;
 
 import com.next.eswaraj.base.BaseClass;
 import com.next.eswaraj.config.ImageType;
+import com.next.eswaraj.config.TimelineType;
 import com.next.eswaraj.util.UserSessionUtil;
 import com.next.eswaraj.volley.CommentPostRequest;
 import com.next.eswaraj.volley.CommentsRequest;
@@ -20,6 +21,7 @@ import com.next.eswaraj.volley.LoadLeadersRequest;
 import com.next.eswaraj.volley.LoadLocationRequest;
 import com.next.eswaraj.volley.LoadProfileUpdateRequest;
 import com.next.eswaraj.volley.LoadPromisesByLeaderRequest;
+import com.next.eswaraj.volley.LoadTimelineRequest;
 import com.next.eswaraj.volley.LocationComplaintCountersRequest;
 import com.next.eswaraj.volley.LocationComplaintsRequest;
 import com.next.eswaraj.volley.ProfileUpdateRequest;
@@ -87,6 +89,8 @@ public class Server extends BaseClass implements ServerInterface {
     LoadLeaderForLocationRequest loadLeaderForLocationRequest;
     @Inject
     LoadPromisesByLeaderRequest loadPromisesByLeaderRequest;
+    @Inject
+    LoadTimelineRequest loadTimelineRequest;
 
 
     public void loadCategoriesData(Context context) {
@@ -203,5 +207,10 @@ public class Server extends BaseClass implements ServerInterface {
     @Override
     public void loadPromisesByLeaders(Context context, Long id) {
         loadPromisesByLeaderRequest.processRequest(context, id);
+    }
+
+    @Override
+    public void loadTimeline(Context context, TimelineType type, Long id, int start, int count) {
+        loadTimelineRequest.processRequest(context, type, id, start, count);
     }
 }

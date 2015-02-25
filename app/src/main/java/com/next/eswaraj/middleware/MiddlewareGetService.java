@@ -3,6 +3,7 @@ package com.next.eswaraj.middleware;
 
 import android.content.Context;
 
+import com.next.eswaraj.config.TimelineType;
 import com.next.eswaraj.util.UserSessionUtil;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.next.eswaraj.models.ComplaintDto;
@@ -32,4 +33,5 @@ public interface MiddlewareGetService {
     public void loadLeaderById(Context context, Long id);
     public void loadLeadersForLocation(Context context, LocationDto locationDto);
     public void loadPromisesByLeaders(Context context, Long id);
+    public void loadTimeline(Context context, TimelineType type, Long id, int start, int count);
 }

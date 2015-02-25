@@ -14,7 +14,6 @@ public class Constants {
 
     //eSwaraj URLS
     public static String BASE_URL = "http://api.eswaraj.com/api/v0";
-    public static String BASE_URL_2 = "http://api.eswaraj.com";
 
     public static String GET_CATEGORIES_URL = BASE_URL + "/categories";
     public static String SAVE_FACEBOOK_USER_URL = BASE_URL + "/user/facebook";
@@ -24,7 +23,7 @@ public class Constants {
     public static String COMPLAINT_CLOSE_URL = BASE_URL + "/complaint/user/status";
     public static String UPDATE_PROFILE_URL = BASE_URL + "/mobile/user/profile";
     public static String GET_PROFILE_URL = BASE_URL + "/mobile/user/profile";
-    public static String LOCATION_COUNTERS_URL = BASE_URL_2 + "/stats/counter/location";
+    public static String LOCATION_COUNTERS_URL = BASE_URL + "/stats/counter/location";
     public static String LOCATION_COMPLAINTS_URL = BASE_URL + "/complaint/location";
     public static String SAVE_GCM_ID_URL = BASE_URL + "/user/device/gcm";
     public static String GET_SINGLE_COMPLAINT_URL = BASE_URL + "/complaint";
@@ -39,7 +38,6 @@ public class Constants {
 
     public static void setDevMode() {
         BASE_URL = "http://dev.api.eswaraj.com/api/v0";
-        BASE_URL_2 = "http://dev.api.eswaraj.com";
 
         GET_CATEGORIES_URL = BASE_URL + "/categories";
         SAVE_FACEBOOK_USER_URL = BASE_URL + "/user/facebook";
@@ -49,7 +47,7 @@ public class Constants {
         COMPLAINT_CLOSE_URL = BASE_URL + "/complaint/user/status";
         UPDATE_PROFILE_URL = BASE_URL + "/mobile/user/profile";
         GET_PROFILE_URL = BASE_URL + "/mobile/user/profile";
-        LOCATION_COUNTERS_URL = BASE_URL_2 + "/stats/counter/location";
+        LOCATION_COUNTERS_URL = BASE_URL + "/stats/counter/location";
         LOCATION_COMPLAINTS_URL = BASE_URL + "/complaint/location";
         SAVE_GCM_ID_URL = BASE_URL + "/user/device/gcm";
         GET_SINGLE_COMPLAINT_URL = BASE_URL + "/complaint";
@@ -64,7 +62,7 @@ public class Constants {
     }
 
     public static String getLocationCountersPerRootCategoryUrl(Long locationId, Long rootCategoryId) {
-        return BASE_URL_2 + "/stats/counter/location/" + locationId + "/parentcategory/" + rootCategoryId;
+        return BASE_URL + "/stats/counter/location/" + locationId + "/parentcategory/" + rootCategoryId;
     }
 
     public static String getLocationComplaintsUrl(Long locationId, int start, int count) {
@@ -81,5 +79,17 @@ public class Constants {
 
     public static String getUserComplaintsUrl(Long userId, int start, int count) {
         return USER_COMPLAINTS_URL + "/" + userId + "?count=" + count + "&start=" + start;
+    }
+
+    public static String getPromiseTimelineUrl(Long id, int start, int count) {
+        return BASE_URL + "/timeline/promise/" + id + "?start=" + start + "&size=" + count;
+    }
+
+    public static String getLeaderTimelineUrl(Long id, int start, int count) {
+        return BASE_URL + "/timeline/leader/" + id + "?start=" + start + "&size=" + count;
+    }
+
+    public static String getLocationTimelineUrl(Long id, int start, int count) {
+        return BASE_URL + "/timeline/location/" + id + "?start=" + start + "&size=" + count;
     }
 }

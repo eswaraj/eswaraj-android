@@ -4,6 +4,7 @@ import android.content.Context;
 import android.location.Location;
 
 import com.next.eswaraj.base.BaseClass;
+import com.next.eswaraj.config.TimelineType;
 import com.next.eswaraj.datastore.CacheInterface;
 import com.next.eswaraj.datastore.Database;
 import com.next.eswaraj.datastore.ServerInterface;
@@ -602,8 +603,37 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
         }
     }
 
+    @Override
+    public void loadTimeline(Context context, TimelineType type, Long id, int start, int count, Boolean dontGetFromCache) {
+        if(dontGetFromCache) {
+            server.loadTimeline(context, type, id, start, count);
+        }
+        else {
+            loadTimeline(context, type, id, start, count);
+        }
+    }
 
-//Database
+    @Override
+    public Boolean isTimelineAvailable(Context context, TimelineType type, Long id, int start, int count) {
+        return cache.isTimelineAvailable(context, type, id, start, count);
+    }
+
+    @Override
+    public void updateTimeline(Context context, TimelineType type, Long id, int start, int count, String json) {
+        cache.updateTimeline(context, type, id, start, count, json);
+    }
+
+    @Override
+    public void loadTimeline(Context context, TimelineType type, Long id, int start, int count) {
+        if(cache.isTimelineAvailable(context, type, id, start, count)) {
+            cache.loadTimeline(context, type, id, start, count);
+        }
+        else {
+            server.loadTimeline(context, type, id, start, count);
+        }
+    }
+
+    //Database
 
     @Override
     public void postOneComplaint() {

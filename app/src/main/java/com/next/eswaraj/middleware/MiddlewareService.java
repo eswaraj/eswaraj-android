@@ -3,6 +3,7 @@ package com.next.eswaraj.middleware;
 
 import android.content.Context;
 
+import com.next.eswaraj.config.TimelineType;
 import com.next.eswaraj.datastore.CacheInterface;
 import com.next.eswaraj.datastore.DatabaseInterface;
 import com.next.eswaraj.util.UserSessionUtil;
@@ -35,4 +36,5 @@ public interface MiddlewareService extends MiddlewareGetService, MiddlewarePostS
     public void loadLeaderById(Context context, Long id, Boolean dontGetFromCache);
     public void loadLeadersForLocation(Context context, LocationDto locationDto, Boolean dontGetFromCache);
     public void loadPromisesByLeaders(Context context, Long id, Boolean dontGetFromCache);
+    public void loadTimeline(Context context, TimelineType type, Long id, int start, int count, Boolean dontGetFromCache);
 }

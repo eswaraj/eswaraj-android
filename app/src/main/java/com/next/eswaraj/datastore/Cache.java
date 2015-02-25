@@ -7,6 +7,7 @@ import com.next.eswaraj.base.BaseClass;
 import com.next.eswaraj.config.Constants;
 import com.next.eswaraj.config.ImageType;
 import com.next.eswaraj.config.PreferenceConstants;
+import com.next.eswaraj.config.TimelineType;
 import com.next.eswaraj.events.GetCategoriesDataEvent;
 import com.next.eswaraj.events.GetCategoriesImagesEvent;
 import com.next.eswaraj.events.GetComplaintImageEvent;
@@ -531,6 +532,21 @@ public class Cache extends BaseClass implements CacheInterface {
 
     @Override
     public void loadPromisesByLeaders(Context context, Long id) {
+        assert false;
+    }
+
+    @Override
+    public Boolean isTimelineAvailable(Context context, TimelineType type, Long id, int start, int count) {
+        return false;
+    }
+
+    @Override
+    public void updateTimeline(Context context, TimelineType type, Long id, int start, int count, String json) {
+        //Nothing to do here
+    }
+
+    @Override
+    public void loadTimeline(Context context, TimelineType type, Long id, int start, int count) {
         assert false;
     }
 }
