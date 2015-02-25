@@ -5,26 +5,359 @@
     android:orientation="vertical"
     tools:context="com.next.eswaraj.fragments.SinglePromiseFragment">
 
-    <TextView
-        android:id="@+id/spTitle"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textColor="#333"
-        android:background="@color/white"
-        android:padding="10dp"/>
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:background="@drawable/white_grey_highlight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
 
-    <TextView
-        android:id="@+id/spDescription"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/white"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:padding="10dp"/>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:background="@color/white"
+                android:paddingBottom="10dp">
 
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:weightSum="1"
+                    android:layout_weight="0.85">
+
+                    <com.next.eswaraj.widgets.CustomNetworkImageView
+                        android:id="@+id/mcProfilePhoto"
+                        android:layout_width="fill_parent"
+                        android:layout_height="80dp"
+                        android:src="@drawable/red_promise"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="7dp"
+                        android:layout_marginRight="-7dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.15"
+                    android:layout_marginLeft="-5dp">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:weightSum="1"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/spTitle"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Swaraj Bill"
+                            android:textStyle="bold"
+                            android:textColor="#707070"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/spDescription"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="AAP will legislate the Swaraj Act"
+                            android:textStyle="bold"
+                            android:textColor="#ADADAD"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:layout_marginBottom="5dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/spDivider"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="---------------------------------"
+                        android:textStyle="bold"
+                        android:textColor="#ADADAD"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp" />
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <TextView
+                            android:id="@+id/updateTitle"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:text="Update on the Bill"
+                            android:textStyle="bold"
+                            android:textColor="#707070"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/mcDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:textColor="#ADADAD"
+                            android:text="8 hours ago"
+                            android:drawableLeft="@drawable/my_complaints_time_icon"
+                            android:drawablePadding="5dp"
+                            android:textSize="12dp"
+                            android:maxLines="1"
+                            android:textStyle="bold"
+                            android:gravity="right"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="25dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:id="@+id/updateDescription"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="AAP will legislate the Act"
+                            android:textStyle="bold"
+                            android:textColor="#ADADAD"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:layout_marginBottom="5dp" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:background="@color/white"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp">
+
+                        <android.support.v4.view.ViewPager
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/csPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+
+                        <com.next.eswaraj.widgets.CustomNetworkImageView
+                            android:id="@+id/mcImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:scaleType="fitXY"
+                            android:background="@drawable/leaky_pipe" />
+
+                        <ImageView
+                            android:id="@+id/csBack"
+                            android:src="@drawable/backward_arrow_merged_complaint"
+                            android:layout_centerVertical="true"
+                            android:layout_width="40dp"
+                            android:layout_height="fill_parent"
+                            android:layout_marginLeft="-5dp" />
+
+
+                        <ImageView
+                            android:id="@+id/csForward"
+                            android:src="@drawable/forward_arrow_merged_complaint"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="40dp"
+                            android:layout_height="fill_parent"
+                            android:layout_marginRight="-5dp" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/white"
+                        android:paddingBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/my_complaints_location"
+                            android:layout_marginRight="5dp"
+                            android:layout_gravity="top" />
+                        <TextView
+                            android:id="@+id/mcAddress"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.28"
+                            android:text="Govind Vihar, Delhi"
+                            android:textStyle="bold"
+                            android:textSize="9dp"
+                            android:textColor="#ADADAD"
+                            android:gravity="left"
+                            android:maxLines="4"/>
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/my_complaints_comment"
+                            android:layout_marginRight="5dp"
+                            android:layout_gravity="top"
+                            android:paddingLeft="15dp"
+                            android:visibility="gone" />
+                        <TextView
+                            android:id="@+id/mcComments"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.36"
+                            android:text="Comments"
+                            android:textStyle="bold"
+                            android:textSize="9dp"
+                            android:textColor="#ADADAD"
+                            android:maxLines="1"
+                            android:visibility="gone"/>
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/my_complaints_status"
+                            android:layout_marginRight="5dp"
+                            android:layout_gravity="top"
+                            android:paddingLeft="25dp" />
+                        <TextView
+                            android:id="@+id/mcStatus"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.36"
+                            android:text="Generic"
+                            android:textStyle="bold"
+                            android:textColor="#ADADAD"
+                            android:textSize="9dp"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/mcVideoLabel"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Youtube Link"
+                            android:textStyle="bold"
+                            android:textColor="#707070"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:layout_marginBottom="5dp" />
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+                            <ImageView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:src="@drawable/video_icon"
+                                android:layout_weight="0.9"
+                                android:scaleType="centerCrop"
+                                android:paddingBottom="5dp" />
+
+                            <TextView
+                                android:id="@+id/mcVideo"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:text="MLA on Legislating the Act "
+                                android:textStyle="bold"
+                                android:textColor="#ADADAD"
+                                android:layout_weight="0.1"
+                                android:padding="8dp" />
+                        </LinearLayout>
+
+                        <FrameLayout
+                            android:id="@+id/youtube"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/mcDocumentsLabel"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Related Documents"
+                        android:textStyle="bold"
+                        android:textColor="#707070"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_marginBottom="5dp" />
+
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+                        <ImageView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:src="@drawable/pdf_icon"
+                            android:layout_weight="0.9"
+                            android:scaleType="centerCrop"
+                            android:paddingBottom="5dp" />
+
+                        <TextView
+                            android:id="@+id/mcDocuments"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:text="86651.pdf"
+                            android:textStyle="bold"
+                            android:textColor="#ADADAD"
+                            android:layout_weight="0.1"
+                            android:padding="8dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

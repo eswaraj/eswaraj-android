@@ -1,0 +1,270 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    tools:context="com.next.eswaraj.fragments.LeaderFragment"
+    android:orientation="vertical"
+    android:background="#DBDBDB"
+    >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:visibility="visible">
+
+        <com.next.eswaraj.widgets.CustomNetworkImageView
+            android:id="@+id/smPhoto"
+            android:layout_width="fill_parent"
+            android:layout_height="255dp"
+            android:src="@drawable/ravi"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+            android:id="@+id/smName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ravi Sharma"
+            android:layout_marginLeft="20dp"
+            android:textColor="#606060" />
+
+        <TextView
+            android:id="@+id/smNamesmPost_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="|"
+            android:layout_toRightOf="@+id/lName"
+            android:layout_marginLeft="10dp"
+            android:textColor="#606060"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/smPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="JE, Area1, Timarpur"
+            android:layout_toRightOf="@+id/lNamelPost_separator"
+            android:layout_marginLeft="10dp"
+            android:textColor="#606060"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/white"
+        android:gravity="top"
+        android:layout_gravity="top">
+
+        <TextView
+            android:id="@+id/smDivision"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|center_horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:background="@color/white"
+            android:paddingBottom="18dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:id="@+id/smComplaintsList"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/blue_darkblue_highlight"
+                android:layout_marginRight="10dp"
+                android:text="JE, Area1, Timarpur, B1 Sub Division, DJB"
+                android:textColor="@color/white"
+                android:layout_marginLeft="5dp"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/smName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click the above link to view Complaints"
+            android:textColor="#606060"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_marginTop="-15dp"
+            android:paddingRight="15dp"
+            android:textSize="10sp" />
+
+        <TextView
+            android:text="Get in Touch"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="#606060"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+             />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:paddingBottom="10dp"
+            android:background="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <Button
+                android:id="@+id/smEmail"
+                android:text="Email"
+                android:layout_gravity="center"
+                android:background="@drawable/greygreen_darkgreygreen_highlight"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/white"
+                android:layout_weight="0.5" />
+
+            <Button
+                android:id="@+id/smPhone"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:layout_weight="0.5"
+                android:background="@drawable/greygreen_darkgreygreen_highlight"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="5dp"
+                android:text="Phone"
+                android:paddingLeft="20dp"
+                android:textColor="@color/white"
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:text="Departments List"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="#606060"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+             />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:paddingBottom="10dp"
+            android:background="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <Button
+                android:id="@+id/smDJB"
+                android:text="DJB"
+                android:layout_gravity="center"
+                android:background="@drawable/red_darkred_highlight"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/white"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                android:id="@+id/smMCDULB"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:layout_weight="0.5"
+                android:background="@drawable/red_darkred_highlight"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="MCD/ULB"
+                android:paddingLeft="20dp"
+                android:textColor="@color/white"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                android:id="@+id/StateLevelDepartment"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:layout_weight="0.5"
+                android:background="@drawable/red_darkred_highlight"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="State Level Department"
+                android:paddingLeft="20dp"
+                android:textColor="@color/white"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                android:id="@+id/NationalLevelDept"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:layout_weight="0.5"
+                android:background="@drawable/red_darkred_highlight"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="National Level Department"
+                android:paddingLeft="20dp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
