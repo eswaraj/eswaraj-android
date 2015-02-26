@@ -16,6 +16,7 @@ import com.next.eswaraj.events.GetLocationComplaintCountersEvent;
 import com.next.eswaraj.events.GetLocationComplaintsEvent;
 import com.next.eswaraj.events.GetLocationEvent;
 import com.next.eswaraj.events.ShowConstituencyComplaintsEvent;
+import com.next.eswaraj.events.ShowConstituencyTimelineEvent;
 import com.next.eswaraj.events.ShowLeadersForLocationEvent;
 import com.next.eswaraj.helpers.ComplaintFilterHelper;
 import com.next.eswaraj.helpers.GoogleAnalyticsTracker;
@@ -63,6 +64,7 @@ public class ConstituencySnapshotFragment extends BaseFragment {
     private Long complaintCount = 0L;
     private Button leader;
     private Button smart;
+    private Button timeline;
 
     private Integer requestCount = 20;
     private Boolean isStopped = false;
@@ -134,6 +136,7 @@ public class ConstituencySnapshotFragment extends BaseFragment {
         header = (CustomNetworkImageView) headerView.findViewById(R.id.cHeader);
         leader = (Button) headerView.findViewById(R.id.cLeader);
         smart = (Button) headerView.findViewById(R.id.cSmart);
+        timeline = (Button) headerView.findViewById(R.id.cTimeline);
 
         if(locationDto != null) {
             name.setText(locationDto.getName());
@@ -168,6 +171,15 @@ public class ConstituencySnapshotFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 ShowConstituencyComplaintsEvent event = new ShowConstituencyComplaintsEvent();
+                event.setSuccess(true);
+                event.setLocationDto(locationDto);
+                eventBus.post(event);
+            }
+        });
+        timeline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowConstituencyTimelineEvent event = new ShowConstituencyTimelineEvent();
                 event.setSuccess(true);
                 event.setLocationDto(locationDto);
                 eventBus.post(event);

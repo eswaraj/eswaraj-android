@@ -7,6 +7,7 @@ import com.next.eswaraj.R;
 import com.next.eswaraj.base.BaseActivity;
 import com.next.eswaraj.events.ComplaintSelectedEvent;
 import com.next.eswaraj.events.ShowConstituencyComplaintsEvent;
+import com.next.eswaraj.events.ShowConstituencyTimelineEvent;
 import com.next.eswaraj.events.ShowLeadersForLocationEvent;
 import com.next.eswaraj.events.ShowSelectAmenityEvent;
 import com.next.eswaraj.fragments.ConstituencySnapshotFragment;
@@ -78,6 +79,14 @@ public class ConstituencySnapshotActivity extends BaseActivity {
     public void onEventMainThread(ShowLeadersForLocationEvent event) {
         if(!isStopped) {
             Intent i = new Intent(this, LeaderListActivity.class);
+            i.putExtra("LOCATION", (Serializable) event.getLocationDto());
+            startActivity(i);
+        }
+    }
+
+    public void onEventMainThread(ShowConstituencyTimelineEvent event) {
+        if(!isStopped) {
+            Intent i = new Intent(this, ConstituencyTimelineActivity.class);
             i.putExtra("LOCATION", (Serializable) event.getLocationDto());
             startActivity(i);
         }

@@ -10,6 +10,7 @@ import com.next.eswaraj.activities.ComplaintFilterActivity;
 import com.next.eswaraj.activities.ComplaintSummaryActivity;
 import com.next.eswaraj.activities.ConstituencyComplaintsActivity;
 import com.next.eswaraj.activities.ConstituencySnapshotActivity;
+import com.next.eswaraj.activities.ConstituencyTimelineActivity;
 import com.next.eswaraj.activities.DocumentActivity;
 import com.next.eswaraj.activities.LeaderListActivity;
 import com.next.eswaraj.activities.LocationListActivity;
@@ -43,6 +44,7 @@ import com.next.eswaraj.fragments.ComplaintListFragment;
 import com.next.eswaraj.fragments.ComplaintSummaryOfflineFragment;
 import com.next.eswaraj.fragments.ConstituencyComplaintsFragment;
 import com.next.eswaraj.fragments.ConstituencySnapshotFragment;
+import com.next.eswaraj.fragments.ConstituencyTimelineFragment;
 import com.next.eswaraj.fragments.LeaderForComplaintFragment;
 import com.next.eswaraj.fragments.LeaderListFragment;
 import com.next.eswaraj.fragments.LocationListFragment;
@@ -218,7 +220,9 @@ import de.greenrobot.event.EventBus;
                 SinglePromiseFragment.class,
                 LoadTimelineRequest.class,
                 TimelineFragment.class,
-                DocumentActivity.class
+                DocumentActivity.class,
+                ConstituencyTimelineActivity.class,
+                ConstituencyTimelineFragment.class
         },
         complete = false,
         library = true

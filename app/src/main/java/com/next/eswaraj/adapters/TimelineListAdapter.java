@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,7 +62,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
 
             holder = new TimelineDtoHolder();
             holder.tlTitle = (TextView)row.findViewById(R.id.tlTitle);
-            holder.tlDescription = (TextView)row.findViewById(R.id.tlDescription);
+            holder.tlDescription = (WebView)row.findViewById(R.id.tlDescription);
             holder.tlDate = (TextView)row.findViewById(R.id.tlDate);
             holder.tlYoutube = (YouTubeThumbnailView)row.findViewById(R.id.tlYoutube);
             holder.tlImage = (ImageView)row.findViewById(R.id.tlImage);
@@ -116,7 +117,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
         }
 
         holder.tlTitle.setText(timelineDto.getTitle());
-        holder.tlDescription.setText(timelineDto.getDescription());
+        holder.tlDescription.loadData(timelineDto.getDescription(), "text/html", null);
         holder.tlDate.setText(DateUtils.getRelativeTimeSpanString(timelineDto.getUpdateTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
         if(timelineDto.getImages() != null && timelineDto.getImages().get(0) != null && !timelineDto.getImages().get(0).equals("")) {
             holder.tlImage.setVisibility(View.VISIBLE);
@@ -168,7 +169,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
     static class TimelineDtoHolder
     {
         TextView tlTitle;
-        TextView tlDescription;
+        WebView tlDescription;
         TextView tlDate;
         YouTubeThumbnailView tlYoutube;
         ImageView tlImage;
