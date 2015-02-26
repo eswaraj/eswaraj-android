@@ -53,7 +53,6 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
         TimelineDtoHolder holder = null;
 
         final TimelineDto timelineDto = timelineDtoList.get(position);
-        Log.e("TimelineListAdapter", "Posidfdfdtion=" + position);
 
         if(row == null)
         {
@@ -68,15 +67,21 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
             holder.tlImage = (ImageView)row.findViewById(R.id.tlImage);
             holder.tlIcon = (ImageView)row.findViewById(R.id.tlIcon);
             holder.tlDoc = (ImageView)row.findViewById(R.id.tlDoc);
+            holder.tlVideoLabel = (TextView)row.findViewById(R.id.tlVideoLabel);
+            holder.tlDocLabel = (TextView)row.findViewById(R.id.tlDocLabel);
+            holder.tlDocName = (TextView)row.findViewById(R.id.tlDocName);
 
             if(timelineDto.getYoutubeUrl() != null && timelineDto.getYoutubeUrl().get(0) != null && !timelineDto.getYoutubeUrl().get(0).equals("")) {
                 holder.tlYoutube.setVisibility(View.VISIBLE);
+                holder.tlIcon.setVisibility(View.VISIBLE);
+                holder.tlVideoLabel.setVisibility(View.VISIBLE);
                 holder.tlYoutube.setTag(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
                 holder.tlYoutube.initialize(Constants.GOOGLE_API_KEY, this);
             }
             else {
                 holder.tlYoutube.setVisibility(View.GONE);
                 holder.tlIcon.setVisibility(View.GONE);
+                holder.tlVideoLabel.setVisibility(View.GONE);
             }
 
             holder.tlYoutube.setOnClickListener(new View.OnClickListener() {
@@ -97,21 +102,27 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
             if (loader == null) {
                 if(timelineDto.getYoutubeUrl() != null && timelineDto.getYoutubeUrl().get(0) != null && !timelineDto.getYoutubeUrl().get(0).equals("")) {
                     holder.tlYoutube.setVisibility(View.VISIBLE);
+                    holder.tlIcon.setVisibility(View.VISIBLE);
+                    holder.tlVideoLabel.setVisibility(View.VISIBLE);
                     holder.tlYoutube.setTag(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
                 }
                 else {
                     holder.tlYoutube.setVisibility(View.GONE);
                     holder.tlIcon.setVisibility(View.GONE);
+                    holder.tlVideoLabel.setVisibility(View.GONE);
                 }
             } else {
                 if(timelineDto.getYoutubeUrl() != null && timelineDto.getYoutubeUrl().get(0) != null && !timelineDto.getYoutubeUrl().get(0).equals("")) {
                     holder.tlYoutube.setVisibility(View.VISIBLE);
+                    holder.tlIcon.setVisibility(View.VISIBLE);
+                    holder.tlVideoLabel.setVisibility(View.VISIBLE);
                     holder.tlYoutube.setTag(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
                     loader.setVideo(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
                 }
                 else {
                     holder.tlYoutube.setVisibility(View.GONE);
                     holder.tlIcon.setVisibility(View.GONE);
+                    holder.tlVideoLabel.setVisibility(View.GONE);
                 }
             }
         }
@@ -128,18 +139,33 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
         }
         if(timelineDto.getDocuments() != null && timelineDto.getDocuments().get(0) != null && !timelineDto.getDocuments().get(0).equals("")) {
             holder.tlDoc.setVisibility(View.VISIBLE);
+            holder.tlDocName.setVisibility(View.VISIBLE);
+            holder.tlDocLabel.setVisibility(View.VISIBLE);
+            String[] parts = timelineDto.getDocuments().get(0).split("/");
+            holder.tlDocName.setText(parts[parts.length - 1]);
+            holder.tlDoc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, DocumentActivity.class);
+                    i.putExtra("URL", timelineDto.getDocuments().get(0));
+                    context.startActivity(i);
+                }
+            });
+            holder.tlDocName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, DocumentActivity.class);
+                    i.putExtra("URL", timelineDto.getDocuments().get(0));
+                    context.startActivity(i);
+                }
+            });
         }
         else {
             holder.tlDoc.setVisibility(View.GONE);
+            holder.tlDocName.setVisibility(View.GONE);
+            holder.tlDocLabel.setVisibility(View.GONE);
         }
-        holder.tlDoc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, DocumentActivity.class);
-                i.putExtra("URL", timelineDto.getDocuments().get(0));
-                context.startActivity(i);
-            }
-        });
+
         return row;
     }
 
@@ -175,5 +201,8 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
         ImageView tlImage;
         ImageView tlIcon;
         ImageView tlDoc;
+        TextView tlVideoLabel;
+        TextView tlDocLabel;
+        TextView tlDocName;
     }
 }

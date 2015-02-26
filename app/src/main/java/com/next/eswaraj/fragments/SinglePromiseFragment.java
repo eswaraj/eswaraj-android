@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.next.eswaraj.R;
 import com.next.eswaraj.base.BaseFragment;
+import com.next.eswaraj.config.TimelineType;
 import com.next.eswaraj.models.PromiseDto;
 
 
@@ -18,6 +19,8 @@ public class SinglePromiseFragment extends BaseFragment {
     private PromiseDto promiseDto;
     private TextView spTitle;
     private TextView spDescription;
+    private TimelineFragment timelineFragment;
+    private View headerView;
 
 
     public SinglePromiseFragment() {
@@ -29,13 +32,20 @@ public class SinglePromiseFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Promise");
         promiseDto = (PromiseDto) getActivity().getIntent().getSerializableExtra("PROMISE");
+        if(savedInstanceState == null) {
+            timelineFragment = new TimelineFragment();
+            getChildFragmentManager().beginTransaction().add(R.id.spTimeline, timelineFragment).commit();
+        }
+        timelineFragment.setTypeAndId(TimelineType.PROMISE, promiseDto.getId());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_single_promise, container, false);
-        spTitle = (TextView) rootView.findViewById(R.id.spTitle);
-        spDescription = (TextView) rootView.findViewById(R.id.spDescription);
+        headerView = getActivity().getLayoutInflater().inflate(R.layout.header_single_promise, null);
+        timelineFragment.setHeader(headerView);
+        spTitle = (TextView) headerView.findViewById(R.id.spTitle);
+        spDescription = (TextView) headerView.findViewById(R.id.spDescription);
 
         spTitle.setText(promiseDto.getTitle());
         spDescription.setText(promiseDto.getDescription());

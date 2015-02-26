@@ -1,54 +1,146 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/white_grey_highlight">
 
-    <TextView
-        android:id="@+id/tlTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/tlTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:text="Update on the Bill"
+            android:textStyle="bold"
+            android:textColor="#707070"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tlDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:textColor="#ADADAD"
+            android:text="8 hours ago"
+            android:drawableLeft="@drawable/my_complaints_time_icon"
+            android:drawablePadding="5dp"
+            android:textSize="12dp"
+            android:maxLines="1"
+            android:textStyle="bold"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:paddingLeft="25dp" />
+
+    </LinearLayout>
+
 
     <WebView
         android:id="@+id/tlDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/tlDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="#ADADAD"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginBottom="5dp" />
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <com.google.android.youtube.player.YouTubeThumbnailView
-            android:id="@+id/tlYoutube"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="300dp" />
-
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@color/white"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp">
 
         <ImageView
-            android:id="@+id/tlIcon"
-            android:src="@drawable/video_preview_fg"
-            android:layout_centerInParent="true"
-            android:layout_width="80dp"
-            android:layout_height="80dp" />
+            android:id="@+id/tlImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="fitXY" />
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/tlImage"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/tlDoc"
-        android:src="@drawable/ic_launcher"
-        android:layout_gravity="center"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        <TextView
+            android:id="@+id/tlVideoLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Video"
+            android:textStyle="bold"
+            android:textColor="#707070"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginBottom="5dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.google.android.youtube.player.YouTubeThumbnailView
+                android:id="@+id/tlYoutube"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+
+            <ImageView
+                android:id="@+id/tlIcon"
+                android:src="@drawable/video_preview_fg"
+                android:layout_centerInParent="true"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tlDocLabel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Related Documents"
+        android:textStyle="bold"
+        android:textColor="#707070"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginBottom="5dp" />
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/tlDoc"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="@drawable/pdf_icon"
+            android:layout_weight="0.9"
+            android:scaleType="centerCrop"
+            android:paddingBottom="5dp" />
+
+        <TextView
+            android:id="@+id/tlDocName"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textStyle="bold"
+            android:textColor="#ADADAD"
+            android:layout_weight="0.1"
+            android:padding="8dp" />
+
+    </LinearLayout>
 
 </LinearLayout>
+
