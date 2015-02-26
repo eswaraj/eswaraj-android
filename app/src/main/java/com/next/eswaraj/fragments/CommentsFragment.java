@@ -43,6 +43,7 @@ public class CommentsFragment extends BaseFragment {
     private ComplaintDto complaintDto;
     private List<CommentDto> commentDtoList;
     private CommentListAdapter commentListAdapter;
+    private Boolean dataDownloadStarted = false;
     
     private ImageView cSend;
     private EditText cComment;
@@ -55,7 +56,10 @@ public class CommentsFragment extends BaseFragment {
 
     public void setComplaintDto(ComplaintDto complaintDto) {
         this.complaintDto = complaintDto;
-        middlewareService.loadComments(getActivity(), complaintDto, 0, 5);
+        if(getActivity() != null && !dataDownloadStarted) {
+            middlewareService.loadComments(getActivity(), complaintDto, 0, 5);
+            dataDownloadStarted = true;
+        }
     }
 
     @Override
@@ -88,6 +92,11 @@ public class CommentsFragment extends BaseFragment {
                 middlewareService.loadComments(getActivity(), complaintDto, commentDtoList.size(), 5);
             }
         });
+
+        if(!dataDownloadStarted && complaintDto != null) {
+            middlewareService.loadComments(getActivity(), complaintDto, 0, 5);
+            dataDownloadStarted = true;
+        }
         return rootView;
     }
 

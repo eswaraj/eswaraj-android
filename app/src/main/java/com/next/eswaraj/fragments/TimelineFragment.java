@@ -108,7 +108,7 @@ public class TimelineFragment extends BaseFragment {
     public void setTypeAndId(TimelineType type, Long id) {
         this.type = type;
         this.id = id;
-        if(getActivity() != null) {
+        if(getActivity() != null && !dataDownloadStarted) {
             middlewareService.loadTimeline(getActivity(), type, id, totalCount, requestCount);
             dataDownloadStarted = true;
         }
