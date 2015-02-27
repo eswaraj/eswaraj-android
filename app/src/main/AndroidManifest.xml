@@ -337,6 +337,7 @@
         <activity
             android:name=".activities.ConstituencyTimelineActivity"
             android:label="@string/title_activity_constituency_timeline"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.ConstituencySnapshotActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -8,6 +8,9 @@
     <ListView
         android:id="@+id/tlList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:dividerHeight="10dp"
+        android:divider="@color/transparent"
+        android:layout_margin="10dp"/>
 
 </RelativeLayout>

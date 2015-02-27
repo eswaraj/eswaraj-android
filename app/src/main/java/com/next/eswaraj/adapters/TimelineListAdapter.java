@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -70,6 +72,9 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
             holder.tlVideoLabel = (TextView)row.findViewById(R.id.tlVideoLabel);
             holder.tlDocLabel = (TextView)row.findViewById(R.id.tlDocLabel);
             holder.tlDocName = (TextView)row.findViewById(R.id.tlDocName);
+            holder.tlDocLayout = (LinearLayout) row.findViewById(R.id.tlDocLayout);
+            holder.tlVideoLayout = (LinearLayout) row.findViewById(R.id.tlVideoLayout);
+            holder.tlImageLayout = (RelativeLayout) row.findViewById(R.id.tlImageLayout);
 
             if(timelineDto.getYoutubeUrl() != null && timelineDto.getYoutubeUrl().get(0) != null && !timelineDto.getYoutubeUrl().get(0).equals("")) {
                 holder.tlYoutube.setVisibility(View.VISIBLE);
@@ -79,9 +84,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
                 holder.tlYoutube.initialize(Constants.GOOGLE_API_KEY, this);
             }
             else {
-                holder.tlYoutube.setVisibility(View.GONE);
-                holder.tlIcon.setVisibility(View.GONE);
-                holder.tlVideoLabel.setVisibility(View.GONE);
+                holder.tlVideoLayout.setVisibility(View.GONE);
             }
 
             holder.tlYoutube.setOnClickListener(new View.OnClickListener() {
@@ -107,9 +110,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
                     holder.tlYoutube.setTag(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
                 }
                 else {
-                    holder.tlYoutube.setVisibility(View.GONE);
-                    holder.tlIcon.setVisibility(View.GONE);
-                    holder.tlVideoLabel.setVisibility(View.GONE);
+                    holder.tlVideoLayout.setVisibility(View.GONE);
                 }
             } else {
                 if(timelineDto.getYoutubeUrl() != null && timelineDto.getYoutubeUrl().get(0) != null && !timelineDto.getYoutubeUrl().get(0).equals("")) {
@@ -120,9 +121,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
                     loader.setVideo(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
                 }
                 else {
-                    holder.tlYoutube.setVisibility(View.GONE);
-                    holder.tlIcon.setVisibility(View.GONE);
-                    holder.tlVideoLabel.setVisibility(View.GONE);
+                    holder.tlVideoLayout.setVisibility(View.GONE);
                 }
             }
         }
@@ -135,7 +134,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
             Picasso.with(context).load(timelineDto.getImages().get(0)).into(holder.tlImage);
         }
         else {
-            holder.tlImage.setVisibility(View.GONE);
+            holder.tlImageLayout.setVisibility(View.GONE);
         }
         if(timelineDto.getDocuments() != null && timelineDto.getDocuments().get(0) != null && !timelineDto.getDocuments().get(0).equals("")) {
             holder.tlDoc.setVisibility(View.VISIBLE);
@@ -161,8 +160,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
             });
         }
         else {
-            holder.tlDoc.setVisibility(View.GONE);
-            holder.tlDocName.setVisibility(View.GONE);
+            holder.tlDocLayout.setVisibility(View.GONE);
             holder.tlDocLabel.setVisibility(View.GONE);
         }
 
@@ -204,5 +202,8 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
         TextView tlVideoLabel;
         TextView tlDocLabel;
         TextView tlDocName;
+        LinearLayout tlDocLayout;
+        LinearLayout tlVideoLayout;
+        RelativeLayout tlImageLayout;
     }
 }
