@@ -8,8 +8,8 @@ android {
         applicationId "com.next.eswaraj"
         minSdkVersion 14
         targetSdkVersion 19
-        versionCode 27
-        versionName "1.2.7"
+        versionCode 28
+        versionName "1.2.8"
     }
     buildTypes {
         release {

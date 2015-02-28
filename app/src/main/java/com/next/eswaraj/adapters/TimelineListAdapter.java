@@ -109,7 +109,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
                     holder.tlIcon.setVisibility(View.VISIBLE);
                     holder.tlVideoLabel.setVisibility(View.VISIBLE);
                     holder.tlYoutube.setTag(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
-                    holder.tlYoutube.initialize(Constants.GOOGLE_API_KEY, this);
+                    //holder.tlYoutube.initialize(Constants.GOOGLE_API_KEY, this);
                     holder.tlVideoLayout.setVisibility(View.VISIBLE);
                 }
                 else {
@@ -121,7 +121,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
                     holder.tlIcon.setVisibility(View.VISIBLE);
                     holder.tlVideoLabel.setVisibility(View.VISIBLE);
                     holder.tlYoutube.setTag(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
-                    holder.tlYoutube.initialize(Constants.GOOGLE_API_KEY, this);
+                    //holder.tlYoutube.initialize(Constants.GOOGLE_API_KEY, this);
                     loader.setVideo(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
                 }
                 else {

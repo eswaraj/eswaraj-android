@@ -122,7 +122,7 @@
 
 
         <TextView
-            android:id="@+id/smName"
+            android:id="@+id/smChangeItName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Click the above link to view Complaints"
