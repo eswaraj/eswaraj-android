@@ -82,6 +82,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
                 holder.tlVideoLabel.setVisibility(View.VISIBLE);
                 holder.tlYoutube.setTag(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
                 holder.tlYoutube.initialize(Constants.GOOGLE_API_KEY, this);
+                holder.tlVideoLayout.setVisibility(View.VISIBLE);
             }
             else {
                 holder.tlVideoLayout.setVisibility(View.GONE);
@@ -108,6 +109,8 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
                     holder.tlIcon.setVisibility(View.VISIBLE);
                     holder.tlVideoLabel.setVisibility(View.VISIBLE);
                     holder.tlYoutube.setTag(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
+                    initYoutubePreview(holder.tlYoutube);
+                    holder.tlVideoLayout.setVisibility(View.VISIBLE);
                 }
                 else {
                     holder.tlVideoLayout.setVisibility(View.GONE);
@@ -118,6 +121,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
                     holder.tlIcon.setVisibility(View.VISIBLE);
                     holder.tlVideoLabel.setVisibility(View.VISIBLE);
                     holder.tlYoutube.setTag(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
+                    initYoutubePreview(holder.tlYoutube);
                     loader.setVideo(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
                 }
                 else {
@@ -130,6 +134,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
         holder.tlDescription.loadData(timelineDto.getDescription(), "text/html", null);
         holder.tlDate.setText(DateUtils.getRelativeTimeSpanString(timelineDto.getUpdateTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
         if(timelineDto.getImages() != null && timelineDto.getImages().get(0) != null && !timelineDto.getImages().get(0).equals("")) {
+            holder.tlImageLayout.setVisibility(View.VISIBLE);
             holder.tlImage.setVisibility(View.VISIBLE);
             Picasso.with(context).load(timelineDto.getImages().get(0)).into(holder.tlImage);
         }
@@ -137,6 +142,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
             holder.tlImageLayout.setVisibility(View.GONE);
         }
         if(timelineDto.getDocuments() != null && timelineDto.getDocuments().get(0) != null && !timelineDto.getDocuments().get(0).equals("")) {
+            holder.tlDocLayout.setVisibility(View.VISIBLE);
             holder.tlDoc.setVisibility(View.VISIBLE);
             holder.tlDocName.setVisibility(View.VISIBLE);
             holder.tlDocLabel.setVisibility(View.VISIBLE);
@@ -166,7 +172,25 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
 
         return row;
     }
+    private void initYoutubePreview(YouTubeThumbnailView tlYoutube){
+        tlYoutube.initialize(Constants.GOOGLE_API_KEY, this);
+        /*
+        tlYoutube.initialize(Constants.GOOGLE_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
+                String videoId = (String) youTubeThumbnailView.getTag();
+                loaders.put(youTubeThumbnailView, youTubeThumbnailLoader);
+                youTubeThumbnailView.setImageResource(R.drawable.logo);
+                youTubeThumbnailLoader.setVideo(videoId);
+            }
 
+            @Override
+            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+
+            }
+        });
+        */
+    }
     private String extractVideoId(String url) {
         String video = null;
         String pattern = ".*v=(.*)";
