@@ -109,7 +109,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
                     holder.tlIcon.setVisibility(View.VISIBLE);
                     holder.tlVideoLabel.setVisibility(View.VISIBLE);
                     holder.tlYoutube.setTag(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
-                    initYoutubePreview(holder.tlYoutube);
+                    holder.tlYoutube.initialize(Constants.GOOGLE_API_KEY, this);
                     holder.tlVideoLayout.setVisibility(View.VISIBLE);
                 }
                 else {
@@ -121,7 +121,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
                     holder.tlIcon.setVisibility(View.VISIBLE);
                     holder.tlVideoLabel.setVisibility(View.VISIBLE);
                     holder.tlYoutube.setTag(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
-                    initYoutubePreview(holder.tlYoutube);
+                    holder.tlYoutube.initialize(Constants.GOOGLE_API_KEY, this);
                     loader.setVideo(extractVideoId(timelineDto.getYoutubeUrl().get(0)));
                 }
                 else {
@@ -172,25 +172,7 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
 
         return row;
     }
-    private void initYoutubePreview(YouTubeThumbnailView tlYoutube){
-        tlYoutube.initialize(Constants.GOOGLE_API_KEY, this);
-        /*
-        tlYoutube.initialize(Constants.GOOGLE_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
-            @Override
-            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
-                String videoId = (String) youTubeThumbnailView.getTag();
-                loaders.put(youTubeThumbnailView, youTubeThumbnailLoader);
-                youTubeThumbnailView.setImageResource(R.drawable.logo);
-                youTubeThumbnailLoader.setVideo(videoId);
-            }
 
-            @Override
-            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-
-            }
-        });
-        */
-    }
     private String extractVideoId(String url) {
         String video = null;
         String pattern = ".*v=(.*)";
