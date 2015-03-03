@@ -31,6 +31,7 @@ public class ConstituencyTimelineFragment extends BaseFragment {
         }
         locationDto = (LocationDto) getActivity().getIntent().getSerializableExtra("LOCATION");
         timelineFragment.setTypeAndId(TimelineType.LOCATION, locationDto.getId());
+        getActivity().setTitle(locationDto.getName());
     }
 
     @Override

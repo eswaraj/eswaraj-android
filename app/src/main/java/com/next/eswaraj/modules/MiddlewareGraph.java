@@ -12,6 +12,7 @@ import com.next.eswaraj.activities.ConstituencyComplaintsActivity;
 import com.next.eswaraj.activities.ConstituencySnapshotActivity;
 import com.next.eswaraj.activities.ConstituencyTimelineActivity;
 import com.next.eswaraj.activities.DocumentActivity;
+import com.next.eswaraj.activities.FullscreenImageActivity;
 import com.next.eswaraj.activities.LeaderListActivity;
 import com.next.eswaraj.activities.LocationListActivity;
 import com.next.eswaraj.activities.MarkHomeActivity;
@@ -222,7 +223,8 @@ import de.greenrobot.event.EventBus;
                 TimelineFragment.class,
                 DocumentActivity.class,
                 ConstituencyTimelineActivity.class,
-                ConstituencyTimelineFragment.class
+                ConstituencyTimelineFragment.class,
+                FullscreenImageActivity.class
         },
         complete = false,
         library = true

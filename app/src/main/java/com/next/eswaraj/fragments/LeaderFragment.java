@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +58,9 @@ public class LeaderFragment extends BaseFragment {
     private Button lEmail;
     private Button lPhone;
     private View headerView;
+    private LinearLayout lDetailsContainer;
+    private TextView lBiodata;
+
     private TimelineFragment timelineFragment;
 
     private PoliticalBodyAdminDto politicalBodyAdminDto;
@@ -98,6 +104,8 @@ public class LeaderFragment extends BaseFragment {
         lPromise = (Button) headerView.findViewById(R.id.lPromise);
         lEmail = (Button) headerView.findViewById(R.id.lEmail);
         lPhone = (Button) headerView.findViewById(R.id.lPhone);
+        lDetailsContainer = (LinearLayout) headerView.findViewById(R.id.lDetailsContainer);
+        lBiodata = (TextView) headerView.findViewById(R.id.lBiodata);
 
 
         politicalBodyAdminDto = (PoliticalBodyAdminDto) getActivity().getIntent().getSerializableExtra("LEADER");
@@ -194,11 +202,18 @@ public class LeaderFragment extends BaseFragment {
         lAge.setText("");
         lEducation.setText("");
         lConstituency.setText(politicalBodyAdminDto.getLocation().getName());
-        if (politicalBodyAdminDto.getBiodata() != null && !politicalBodyAdminDto.getBiodata().equals("")) {
+        lBiodata.setCompoundDrawablesWithIntrinsicBounds(R.drawable.plus, 0, 0, 0);
+        if (politicalBodyAdminDto.getBiodata() != null && !politicalBodyAdminDto.getBiodata().trim().equals("")) {
             lDetails.loadData(politicalBodyAdminDto.getBiodata(), "text/html", null);
+            lBiodata.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toggleBiodata();
+                }
+            });
         }
         else {
-            lDetails.setVisibility(View.GONE);
+            lDetailsContainer.setVisibility(View.GONE);
         }
     }
 
@@ -210,6 +225,30 @@ public class LeaderFragment extends BaseFragment {
         }
         else {
             Toast.makeText(getActivity(), "Could not fetch leader details. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void toggleBiodata() {
+        if(lDetails.isShown()) {
+            Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
+            animation.reset();
+            lDetails.clearAnimation();
+            lDetails.startAnimation(animation);
+            lDetails.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    lDetails.setVisibility(View.GONE);
+                    lBiodata.setCompoundDrawablesWithIntrinsicBounds(R.drawable.plus, 0, 0, 0);
+                }
+            }, 200);
+        }
+        else {
+            Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
+            lDetails.setVisibility(View.VISIBLE);
+            animation.reset();
+            lDetails.clearAnimation();
+            lDetails.startAnimation(animation);
+            lBiodata.setCompoundDrawablesWithIntrinsicBounds(R.drawable.minus, 0, 0, 0);
         }
     }
 }

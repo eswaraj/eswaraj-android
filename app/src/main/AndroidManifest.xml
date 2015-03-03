@@ -337,11 +337,16 @@
         <activity
             android:name=".activities.ConstituencyTimelineActivity"
             android:label="@string/title_activity_constituency_timeline"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".activities.ConstituencySnapshotActivity" >
+            android:parentActivityName=".activities.ConstituencySnapshotActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.next.eswaraj.activities.ConstituencySnapshotActivity" />
+        </activity>
+        <activity
+            android:name=".activities.FullscreenImageActivity"
+            android:label="@string/title_activity_fullscreen_image"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
         </activity>
     </application>
 

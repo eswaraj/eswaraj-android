@@ -3,6 +3,8 @@ package com.next.eswaraj.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.next.eswaraj.R;
 import com.next.eswaraj.activities.DocumentActivity;
+import com.next.eswaraj.activities.FullscreenImageActivity;
 import com.next.eswaraj.activities.YoutubeActivity;
 import com.next.eswaraj.config.Constants;
 import com.next.eswaraj.models.TimelineDto;
@@ -137,6 +140,14 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
             holder.tlImageLayout.setVisibility(View.VISIBLE);
             holder.tlImage.setVisibility(View.VISIBLE);
             Picasso.with(context).load(timelineDto.getImages().get(0)).into(holder.tlImage);
+            holder.tlImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(v.getContext(), FullscreenImageActivity.class);
+                    i.putExtra("IMAGE", timelineDto.getImages().get(0));
+                    v.getContext().startActivity(i);
+                }
+            });
         }
         else {
             holder.tlImageLayout.setVisibility(View.GONE);
