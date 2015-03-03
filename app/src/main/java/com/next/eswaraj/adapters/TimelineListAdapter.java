@@ -75,6 +75,8 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
             holder.tlVideoLabel = (TextView)row.findViewById(R.id.tlVideoLabel);
             holder.tlDocLabel = (TextView)row.findViewById(R.id.tlDocLabel);
             holder.tlDocName = (TextView)row.findViewById(R.id.tlDocName);
+            holder.tlStatus = (TextView)row.findViewById(R.id.tlStatus);
+            holder.tlDelivery = (TextView)row.findViewById(R.id.tlDelivery);
             holder.tlDocLayout = (LinearLayout) row.findViewById(R.id.tlDocLayout);
             holder.tlVideoLayout = (LinearLayout) row.findViewById(R.id.tlVideoLayout);
             holder.tlImageLayout = (RelativeLayout) row.findViewById(R.id.tlImageLayout);
@@ -136,6 +138,29 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
         holder.tlTitle.setText(timelineDto.getTitle());
         holder.tlDescription.loadData(timelineDto.getDescription(), "text/html", null);
         holder.tlDate.setText(DateUtils.getRelativeTimeSpanString(timelineDto.getUpdateTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
+        if(timelineDto.getDeliveryTime() != null && !timelineDto.getDeliveryTime().equals("")) {
+            holder.tlDelivery.setText(timelineDto.getDeliveryTime());
+            holder.tlDelivery.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.tlDelivery.setVisibility(View.GONE);
+        }
+        if(timelineDto.getStatus() != null && !timelineDto.getStatus().equals("")) {
+            holder.tlStatus.setText(timelineDto.getStatus());
+            if(timelineDto.getStatus().equals("Pending")) {
+                holder.tlStatus.setTextColor(context.getResources().getColor(R.color.red));
+            }
+            else if(timelineDto.getStatus().equals("On Going")) {
+                holder.tlStatus.setTextColor(context.getResources().getColor(R.color.blue));
+            }
+            else if(timelineDto.getStatus().equals("Delivered")) {
+                holder.tlStatus.setTextColor(context.getResources().getColor(R.color.green));
+            }
+        }
+        else {
+            holder.tlStatus.setText("Pending");
+            holder.tlStatus.setTextColor(context.getResources().getColor(R.color.red));
+        }
         if(timelineDto.getImages() != null && timelineDto.getImages().get(0) != null && !timelineDto.getImages().get(0).equals("")) {
             holder.tlImageLayout.setVisibility(View.VISIBLE);
             holder.tlImage.setVisibility(View.VISIBLE);
@@ -219,6 +244,8 @@ public class TimelineListAdapter extends ArrayAdapter<TimelineDto> implements Yo
         TextView tlVideoLabel;
         TextView tlDocLabel;
         TextView tlDocName;
+        TextView tlDelivery;
+        TextView tlStatus;
         LinearLayout tlDocLayout;
         LinearLayout tlVideoLayout;
         RelativeLayout tlImageLayout;

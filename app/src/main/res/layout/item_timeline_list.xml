@@ -164,4 +164,14 @@
             android:gravity="right"
             android:paddingRight="10dp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tlStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tlDelivery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>
