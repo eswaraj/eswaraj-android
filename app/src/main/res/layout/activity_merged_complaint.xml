@@ -1,0 +1,559 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DBDBDB"
+    tools:context="com.next.eswaraj.activities.SplashActivity"
+    android:orientation="vertical">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#DBDBDB">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/dummyComplaintPlaceholderText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="No Complaints to show yet. \nRaise a complaint like the one below and contribute towards good governance."
+            android:textStyle="bold"
+            android:textColor="#707070"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:background="@color/white"
+            android:gravity="center_vertical|center_horizontal"
+            android:visibility="gone"/>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                android:background="@drawable/white_grey_highlight"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:background="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:weightSum="1"
+                        android:layout_weight="0.85">
+
+                        <com.next.eswaraj.widgets.CustomNetworkImageView
+                            android:id="@+id/mcProfilePhoto"
+                            android:layout_width="fill_parent"
+                            android:layout_height="80dp"
+                            android:src="@drawable/my_complaints_water"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="7dp"
+                            android:paddingRight="7dp"
+                            android:layout_marginRight="-7dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="left"
+                        android:layout_weight="0.15"
+                        android:layout_marginLeft="-5dp">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:weightSum="1"
+                            android:layout_marginTop="10dp">
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="1"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp">
+
+                                    <TextView
+                                        android:id="@+id/mcID"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0.6"
+                                        android:text="#84801"
+                                        android:textStyle="bold"
+                                        android:textColor="#ADADAD" />
+
+                                <TextView
+                                    android:id="@+id/mcDate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.4"
+                                    android:textColor="#ADADAD"
+                                    android:text="8 hours ago"
+                                    android:drawableLeft="@drawable/my_complaints_time_icon"
+                                    android:drawablePadding="5dp"
+                                    android:textSize="12dp"
+                                    android:maxLines="1"
+                                    android:textStyle="bold"
+                                    android:gravity="right"
+                                    android:paddingRight="10dp"
+                                    android:paddingLeft="85dp" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/mcCategory"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Leaking Water Pipes"
+                                android:textStyle="bold"
+                                android:textColor="#707070"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/mcDescription"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Gallons of water leaking everyday."
+                                android:textStyle="bold"
+                                android:textColor="#ADADAD"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:layout_marginBottom="5dp" />
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:background="@color/white"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp">
+
+                            <android.support.v4.view.ViewPager
+                                xmlns:android="http://schemas.android.com/apk/res/android"
+                                android:id="@+id/csPager"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                />
+
+                            <com.next.eswaraj.widgets.CustomNetworkImageView
+                                android:id="@+id/mcImage"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:scaleType="fitXY"
+                                android:background="@drawable/leaky_pipe" />
+
+                            <ImageView
+                                android:id="@+id/csBack"
+                                android:src="@drawable/backward_arrow"
+                                android:layout_centerVertical="true"
+                                android:layout_width="40dp"
+                                android:layout_height="fill_parent"
+                                android:layout_marginLeft="-5dp" />
+
+
+                            <ImageView
+                                android:id="@+id/csForward"
+                                android:src="@drawable/forward_arrow"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_width="40dp"
+                                android:layout_height="fill_parent"
+                                android:layout_marginRight="-5dp" />
+
+                        </RelativeLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="1"
+                            android:layout_marginLeft="5dp">
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <com.next.eswaraj.widgets.CustomNetworkImageView
+                                    android:id="@+id/mcIcon"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@drawable/ravi"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:layout_gravity="top"
+                                    android:scaleType="fitCenter" />
+
+                                <TextView
+                                    android:id="@+id/mcSubmitterName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="40dp"
+                                    android:text="Rakesh Singh"
+                                    android:gravity="left"
+                                    android:textColor="#ADADAD"
+                                    android:maxLines="1"
+                                    android:textSize="8sp"
+                                    android:paddingTop="10dp" />
+
+                                <com.next.eswaraj.widgets.CustomNetworkImageView
+                                    android:id="@+id/mcIcon2"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@drawable/ravi"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:layout_gravity="top"
+                                    android:scaleType="fitCenter" />
+
+                                <TextView
+                                    android:id="@+id/mcSubmitterName2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="40dp"
+                                    android:text="Vaibhav Sinha"
+                                    android:gravity="left"
+                                    android:textColor="#ADADAD"
+                                    android:maxLines="1"
+                                    android:textSize="8sp"
+                                    android:paddingTop="10dp" />
+
+
+                                <TextView
+                                    android:id="@+id/mcDetails"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="40dp"
+                                    android:text="and 80 more affected"
+                                    android:gravity="left"
+                                    android:textColor="#ADADAD"
+                                    android:maxLines="1"
+                                    android:textSize="8sp"
+                                    android:paddingTop="10dp"
+                                    android:paddingLeft="3dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@color/white"
+                            android:paddingBottom="10dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/my_complaints_location"
+                                android:layout_marginRight="5dp"
+                                android:layout_gravity="top" />
+                            <TextView
+                                android:id="@+id/mcAddress"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.28"
+                                android:text="Govind Vihar, Delhi"
+                                android:textStyle="bold"
+                                android:textSize="9dp"
+                                android:textColor="#ADADAD"
+                                android:gravity="left"
+                                android:maxLines="4"/>
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/my_complaints_comment"
+                                android:layout_marginRight="5dp"
+                                android:layout_gravity="top"
+                                android:paddingLeft="15dp" />
+                            <TextView
+                                android:id="@+id/mcComments"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.36"
+                                android:text="Comments"
+                                android:textStyle="bold"
+                                android:textSize="9dp"
+                                android:textColor="#ADADAD"
+                                android:maxLines="1"/>
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/my_complaints_status"
+                                android:layout_marginRight="5dp"
+                                android:layout_gravity="top"
+                                android:paddingLeft="25dp" />
+                            <TextView
+                                android:id="@+id/mcStatus"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.36"
+                                android:text="Pending"
+                                android:textStyle="bold"
+                                android:textColor="#ADADAD"
+                                android:textSize="9dp"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/mcAmenityName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#808080"
+                android:text="Water"
+                android:layout_weight="0.5"
+                android:paddingBottom="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_gravity="top"
+                android:layout_marginTop="45dp"
+                android:scaleType="fitCenter"
+                android:gravity="center_vertical|center_horizontal"
+                android:visibility="gone"
+                android:layout_marginLeft="40dp" />
+
+            <ImageView
+                android:id="@+id/mcSampleStampBg"
+                android:layout_width="240dp"
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
+                android:src="@drawable/sample_stamp_background"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="85dp"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+
+<LinearLayout
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <EditText
+            android:id="@+id/cComment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.15"
+            android:hint="Leave a Comment"
+            android:layout_marginLeft="5dp" />
+
+        <ImageView
+            android:id="@+id/cSend"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_weight="0.85"
+            android:src="@drawable/post_comment_imageview"
+            android:layout_marginRight="5dp" />
+
+    </LinearLayout>
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    android:background="@color/white"
+    android:layout_marginLeft="10dp"
+    android:layout_marginBottom="1dp"
+    android:layout_marginRight="10dp"
+    android:paddingBottom="5dp">
+
+    <com.next.eswaraj.widgets.CustomNetworkImageView
+        android:id="@+id/cImage"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:src="@drawable/ravi"
+        android:layout_weight="0.8"
+        android:gravity="top"
+        android:paddingLeft="10dp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_weight="0.2"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp">
+            <TextView
+                android:id="@+id/cName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rakesh Singh"
+                android:layout_weight="0.5"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/cTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="7 hours ago"
+                android:layout_weight="0.5"
+                android:gravity="right"
+                android:textColor="#808080"
+                android:paddingRight="5dp" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/cText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Leaking water pipes in Govind Vihar area. \n Please address this issue. "
+            android:gravity="left"
+            android:textColor="#333"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp" />
+    </LinearLayout>
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:background="@color/white"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:visibility="gone">
+
+        <com.next.eswaraj.widgets.CustomNetworkImageView
+            android:id="@+id/cImage"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:src="@drawable/ravi"
+            android:layout_weight="0.8"
+            android:gravity="top"
+            android:paddingLeft="10dp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_weight="0.2"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp">
+                <TextView
+                    android:id="@+id/cName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Anonymous"
+                    android:layout_weight="0.5"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/cTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3 Hours Ago"
+                    android:layout_weight="0.5"
+                    android:gravity="right"
+                    android:textColor="#808080"
+                    android:paddingRight="5dp" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/cText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comment text"
+                android:gravity="left"
+                android:textColor="#333"
+                android:paddingLeft="5dp"
+                android:paddingTop="10dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_margin="10dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/cShowMore"
+            android:text="Show More"
+            android:layout_gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_darkblue_highlight"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+    </LinearLayout>
