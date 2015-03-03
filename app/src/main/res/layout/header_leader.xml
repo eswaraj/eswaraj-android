@@ -4,94 +4,76 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-        <com.next.eswaraj.widgets.CustomNetworkImageView
-            android:id="@+id/lPhoto"
-            android:layout_width="fill_parent"
-            android:layout_height="300dp"
-            android:src="@drawable/anon"
-            android:cropToPadding="true"
-            android:scaleType="centerCrop" />
-
-    </RelativeLayout>
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/white"
-        android:padding="10dp"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_gravity="center">
-
-        <TextView
-            android:id="@+id/lName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MLA Name"
-            android:layout_marginLeft="20dp"
-            android:textColor="#606060" />
-
-        <TextView
-            android:id="@+id/lNamelPost_separator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="|"
-            android:layout_toRightOf="@+id/lName"
-            android:layout_marginLeft="10dp"
-            android:textColor="#606060" />
-
-        <TextView
-            android:id="@+id/lPost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MP, Delhi"
-            android:layout_toRightOf="@+id/lNamelPost_separator"
-            android:layout_marginLeft="10dp"
-            android:textColor="#606060" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:weightSum="1"
-        android:background="@color/white"
-        android:gravity="top"
-        android:layout_gravity="top">
+        android:background="@color/white">
 
-        <TextView
-            android:id="@+id/lPoliticalParty"
+        <com.next.eswaraj.widgets.CustomNetworkImageView
+            android:id="@+id/lPhoto"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Political Party:"
-            android:gravity="left"
-            android:layout_marginLeft="10dp"
-            android:textStyle="bold"
-            android:layout_weight="0.5"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/lParty"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Aam Aadmi Party"
-            android:gravity="top|center_horizontal"
+            android:layout_height="270dp"
+            android:src="@drawable/anon"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"
+            android:layout_weight="0.2"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingTop="10dp"
             android:paddingBottom="10dp" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:gravity="right"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.8">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+            <Button
+                android:id="@+id/lPromise"
+                android:background="@drawable/blue_darkblue_highlight"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:textColor="@color/white"
+                android:drawableLeft="@drawable/icon_promise"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0.25"
+                android:layout_marginTop="10dp" />
+
+            <Button
+                android:id="@+id/lConstituency"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@drawable/greygreen_darkgreygreen_highlight"
+                android:drawableLeft="@drawable/map_view_white"
+                android:textColor="@color/white"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0.25" />
+
+            <Button
+                android:id="@+id/lEmail"
+                android:background="@drawable/blue_darkblue_highlight"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:textColor="@color/white"
+                android:drawableLeft="@drawable/icon_email"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0.25" />
+
+            <Button
+                android:id="@+id/lPhone"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@drawable/greygreen_darkgreygreen_highlight"
+                android:drawableLeft="@drawable/icon_phone"
+                android:textColor="@color/white"
+                android:layout_weight="0.25"
+                android:layout_marginBottom="10dp" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -183,91 +165,76 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            android:background="@color/white"
-            android:layout_marginBottom="10dp"
-            android:paddingBottom="10dp">
+    </LinearLayout>
 
-            <Button
-                android:id="@+id/lPromise"
-                android:text="Election Promises"
-                android:layout_gravity="center"
-                android:background="@drawable/blue_darkblue_highlight"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/white"
-                android:layout_weight="0.5"
-                android:layout_marginRight="5dp" />
-
-            <TextView
-                android:id="@+id/lConstituency"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="left|center_vertical"
-                android:layout_weight="0.5"
-                android:background="@drawable/greygreen_darkgreygreen_highlight"
-                android:drawableLeft="@drawable/map_view_white"
-                android:layout_marginRight="10dp"
-                android:text="Delhi"
-                android:paddingLeft="20dp"
-                android:textColor="@color/white"
-                android:layout_marginLeft="5dp" />
-
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_gravity="center">
 
         <TextView
-            android:text="Get in Touch"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:layout_width="match_parent"
+            android:id="@+id/lName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textColor="#808080"
-            android:background="@color/white" />
+            android:text="MLA Name"
+            android:layout_marginLeft="20dp"
+            android:textColor="#606060" />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <TextView
+            android:id="@+id/lNamelPost_separator"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            android:background="@color/white"
-            android:paddingBottom="10dp">
+            android:text="|"
+            android:layout_toRightOf="@+id/lName"
+            android:layout_marginLeft="10dp"
+            android:textColor="#606060" />
 
-            <Button
-                android:id="@+id/lEmail"
-                android:text="Email"
-                android:layout_gravity="center"
-                android:background="@drawable/blue_darkblue_highlight"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="5dp"
-                android:textColor="@color/white"
-                android:layout_weight="0.5" />
-
-            <Button
-                android:id="@+id/lPhone"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center"
-                android:layout_weight="0.5"
-                android:background="@drawable/greygreen_darkgreygreen_highlight"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="5dp"
-                android:text="Phone"
-                android:paddingLeft="20dp"
-                android:textColor="@color/white"
-                />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/lPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MP, Delhi"
+            android:layout_toRightOf="@+id/lNamelPost_separator"
+            android:layout_marginLeft="10dp"
+            android:textColor="#606060" />
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:background="@color/white"
+        android:gravity="top"
+        android:layout_gravity="top">
+
+        <TextView
+            android:id="@+id/lPoliticalParty"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Political Party:"
+            android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/lParty"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Aam Aadmi Party"
+            android:gravity="top|center_horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lDetailsContainer"
@@ -280,14 +247,16 @@
             android:text="Biodata"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:padding="10dp" />
 
         <WebView
             android:id="@+id/lDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="10dp" />
+            android:visibility="gone" />
 
     </LinearLayout>
 
