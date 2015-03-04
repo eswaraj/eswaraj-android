@@ -15,8 +15,6 @@ public class TimelineDto extends BaseDto implements Serializable {
     private Long creationTime;
     private Poster createdBy;
     private String type;
-    private String status;
-    private String deliveryTime;
     private List<String> youtubeUrl;
     private List<String> images;
     private List<String> documents;
@@ -109,28 +107,10 @@ public class TimelineDto extends BaseDto implements Serializable {
                 ", creationTime=" + creationTime +
                 ", createdBy=" + createdBy +
                 ", type='" + type + '\'' +
-                ", status='" + status + '\'' +
-                ", deliveryTime='" + deliveryTime + '\'' +
                 ", youtubeUrl=" + youtubeUrl +
                 ", images=" + images +
                 ", documents=" + documents +
                 '}';
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getDeliveryTime() {
-        return deliveryTime;
-    }
-
-    public void setDeliveryTime(String deliveryTime) {
-        this.deliveryTime = deliveryTime;
     }
 
     public class Poster {

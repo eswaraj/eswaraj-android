@@ -13,21 +13,21 @@
         android:orientation="horizontal"
         android:weightSum="1" >
 
-            <ImageView
-                android:id="@+id/sImage"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/election_promise" />
+        <ImageView
+            android:id="@+id/plImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/election_promise" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical">
 
-            <TextView android:id="@+id/text1"
+            <TextView android:id="@+id/plTitle"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:textSize="18sp"
                 android:text="CAG Audit of Discoms"
@@ -35,8 +35,19 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:autoText="false" />
+                android:paddingTop="5dp"/>
+
+            <TextView
+                android:id="@+id/plStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/plDelivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

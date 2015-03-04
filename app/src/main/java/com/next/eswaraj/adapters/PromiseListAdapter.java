@@ -37,7 +37,9 @@ public class PromiseListAdapter extends ArrayAdapter<PromiseDto> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new PromiseDtoHolder();
-            holder.plTitle = (TextView) row.findViewById(R.id.text1);
+            holder.plTitle = (TextView) row.findViewById(R.id.plTitle);
+            holder.plStatus = (TextView)row.findViewById(R.id.plStatus);
+            holder.plDelivery = (TextView)row.findViewById(R.id.plDelivery);
 
             row.setTag(holder);
         } else {
@@ -46,11 +48,36 @@ public class PromiseListAdapter extends ArrayAdapter<PromiseDto> {
 
         PromiseDto promiseDto = promiseDtoList.get(position);
         holder.plTitle.setText(promiseDto.getTitle());
+        if(promiseDto.getDeliveryTime() != null && !promiseDto.getDeliveryTime().equals("")) {
+            holder.plDelivery.setText(promiseDto.getDeliveryTime());
+            holder.plDelivery.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.plDelivery.setVisibility(View.GONE);
+        }
+        if(promiseDto.getStatus() != null && !promiseDto.getStatus().equals("")) {
+            holder.plStatus.setText(promiseDto.getStatus());
+            if(promiseDto.getStatus().equals("Pending")) {
+                holder.plStatus.setBackgroundColor(context.getResources().getColor(R.color.red));
+            }
+            else if(promiseDto.getStatus().equals("On Going")) {
+                holder.plStatus.setBackgroundColor(context.getResources().getColor(R.color.blue));
+            }
+            else if(promiseDto.getStatus().equals("Delivered")) {
+                holder.plStatus.setBackgroundColor(context.getResources().getColor(R.color.green));
+            }
+        }
+        else {
+            holder.plStatus.setText("Pending");
+            holder.plStatus.setBackgroundColor(context.getResources().getColor(R.color.red));
+        }
 
         return row;
     }
 
     static class PromiseDtoHolder {
         TextView plTitle;
+        TextView plDelivery;
+        TextView plStatus;
     }
 }

@@ -19,6 +19,8 @@ public class SinglePromiseFragment extends BaseFragment {
     private PromiseDto promiseDto;
     private TextView spTitle;
     private TextView spDescription;
+    private TextView spStatus;
+    private TextView spDelivery;
     private TimelineFragment timelineFragment;
     private View headerView;
 
@@ -46,9 +48,34 @@ public class SinglePromiseFragment extends BaseFragment {
         timelineFragment.setHeader(headerView);
         spTitle = (TextView) headerView.findViewById(R.id.spTitle);
         spDescription = (TextView) headerView.findViewById(R.id.spDescription);
+        spStatus = (TextView) headerView.findViewById(R.id.spStatus);
+        spDelivery = (TextView) headerView.findViewById(R.id.spDelivery);
 
         spTitle.setText(promiseDto.getTitle());
         spDescription.setText(promiseDto.getDescription());
+        if(promiseDto.getDeliveryTime() != null && !promiseDto.getDeliveryTime().equals("")) {
+            spDelivery.setText(promiseDto.getDeliveryTime());
+            spDelivery.setVisibility(View.VISIBLE);
+        }
+        else {
+            spDelivery.setVisibility(View.GONE);
+        }
+        if(promiseDto.getStatus() != null && !promiseDto.getStatus().equals("")) {
+            spStatus.setText(promiseDto.getStatus());
+            if(promiseDto.getStatus().equals("Pending")) {
+                spStatus.setBackgroundColor(getActivity().getResources().getColor(R.color.red));
+            }
+            else if(promiseDto.getStatus().equals("On Going")) {
+                spStatus.setBackgroundColor(getActivity().getResources().getColor(R.color.blue));
+            }
+            else if(promiseDto.getStatus().equals("Delivered")) {
+                spStatus.setBackgroundColor(getActivity().getResources().getColor(R.color.green));
+            }
+        }
+        else {
+            spStatus.setText("Pending");
+            spStatus.setBackgroundColor(getActivity().getResources().getColor(R.color.red));
+        }
         return rootView;
     }
 
