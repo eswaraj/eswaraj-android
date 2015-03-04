@@ -53,7 +53,7 @@ public class LeaderFragment extends BaseFragment {
     private TextView lParty;
     private TextView lEducation;
     private WebView lDetails;
-    private TextView lConstituency;
+    private Button lConstituency;
     private Button lPromise;
     private Button lEmail;
     private Button lPhone;
@@ -100,7 +100,7 @@ public class LeaderFragment extends BaseFragment {
         lParty = (TextView) headerView.findViewById(R.id.lParty);
         lAddress = (TextView) headerView.findViewById(R.id.lAddress);
         lEducation = (TextView) headerView.findViewById(R.id.lEducation);
-        lConstituency = (TextView) headerView.findViewById(R.id.lConstituency);
+        lConstituency = (Button) headerView.findViewById(R.id.lConstituency);
         lPromise = (Button) headerView.findViewById(R.id.lPromise);
         lEmail = (Button) headerView.findViewById(R.id.lEmail);
         lPhone = (Button) headerView.findViewById(R.id.lPhone);
@@ -201,7 +201,7 @@ public class LeaderFragment extends BaseFragment {
         lAddress.setText("");
         lAge.setText("");
         lEducation.setText("");
-        lConstituency.setText(politicalBodyAdminDto.getLocation().getName());
+        //lConstituency.setText(politicalBodyAdminDto.getLocation().getName());
         lBiodata.setCompoundDrawablesWithIntrinsicBounds(R.drawable.plus, 0, 0, 0);
         if (politicalBodyAdminDto.getBiodata() != null && !politicalBodyAdminDto.getBiodata().trim().equals("")) {
             lDetails.loadData(politicalBodyAdminDto.getBiodata(), "text/html", null);
