@@ -1,11 +1,72 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:background="#DBDBDB">
+    android:background="#DBDBDB"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:baselineAligned="false"
+        android:padding="10dp"
+        android:background="@color/white"
+        android:layout_marginBottom="1dp">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5">
+
+        <TextView
+        android:id="@+id/tlStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/promise_status"
+        android:drawablePadding="5dp"/>
+
+    <TextView
+        android:id="@+id/tlDelivery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/promise_delivered"
+        android:drawablePadding="5dp"
+        />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:gravity="right"
+        android:paddingTop="2dp"
+        android:layout_weight="0.5">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@drawable/my_complaints_time_icon"
+            android:layout_alignLeft="@+id/tlDate"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            android:id="@+id/tlDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ADADAD"
+            android:text="8 hours ago"
+            android:textSize="12dp"
+            android:maxLines="1"
+            android:textStyle="bold"
+            android:gravity="right"
+            android:paddingRight="10dp" />
+    </LinearLayout>
+</LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:orientation="vertical">
 
         <TextView
@@ -138,40 +199,5 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:gravity="right"
-        android:paddingTop="2dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:src="@drawable/my_complaints_time_icon"
-            android:layout_alignLeft="@+id/tlDate"
-            android:layout_marginRight="5dp"/>
 
-        <TextView
-            android:id="@+id/tlDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#ADADAD"
-            android:text="8 hours ago"
-            android:textSize="12dp"
-            android:maxLines="1"
-            android:textStyle="bold"
-            android:gravity="right"
-            android:paddingRight="10dp" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tlStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/tlDelivery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</RelativeLayout>
+</LinearLayout>
