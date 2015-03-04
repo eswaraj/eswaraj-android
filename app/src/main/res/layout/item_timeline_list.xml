@@ -23,14 +23,12 @@
         android:id="@+id/tlStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/promise_status"
         android:drawablePadding="5dp"/>
 
     <TextView
         android:id="@+id/tlDelivery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/promise_delivered"
         android:drawablePadding="5dp"
         />
 
