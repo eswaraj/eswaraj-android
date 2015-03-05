@@ -58,18 +58,18 @@ public class PromiseListAdapter extends ArrayAdapter<PromiseDto> {
         if(promiseDto.getStatus() != null && !promiseDto.getStatus().equals("")) {
             holder.plStatus.setText(promiseDto.getStatus());
             if(promiseDto.getStatus().equals("Pending")) {
-                holder.plStatus.setBackgroundColor(context.getResources().getColor(R.color.red));
+                holder.plStatus.setBackgroundResource(R.drawable.red_promise_rounded_corner);
             }
             else if(promiseDto.getStatus().equals("On Going")) {
-                holder.plStatus.setBackgroundColor(context.getResources().getColor(R.color.blue));
+                holder.plStatus.setBackgroundResource(R.drawable.blue_promise_rounded_corner);
             }
             else if(promiseDto.getStatus().equals("Delivered")) {
-                holder.plStatus.setBackgroundColor(context.getResources().getColor(R.color.green));
+                holder.plStatus.setBackgroundResource(R.drawable.green_promise_rounded_corner);
             }
         }
         else {
             holder.plStatus.setText("Pending");
-            holder.plStatus.setBackgroundColor(context.getResources().getColor(R.color.red));
+            holder.plStatus.setBackgroundResource(R.drawable.red_promise_rounded_corner);
         }
 
         return row;

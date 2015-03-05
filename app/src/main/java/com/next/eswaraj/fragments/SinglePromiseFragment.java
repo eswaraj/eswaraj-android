@@ -63,18 +63,18 @@ public class SinglePromiseFragment extends BaseFragment {
         if(promiseDto.getStatus() != null && !promiseDto.getStatus().equals("")) {
             spStatus.setText(promiseDto.getStatus());
             if(promiseDto.getStatus().equals("Pending")) {
-                spStatus.setBackgroundColor(getActivity().getResources().getColor(R.color.red));
+                spStatus.setBackgroundResource(R.drawable.red_promise_rounded_corner);
             }
             else if(promiseDto.getStatus().equals("On Going")) {
-                spStatus.setBackgroundColor(getActivity().getResources().getColor(R.color.blue));
+                spStatus.setBackgroundResource(R.drawable.blue_promise_rounded_corner);
             }
             else if(promiseDto.getStatus().equals("Delivered")) {
-                spStatus.setBackgroundColor(getActivity().getResources().getColor(R.color.green));
+                spStatus.setBackgroundResource(R.drawable.green_promise_rounded_corner);
             }
         }
         else {
             spStatus.setText("Pending");
-            spStatus.setBackgroundColor(getActivity().getResources().getColor(R.color.red));
+            spStatus.setBackgroundResource(R.drawable.red_promise_rounded_corner);
         }
         return rootView;
     }
