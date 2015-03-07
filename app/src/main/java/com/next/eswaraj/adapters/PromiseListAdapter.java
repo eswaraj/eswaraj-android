@@ -48,7 +48,7 @@ public class PromiseListAdapter extends ArrayAdapter<PromiseDto> {
 
         PromiseDto promiseDto = promiseDtoList.get(position);
         holder.plTitle.setText(promiseDto.getTitle());
-        if(promiseDto.getDeliveryTime() != null && !promiseDto.getDeliveryTime().equals("")) {
+        if(promiseDto.getDeliveryTime() != null && !promiseDto.getDeliveryTime().equals("") && promiseDto.getStatus().equals("Delivered")) {
             holder.plDelivery.setText(promiseDto.getDeliveryTime());
             holder.plDelivery.setVisibility(View.VISIBLE);
         }
