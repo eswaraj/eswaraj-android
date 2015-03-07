@@ -11,6 +11,29 @@
         android:background="@color/white"
         android:paddingTop="5dp"
         android:paddingRight="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+        <TextView
+            android:id="@+id/spDelivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/promise_delivered"
+            android:drawablePadding="5dp"
+            android:textStyle="bold"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:textSize="10sp"
+            android:layout_weight="0.5"
+            android:textColor="#808080"
+            android:text="10 days" />
+
         <TextView
             android:id="@+id/spStatus"
             android:layout_width="wrap_content"
@@ -25,12 +48,11 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="2dp"
-            android:paddingBottom="2dp" />
+            android:paddingBottom="2dp"
+            android:layout_weight="0.5"
+            />
+</LinearLayout>
 
-        <TextView
-            android:id="@+id/spDelivery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
     </RelativeLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -56,7 +78,6 @@
             android:layout_height="wrap_content"
             android:text="AAP will legislate the Swaraj Act"
             android:gravity="center"
-            android:textColor="#ADADAD"
             android:padding="10dp" />
 
     </LinearLayout>

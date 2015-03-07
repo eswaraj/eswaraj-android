@@ -38,40 +38,55 @@
                 android:paddingTop="5dp"/>
 
             <RelativeLayout
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="false"
                 android:gravity="right"
                 android:layout_marginRight="3dp"
                 android:layout_marginBottom="3dp"
-                android:layout_alignParentBottom="true">
-                <TextView
-                    android:id="@+id/plStatus"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true">
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/promise_status"
-                    android:drawablePadding="5dp"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:text="Pending"
-                    android:textSize="10dp"
-                    android:background="@drawable/red_promise_rounded_corner"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp" />
+                    android:orientation="horizontal"
+                    android:weightSum="1">
 
-                <TextView
-                    android:id="@+id/plDelivery"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/promise_delivered"
-                    android:drawablePadding="5dp"
-                    android:textStyle="bold"
-                    android:padding="2dp"
-                    android:textSize="10dp"
-                    />
+                    <TextView
+                        android:id="@+id/plDelivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/promise_delivered"
+                        android:drawablePadding="5dp"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:layout_weight="0.5"
+                        android:textColor="#808080"
+                        android:text="10 days"
+                        android:paddingLeft="2dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:paddingRight="5dp" />
 
+                    <TextView
+                        android:id="@+id/plStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/promise_status"
+                        android:drawablePadding="5dp"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:text="Pending"
+                        android:textSize="10dp"
+                        android:background="@drawable/red_promise_rounded_corner"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:layout_weight="0.5"
+                        />
+
+                </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>
 
