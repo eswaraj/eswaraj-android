@@ -14,37 +14,34 @@ import com.next.eswaraj.base.BaseActivity;
 
 public class AboutUsActivity extends BaseActivity implements View.OnClickListener {
 
-    ImageView iv1,iv2,iv3,iv4;
+    ImageView auPhone;
+    ImageView auEmail;
+    ImageView auWeb;
+    ImageView auLike;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
-        iv1 = (ImageView) findViewById(R.id.iv1);
-        iv2 = (ImageView) findViewById(R.id.iv2);
-        iv3 = (ImageView) findViewById(R.id.iv3);
-        iv4 = (ImageView) findViewById(R.id.iv4);
+        auPhone = (ImageView) findViewById(R.id.auPhone);
+        auEmail = (ImageView) findViewById(R.id.auEmail);
+        auWeb = (ImageView) findViewById(R.id.auWeb);
+        auLike = (ImageView) findViewById(R.id.auLike);
 
-        iv1.setOnClickListener(this);
-        iv2.setOnClickListener(this);
-        iv3.setOnClickListener(this);
-        iv4.setOnClickListener(this);
+        auPhone.setOnClickListener(this);
+        auEmail.setOnClickListener(this);
+        auWeb.setOnClickListener(this);
+        auLike.setOnClickListener(this);
     }
 
     public void onClick (View v){
         switch(v.getId()){
-            case R.id.iv1:
-                //Dialog D = new Dialog(this);
-                //D.setTitle("Message from eSwaraj");
-                //TextView tv = new TextView(this);
-                //tv.setText("Please contact us at +91-9686");
-                //D.setContentView(tv);
-                //D.show();
+            case R.id.auPhone:
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:09686860429"));
                 startActivity(intent);
                 break;
-            case R.id.iv2:
+            case R.id.auEmail:
                 String emailAddress[] = { "eswaraj.india@gmail.com"};
                 String message = "Feedback :\n";
                 Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -54,17 +51,15 @@ public class AboutUsActivity extends BaseActivity implements View.OnClickListene
                 emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, message);
                 startActivity(emailIntent);
                 break;
-            case R.id.iv3:
+            case R.id.auWeb:
                 Intent browserIntent1 = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.eswaraj.com/"));
                 startActivity(browserIntent1);
                 break;
-            case R.id.iv4:
+            case R.id.auLike:
                 Intent browserIntent2 = new Intent(Intent.ACTION_VIEW, Uri.parse("http://bit.ly/1DS5Xn7"));
                 startActivity(browserIntent2);
                 break;
 
         }
-
     }
-
 }

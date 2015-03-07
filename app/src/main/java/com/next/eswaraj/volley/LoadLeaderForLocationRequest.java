@@ -67,6 +67,11 @@ public class LoadLeaderForLocationRequest extends BaseClass {
                     List<PoliticalBodyAdminDto> politicalBodyAdminDtoList;
                     GetLeadersEvent event = new GetLeadersEvent();
                     politicalBodyAdminDtoList = gson.fromJson(json, new TypeToken<List<PoliticalBodyAdminDto>>(){}.getType());
+                    if(politicalBodyAdminDtoList == null) {
+                        event.setSuccess(false);
+                        eventBus.postSticky(event);
+                        return;
+                    }
                     event.setSuccess(true);
                     event.setPoliticalBodyAdminDtos(politicalBodyAdminDtoList);
                     eventBus.postSticky(event);

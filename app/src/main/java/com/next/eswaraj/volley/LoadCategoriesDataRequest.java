@@ -70,6 +70,11 @@ public class LoadCategoriesDataRequest extends BaseClass {
                     List<CategoryWithChildCategoryDto> categoryDtoList;
                     GetCategoriesDataEvent event = new GetCategoriesDataEvent();
                     categoryDtoList = gson.fromJson(json, new TypeToken<ArrayList<CategoryWithChildCategoryDto>>(){}.getType());
+                    if(categoryDtoList == null) {
+                        event.setSuccess(false);
+                        eventBus.postSticky(event);
+                        return;
+                    }
                     event.setSuccess(true);
                     event.setCategoryList(categoryDtoList);
                     eventBus.postSticky(event);

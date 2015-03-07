@@ -90,6 +90,11 @@ public class LoadPromisesByLeaderRequest extends BaseClass {
                     List<PromiseDto> promiseDtoList;
                     promiseDtoList = gson.fromJson(json, new TypeToken<List<PromiseDto>>(){}.getType());
                     GetPromisesEvent event = new GetPromisesEvent();
+                    if(promiseDtoList == null) {
+                        event.setSuccess(false);
+                        eventBus.postSticky(event);
+                        return;
+                    }
                     event.setSuccess(true);
                     event.setPromiseDtoList(promiseDtoList);
                     eventBus.postSticky(event);

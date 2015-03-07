@@ -44,6 +44,12 @@ public class CommentPostRequest extends BaseClass {
             @Override
             public void onResponse(String response) {
                 CommentDto commentDto = new Gson().fromJson(response, CommentDto.class);
+                if(commentDto == null) {
+                    SavedCommentEvent event = new SavedCommentEvent();
+                    event.setSuccess(false);
+                    eventBus.postSticky(event);
+                    return;
+                }
                 commentDto.createNewCommenter();
                 if(userDto.getPerson() != null) {
                     commentDto.getPostedBy().setExternalId(userDto.getPerson().getExternalId());

@@ -89,6 +89,11 @@ public class LoadLeaderByIdRequest extends BaseClass {
                     PoliticalBodyAdminDto politicalBodyAdminDto;
                     politicalBodyAdminDto = gson.fromJson(json, PoliticalBodyAdminDto.class);
                     GetLeaderEvent event = new GetLeaderEvent();
+                    if(politicalBodyAdminDto == null) {
+                        event.setSuccess(false);
+                        eventBus.postSticky(event);
+                        return;
+                    }
                     event.setSuccess(true);
                     event.setPoliticalBodyAdminDto(politicalBodyAdminDto);
                     eventBus.postSticky(event);

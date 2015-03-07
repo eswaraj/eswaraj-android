@@ -74,10 +74,13 @@ public class LocationComplaintsRequest extends BaseClass {
                     List<ComplaintDto> complaintDtoList;
                     GetLocationComplaintsEvent event = new GetLocationComplaintsEvent();
                     complaintDtoList = gson.fromJson(json, new TypeToken<List<ComplaintDto>>(){}.getType());
+                    if(complaintDtoList == null) {
+                        event.setSuccess(false);
+                        eventBus.postSticky(event);
+                    }
                     event.setSuccess(true);
                     event.setComplaintDtoList(complaintDtoList);
                     eventBus.postSticky(event);
-                    Log.d("LocationComplaints", json);
                     //Update the cache
                     cache.updateLocationComplaints(context, locationDto, start, count, json);
                 } catch (JsonParseException e) {

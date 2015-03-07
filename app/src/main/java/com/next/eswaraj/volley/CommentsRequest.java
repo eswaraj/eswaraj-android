@@ -69,6 +69,11 @@ public class CommentsRequest extends BaseClass {
                     List<CommentDto> commentDtos;
                     GetCommentsEvent event = new GetCommentsEvent();
                     commentDtos = gson.fromJson(json, new TypeToken<List<CommentDto>>(){}.getType());
+                    if(commentDtos == null) {
+                        event.setSuccess(false);
+                        eventBus.postSticky(event);
+                        return;
+                    }
                     event.setSuccess(true);
                     event.setCommentDtos(commentDtos);
                     eventBus.postSticky(event);

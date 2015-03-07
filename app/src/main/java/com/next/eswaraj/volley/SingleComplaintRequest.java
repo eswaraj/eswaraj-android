@@ -66,6 +66,11 @@ public class SingleComplaintRequest extends BaseClass {
                     ComplaintDto complaintDto;
                     GetSingleComplaintEvent event = new GetSingleComplaintEvent();
                     complaintDto = gson.fromJson(json, ComplaintDto.class);
+                    if(complaintDto == null) {
+                        event.setSuccess(false);
+                        eventBus.postSticky(event);
+                        return;
+                    }
                     event.setSuccess(true);
                     event.setComplaintDto(complaintDto);
                     eventBus.postSticky(event);

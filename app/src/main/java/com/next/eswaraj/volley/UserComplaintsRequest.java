@@ -73,6 +73,11 @@ public class UserComplaintsRequest extends BaseClass {
                     List<ComplaintDto> complaintDtoList;
                     GetUserComplaintsEvent event = new GetUserComplaintsEvent();
                     complaintDtoList = gson.fromJson(json, new TypeToken<List<ComplaintDto>>(){}.getType());
+                    if(complaintDtoList == null) {
+                        event.setSuccess(false);
+                        eventBus.postSticky(event);
+                        return;
+                    }
                     event.setSuccess(true);
                     event.setComplaintDtoList(complaintDtoList);
                     eventBus.postSticky(event);

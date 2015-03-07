@@ -74,6 +74,11 @@ public class LocationComplaintCountersRequest extends BaseClass {
                     List<ComplaintCounter> complaintCounters;
                     GetLocationComplaintCountersEvent event = new GetLocationComplaintCountersEvent();
                     complaintCounters = gson.fromJson(json, new TypeToken<List<ComplaintCounter>>(){}.getType());
+                    if(complaintCounters == null) {
+                        event.setSuccess(false);
+                        eventBus.postSticky(event);
+                        return;
+                    }
                     event.setSuccess(true);
                     event.setComplaintCounters(complaintCounters);
                     eventBus.postSticky(event);

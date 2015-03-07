@@ -104,6 +104,12 @@ public class LoadTimelineRequest extends BaseClass {
                     List<TimelineDto> timelineDtoList;
                     timelineDtoList = gson.fromJson(json, new TypeToken<List<TimelineDto>>(){}.getType());
                     GetTimelineEvent event = new GetTimelineEvent();
+                    if(timelineDtoList == null) {
+                        event.setSuccess(false);
+                        event.setType(type);
+                        eventBus.postSticky(event);
+                        return;
+                    }
                     event.setSuccess(true);
                     event.setType(type);
                     event.setTimelineDtoList(timelineDtoList);

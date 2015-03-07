@@ -88,6 +88,11 @@ public class LoadProfileUpdateRequest extends BaseClass {
                 try {
                     UserDto userDto = gson.fromJson(json, UserDto.class);
                     GetProfileEvent event = new GetProfileEvent();
+                    if(userDto == null) {
+                        event.setSuccess(false);
+                        eventBus.postSticky(event);
+                        return;
+                    }
                     event.setSuccess(true);
                     event.setUserDto(userDto);
                     event.setToken(token);

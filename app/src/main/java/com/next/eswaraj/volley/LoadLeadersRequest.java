@@ -92,6 +92,11 @@ public class LoadLeadersRequest extends BaseClass {
                     List<PoliticalBodyAdminDto> politicalBodyAdminDtos;
                     politicalBodyAdminDtos = gson.fromJson(json, new TypeToken<List<PoliticalBodyAdminDto>>(){}.getType());
                     GetLeadersEvent event = new GetLeadersEvent();
+                    if(politicalBodyAdminDtos == null) {
+                        event.setSuccess(false);
+                        eventBus.postSticky(event);
+                        return;
+                    }
                     event.setSuccess(true);
                     event.setLoadProfilePhotos(false);
                     event.setPoliticalBodyAdminDtos(politicalBodyAdminDtos);

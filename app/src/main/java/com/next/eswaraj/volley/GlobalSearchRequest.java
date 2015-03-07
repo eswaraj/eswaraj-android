@@ -74,6 +74,11 @@ public class GlobalSearchRequest extends BaseClass {
                     List<GlobalSearchResponseDto> globalSearchResponseDtoList;
                     GlobalSearchResultEvent event = new GlobalSearchResultEvent();
                     globalSearchResponseDtoList = gson.fromJson(json, new TypeToken<ArrayList<GlobalSearchResponseDto>>(){}.getType());
+                    if(globalSearchResponseDtoList == null) {
+                        event.setSuccess(false);
+                        eventBus.postSticky(event);
+                        return;
+                    }
                     event.setSuccess(true);
                     event.setGlobalSearchResponseDtoList(globalSearchResponseDtoList);
                     eventBus.postSticky(event);

@@ -88,8 +88,13 @@ public class LoadLocationRequest extends BaseClass {
                 Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
                 try {
                     LocationDto locationDto = gson.fromJson(json, LocationDto.class);
-                    locationDto.setId(id);
                     GetLocationEvent event = new GetLocationEvent();
+                    if(locationDto == null) {
+                        event.setSuccess(false);
+                        eventBus.postSticky(event);
+                        return;
+                    }
+                    locationDto.setId(id);
                     event.setSuccess(true);
                     event.setLocationDto(locationDto);
                     eventBus.postSticky(event);
