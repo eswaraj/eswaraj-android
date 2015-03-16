@@ -23,17 +23,17 @@
 
     <RelativeLayout
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:weightSum="1"
-        android:background="@drawable/white_grey_highlight"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp">
+        android:background="@drawable/white_grey_highlight">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -51,14 +51,10 @@
 
                 <com.next.eswaraj.widgets.CustomNetworkImageView
                     android:id="@+id/mcProfilePhoto"
-                    android:layout_width="fill_parent"
-                    android:layout_height="80dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:src="@drawable/anon_grey"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="7dp"
-                    android:layout_marginRight="-7dp" />
+                    android:padding="10dp" />
 
             </LinearLayout>
 
@@ -67,8 +63,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_gravity="left"
-                android:layout_weight="0.15"
-                android:layout_marginLeft="-5dp">
+                android:layout_weight="0.15">
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -76,7 +71,7 @@
                     android:orientation="horizontal"
                     android:weightSum="1"
                     android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
+                    android:paddingTop="5dp"
                     android:paddingRight="10dp">
 
                     <LinearLayout
@@ -268,9 +263,9 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:layout_gravity="top"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:scaleType="fitCenter"
-        android:layout_marginLeft="35dp" />
+        android:layout_marginLeft="40dp" />
 
 
     <TextView

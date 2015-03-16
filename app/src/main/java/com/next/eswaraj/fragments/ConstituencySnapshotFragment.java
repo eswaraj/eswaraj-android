@@ -128,7 +128,6 @@ public class ConstituencySnapshotFragment extends BaseFragment {
         }
         mcShowMore.setTextColor(Color.parseColor("#FFFFFF"));
         headerView = getActivity().getLayoutInflater().inflate(R.layout.header_constituency_header, null);
-        complaintListFragment.setFooter(mcShowMore);
         complaintListFragment.setHeader(headerView);
 
         name = (TextView) headerView.findViewById(R.id.cName);
@@ -242,8 +241,8 @@ public class ConstituencySnapshotFragment extends BaseFragment {
             if(old != 0) {
                 complaintListFragment.scrollTo(old - 1);
             }
-            if(complaintDtoList.size() < requestCount) {
-                mcShowMore.setVisibility(View.GONE);
+            if(complaintDtoList.size() > requestCount) {
+                complaintListFragment.setFooter(mcShowMore);
             }
         }
         else {

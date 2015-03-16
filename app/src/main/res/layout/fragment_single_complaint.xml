@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="fill_parent">
 
     <LinearLayout
     android:layout_width="fill_parent"
@@ -28,14 +28,11 @@
 
             <com.next.eswaraj.widgets.CustomNetworkImageView
                 android:id="@+id/scSubmitterImage"
-                android:layout_width="fill_parent"
+                android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/anon_grey"
-                android:paddingBottom="10dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="5dp"
-                android:layout_weight="0.5"
-                />
+                android:scaleType="centerCrop"
+                android:padding="10dp" />
 
         </LinearLayout>
 
@@ -45,16 +42,15 @@
             android:orientation="vertical"
             android:layout_gravity="left"
             android:layout_weight="0.2"
-            android:layout_margin="5dp">
+            android:paddingRight="10dp"
+            android:paddingLeft="5dp">
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="1"
-                android:paddingLeft="10dp"
-                android:paddingTop="15dp"
-                android:paddingRight="10dp">
+                android:paddingTop="5dp">
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -93,15 +89,14 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:weightSum="1">
+                android:weightSum="1"
+                android:paddingBottom="5dp">
 
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="1"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
+                    android:weightSum="1">
 
                     <TextView
                         android:id="@+id/scComplaintIdprefix"
@@ -128,9 +123,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textColor="#707070"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
+                    android:textColor="#707070" />
 
                 <TextView
                     android:id="@+id/scDescription"
@@ -138,8 +131,6 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textColor="#ADADAD"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
                     android:layout_marginBottom="10dp" />
 
             </LinearLayout>
@@ -268,9 +259,9 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:layout_gravity="top"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:scaleType="fitCenter"
-        android:layout_marginLeft="60dp" />
+        android:layout_marginLeft="55dp" />
 
 
     <TextView

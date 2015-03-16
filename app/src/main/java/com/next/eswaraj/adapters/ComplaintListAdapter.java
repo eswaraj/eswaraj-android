@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.next.eswaraj.R;
-import com.next.eswaraj.activities.FullscreenImageActivity;
 import com.next.eswaraj.models.ComplaintDto;
 import com.next.eswaraj.widgets.CustomNetworkImageView;
 import com.eswaraj.web.dto.CategoryDto;
@@ -96,14 +95,6 @@ public class ComplaintListAdapter extends ArrayAdapter<ComplaintDto> {
             if (complaintDto.getImages() != null && complaintDto.getImages().get(0) != null && complaintDto.getImages().get(0).getOrgUrl() != null && !complaintDto.getImages().get(0).getOrgUrl().equals("")) {
                 Picasso.with(context).load(complaintDto.getImages().get(0).getOrgUrl()).into(holder.mcImage);
                 holder.mcImage.setVisibility(View.VISIBLE);
-                holder.mcImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(v.getContext(), FullscreenImageActivity.class);
-                        i.putExtra("IMAGE", complaintDto.getImages().get(0).getOrgUrl());
-                        v.getContext().startActivity(i);
-                    }
-                });
             } else {
                 holder.mcImage.setVisibility(View.GONE);
             }

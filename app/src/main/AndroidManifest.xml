@@ -215,6 +215,7 @@
         <activity
             android:name=".activities.ComplaintFilterActivity"
             android:label="@string/title_activity_complaint_filter"
+            android:theme="@style/Theme.Transparent"
             android:parentActivityName=".activities.UserComplaintsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >

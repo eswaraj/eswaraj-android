@@ -34,8 +34,7 @@
     <com.next.eswaraj.widgets.NonScrollableListView
         android:id="@+id/cOldComments"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="9.5">
+        android:layout_height="wrap_content">
     </com.next.eswaraj.widgets.NonScrollableListView>
 
     <Button

@@ -70,7 +70,7 @@ public class CommentsFragment extends BaseFragment {
         cOldComments = (ListView) rootView.findViewById(R.id.cOldComments);
         cShowMore = (Button) rootView.findViewById(R.id.cShowMore);
 
-        cShowMore.setVisibility(View.INVISIBLE);
+        cShowMore.setVisibility(View.GONE);
 
         cOldComments.setDividerHeight(0);
 

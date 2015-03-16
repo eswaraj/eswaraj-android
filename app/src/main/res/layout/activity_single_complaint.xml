@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.next.eswaraj.activities.SingleComplaintActivity"
-    android:background="#ffffff">
+    android:background="#DBDBDB">
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -13,8 +13,7 @@
         class="com.next.eswaraj.fragments.SingleComplaintFragment"
         android:id="@+id/scFragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9"/>
+        android:layout_height="fill_parent" />
     </ScrollView>
 
 </LinearLayout>

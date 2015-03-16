@@ -3,11 +3,15 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.next.eswaraj.activities.ComplaintFilterActivity">
+    tools:context="com.next.eswaraj.activities.ComplaintFilterActivity"
+    android:background="@color/transparent">
 
 <ScrollView
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="fill_parent"
+    android:layout_marginLeft="50dp"
+    android:background="#DBDBDB"
+    android:layout_marginTop="55dp">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -19,17 +23,20 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/navy_blue_background"
                 android:padding="15dp"
-                android:layout_margin="10dp"
                 android:gravity="center_vertical|center_horizontal"
-                android:background="@color/white"/>
+                android:background="@color/white"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp" />
 
             <GridView
                 android:id="@+id/cfCategoryList"
                 android:numColumns="2"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_height="260dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginBottom="10dp"
                 android:verticalSpacing="10dp"
                 android:horizontalSpacing="10dp"/>
@@ -42,17 +49,17 @@
                 android:textColor="@color/navy_blue_background"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
                 android:gravity="center_vertical|center_horizontal"
-                android:background="@color/white"/>
+                android:background="@color/white"
+                android:layout_marginBottom="5dp" />
 
             <GridView
                 android:id="@+id/cfStatusList"
                 android:numColumns="2"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginBottom="10dp"
                 android:verticalSpacing="10dp"
                 android:horizontalSpacing="10dp"/>

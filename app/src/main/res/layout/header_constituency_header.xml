@@ -34,18 +34,20 @@
             android:id="@+id/cName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginBottom="6dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
             android:textSize="20sp"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_marginTop="70dp" />
+            android:textStyle="bold" />
 
         <View
             android:id="@+id/cIcon"
             android:layout_width="16dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="52dp"
-            android:layout_marginTop="74dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="165dp"
             android:background="@drawable/ic_issue_bullet" >
         </View>
 

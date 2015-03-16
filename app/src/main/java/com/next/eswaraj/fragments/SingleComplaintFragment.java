@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.next.eswaraj.R;
+import com.next.eswaraj.activities.FullscreenImageActivity;
 import com.next.eswaraj.base.BaseFragment;
 import com.next.eswaraj.events.ComplaintClosedEvent;
 import com.next.eswaraj.events.GetSingleComplaintEvent;
@@ -182,6 +183,15 @@ public class SingleComplaintFragment extends BaseFragment implements OnMapReadyC
         }
         if(complaintDto.getImages() != null) {
             complaintImage.loadComplaintImage(complaintDto.getImages().get(0).getOrgUrl(), complaintDto.getId());
+            complaintImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(v.getContext(), FullscreenImageActivity.class);
+                    i.putExtra("IMAGE", complaintDto.getImages().get(0).getOrgUrl());
+                    v.getContext().startActivity(i);
+                }
+            });
+
         }
         else {
             complaintImage.setVisibility(View.GONE);
