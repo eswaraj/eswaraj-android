@@ -64,6 +64,9 @@ public class MyProfileActivity extends BaseActivity {
 
     public void onEventMainThread(LoginStatusEvent event) {
         if(!event.getLoggedIn()) {
+            Intent i = new Intent(this, HomeActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
             finish();
         }
     }

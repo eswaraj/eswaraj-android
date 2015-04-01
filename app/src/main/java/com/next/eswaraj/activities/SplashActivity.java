@@ -257,8 +257,7 @@ public class SplashActivity extends BaseActivity {
             if (GooglePlayServicesUtil.isUserRecoverableError(status)) {
                 GooglePlayServicesUtil.getErrorDialog(status, this, REQUEST_CODE_RECOVER_PLAY_SERVICES).show();
             } else {
-                Toast.makeText(this, "This device is not supported.",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "This device is not supported.", Toast.LENGTH_LONG).show();
                 finish();
             }
             return false;
@@ -274,7 +273,7 @@ public class SplashActivity extends BaseActivity {
         }
         else {
             if(internetServicesCheckUtil.isServiceAvailable(this)) {
-                Toast.makeText(this, "Could not fetch data from server. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, event.getError(), Toast.LENGTH_LONG).show();
             }
             else {
                 Toast.makeText(this, "No internet connection found", Toast.LENGTH_LONG).show();

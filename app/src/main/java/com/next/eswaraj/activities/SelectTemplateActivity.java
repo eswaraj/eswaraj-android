@@ -34,7 +34,7 @@ public class SelectTemplateActivity extends BaseActivity {
 
         //Create fragment
         selectTemplateFragment = new SelectTemplateFragment();
-        selectTemplateFragment.setAmenity(amenity);
+        //selectTemplateFragment.setAmenity(amenity);
 
         //Add all fragments
         if (savedInstanceState == null) {

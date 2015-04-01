@@ -35,7 +35,7 @@ public class BaseActivity extends ActionBarActivity {
     UserSessionUtil userSession;
 
     private final int SHOW_FILTER_REQUEST = 9999;
-    protected Boolean dontUseAnimation = false;
+    protected Boolean dontUseAnimation = true;
     protected Boolean showFilter = false;
     protected ComplaintFilter complaintFilter;
 

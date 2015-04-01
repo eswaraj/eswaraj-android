@@ -484,7 +484,7 @@ android:layout_height="wrap_content">
         android:visibility="gone">
 
         <com.next.eswaraj.widgets.CustomNetworkImageView
-            android:id="@+id/cImage"
+            android:id="@+id/cImage1"
             android:layout_width="fill_parent"
             android:layout_height="80dp"
             android:src="@drawable/ravi"
@@ -505,7 +505,7 @@ android:layout_height="wrap_content">
                 android:orientation="horizontal"
                 android:paddingLeft="5dp">
                 <TextView
-                    android:id="@+id/cName"
+                    android:id="@+id/cName1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Anonymous"
@@ -513,7 +513,7 @@ android:layout_height="wrap_content">
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/cTime"
+                    android:id="@+id/cTime1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="3 Hours Ago"
@@ -523,7 +523,7 @@ android:layout_height="wrap_content">
                     android:paddingRight="5dp" />
             </LinearLayout>
             <TextView
-                android:id="@+id/cText"
+                android:id="@+id/cText1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Comment text"

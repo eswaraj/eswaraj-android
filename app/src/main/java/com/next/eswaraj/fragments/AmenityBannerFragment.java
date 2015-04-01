@@ -42,13 +42,16 @@ public class AmenityBannerFragment extends BaseFragment implements View.OnClickL
         // Required empty public constructor
     }
 
+    /*
     public void setAmenity(CategoryWithChildCategoryDto amenity) {
         this.amenity = amenity;
     }
+    */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        amenity = (CategoryWithChildCategoryDto) getActivity().getIntent().getSerializableExtra("AMENITY");
         extractVideoId();
     }
 

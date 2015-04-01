@@ -34,16 +34,19 @@ public class SelectTemplateFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        amenity = (CategoryWithChildCategoryDto) getActivity().getIntent().getSerializableExtra("AMENITY");
         amenityBannerFragment = new AmenityBannerFragment();
-        amenityBannerFragment.setAmenity(amenity);
+        //amenityBannerFragment.setAmenity(amenity);
         if (savedInstanceState == null) {
             getChildFragmentManager().beginTransaction().add(R.id.stBanner, amenityBannerFragment).commit();
         }
     }
 
+    /*
     public void setAmenity(CategoryWithChildCategoryDto amenity) {
         this.amenity = amenity;
     }
+    */
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
