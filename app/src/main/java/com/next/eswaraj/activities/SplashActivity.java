@@ -83,6 +83,7 @@ public class SplashActivity extends BaseActivity {
         eventBus.register(this);
 
         startedFromMenu = getIntent().getBooleanExtra("MODE", false);
+        Log.e("SplashActivity", "startedFromMenu=" + startedFromMenu);
 
         startTime = new Date().getTime();
 
@@ -115,6 +116,7 @@ public class SplashActivity extends BaseActivity {
             gcmUtil.registerWithGcmServerIfNeeded(this);
             dontShowContinueButton = middlewareService.wasImageDownloadLaunchedBefore(this);
             middlewareService.loadCategoriesData(this);
+            Log.e("SplashActivity", "Load categories data initiated");
         }
 
     }
@@ -269,6 +271,7 @@ public class SplashActivity extends BaseActivity {
         if(event.getSuccess()) {
             //Launch image download now.
             globalSession.setCategoryDtoList(event.getCategoryList());
+            Log.e("SplashActivity", "Set category list in GlobalSession. List = " + globalSession.getCategoryDtoList().toString());
             middlewareService.loadCategoriesImages(this, event.getCategoryList(), false);
         }
         else {
@@ -281,6 +284,7 @@ public class SplashActivity extends BaseActivity {
             criticalDataLoadFailed = true;
             updateUi();
         }
+        Log.e("SplashActivity", "GetCategoriesDataEvent done");
     }
 
     public void onEventMainThread(GetCategoriesImagesEvent event) {

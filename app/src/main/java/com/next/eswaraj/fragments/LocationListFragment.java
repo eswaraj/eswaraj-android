@@ -63,48 +63,50 @@ public class LocationListFragment extends BaseFragment {
 
     private void setData() {
         globalSearchResponseDtoList = new ArrayList<GlobalSearchResponseDto>();
-        if(userSession.getUser().getPerson().getPersonAddress().getState() != null) {
-            GlobalSearchResponseDto globalSearchResponseDto = new GlobalSearchResponseDto();
-            globalSearchResponseDto.setType("Location");
-            globalSearchResponseDto.setSubType("State");
-            globalSearchResponseDto.setName(userSession.getUser().getPerson().getPersonAddress().getState().getName());
-            globalSearchResponseDto.setImage(userSession.getUser().getPerson().getPersonAddress().getState().getMobileHeaderImageUrl());
-            globalSearchResponseDto.setId(userSession.getUser().getPerson().getPersonAddress().getState().getId());
-            globalSearchResponseDto.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getState());
-            globalSearchResponseDtoList.add(globalSearchResponseDto);
-        }
+        if(userSession.getUser().getPerson().getPersonAddress() != null) {
+            if (userSession.getUser().getPerson().getPersonAddress().getState() != null) {
+                GlobalSearchResponseDto globalSearchResponseDto = new GlobalSearchResponseDto();
+                globalSearchResponseDto.setType("Location");
+                globalSearchResponseDto.setSubType("State");
+                globalSearchResponseDto.setName(userSession.getUser().getPerson().getPersonAddress().getState().getName());
+                globalSearchResponseDto.setImage(userSession.getUser().getPerson().getPersonAddress().getState().getMobileHeaderImageUrl());
+                globalSearchResponseDto.setId(userSession.getUser().getPerson().getPersonAddress().getState().getId());
+                globalSearchResponseDto.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getState());
+                globalSearchResponseDtoList.add(globalSearchResponseDto);
+            }
 
-        if(userSession.getUser().getPerson().getPersonAddress().getPc() != null) {
-            GlobalSearchResponseDto globalSearchResponseDto = new GlobalSearchResponseDto();
-            globalSearchResponseDto.setType("Location");
-            globalSearchResponseDto.setSubType("Parliamentary Constituency");
-            globalSearchResponseDto.setName(userSession.getUser().getPerson().getPersonAddress().getPc().getName());
-            globalSearchResponseDto.setImage(userSession.getUser().getPerson().getPersonAddress().getPc().getMobileHeaderImageUrl());
-            globalSearchResponseDto.setId(userSession.getUser().getPerson().getPersonAddress().getPc().getId());
-            globalSearchResponseDto.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getPc());
-            globalSearchResponseDtoList.add(globalSearchResponseDto);
-        }
+            if (userSession.getUser().getPerson().getPersonAddress().getPc() != null) {
+                GlobalSearchResponseDto globalSearchResponseDto = new GlobalSearchResponseDto();
+                globalSearchResponseDto.setType("Location");
+                globalSearchResponseDto.setSubType("Parliamentary Constituency");
+                globalSearchResponseDto.setName(userSession.getUser().getPerson().getPersonAddress().getPc().getName());
+                globalSearchResponseDto.setImage(userSession.getUser().getPerson().getPersonAddress().getPc().getMobileHeaderImageUrl());
+                globalSearchResponseDto.setId(userSession.getUser().getPerson().getPersonAddress().getPc().getId());
+                globalSearchResponseDto.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getPc());
+                globalSearchResponseDtoList.add(globalSearchResponseDto);
+            }
 
-        if(userSession.getUser().getPerson().getPersonAddress().getAc() != null) {
-            GlobalSearchResponseDto globalSearchResponseDto = new GlobalSearchResponseDto();
-            globalSearchResponseDto.setType("Location");
-            globalSearchResponseDto.setSubType("Assembly Constituency");
-            globalSearchResponseDto.setName(userSession.getUser().getPerson().getPersonAddress().getAc().getName());
-            globalSearchResponseDto.setImage(userSession.getUser().getPerson().getPersonAddress().getAc().getMobileHeaderImageUrl());
-            globalSearchResponseDto.setId(userSession.getUser().getPerson().getPersonAddress().getAc().getId());
-            globalSearchResponseDto.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getAc());
-            globalSearchResponseDtoList.add(globalSearchResponseDto);
-        }
+            if (userSession.getUser().getPerson().getPersonAddress().getAc() != null) {
+                GlobalSearchResponseDto globalSearchResponseDto = new GlobalSearchResponseDto();
+                globalSearchResponseDto.setType("Location");
+                globalSearchResponseDto.setSubType("Assembly Constituency");
+                globalSearchResponseDto.setName(userSession.getUser().getPerson().getPersonAddress().getAc().getName());
+                globalSearchResponseDto.setImage(userSession.getUser().getPerson().getPersonAddress().getAc().getMobileHeaderImageUrl());
+                globalSearchResponseDto.setId(userSession.getUser().getPerson().getPersonAddress().getAc().getId());
+                globalSearchResponseDto.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getAc());
+                globalSearchResponseDtoList.add(globalSearchResponseDto);
+            }
 
-        if(userSession.getUser().getPerson().getPersonAddress().getWard() != null) {
-            GlobalSearchResponseDto globalSearchResponseDto = new GlobalSearchResponseDto();
-            globalSearchResponseDto.setType("Location");
-            globalSearchResponseDto.setSubType("Ward");
-            globalSearchResponseDto.setName(userSession.getUser().getPerson().getPersonAddress().getWard().getName());
-            globalSearchResponseDto.setImage(userSession.getUser().getPerson().getPersonAddress().getWard().getMobileHeaderImageUrl());
-            globalSearchResponseDto.setId(userSession.getUser().getPerson().getPersonAddress().getWard().getId());
-            globalSearchResponseDto.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getWard());
-            globalSearchResponseDtoList.add(globalSearchResponseDto);
+            if (userSession.getUser().getPerson().getPersonAddress().getWard() != null) {
+                GlobalSearchResponseDto globalSearchResponseDto = new GlobalSearchResponseDto();
+                globalSearchResponseDto.setType("Location");
+                globalSearchResponseDto.setSubType("Ward");
+                globalSearchResponseDto.setName(userSession.getUser().getPerson().getPersonAddress().getWard().getName());
+                globalSearchResponseDto.setImage(userSession.getUser().getPerson().getPersonAddress().getWard().getMobileHeaderImageUrl());
+                globalSearchResponseDto.setId(userSession.getUser().getPerson().getPersonAddress().getWard().getId());
+                globalSearchResponseDto.setLocationDto(userSession.getUser().getPerson().getPersonAddress().getWard());
+                globalSearchResponseDtoList.add(globalSearchResponseDto);
+            }
         }
 
         if(globalSearchResponseDtoList.size() == 0) {

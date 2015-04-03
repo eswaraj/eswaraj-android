@@ -8,8 +8,13 @@ android {
         applicationId "com.next.eswaraj"
         minSdkVersion 14
         targetSdkVersion 19
-        versionCode 29
-        versionName "1.2.9"
+        versionCode 30
+        versionName "1.3.0"
+        /* When releasing a new version, update the version number in following 3 places:
+           1. Just above this comment block :D
+           2. In the activity_about_us.xml file, line 19
+           3. In the GoogleAnalyticsTracker.java file, line 240
+         */
     }
     buildTypes {
         release {
