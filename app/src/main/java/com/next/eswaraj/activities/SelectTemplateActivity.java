@@ -28,6 +28,8 @@ public class SelectTemplateActivity extends BaseActivity {
         setContentView(R.layout.activity_select_template);
         setTitle("Select complaint");
 
+        eventBus.register(this);
+
         //Retrieve data from Intent
         Intent i = getIntent();
         amenity = (CategoryWithChildCategoryDto) i.getSerializableExtra("AMENITY");
@@ -43,15 +45,9 @@ public class SelectTemplateActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        eventBus.register(this);
-    }
-
-    @Override
-    protected void onStop() {
+    protected void onDestroy() {
         eventBus.unregister(this);
-        super.onStop();
+        super.onDestroy();
     }
 
     public void onEventMainThread(TemplateSelectEvent event) {
