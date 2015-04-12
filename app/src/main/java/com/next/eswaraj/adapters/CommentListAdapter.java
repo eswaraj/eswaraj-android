@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.next.eswaraj.R;
@@ -47,6 +48,7 @@ public class CommentListAdapter extends ArrayAdapter<CommentDto> {
             holder.cText = (TextView)row.findViewById(R.id.cText);
             holder.cTime = (TextView)row.findViewById(R.id.cTime);
             holder.cImage = (CustomNetworkImageView)row.findViewById(R.id.cImage);
+            holder.cRoleImage = (ImageView)row.findViewById(R.id.cRoleImage);
 
             row.setTag(holder);
         }
@@ -65,6 +67,12 @@ public class CommentListAdapter extends ArrayAdapter<CommentDto> {
             else {
                 holder.cImage.setImageDrawable(context.getResources().getDrawable(R.drawable.anon));
             }
+        }
+        if(commentDto.getAdminComment()) {
+            holder.cRoleImage.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.cRoleImage.setVisibility(View.GONE);
         }
         holder.cText.setText(commentDto.getText());
         holder.cTime.setText(DateUtils.getRelativeTimeSpanString(commentDto.getCreationTime(), new Date().getTime(), DateUtils.MINUTE_IN_MILLIS));
@@ -90,5 +98,6 @@ public class CommentListAdapter extends ArrayAdapter<CommentDto> {
         TextView cText;
         TextView cTime;
         CustomNetworkImageView cImage;
+        ImageView cRoleImage;
     }
 }

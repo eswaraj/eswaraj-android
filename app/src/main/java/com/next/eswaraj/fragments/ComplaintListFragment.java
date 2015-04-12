@@ -88,7 +88,7 @@ public class ComplaintListFragment extends BaseFragment {
             if(footerAdded) {
                 Boolean removed = mcList.removeFooterView(footer);
                 if(((ViewGroup)footer.getParent()) != null) {
-                    ((ViewGroup)footer.getParent()).removeView(footer);
+                    ((ViewGroup)footer.getParent()).removeViewInLayout(footer);
                 }
                 footerAdded = false;
             }

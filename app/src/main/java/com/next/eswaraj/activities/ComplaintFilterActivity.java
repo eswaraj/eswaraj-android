@@ -109,6 +109,8 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
                 currentSelection = (ComplaintFilter) categoryAdapter.getItem(position);
                 categoryAdapter.setSelection(position);
                 categoryAdapter.notifyDataSetChanged();
+                statusAdapter.setSelection(-1);
+                statusAdapter.notifyDataSetChanged();
             }
         });
 
@@ -118,6 +120,8 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
                 currentSelection = (ComplaintFilter) statusAdapter.getItem(position);
                 statusAdapter.setSelection(position);
                 statusAdapter.notifyDataSetChanged();
+                categoryAdapter.setSelection(-1);
+                categoryAdapter.notifyDataSetChanged();
             }
         });
 

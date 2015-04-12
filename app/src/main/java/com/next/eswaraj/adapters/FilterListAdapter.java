@@ -71,7 +71,12 @@ public class FilterListAdapter extends ArrayAdapter<ComplaintFilter> {
     }
 
     public void setSelection(int position) {
-        currentSelection = position;
+        if(position >= 0) {
+            currentSelection = position;
+        }
+        else {
+            currentSelection = 9999;
+        }
     }
 
     static class FilterDtoHolder
