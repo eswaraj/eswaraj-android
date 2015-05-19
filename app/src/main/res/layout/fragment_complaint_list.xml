@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/mcPlaceholderText"
-            android:text="No complaints to show yet"
+            android:text="@string/fclNoComplaints"
             android:layout_marginTop="340dp"
             android:textSize="18sp"
             android:gravity="center"

@@ -23,7 +23,7 @@
                     android:id="@+id/csMlaName"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ravi Sharma"
+                    android:text="@string/leaderName"
                     android:gravity="bottom|right"
                     android:textStyle="bold"
                     android:layout_weight="0.5"
@@ -32,7 +32,7 @@
                     android:id="@+id/csMlaLocation"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="MLA, Bangalore"
+                    android:text="@string/leaderPosition"
                     android:gravity="top|right"
                     android:layout_weight="0.5"
                     android:textColor="#929292" />

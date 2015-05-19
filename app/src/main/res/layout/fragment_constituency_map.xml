@@ -18,19 +18,19 @@
             android:layout_height="wrap_content">
             <Button
                 android:id="@+id/heatmap"
-                android:text="Heatmap"
+                android:text="@string/heatMap"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent" />
             <Button
                 android:id="@+id/cluster"
-                android:text="Cluster"
+                android:text="@string/cluster"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent" />
             <Button
                 android:id="@+id/marker"
-                android:text="Markers"
+                android:text="@string/markers"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent" />

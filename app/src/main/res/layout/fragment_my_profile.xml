@@ -35,7 +35,7 @@
 
         <TextView
             android:id="@+id/mpchangepic"
-            android:text="Change Profile Pic"
+            android:text="@string/changeProfilePic"
             android:layout_width="wrap_content"
             android:drawableRight="@drawable/ic_edit"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
 
             <TextView
                 android:id="@+id/mpnamelabel"
-                android:text="Name"
+                android:text="@string/fmpNameLabel"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
@@ -77,7 +77,7 @@
 
             <TextView
                 android:id="@+id/mpName"
-                android:text="Aam Aadmi"
+                android:text="@string/fmpName"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
@@ -106,7 +106,7 @@
 
         <TextView
             android:id="@+id/mpEditName"
-            android:text="Edit"
+            android:text="@string/fmpEdit"
             android:layout_width="fill_parent"
             android:drawableRight="@drawable/ic_edit"
             android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
 
             <TextView
                 android:id="@+id/mpemaillabel"
-                android:text="Email"
+                android:text="@string/fmpEmailIdLabel"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
@@ -152,7 +152,7 @@
 
             <TextView
                 android:id="@+id/mpemail"
-                android:text="AamAadmi@gov.nic.in"
+                android:text="@string/fmpEmailId"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
@@ -167,7 +167,7 @@
 
         <TextView
             android:id="@+id/mpeditemail"
-            android:text="Edit"
+            android:text="@string/fmpEdit"
             android:layout_width="fill_parent"
             android:drawableRight="@drawable/ic_edit"
             android:layout_height="wrap_content"
@@ -199,7 +199,7 @@
 
             <TextView
                 android:id="@+id/mpvoteridlabel"
-                android:text="Voter Id"
+                android:text="@string/fmpVoterIdLabel"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
@@ -212,7 +212,7 @@
 
             <TextView
                 android:id="@+id/mpVoterId"
-                android:text="Ex. DEL778956IN"
+                android:text="@string/fmpVoterId"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
@@ -240,7 +240,7 @@
 
         <TextView
             android:id="@+id/mpEditVoterId"
-            android:text="Edit"
+            android:text="@string/fmpEdit"
             android:layout_width="fill_parent"
             android:drawableRight="@drawable/ic_edit"
             android:layout_height="wrap_content"
@@ -271,7 +271,7 @@
 
             <TextView
                 android:id="@+id/mplocationlabel"
-                android:text="My Location"
+                android:text="@string/fmpLocationLabel"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
@@ -284,7 +284,7 @@
 
             <TextView
                 android:id="@+id/mpLocation"
-                android:text="Govind Vihar, Delhi"
+                android:text="@string/fmpLocation"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
@@ -299,7 +299,7 @@
 
         <TextView
             android:id="@+id/mpMarkLocation"
-            android:text="Edit"
+            android:text="@string/fmpEdit"
             android:layout_width="fill_parent"
             android:drawableRight="@drawable/ic_edit"
             android:layout_height="wrap_content"
@@ -340,7 +340,7 @@
 
         <TextView
             android:id="@+id/mppoliticalcoord"
-            android:text="My Political Coordinates"
+            android:text="@string/fmpPoliticalCoordinates"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:gravity="top"
@@ -360,7 +360,7 @@
 
             <TextView
                 android:id="@+id/mpassemblyconstlabel"
-                android:text="Assembly Constituency"
+                android:text="@string/fmpACLabel"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:textColor="#ADADAD"
@@ -372,7 +372,7 @@
 
             <TextView
                 android:id="@+id/mpAc"
-                android:text="Chandni Chowk"
+                android:text="@string/fmpAC"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:textColor="#0099cc"
@@ -384,7 +384,7 @@
 
             <TextView
                 android:id="@+id/mpparliamentaryconstlabel"
-                android:text="Parliamentary Constituency"
+                android:text="@string/fmpPCLabel"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:textColor="#ADADAD"
@@ -396,7 +396,7 @@
 
             <TextView
                 android:id="@+id/mpPc"
-                android:text="Old Delhi"
+                android:text="@string/fmpPC"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:textColor="#0099cc"
@@ -408,7 +408,7 @@
 
             <TextView
                 android:id="@+id/mpwardlabel"
-                android:text="Ward"
+                android:text="@string/fmpWardLabel"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:textColor="#ADADAD"
@@ -420,7 +420,7 @@
 
             <TextView
                 android:id="@+id/mpWard"
-                android:text="Vikram Nagar"
+                android:text="@string/fmpWard"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:textColor="#0099cc"
@@ -454,7 +454,7 @@
 
             <Button
                 android:id="@+id/mpSave"
-                android:text="Save"
+                android:text="@string/fmpSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"
@@ -463,7 +463,7 @@
                 android:textColor="@color/white" />
             <Button
                 android:id="@+id/mpCancel"
-                android:text="Cancel"
+                android:text="@string/fmpCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"
@@ -474,7 +474,7 @@
                 android:visibility="gone"/>
             <Button
                 android:id="@+id/mpLogout"
-                android:text="Log Out"
+                android:text="@string/fmpLogOut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"

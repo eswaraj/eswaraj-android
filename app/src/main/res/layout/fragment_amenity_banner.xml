@@ -43,7 +43,7 @@
                     android:layout_toLeftOf="@+id/issue_issues"
                     android:drawableLeft="@drawable/ic_issue_complaints"
                     android:drawablePadding="12dp"
-                    android:text="%d complaints"
+                    android:text="@string/abNoOfComplaints"
                     android:textColor="@android:color/primary_text_dark" />
                     -->
         <LinearLayout
@@ -58,7 +58,7 @@
             android:id="@+id/select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select"
+            android:text="@string/abSelect"
             android:textColor="@android:color/primary_text_dark"
             android:textSize="15sp"
             android:layout_marginRight="5dp"/>
@@ -66,14 +66,14 @@
             android:id="@+id/issue_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Amenity_Name"
+            android:text="@string/abAmenityNameLabel"
             android:textColor="@android:color/primary_text_dark"
             android:textSize="15sp"
             android:layout_marginRight="5dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="related issue"
+            android:text="@string/abRelatedIssue"
             android:textColor="@android:color/primary_text_dark"
             android:textSize="15sp"
             android:layout_marginRight="5dp"/>
@@ -87,7 +87,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="15dp"
-            android:text="%d   issues"
+            android:text="@string/abIssues"
             android:textColor="@android:color/primary_text_dark"
             android:visibility="visible" />
 

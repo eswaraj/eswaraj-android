@@ -14,7 +14,7 @@
         android:background="@null"
         android:drawableBottom="@drawable/issue_details_take"
         android:drawablePadding="8dp"
-        android:text="Take Photo"
+        android:text="@string/takePhoto"
         android:textColor="#0099cc"
         android:textSize="17sp" />
 
@@ -22,7 +22,7 @@
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Or"
+        android:text="@string/or"
         android:textColor="#0099cc"
         android:layout_marginTop="15dp" />
 
@@ -33,7 +33,7 @@
         android:background="@null"
         android:drawableBottom="@drawable/issue_details_attach"
         android:drawablePadding="8dp"
-        android:text="Attach Photo"
+        android:text="@string/attachPhoto"
         android:textColor="#0099cc"
         android:textSize="17sp" />
 

@@ -18,13 +18,13 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
                 <TextView
-                    android:text="Total Houses"
+                    android:text="@string/ciHousesLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#0099cc" />
                 <TextView
                     android:id="@+id/cTotalHouses"
-                    android:text="Unknown"
+                    android:text="@string/ciHousesVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
@@ -35,13 +35,13 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
                 <TextView
-                    android:text="Total Population"
+                    android:text="@string/ciPopulationLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#0099cc" />
                 <TextView
                     android:id="@+id/cTotalPopulation"
-                    android:text="Unknown"
+                    android:text="@string/ciPopulationVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
@@ -52,13 +52,13 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
                 <TextView
-                    android:text="Total Male Population"
+                    android:text="@string/ciMalePopLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#0099cc" />
                 <TextView
                     android:id="@+id/cTotalMalePopulation"
-                    android:text="Unknown"
+                    android:text="@string/ciMalePopVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
@@ -69,13 +69,13 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
                 <TextView
-                    android:text="Total Female Population"
+                    android:text="@string/ciFemalePopLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#0099cc" />
                 <TextView
                     android:id="@+id/cTotalFemalePopulation"
-                    android:text="Unknown"
+                    android:text="@string/ciFemalePop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
@@ -86,13 +86,13 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
                 <TextView
-                    android:text="Total Literate Population"
+                    android:text="@string/ciLiteratePopLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#0099cc" />
                 <TextView
                     android:id="@+id/cTotalLiteratePopulation"
-                    android:text="Unknown"
+                    android:text="@string/ciLiteratePopVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
@@ -103,13 +103,13 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
                 <TextView
-                    android:text="Total Male Literate Population"
+                    android:text="@string/ciMaleLiterateLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#0099cc" />
                 <TextView
                     android:id="@+id/cTotalMaleLiteratePopulation"
-                    android:text="Unknown"
+                    android:text="@string/ciMaleLiterateVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
@@ -120,13 +120,13 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
                 <TextView
-                    android:text="Total Female Literate Population"
+                    android:text="@string/ciFemaleLiterateLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#0099cc" />
                 <TextView
                     android:id="@+id/cTotalFemaleLiteratePopulation"
-                    android:text="Unknown"
+                    android:text="@string/ciFemaleLiterateVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
@@ -137,13 +137,13 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
                 <TextView
-                    android:text="Total Working Population"
+                    android:text="@string/ciWorkingPopLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#0099cc" />
                 <TextView
                     android:id="@+id/cTotalWorkingPopulation"
-                    android:text="Unknown"
+                    android:text="@string/ciWorkingPopVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
@@ -154,13 +154,13 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
                 <TextView
-                    android:text="Total Male Working Population"
+                    android:text="@string/ciMaleWorkingPopLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#0099cc" />
                 <TextView
                     android:id="@+id/cTotalMaleWorkingPopulation"
-                    android:text="Unknown"
+                    android:text="@string/ciMaleWorkingPopVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
@@ -171,13 +171,13 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
                 <TextView
-                    android:text="Total Female Working Population"
+                    android:text="@string/ciFemaleWorkingPopLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#0099cc" />
                 <TextView
                     android:id="@+id/cTotalFemaleWorkingPopulation"
-                    android:text="Unknown"
+                    android:text="@string/ciFemaleWorkingPopVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
@@ -188,13 +188,13 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
                 <TextView
-                    android:text="Area"
+                    android:text="@string/ciAreaLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#0099cc" />
                 <TextView
                     android:id="@+id/cArea"
-                    android:text="Unknown"
+                    android:text="@string/ciAreaVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
@@ -205,13 +205,13 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
                 <TextView
-                    android:text="Perimeter"
+                    android:text="@string/ciPerimeterLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#0099cc" />
                 <TextView
                     android:id="@+id/cPerimeter"
-                    android:text="Unknown"
+                    android:text="@string/ciPerimeterVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"

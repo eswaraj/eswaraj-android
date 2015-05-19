@@ -24,7 +24,7 @@
                 android:id="@+id/mcName"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Aam Aadmi"
+                android:text="@string/reporterName"
                 android:gravity="bottom|right"
                 android:textStyle="bold"
                 android:layout_weight="0.5"
@@ -33,7 +33,7 @@
                 android:id="@+id/mcUserDetails"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="25 Yrs, Male"
+                android:text="@string/reporterAge"
                 android:gravity="top|right"
                 android:layout_weight="0.5"
                 android:textColor="#929292" />

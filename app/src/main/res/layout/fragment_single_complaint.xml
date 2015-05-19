@@ -103,7 +103,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.97"
-                        android:text="#"
+                        android:text="@string/fscseparator"
                         android:textStyle="bold"
                         android:textColor="#ADADAD"
                         />
@@ -201,7 +201,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.36"
-            android:text="Comments"
+            android:text="@string/comments"
             android:textStyle="bold"
             android:textSize="9dp"
             android:textColor="#ADADAD"
@@ -219,7 +219,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.36"
-            android:text="Pending"
+            android:text="@string/complaintStatus"
             android:textStyle="bold"
             android:textColor="#ADADAD"
             android:textSize="9dp"
@@ -229,7 +229,7 @@
 
     <Button
         android:id="@+id/scClose"
-        android:text="Close Complaint"
+        android:text="@string/closeComplaint"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"

@@ -13,7 +13,7 @@
         android:layout_margin="10dp" />
 
     <TextView
-        android:text="Know More about Civic Amenities"
+        android:text="@string/knowMoreAbt"
         android:textSize="28dp"
         android:paddingTop="80dp"
         android:gravity="center_horizontal"
@@ -24,7 +24,7 @@
     <TextView
         android:id="@+id/cVideoListTitle"
         android:layout_below="@+id/cBanner"
-        android:text="Videos"
+        android:text="@string/videos"
         android:textSize="20dp"
         android:padding="10dp"
         android:gravity="center"

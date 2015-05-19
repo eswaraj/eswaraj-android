@@ -64,7 +64,7 @@
 
         <Button
             android:id="@+id/cLeader"
-            android:text="Leaders"
+            android:text="@string/leaders"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
 
         <Button
             android:id="@+id/cSmart"
-            android:text="Smart Data"
+            android:text="@string/smartData"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
 
     <Button
         android:id="@+id/cTimeline"
-        android:text="Timeline"
+        android:text="@string/timeLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/red_darkred_highlight"

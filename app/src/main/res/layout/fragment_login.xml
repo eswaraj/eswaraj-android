@@ -43,7 +43,7 @@
 
         <TextView
             android:id="@+id/buttonSkip"
-            android:text="Skip login"
+            android:text="@string/skipLogin"
             android:layout_width="100dp"
             android:layout_height="55dp"
             android:gravity="center"

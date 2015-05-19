@@ -35,7 +35,7 @@
 
             <Button
                 android:id="@+id/mhSaveLocation"
-                android:text="Save Location"
+                android:text="@string/mhSaveLocation"
                 android:layout_weight="0.5"
                 android:gravity="center_vertical|center_horizontal"
                 android:textColor="@android:color/white"
@@ -51,7 +51,7 @@
 
             <Button
                 android:id="@+id/mhSkip"
-                android:text="Skip"
+                android:text="@string/mhSkip"
                 android:layout_weight="0.5"
                 android:gravity="center_vertical|center_horizontal"
                 android:background="@drawable/red_darkred_highlight"

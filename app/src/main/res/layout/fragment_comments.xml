@@ -39,7 +39,7 @@
 
     <Button
         android:id="@+id/cShowMore"
-        android:text="Show More"
+        android:text="@string/fcShowMore"
         android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

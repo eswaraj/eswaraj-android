@@ -30,7 +30,7 @@
             android:textColor="@color/white"
             android:layout_weight="0.3"
             android:gravity="bottom|center_horizontal"
-            android:text="eSwaraj : Banking on the new age revolution #DigitalIndia" />
+            android:text="@string/abouteSwaraj" />
 
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
@@ -38,7 +38,7 @@
             android:id="@+id/splash_pager_text"
             android:textSize="14sp"
             android:layout_weight="0.7"
-            android:text="Making good governance a peoples movement"
+            android:text="@string/tagLine"
             android:textColor="@color/white"
             android:padding="5dp"
             android:gravity="top|center_horizontal" />

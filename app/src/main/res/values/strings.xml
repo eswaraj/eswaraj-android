@@ -51,4 +51,300 @@
     <string name="title_activity_constituency_timeline">ConstituencyTimelineActivity</string>
     <string name="title_activity_fullscreen_image">FullscreenImageActivity</string>
 
+	<!-- activity_about_us -->
+    <string name="auVersion">Version 1.3.0</string>
+    <string name="auMediaPartners">Media Partners</string>
+
+<!-- activity_complaint_filter -->
+    <string name="cfCitizenServices">Filter by Citizen Services</string>
+    <string name="cfComplaintStatus">Filter by Complaint Status</string>
+    <string name="cfApplyFilter">Apply Filter</string>
+    <string name="cfRemoveAll">Remove All</string>
+
+<!-- activity_mark_home -->
+    <string name="mhSaveLocation">Save Location</string>
+    <string name="mhSkip">Skip</string>
+
+<!-- activity_merged_complaint -->
+    <string name="mcNoComplaints">No Complaints to show yet. \nRaise a complaint like the one below and contribute towards good governance.</string>
+    <string name="mcComplaintID">#84801</string>
+    <string name="mcTime">8 hours ago</string>
+    <string name="mcIssue">Leaking Water Pipes</string>
+    <string name="mcIssueDescription">Gallons of water leaking everyday.</string>
+    <string name="mcUser1a">Rakesh Singh</string>
+    <string name="mcUser1b">Vaibhav Sinha</string>
+    <string name="mcNoAffected">and 80 more affected</string>
+    <string name="mcIssueLocation">Govind Vihar, Delhi</string>
+    <string name="mcComments">Comments</string>
+    <string name="mcStatus">Pending</string>
+    <string name="mcAmenity">Water</string>
+    <string name="mcUser2">Rakesh Singh</string>
+    <string name="mcTime2">7 hours ago</string>
+    <string name="mcIssueDesc2">Leaking water pipes in Govind Vihar area. \n Please address this issue. </string>
+    <string name="mcUser3">Anonymous</string>
+    <string name="mcTime3">3 Hours Ago</string>
+    <string name="mcIssueDesc3">Comment text</string>
+    <string name="mcShowMore">Show More</string>
+
+<!-- activity_searchable -->
+    <string name="noMatchFound">No matches found</string>
+
+<!-- complaint_reporters_details -->
+    <string name="reporterName">Aam Aadmi</string>
+    <string name="reporterAge">25 Yrs, Male</string>
+
+<!-- dialog_select -->
+    <string name="notAvailableMessage">Sorry we are not available at your location yet!</string>
+    <string name="close">Close</string>
+
+<!-- footer_user_snapshot -->
+    <string name="viewAllComplaints">View all complaints</string>
+
+<!-- fragment_add_details -->
+    <string name="adAmenityTypeLabel">Amenity Type</string>
+    <string name="adAmenity">Water</string>
+    <string name="adIssueLabel">My Issue</string>
+    <string name="adIssueType">No Water at home</string>
+    <string name="adDescLabel">Description</string>
+    <string name="adEnterDescLabel">(Please enter a brief description of the issue)</string>
+    <string name="adAddDescLabel">Add Description</string>
+    <string name="adPostAnon">Post Anonymously</string>
+    <string name="adPost">Post</string>
+
+<!-- fragment_amenity_banner -->
+    <string name="abNoOfComplaints">%d complaints</string>
+    <string name="abSelect">Select</string>
+    <string name="abAmenityNameLabel">Amenity_Name</string>
+    <string name="abRelatedIssue">related issue</string>
+    <string name="abIssues">%d   issues</string>
+
+<!-- fragment_comments -->
+    <string name="fcShowMore">Show More</string>
+
+<!-- fragment_complaint_list -->
+    <string name="fclNoComplaints">No complaints to show yet</string>
+
+<!-- fragment_complaint_summary -->
+    <string name="fcsIssueDetails">Issue Details</string>
+    <string name="fcsCitizenServiceLabel">Citizen Service</string>
+    <string name="fcsAmenity">Water</string>
+    <string name="fcsIssueNameLabel">Issue Name</string>
+    <string name="fcsIssueType">Leaking Water Pipes</string>
+    <string name="fcsReportedFromLabel">Issue Reported From</string>
+    <string name="fcsLocation">Govind Vihar, Delhi</string>
+    <string name="fcsIssueDescLabel">Issue Description</string>
+    <string name="fcsIssueDesc">Too much problem</string>
+    <string name="fcsNewComplaint">New Complaint</string>
+    <string name="fcsDone">Done</string>
+
+<!-- fragment_complaint_summary_offline -->
+    <string name="csoComplaintSuccessful">Complaint Successful</string>
+    <string name="csoThankYouMessage">Thank you for using eSwaraj. Together we deliver Governance, Sabka Saath Sabka Vikas.</string>
+    <string name="csoSavedMessage">\nYour complaint is saved.\nNext time when you are connected to internet,\nit will be sent to server.</string>
+
+<!-- fragment_constituency_info -->
+    <string name="ciHousesLabel">Total Houses</string>
+    <string name="ciHousesVal">Unknown</string>
+    <string name="ciPopulationLabel">Total Population</string>
+    <string name="ciPopulationVal">Unknown</string>
+    <string name="ciMalePopLabel">Total Male Population</string>
+    <string name="ciMalePopVal">Unknown</string>
+    <string name="ciFemalePopLabel">Total Female Population</string>
+    <string name="ciFemalePop">Unknown</string>
+    <string name="ciLiteratePopLabel">Total Literate Population</string>
+    <string name="ciLiteratePopVal">Unknown</string>
+    <string name="ciMaleLiterateLabel">Total Male Literate Population</string>
+    <string name="ciMaleLiterateVal">Unknown</string>
+    <string name="ciFemaleLiterateLabel">Total Female Literate Population</string>
+    <string name="ciFemaleLiterateVal">Unknown</string>
+    <string name="ciWorkingPopLabel">Total Working Population</string>
+    <string name="ciWorkingPopVal">Unknown</string>
+    <string name="ciMaleWorkingPopLabel">Total Male Working Population</string>
+    <string name="ciMaleWorkingPopVal">Unknown</string>
+    <string name="ciFemaleWorkingPopLabel">Total Female Working Population</string>
+    <string name="ciFemaleWorkingPopVal">Unknown</string>
+    <string name="ciAreaLabel">Area</string>
+    <string name="ciAreaVal">Unknown</string>
+    <string name="ciPerimeterLabel">Perimeter</string>
+    <string name="ciPerimeterVal">Unknown</string>
+
+<!-- fragment_constituency_map -->
+    <string name="heatMap">Heatmap</string>
+    <string name="cluster">Cluster</string>
+    <string name="markers">Markers</string>
+
+<!-- fragment_content -->
+    <string name="knowMoreAbt">Know More about Civic Amenities</string>
+    <string name="videos">Videos</string>
+
+<!-- fragment_leader_for_complaint -->
+    <string name="leaderName">Ravi Sharma</string>
+    <string name="separator">|</string>
+    <string name="leaderDesignation">PM, India</string>
+    <string name="thankyouMessageFromLeader">Thank you for using eSwaraj. \nTogether we deliver Governance, Sabka Saath Sabka Vikas.</string>
+
+<!-- fragment_leader_list , fragment_location_list-->
+    <string name="serviceUnavailable">Our service is not available in your location yet.</string>
+
+<!-- fragment_login -->
+    <string name="skipLogin">Skip login</string>
+
+<!-- fragment_login_dialog -->
+    <string name="loginToProceed">You need to login to perform this activity</string>
+    <string name="retry">Retry</string>
+
+<!-- fragment_my_profile -->
+    <string name="changeProfilePic">Change Profile Pic</string>
+    <string name="fmpNameLabel">Name</string>
+    <string name="fmpName">Aam Aadmi</string>
+    <string name="fmpEdit">Edit</string>
+    <string name="fmpEmailIdLabel">Email</string>
+    <string name="fmpEmailId">AamAadmi@gov.nic.in</string>
+    <string name="fmpVoterIdLabel">Voter Id</string>
+    <string name="fmpVoterId">Ex. DEL778956IN</string>
+    <string name="fmpLocationLabel">My Location</string>
+    <string name="fmpLocation">Govind Vihar, Delhi</string>
+    <string name="fmpPoliticalCoordinates">My Political Coordinates</string>
+    <string name="fmpACLabel">Assembly Constituency</string>
+    <string name="fmpAC">Chandni Chowk</string>
+    <string name="fmpPCLabel">Parliamentary Constituency</string>
+    <string name="fmpPC">Old Delhi</string>
+    <string name="fmpWardLabel">Ward</string>
+    <string name="fmpWard">Vikram Nagar</string>
+    <string name="fmpSave">Save</string>
+    <string name="fmpCancel">Cancel</string>
+    <string name="fmpLogOut">Log Out</string>
+
+<!-- fragment_promises_list -->
+    <string name="noPromisesToShow">No promises to show</string>
+
+<!-- fragment_single_complaint -->
+    <string name="fscseparator">#</string>
+    <string name="comments">Comments</string>
+    <string name="complaintStatus">Pending</string>
+    <string name="closeComplaint">Close Complaint</string>
+
+<!-- fragment_splash -->
+    <string name="abouteSwaraj">eSwaraj : Banking on the new age revolution #DigitalIndia" />
+    <string name="tagLine">Making good governance a peoples movement</string>
+
+<!-- fragment_staff_member -->
+    <string name="staffMemberName">Ravi Sharma</string>
+    <string name="">|</string>
+    <string name="staffMemberPosition">JE, Area1, Timarpur</string>
+    <string name="staffMemberPositionDetailed">JE, Area1, Timarpur, B1 Sub Division, DJB</string>
+    <string name="clickToViewComplaint">Click the above link to view Complaints</string>
+    <string name="getInTouch">Get in Touch</string>
+    <string name="fsmEmail">Email</string>
+    <string name="fsmPhone">Phone</string>
+    <string name="fsmDepartmentsList">Departments List</string>
+    <string name="fsmDept1">DJB</string>
+    <string name="fsmDept2">MCD/ULB</string>
+    <string name="fsmDept3">State Level Department</string>
+    <string name="fsmDept4">National Level Department</string>
+
+<!-- header_constituency_header -->
+    <string name="leaders">Leaders</string>
+    <string name="smartData">Smart Data</string>
+    <string name="timeLine">Timeline</string>
+
+<!-- header_leader -->
+    <string name="leaderAgeLabel">Age:</string>
+    <string name="leaderAge">45 Years</string>
+    <string name="leaderEduLabel">Education:</string>
+    <string name="leaderEdu">Political Science, Oxford Univ.</string>
+    <string name="leadAddrLabel">Address:</string>
+    <string name="leaderAddr">12, Shastri Nagar, Delhi</string>
+    <string name="leaderDesignationLabel">MLA Name</string>
+    <string name="">|</string>
+    <string name="leaderDesignation">MP, Delhi</string>
+    <string name="leaderPartyLabel">Political Party:</string>
+    <string name="leaderParty">Aam Aadmi Party</string>
+    <string name="bioData">Biodata</string>
+
+<!-- header_single_promise -->
+    <string name="promiseTime">10 days" />
+    <string name="promiseStatus">Pending</string>
+    <string name="promiseTitle">Swaraj Bill</string>
+    <string name="promiseDescription">AAP will legislate the Swaraj Act</string>
+
+<!-- header_user_snapshot -->
+    <string name="usName">Ravi Sharma</string>
+    <string name="totalComplaints">Total</string>
+    <string name="openComplaints">Open</string>
+    <string name="closedComplaints">Close</string>
+    <string name="editProfile">Edit Profile</string>
+    <string name="smartDataLabel">Smart Data</string>
+
+<!-- item_amenity_list -->
+    <string name="ialStats">20%</string>
+    <string name="ialAmenity">Water" />
+
+<!-- item_comment_list -->
+    <string name="iclName">Anonymous</string>
+    <string name="iclDateTime">Tue Dec 30 03:36:48 GMT +5:30 2014</string>
+    <string name="iclCommentText">Comment text</string>
+
+<!-- item_complaint_list -->
+    <string name="noComplaintsToShowYet">No Complaints to show yet. \nRaise a complaint like the one below and contribute towards good governance.</string>
+    <string name="complaintsListName">Aam Aadmi</string>
+    <string name="complaintsListTimeAgo">3 hours ago</string>
+    <string name="complaintsListSep">#</string>
+    <string name="complaintsListID">84801</string>
+    <string name="complaintsListIssueType">Leaking Water Pipes</string>
+    <string name="complaintsListDesc">Too much problem</string>
+    <string name="complaintsListLocation">Govind Vihar, Delhi</string>
+    <string name="complaintsListComments">Comments</string>
+    <string name="complaintsListStatus">Pending</string>
+    <string name="complaintsListAmenity">Water</string>
+
+<!-- item_filter_citizenservices_list -->
+    <string name="ifclAmenity">Water</string>
+	
+<!-- item_filter_complaintstatus_list -->
+    <string name="iclsStatus">Open</string>
+
+<!-- item_global_search_result -->
+    <string name="igsrName">Rakesh Sharma</string>
+    <string name="igsrDesignation">MP, Delhi</string>
+
+<!-- item_google_places_list -->
+    <string name="igplLocation">Delhi, India</string>
+    <string name="igplIssueType">Lack of Infrastructure</string>
+
+<!-- item_promise_list -->
+    <string name="iplLabel">CAG Audit of Discoms</string>
+    <string name="iplTime">10 days</string>
+    <string name="iplStatus">Pending</string>
+
+<!-- item_subcategory_list -->
+    <string name="islIssueType">No water in locality</string>
+    <string name="islIssueReason">Lack of Infrastructure</string>
+
+<!-- item_timeline_list -->
+    <string name="itlTimeAgo">8 hours ago</string>
+    <string name="itlUpdateOnBill">Update on the Bill</string>
+    <string name="itlVideo">Video</string>
+    <string name="itlRelatedDoc">Related Documents</string>
+
+<!-- item_video_content_list -->
+    <string name="ivclAmentiy">Water" />
+
+<!-- leader_details -->
+    <string name="leaderName">Ravi Sharma</string>
+    <string name="leaderPosition">MLA, Bangalore</string>
+
+<!-- notification -->
+    <string name="notificationHead">eSwaraj: Your voice is heard</string>
+    <string name="notificationText">Your complaint viewed</string>
+
+<!-- photo_taken_container -->
+    <string name="removePhoto">Remove Photo</string>
+    <string name="retakePhoto">Retake Photo</string>
+
+<!-- take_photo_container -->
+    <string name="takePhoto">Take Photo</string>
+    <string name="or">Or</string>
+    <string name="attachPhoto">Attach Photo</string>
+
 </resources>

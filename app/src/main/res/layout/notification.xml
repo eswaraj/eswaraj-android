@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/nTitle"
-        android:text="eSwaraj: Your voice is heard"
+        android:text="@string/notificationHead"
         android:layout_toRightOf="@+id/nImage"
         android:paddingTop="12dp"
         android:textSize="20dp"
@@ -31,7 +31,7 @@
         android:id="@+id/nMessage"
         android:layout_below="@+id/nTitle"
         android:layout_toRightOf="@+id/nImage"
-        android:text="Your complaint viewed"
+        android:text="@string/notificationText"
         android:textSize="15dp"
         android:paddingTop="5dp"
         android:layout_width="match_parent"

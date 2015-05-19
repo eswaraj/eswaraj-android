@@ -41,7 +41,7 @@
             android:id="@+id/smName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ravi Sharma"
+            android:text="@string/staffMemberName"
             android:layout_marginLeft="20dp"
             android:textColor="#606060" />
 
@@ -49,7 +49,7 @@
             android:id="@+id/smNamesmPost_separator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="|"
+            android:text="@string/separator"
             android:layout_toRightOf="@+id/lName"
             android:layout_marginLeft="10dp"
             android:textColor="#606060"
@@ -59,7 +59,7 @@
             android:id="@+id/smPost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="JE, Area1, Timarpur"
+            android:text="@string/staffMemberPosition"
             android:layout_toRightOf="@+id/lNamelPost_separator"
             android:layout_marginLeft="10dp"
             android:textColor="#606060"
@@ -113,7 +113,7 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:background="@drawable/blue_darkblue_highlight"
                 android:layout_marginRight="10dp"
-                android:text="JE, Area1, Timarpur, B1 Sub Division, DJB"
+                android:text="@string/staffMemberPositionDetailed"
                 android:textColor="@color/white"
                 android:layout_marginLeft="5dp"
                 android:padding="10dp" />
@@ -125,7 +125,7 @@
             android:id="@+id/smChangeItName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Click the above link to view Complaints"
+            android:text="@string/clickToViewComplaint"
             android:textColor="#606060"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -136,7 +136,7 @@
             android:textSize="10sp" />
 
         <TextView
-            android:text="Get in Touch"
+            android:text="@string/getInTouch"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
 
             <Button
                 android:id="@+id/smEmail"
-                android:text="Email"
+                android:text="@string/fsmEmail"
                 android:layout_gravity="center"
                 android:background="@drawable/greygreen_darkgreygreen_highlight"
                 android:layout_width="fill_parent"
@@ -179,7 +179,7 @@
                 android:background="@drawable/greygreen_darkgreygreen_highlight"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="5dp"
-                android:text="Phone"
+                android:text="@string/fsmPhone"
                 android:paddingLeft="20dp"
                 android:textColor="@color/white"
                 />
@@ -188,7 +188,7 @@
 
 
         <TextView
-            android:text="Departments List"
+            android:text="@string/fsmDepartmentsList"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -212,7 +212,7 @@
 
             <Button
                 android:id="@+id/smDJB"
-                android:text="DJB"
+                android:text="@string/fsmDept1"
                 android:layout_gravity="center"
                 android:background="@drawable/red_darkred_highlight"
                 android:layout_width="fill_parent"
@@ -231,7 +231,7 @@
                 android:background="@drawable/red_darkred_highlight"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
-                android:text="MCD/ULB"
+                android:text="@string/fsmDept2"
                 android:paddingLeft="20dp"
                 android:textColor="@color/white"
                 android:layout_marginBottom="10dp" />
@@ -245,7 +245,7 @@
                 android:background="@drawable/red_darkred_highlight"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
-                android:text="State Level Department"
+                android:text="@string/fsmDept3"
                 android:paddingLeft="20dp"
                 android:textColor="@color/white"
                 android:layout_marginBottom="10dp" />
@@ -259,7 +259,7 @@
                 android:background="@drawable/red_darkred_highlight"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
-                android:text="National Level Department"
+                android:text="@string/fsmDept4"
                 android:paddingLeft="20dp"
                 android:textColor="@color/white" />
 

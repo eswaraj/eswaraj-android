@@ -51,7 +51,7 @@
                     android:layout_weight="0.5"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
-                    android:text="Ravi Sharma"
+                    android:text="@string/usName"
                     android:textColor="@color/white"
                     android:paddingLeft="5dp"
                     android:gravity="left|center_vertical"
@@ -82,7 +82,7 @@
 
         <Button
             android:id="@+id/usTotal"
-            android:text="Total"
+            android:text="@string/totalComplaints"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
 
         <Button
             android:id="@+id/usOpen"
-            android:text="Open"
+            android:text="@string/openComplaints"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
 
         <Button
             android:id="@+id/usClose"
-            android:text="Close"
+            android:text="@string/closedComplaints"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
 
         <Button
             android:id="@+id/usProfile"
-            android:text="Edit Profile"
+            android:text="@string/editProfile"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
 
         <Button
             android:id="@+id/usSmart"
-            android:text="Smart Data"
+            android:text="@string/smartDataLabel"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

@@ -14,7 +14,7 @@
         android:textSize="12sp"
         android:textColor="#929292"
         android:visibility="gone"
-        android:text="20%"
+        android:text="@string/ialStats"
         android:maxLines="1"
         android:layout_centerHorizontal="true" />
 
@@ -43,7 +43,7 @@
             android:textColor="@color/white"
             android:maxLines="1"
             android:layout_marginTop="60dp"
-            android:text="Water" />
+            android:text="@string/ialAmenity" />
 
     </RelativeLayout>
 

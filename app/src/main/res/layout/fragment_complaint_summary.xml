@@ -53,7 +53,7 @@
             android:orientation="vertical"
             android:layout_weight="0.5">
             <TextView
-                android:text="Issue Details"
+                android:text="@string/fcsIssueDetails"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:gravity="center_vertical"
@@ -68,7 +68,7 @@
                 android:id="@+id/csCategory_label"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Citizen Service"
+                android:text="@string/fcsCitizenServiceLabel"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:textColor="#828282" />
@@ -77,7 +77,7 @@
                 android:id="@+id/csRootCategory"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Water"
+                android:text="@string/fcsAmenity"
                 android:paddingLeft="10dp"
                 android:textStyle="bold"
                 android:textColor="#0099cc" />
@@ -86,7 +86,7 @@
                 android:id="@+id/csSubCategory_label"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Issue Name"
+                android:text="@string/fcsIssueNameLabel"
                 android:paddingLeft="10dp"
                 android:textColor="#828282" />
 
@@ -94,7 +94,7 @@
                 android:id="@+id/csSubCategory"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Leaking Water Pipes"
+                android:text="@string/fcsIssueType"
                 android:paddingLeft="10dp"
                 android:textStyle="bold"
                 android:textColor="#0099cc" />
@@ -103,7 +103,7 @@
                 android:id="@+id/cs_address_label"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Issue Reported From"
+                android:text="@string/fcsReportedFromLabel"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:textColor="#828282" />
@@ -112,7 +112,7 @@
                 android:id="@+id/csAddress"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Govind Vihar, Delhi"
+                android:text="@string/fcsLocation"
                 android:paddingLeft="10dp"
                 android:textStyle="bold"
                 android:textColor="#0099cc" />
@@ -121,7 +121,7 @@
                 android:id="@+id/csDescriptionLabel"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Issue Description"
+                android:text="@string/fcsIssueDescLabel"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:textColor="#828282" />
@@ -130,7 +130,7 @@
                 android:id="@+id/csDescription"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Too much problem"
+                android:text="@string/fcsIssueDesc"
                 android:paddingLeft="10dp"
                 android:textStyle="bold"
                 android:textColor="#0099cc"
@@ -183,7 +183,7 @@
 
         <Button
             android:id="@+id/csAnother"
-            android:text="New Complaint"
+            android:text="@string/fcsNewComplaint"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -198,7 +198,7 @@
 
         <Button
             android:id="@+id/csDone"
-            android:text="Done"
+            android:text="@string/fcsDone"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_weight="1"

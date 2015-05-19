@@ -23,7 +23,7 @@
                 android:layout_height="fill_parent"
                 android:gravity="center_vertical|center_horizontal"
                 android:textSize="10sp"
-                android:text="Open"
+                android:text="@string/iclsStatus"
                 android:textColor="#808080"
                 android:maxLines="2"
                 android:paddingBottom="20dp"

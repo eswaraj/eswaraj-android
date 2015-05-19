@@ -31,7 +31,7 @@
             android:textSize="14sp"
             android:maxLines="1"
             android:layout_below="@+id/vcIcon"
-            android:text="Water" />
+            android:text="@string/ivclAmentiy" />
 
     </RelativeLayout>
 

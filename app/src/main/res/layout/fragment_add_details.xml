@@ -20,7 +20,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Amenity Type"
+        android:text="@string/adAmenityTypeLabel"
         android:textColor="#0099cc"
         android:textStyle="bold"
         android:shadowColor="#0099dd"
@@ -35,7 +35,7 @@
         android:id="@+id/adAmenity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Water"
+        android:text="@string/adAmenity"
         android:textColor="#ff3a4359"
         android:shadowColor="#ff865429"
         android:textSize="16dp"
@@ -60,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
-        android:text="My Issue"
+        android:text="@string/adIssueLabel"
         android:textColor="#0099cc"
         android:textStyle="bold"
         android:shadowColor="#fff1974a"
@@ -76,7 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
-        android:text="No Water at home"
+        android:text="@string/adIssueType"
         android:textColor="#ff3a4359"
         android:shadowColor="#ff865429"
         android:textSize="16dp"
@@ -98,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Description"
+            android:text="@string/adDescLabel"
             android:textColor="#0099cc"
             android:textStyle="bold"
             android:shadowColor="#fff1974a"
@@ -114,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
-            android:text="(Please enter a brief description of the issue)"
+            android:text="@string/adEnterDescLabel"
             android:textColor="#ff798db9"
             android:shadowColor="#fff1974a"
             android:textSize="11dp"
@@ -178,7 +178,7 @@
             android:gravity="center"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
-            android:text="Add Description"
+            android:text="@string/adAddDescLabel"
             android:textColor="#929292"
             android:textSize="17sp"
             android:layout_marginLeft="15dp"
@@ -224,7 +224,7 @@
             android:textColor="#0099cc" />
 
         <TextView
-            android:text="Post Anonymously"
+            android:text="@string/adPostAnon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -236,7 +236,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/post_button"
-        android:text="Post"
+        android:text="@string/adPost"
         android:layout_marginBottom="10dp"
         android:textColor="@android:color/white" />
 
