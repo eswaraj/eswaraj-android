@@ -24,7 +24,7 @@ public class AddDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_details);
-        setTitle("Add Complaint Details");
+        setTitle(getResources().getString(R.string.titleAddDetails));
 
         addDetailsFragment = (AddDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.adFragment);
     }

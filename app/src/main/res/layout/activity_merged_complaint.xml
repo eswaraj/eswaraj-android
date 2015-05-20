@@ -396,7 +396,7 @@ android:layout_height="wrap_content">
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="0.15"
-            android:hint="Leave a Comment"
+            android:hint="@string/leaveACommentHint"
             android:layout_marginLeft="5dp" />
 
         <ImageView

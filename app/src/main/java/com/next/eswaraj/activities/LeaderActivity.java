@@ -77,11 +77,11 @@ public class LeaderActivity extends BaseActivity {
             i.setType("message/rfc822");
             i.putExtra(Intent.EXTRA_EMAIL  , new String[]{event.getEmail()});
             i.putExtra(Intent.EXTRA_SUBJECT, event.getSubject());
-            i.putExtra(Intent.EXTRA_TEXT   , "[Add your message here]\n\n\n" + event.getMessage());
+            i.putExtra(Intent.EXTRA_TEXT   , getResources().getString(R.string.addMessageHereLabel) + event.getMessage());
             try {
                 startActivity(Intent.createChooser(i, "Send mail..."));
             } catch (android.content.ActivityNotFoundException ex) {
-                Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.noEmailClients), Toast.LENGTH_SHORT).show();
             }
         }
     }

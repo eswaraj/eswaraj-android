@@ -40,7 +40,7 @@ public class PlaceSearchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_search);
-        setTitle("Search location");
+        setTitle(getResources().getString(R.string.titlePlaceSearch));
         eventBus.register(this);
 
         psInput = (EditText) findViewById(R.id.psInput);
@@ -83,7 +83,7 @@ public class PlaceSearchActivity extends BaseActivity {
             psList.setAdapter(new GooglePlacesListAdapter(this, R.layout.item_google_places_list, event.getArrayList()));
         }
         else {
-            Toast.makeText(this, "Could not fetch list of places. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.couldNotFetchPlaces) + event.getError(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -101,7 +101,7 @@ public class PlaceSearchActivity extends BaseActivity {
             finish();
         }
         else {
-            Toast.makeText(this, "Could not fetch details of selected place. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.couldNotFetchDetails) + event.getError(), Toast.LENGTH_LONG).show();
         }
     }
 

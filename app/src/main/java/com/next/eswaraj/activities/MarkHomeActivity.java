@@ -12,11 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.PointTarget;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.next.eswaraj.R;
 import com.next.eswaraj.base.BaseActivity;
 import com.next.eswaraj.events.ProfileUpdateEvent;
-import com.next.eswaraj.events.RevGeocodeEvent;
 import com.next.eswaraj.events.UserActionRevGeocodeEvent;
 import com.next.eswaraj.fragments.GoogleMapFragment;
 import com.next.eswaraj.helpers.GoogleAnalyticsTracker;
@@ -25,10 +28,6 @@ import com.next.eswaraj.middleware.MiddlewareServiceImpl;
 import com.next.eswaraj.util.LocationUtil;
 import com.next.eswaraj.util.UserSessionUtil;
 import com.next.eswaraj.widgets.CustomProgressDialog;
-import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.PointTarget;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 
 import javax.inject.Inject;
 
@@ -64,7 +63,7 @@ public class MarkHomeActivity extends BaseActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mark_home);
-        setTitle("Mark location");
+        setTitle(getResources().getString(R.string.titleMarkHome));
 
         dialogMode = getIntent().getBooleanExtra("MODE", false);
         googleMapFragment = new GoogleMapFragment();
@@ -83,8 +82,8 @@ public class MarkHomeActivity extends BaseActivity implements OnMapReadyCallback
         mhSaveLocation.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MarkHome: Save Location");
-                pDialogSave = new CustomProgressDialog(view.getContext(), false, true, "Saving your location...");
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, getResources().getString(R.string.saveLocationLabel));
+                pDialogSave = new CustomProgressDialog(view.getContext(), false, true, getResources().getString(R.string.savingLocation));
                 pDialogSave.show();
                 middlewareService.updateProfile(view.getContext(), userSession.getToken(), userSession.getUser().getPerson().getName(), userSession.getUser().getPerson().getVoterId(), googleMapFragment.getMarkedLatitude(), googleMapFragment.getMarkedLongitude());
             }
@@ -101,7 +100,7 @@ public class MarkHomeActivity extends BaseActivity implements OnMapReadyCallback
         mhSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "MarkHome: Skip Location");
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, getResources().getString(R.string.skipLocation));
                 if(dialogMode) {
                     finish();
                 }
@@ -119,8 +118,8 @@ public class MarkHomeActivity extends BaseActivity implements OnMapReadyCallback
 
         new ShowcaseView.Builder(this)
                 .setTarget(new PointTarget(size.x/2, size.y/2))
-                .setContentTitle("Mark your location of interest")
-                .setContentText("Drag to take the marker to correct location and press save")
+                .setContentTitle(getResources().getString(R.string.markLocation))
+                .setContentText(getResources().getString(R.string.dragMarker))
                 .setStyle(R.style.CustomShowcaseTheme2)
                 .singleShot(42)
                 .hideOnTouchOutside()
@@ -168,7 +167,7 @@ public class MarkHomeActivity extends BaseActivity implements OnMapReadyCallback
             }
         }
         else {
-            Toast.makeText(this, "Could not save location to server. Please retry. Error = " + event.getError(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.couldNotSaveLoc) + event.getError(), Toast.LENGTH_LONG).show();
         }
     }
 

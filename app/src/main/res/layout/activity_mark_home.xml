@@ -87,7 +87,7 @@
             android:drawablePadding="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="60dp"
-            android:hint="Enter Your Location ..."
+            android:hint="@string/enterLocationHint"
             android:gravity="left|center_vertical" />
 
     </LinearLayout>

@@ -27,7 +27,7 @@
                 android:drawableLeft="@android:drawable/ic_menu_search"
                 android:drawablePadding="5dp"
                 android:background="@color/white"
-                android:hint="Search"
+                android:hint="@string/searchHint"
                 android:layout_marginLeft="10dp"
                 />
 

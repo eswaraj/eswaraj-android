@@ -24,7 +24,7 @@ public class SingleComplaintActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_complaint);
-        setTitle("Complaint");
+        setTitle(getResources().getString(R.string.titleSingleComplaint));
 
         singleComplaintFragment = (SingleComplaintFragment) getSupportFragmentManager().findFragmentById(R.id.scFragment);
         eventBus.register(this);

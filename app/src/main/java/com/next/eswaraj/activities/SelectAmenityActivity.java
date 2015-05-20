@@ -26,7 +26,7 @@ public class SelectAmenityActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_amenity);
-        setTitle("Select Amenity");
+        setTitle(getResources().getString(R.string.titleSelectAmentiy));
 
         selectAmenityFragment = SelectAmenityFragment.newInstance();
 

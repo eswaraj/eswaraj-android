@@ -25,7 +25,7 @@ public class ComplaintSummaryActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complaint_summary);
-        setTitle("Your complaint");
+        setTitle(getResources().getString(R.string.titleComplaintSummary));
 
         Boolean mode = getIntent().getBooleanExtra("MODE", false);
         if(mode) {

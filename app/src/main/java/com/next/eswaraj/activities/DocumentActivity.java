@@ -1,8 +1,6 @@
 package com.next.eswaraj.activities;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 
@@ -14,7 +12,7 @@ public class DocumentActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Document Viewer");
+        setTitle(getResources().getString(R.string.titleDocumentActivity));
         WebView mWebView=new WebView(this);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl("https://docs.google.com/gview?embedded=true&url="+getIntent().getStringExtra("URL"));

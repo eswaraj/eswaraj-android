@@ -55,8 +55,8 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
 
         ComplaintFilter filter = new ComplaintFilter();
         filter.setComplaintFilterType(ComplaintFilter.ComplaintFilterType.STATUS);
-        filter.setStatus("Pending");
-        filter.setDisplayText("Open");
+        filter.setStatus(getResources().getString(R.string.filterStatusPending));
+        filter.setDisplayText(getResources().getString(R.string.filterDisplayTextOpen));
         /*
         if(selected != null && selected.getComplaintFilterType() == ComplaintFilter.ComplaintFilterType.STATUS && selected.getStatus().equals("Pending")) {
             filter.setHighlight(true);
@@ -69,8 +69,8 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
 
         filter = new ComplaintFilter();
         filter.setComplaintFilterType(ComplaintFilter.ComplaintFilterType.STATUS);
-        filter.setStatus("Done");
-        filter.setDisplayText("Closed");
+        filter.setStatus(getResources().getString(R.string.filterStatusDone));
+        filter.setDisplayText(getResources().getString(R.string.filterDisplayTextClosed));
         /*
         if(selected != null && selected.getComplaintFilterType() == ComplaintFilter.ComplaintFilterType.STATUS && selected.getStatus().equals("Done")) {
             filter.setHighlight(true);

@@ -1,12 +1,10 @@
 package com.next.eswaraj.activities;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.next.eswaraj.R;
 import com.next.eswaraj.base.BaseActivity;
@@ -38,25 +36,25 @@ public class AboutUsActivity extends BaseActivity implements View.OnClickListene
         switch(v.getId()){
             case R.id.auPhone:
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:09686860429"));
+                intent.setData(Uri.parse(getResources().getString(R.string.ourContactNumber)));
                 startActivity(intent);
                 break;
             case R.id.auEmail:
-                String emailAddress[] = { "eswaraj.india@gmail.com"};
-                String message = "Feedback :\n";
+                String emailAddress[] = {getResources().getString(R.string.eswarajEmailID)};
+                String message = getResources().getString(R.string.feedback);
                 Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
                 emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, emailAddress);
-                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "My Feedback for eSwaraj");
+                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getResources().getString(R.string.myFeedbackLabel));
                 emailIntent.setType("plain/text");
                 emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, message);
                 startActivity(emailIntent);
                 break;
             case R.id.auWeb:
-                Intent browserIntent1 = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.eswaraj.com/"));
+                Intent browserIntent1 = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.webSiteLink)));
                 startActivity(browserIntent1);
                 break;
             case R.id.auLike:
-                Intent browserIntent2 = new Intent(Intent.ACTION_VIEW, Uri.parse("http://bit.ly/1DS5Xn7"));
+                Intent browserIntent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.playStoreLink)));
                 startActivity(browserIntent2);
                 break;
 

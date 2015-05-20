@@ -72,7 +72,7 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        setTitle("Choose action");
+        setTitle(getResources().getString(R.string.titleDocumentActivity));
         eventBus.register(this);
 
         complaints = (ImageView) findViewById(R.id.hComplaints);
@@ -90,25 +90,25 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         hCreate.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "Create Complaint");
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, getResources().getString(R.string.createComplaintLabel));
                 if(locationServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     Intent i = new Intent(v.getContext(), SelectAmenityActivity.class);
                     startActivity(i);
                 }
                 else {
-                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, "Create Complaint: No Location Service");
+                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, getResources().getString(R.string.createComplaintNoLocation));
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
-                    builder.setMessage("You need location services enabled to use this feature")
+                    builder.setMessage(getResources().getString(R.string.needLocationServiceLabel))
                             .setCancelable(false)
-                            .setTitle("Location Service needed")
+                            .setTitle(getResources().getString(R.string.locationServiceNeeded))
                             .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
                             })
-                            .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getResources().getString(R.string.settings), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                                     startActivity(settingsIntent);
@@ -124,33 +124,33 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         complaints.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Complaints");
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, getResources().getString(R.string.myComplaints));
                 if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     if (userSession.isUserLoggedIn(v.getContext())) {
                         Intent i = new Intent(v.getContext(), UserSnapshotActivity.class);
                         startActivity(i);
                     } else {
-                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Complaints: Not Logged-in");
+                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, getResources().getString(R.string.myComplaintsNotLoggedIn));
                         Intent i = new Intent(v.getContext(), LoginActivity.class);
                         i.putExtra("MODE", true);
                         startActivityForResult(i, REQUEST_MY_COMPLAINTS);
                     }
                 }
                 else {
-                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, "My Complaints: No Internet Service");
+                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, getResources().getString(R.string.myComplaintsNoInternet));
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
                     final Context c = v.getContext();
-                    builder.setMessage("You need internet services enabled to use this feature")
+                    builder.setMessage(getResources().getString(R.string.needInternetService))
                             .setCancelable(false)
-                            .setTitle("Internet Connection needed")
+                            .setTitle(getResources().getString(R.string.internetConnNeeded))
                             .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
                             })
-                            .setPositiveButton("Enable WiFi", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getResources().getString(R.string.enableWiFi), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     GenericUtil.enableWifi(c);
                                     dialog.dismiss();
@@ -165,38 +165,38 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         leaders.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Leaders");
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, getResources().getString(R.string.myLeadersLabel));
                 if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     if (userSession.isUserLoggedIn(v.getContext()) && userSession.isUserLocationKnown()) {
                         Intent i = new Intent(v.getContext(), LeaderListActivity.class);
                         startActivity(i);
                     } else if (userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
-                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Leaders: Location not marked");
+                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, getResources().getString(R.string.myLeadersLocationNotMarked));
                         Intent i = new Intent(v.getContext(), MarkHomeActivity.class);
                         i.putExtra("MODE", true);
                         startActivityForResult(i, REQUEST_MY_LEADERS);
                     } else {
-                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Leaders: Not Logged-in");
+                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, getResources().getString(R.string.myLeadersNotLoggedIn));
                         Intent i = new Intent(v.getContext(), LoginActivity.class);
                         i.putExtra("MODE", true);
                         startActivityForResult(i, REQUEST_MY_LEADERS);
                     }
                 }
                 else {
-                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, "My Leaders: No Internet Service");
+                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, getResources().getString(R.string.myLeadersNoInternet));
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
                     final Context c = v.getContext();
-                    builder.setMessage("You need internet services enabled to use this feature")
+                    builder.setMessage(getResources().getString(R.string.needInternetService))
                             .setCancelable(false)
-                            .setTitle("Internet Connection needed")
+                            .setTitle(getResources().getString(R.string.internetConnNeeded))
                             .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
                             })
-                            .setPositiveButton("Enable WiFi", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getResources().getString(R.string.enableWiFi), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     GenericUtil.enableWifi(c);
                                     dialog.dismiss();
@@ -211,40 +211,40 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         constituency.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Constituency");
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, getResources().getString(R.string.myConstituencyLabel));
                 if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     if(userSession.isUserLoggedIn(v.getContext()) && userSession.isUserLocationKnown()) {
                         Intent i = new Intent(v.getContext(), LocationListActivity.class);
                         startActivity(i);
                     }
                     else if(userSession.isUserLoggedIn(v.getContext()) && !userSession.isUserLocationKnown()) {
-                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Constituency: Location not marked");
+                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, getResources().getString(R.string.myConstituencyLocationNotMarked));
                         Intent i = new Intent(v.getContext(), MarkHomeActivity.class);
                         i.putExtra("MODE", true);
                         startActivityForResult(i, REQUEST_MY_CONSTITUENCY);
                     }
                     else {
-                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Constituency: Not Logged-in");
+                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, getResources().getString(R.string.myConstituencyNotLoggedIn));
                         Intent i = new Intent(v.getContext(), LoginActivity.class);
                         i.putExtra("MODE", true);
                         startActivityForResult(i, REQUEST_MY_CONSTITUENCY);
                     }
                 }
                 else {
-                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, "My Constituency: No Internet Service");
+                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, getResources().getString(R.string.myConstituencyNoInternet));
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
                     final Context c = v.getContext();
-                    builder.setMessage("You need internet services enabled to use this feature")
+                    builder.setMessage(getResources().getString(R.string.needInternetService))
                             .setCancelable(false)
-                            .setTitle("Internet Connection needed")
+                            .setTitle(getResources().getString(R.string.internetConnNeeded))
                             .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
                             })
-                            .setPositiveButton("Enable WiFi", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getResources().getString(R.string.enableWiFi), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     GenericUtil.enableWifi(c);
                                     dialog.dismiss();
@@ -259,34 +259,34 @@ public class HomeActivity extends BaseActivity implements OnMapReadyCallback {
         profile.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, "My Profile");
+                googleAnalyticsTracker.trackUIEvent(GoogleAnalyticsTracker.UIAction.CLICK, getResources().getString(R.string.myProfileLabel));
                 if(internetServicesCheckUtil.isServiceAvailable(v.getContext())) {
                     if(userSession.isUserLoggedIn(v.getContext())) {
                         Intent i = new Intent(v.getContext(), MyProfileActivity.class);
                         startActivity(i);
                     }
                     else {
-                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, "My Profile: Not Logged-in");
+                        googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.ACCESS_DENIED, getResources().getString(R.string.myProfileNotLoggedIn));
                         Intent i = new Intent(v.getContext(), LoginActivity.class);
                         i.putExtra("MODE", true);
                         startActivityForResult(i, REQUEST_MY_PROFILE);
                     }
                 }
                 else {
-                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, "My Profile: No Internet Service");
+                    googleAnalyticsTracker.trackAppAction(GoogleAnalyticsTracker.AppAction.NO_SERVICE, getResources().getString(R.string.myProfileNoInternet));
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), AlertDialog.THEME_HOLO_LIGHT);
                     final Context c = v.getContext();
-                    builder.setMessage("You need internet services enabled to use this feature")
+                    builder.setMessage(getResources().getString(R.string.needInternetService))
                             .setCancelable(false)
-                            .setTitle("Internet Connection needed")
+                            .setTitle(getResources().getString(R.string.internetConnNeeded))
                             .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
                             })
-                            .setPositiveButton("Enable WiFi", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getResources().getString(R.string.enableWiFi), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     GenericUtil.enableWifi(c);
                                     dialog.dismiss();

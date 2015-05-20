@@ -37,7 +37,7 @@ public class SearchableActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchable);
-        setTitle("Search results");
+        setTitle(getResources().getString(R.string.titleSearchableActivity));
         eventBus.register(this);
         resultList = (ListView) findViewById(R.id.sResultList);
         placeholder = (TextView) findViewById(R.id.sPlaceholder);
@@ -65,7 +65,7 @@ public class SearchableActivity extends BaseActivity {
             }
         });
 
-        pDialog = new CustomProgressDialog(this, false, true, "Loading search results...");
+        pDialog = new CustomProgressDialog(this, false, true, getResources().getString(R.string.loadingSearchRes));
         pDialog.show();
     }
 
