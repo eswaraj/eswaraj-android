@@ -81,7 +81,7 @@ public class ComplaintFilterActivity extends BaseFragmentActivity {
         */
         statusFilterItems.add(filter);
 
-        for(CategoryWithChildCategoryDto categoryDto : globalSession.getCategoryDtoList()) {
+        for(CategoryWithChildCategoryDto categoryDto : globalSession.getCategoryDtoList(this)) {
             filter = new ComplaintFilter();
             filter.setComplaintFilterType(ComplaintFilter.ComplaintFilterType.CATEGORY);
             filter.setCategoryId(categoryDto.getId());

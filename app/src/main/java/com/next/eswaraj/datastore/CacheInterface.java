@@ -2,10 +2,13 @@ package com.next.eswaraj.datastore;
 
 import android.content.Context;
 
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.next.eswaraj.config.TimelineType;
 import com.next.eswaraj.middleware.MiddlewareGetService;
 import com.next.eswaraj.models.ComplaintDto;
 import com.eswaraj.web.dto.LocationDto;
+
+import java.util.List;
 
 public interface CacheInterface extends MiddlewareGetService {
 
@@ -17,6 +20,7 @@ public interface CacheInterface extends MiddlewareGetService {
     //Similar methods have to be defined for all methods in MiddlewareGetService interface
     public Boolean isCategoriesDataAvailable(Context context);
     public void updateCategoriesData(Context context, String json);
+    public List<CategoryWithChildCategoryDto> getCategoriesDataFromCache(Context context);
 
     public Boolean isCategoriesImagesAvailable(Context context);
     public Boolean wasImageDownloadLaunchedBefore(Context context);

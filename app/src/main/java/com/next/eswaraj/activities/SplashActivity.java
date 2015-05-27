@@ -268,7 +268,7 @@ public class SplashActivity extends BaseActivity {
         if(event.getSuccess()) {
             //Launch image download now.
             globalSession.setCategoryDtoList(event.getCategoryList());
-            Log.e("SplashActivity", "Set category list in GlobalSession. List = " + globalSession.getCategoryDtoList().toString());
+            Log.e("SplashActivity", "Set category list in GlobalSession. List = " + globalSession.getCategoryDtoList(this).toString());
             middlewareService.loadCategoriesImages(this, event.getCategoryList(), false);
         }
         else {

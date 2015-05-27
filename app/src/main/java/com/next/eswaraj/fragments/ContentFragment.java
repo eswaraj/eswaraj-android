@@ -51,7 +51,7 @@ public class ContentFragment extends BaseFragment {
 
         ArrayList<VideoContentItem> videoContentItems = new ArrayList<VideoContentItem>();
 
-        for(CategoryWithChildCategoryDto categoryDto : globalSession.getCategoryDtoList()) {
+        for(CategoryWithChildCategoryDto categoryDto : globalSession.getCategoryDtoList(getActivity())) {
             VideoContentItem videoContentItem = new VideoContentItem();
             videoContentItem.setId(categoryDto.getId());
             videoContentItem.setName(categoryDto.getName());

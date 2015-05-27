@@ -59,6 +59,11 @@ public class MiddlewareServiceImpl extends BaseClass implements MiddlewareServic
     }
 
     @Override
+    public List<CategoryWithChildCategoryDto> getCategoriesDataFromCache(Context context) {
+        return cache.getCategoriesDataFromCache(context);
+    }
+
+    @Override
     public void loadCategoriesImages(Context context, List<CategoryWithChildCategoryDto> categoriesList) {
         if(cache.isCategoriesImagesAvailable(context)) {
             cache.loadCategoriesImages(context, categoriesList);

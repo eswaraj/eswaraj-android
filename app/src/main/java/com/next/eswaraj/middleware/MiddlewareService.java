@@ -19,6 +19,7 @@ public interface MiddlewareService extends MiddlewareGetService, MiddlewarePostS
 
     //Add these for each GET services
     public void loadCategoriesData(Context context, Boolean dontGetFromCache);
+    public List<CategoryWithChildCategoryDto> getCategoriesDataFromCache(Context context);
     public void loadCategoriesImages(Context context, List<CategoryWithChildCategoryDto> categoriesList, Boolean dontGetFromCache);
     public void loadUserData(Context context, Session session, Boolean dontGetFromCache);
     public void loadUserComplaints(Context context, UserDto userDto, int start, int count, Boolean dontGetFromCache);

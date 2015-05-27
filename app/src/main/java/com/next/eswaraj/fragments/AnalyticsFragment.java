@@ -73,7 +73,7 @@ public class AnalyticsFragment extends BaseFragment {
 
     public void populateCountersAndCreateChart(List<ComplaintDto> complaintDtoList) {
         ArrayList<ComplaintCounter> complaintCounters = new ArrayList<ComplaintCounter>();
-        for(CategoryWithChildCategoryDto categoryDto : globalSession.getCategoryDtoList()) {
+        for(CategoryWithChildCategoryDto categoryDto : globalSession.getCategoryDtoList(getActivity())) {
             ComplaintCounter complaintCounter = new ComplaintCounter();
             complaintCounter.setId(categoryDto.getId());
             complaintCounter.setName(categoryDto.getName());
@@ -93,10 +93,10 @@ public class AnalyticsFragment extends BaseFragment {
     }
 
     public void createChart(List<ComplaintCounter> complaintCounters) {
-        GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters, globalSession.getCategoryDtoList(), globalSession.getColorMap());
+        GraphicalView chartView = PieChartView.getNewInstance(getActivity(), complaintCounters, globalSession.getCategoryDtoList(getActivity()), globalSession.getColorMap());
         mcChartContainer.removeAllViews();
         mcChartContainer.addView(chartView);
-        AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(), complaintCounters, globalSession.getColorMap());
+        AmenityListAdapter amenityListAdapter = new AmenityListAdapter(getActivity(), R.layout.item_amenity_list, globalSession.getCategoryDtoList(getActivity()), complaintCounters, globalSession.getColorMap());
         mcAmenityList.setAdapter(amenityListAdapter);
     }
 

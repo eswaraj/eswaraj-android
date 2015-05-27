@@ -207,6 +207,33 @@ public class Cache extends BaseClass implements CacheInterface {
     }
 
     @Override
+    public List<CategoryWithChildCategoryDto> getCategoriesDataFromCache(Context context) {
+        Gson gson = new Gson();
+        String json = sharedPreferencesHelper.getString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_DATA, null);
+        try {
+            List<CategoryWithChildCategoryDto> categoryDtoList;
+            categoryDtoList = gson.fromJson(json, new TypeToken<ArrayList<CategoryWithChildCategoryDto>>(){}.getType());
+            return categoryDtoList;
+        } catch (JsonParseException e) {
+            //This should never happen since json would only be stored in server if de-serialization was successful in Server class
+            return null;
+        }
+    }
+
+    public List<CategoryWithChildCategoryDto> getCategoriesDataFromCache(Service context) {
+        Gson gson = new Gson();
+        String json = sharedPreferencesHelper.getString(context, PreferenceConstants.FILE_SERVER_DATA, PreferenceConstants.CATEGORY_DATA, null);
+        try {
+            List<CategoryWithChildCategoryDto> categoryDtoList;
+            categoryDtoList = gson.fromJson(json, new TypeToken<ArrayList<CategoryWithChildCategoryDto>>(){}.getType());
+            return categoryDtoList;
+        } catch (JsonParseException e) {
+            //This should never happen since json would only be stored in server if de-serialization was successful in Server class
+            return null;
+        }
+    }
+
+    @Override
     public void loadCategoriesImages(Context context, List<CategoryWithChildCategoryDto> categoriesList) {
         //No data needs to be put here. The image file names will be inferred from the categoryId. Just put success=True in event object
         GetCategoriesImagesEvent getCategoriesImagesEvent = new GetCategoriesImagesEvent();
